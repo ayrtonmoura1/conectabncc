@@ -1,0 +1,689 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Documentação Técnica & Arquitetura - Concecta BNCC</title>
+    <meta name="description" content="Documentação técnica detalhada do Concecta BNCC: arquitetura 100% frontend com Transformers.js, modelos de embeddings, cálculo de relações pedagógicas e grafos interativos.">
+    
+    <!-- Google Fonts: Plus Jakarta Sans & JetBrains Mono -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;600;700&family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    
+    <link rel="stylesheet" href="./style.css">
+    
+    <style>
+        /* Estilos específicos da página de documentação */
+        .doc-page {
+            max-width: 1140px;
+            margin: 0 auto;
+            padding: 32px 24px 80px 24px;
+        }
+
+        .doc-header {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 20px;
+            padding-bottom: 24px;
+            margin-bottom: 32px;
+            border-bottom: 1px solid var(--border-color);
+            flex-wrap: wrap;
+        }
+
+        .doc-header-left {
+            display: flex;
+            flex-direction: column;
+            gap: 6px;
+        }
+
+        .doc-badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            background: var(--accent-light);
+            border: 1px solid var(--accent-border);
+            color: var(--accent-primary);
+            font-size: 0.75rem;
+            font-weight: 700;
+            padding: 3px 10px;
+            border-radius: var(--radius-full);
+            text-transform: uppercase;
+            letter-spacing: 0.04em;
+            width: fit-content;
+        }
+
+        .doc-title {
+            font-size: clamp(1.8rem, 3vw, 2.4rem);
+            font-weight: 800;
+            color: var(--text-primary);
+            letter-spacing: -0.03em;
+            margin: 0;
+            line-height: 1.2;
+        }
+
+        .doc-subtitle {
+            font-size: 0.95rem;
+            color: var(--text-muted);
+            margin: 0;
+            max-width: 680px;
+            line-height: 1.5;
+        }
+
+        .doc-btn-back {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            background: var(--accent-primary);
+            color: #ffffff;
+            font-weight: 700;
+            font-size: 0.88rem;
+            padding: 10px 18px;
+            border-radius: var(--radius-sm);
+            text-decoration: none;
+            box-shadow: 0 4px 12px rgba(79, 70, 229, 0.25);
+            transition: var(--transition);
+        }
+
+        .doc-btn-back:hover {
+            background: var(--accent-hover);
+            transform: translateY(-1px);
+            box-shadow: 0 6px 16px rgba(79, 70, 229, 0.35);
+        }
+
+        .doc-layout {
+            display: grid;
+            grid-template-columns: 260px 1fr;
+            gap: 40px;
+            align-items: flex-start;
+        }
+
+        @media (max-width: 900px) {
+            .doc-layout {
+                grid-template-columns: 1fr;
+                gap: 24px;
+            }
+        }
+
+        /* Menu Lateral de Navegação (Sticky) */
+        .doc-sidebar {
+            position: sticky;
+            top: 24px;
+            background: #ffffff;
+            border: 1px solid var(--border-color);
+            border-radius: var(--radius-md);
+            padding: 18px;
+            box-shadow: 0 1px 3px rgba(0, 0, 0, 0.04);
+        }
+
+        .doc-nav-title {
+            font-size: 0.76rem;
+            font-weight: 800;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+            color: var(--text-secondary);
+            margin-bottom: 12px;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+        }
+
+        .doc-nav-list {
+            list-style: none;
+            padding: 0;
+            margin: 0;
+            display: flex;
+            flex-direction: column;
+            gap: 4px;
+        }
+
+        .doc-nav-link {
+            display: block;
+            padding: 7px 10px;
+            font-size: 0.84rem;
+            font-weight: 600;
+            color: var(--text-secondary);
+            text-decoration: none;
+            border-radius: var(--radius-xs);
+            transition: var(--transition);
+            border-left: 2px solid transparent;
+        }
+
+        .doc-nav-link:hover {
+            color: var(--accent-primary);
+            background: var(--bg-secondary);
+            border-left-color: var(--accent-primary);
+        }
+
+        /* Conteúdo Principal */
+        .doc-content {
+            display: flex;
+            flex-direction: column;
+            gap: 40px;
+        }
+
+        .doc-section {
+            background: #ffffff;
+            border: 1px solid var(--border-color);
+            border-radius: var(--radius-md);
+            padding: 28px 32px;
+            box-shadow: 0 1px 3px rgba(0, 0, 0, 0.04);
+        }
+
+        .section-header {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            margin-bottom: 18px;
+            padding-bottom: 12px;
+            border-bottom: 1px solid var(--border-color);
+        }
+
+        .section-icon {
+            font-size: 1.5rem;
+        }
+
+        .section-title {
+            font-size: 1.35rem;
+            font-weight: 800;
+            color: var(--text-primary);
+            margin: 0;
+            letter-spacing: -0.02em;
+        }
+
+        .doc-p {
+            font-size: 0.92rem;
+            line-height: 1.7;
+            color: var(--text-secondary);
+            margin-bottom: 14px;
+        }
+
+        .doc-p strong {
+            color: var(--text-primary);
+        }
+
+        .formula-box {
+            background: #f8fafc;
+            border: 1px solid var(--border-color);
+            border-left: 4px solid var(--accent-primary);
+            border-radius: var(--radius-sm);
+            padding: 16px 20px;
+            margin: 18px 0;
+            font-family: var(--font-mono);
+            font-size: 0.88rem;
+            color: #1e293b;
+            line-height: 1.6;
+            overflow-x: auto;
+        }
+
+        .formula-title {
+            font-family: var(--font-sans);
+            font-weight: 800;
+            font-size: 0.78rem;
+            text-transform: uppercase;
+            letter-spacing: 0.04em;
+            color: var(--accent-primary);
+            margin-bottom: 6px;
+        }
+
+        .table-doc {
+            width: 100%;
+            border-collapse: collapse;
+            font-size: 0.86rem;
+            margin: 18px 0;
+        }
+
+        .table-doc th, .table-doc td {
+            padding: 10px 14px;
+            border: 1px solid var(--border-color);
+            text-align: left;
+        }
+
+        .table-doc th {
+            background: var(--bg-secondary);
+            font-weight: 700;
+            color: var(--text-primary);
+            font-size: 0.78rem;
+            text-transform: uppercase;
+            letter-spacing: 0.03em;
+        }
+
+        .table-doc tr:hover td {
+            background: #f8fafc;
+        }
+
+        .code-snippet {
+            background: #0f172a;
+            color: #e2e8f0;
+            border-radius: var(--radius-sm);
+            padding: 16px 20px;
+            font-family: var(--font-mono);
+            font-size: 0.82rem;
+            line-height: 1.55;
+            overflow-x: auto;
+            margin: 16px 0;
+        }
+
+        .flow-diagram {
+            background: #f8fafc;
+            border: 1px dashed var(--border-color);
+            border-radius: var(--radius-sm);
+            padding: 20px;
+            font-family: var(--font-mono);
+            font-size: 0.80rem;
+            color: #334155;
+            line-height: 1.45;
+            white-space: pre;
+            overflow-x: auto;
+            margin: 16px 0;
+        }
+
+        .feature-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+            gap: 16px;
+            margin-top: 18px;
+        }
+
+        .feature-card {
+            background: var(--bg-secondary);
+            border: 1px solid var(--border-color);
+            border-radius: var(--radius-sm);
+            padding: 16px;
+            display: flex;
+            flex-direction: column;
+            gap: 6px;
+        }
+
+        .feature-card h4 {
+            margin: 0;
+            font-size: 0.92rem;
+            font-weight: 700;
+            color: var(--text-primary);
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .feature-card p {
+            margin: 0;
+            font-size: 0.82rem;
+            color: var(--text-secondary);
+            line-height: 1.45;
+        }
+    </style>
+</head>
+<body style="background: var(--bg-primary);">
+
+    <div class="doc-page">
+        <!-- Topo da Documentação -->
+        <header class="doc-header">
+            <div class="doc-header-left">
+                <div class="doc-badge">
+                    <span>📖</span> Documentação Oficial &bull; v2.0
+                </div>
+                <h1 class="doc-title">Concecta BNCC</h1>
+                <p class="doc-subtitle">
+                    Guia de arquitetura, metodologia vetorial de embeddings, formulação de similaridade pedagógica e mapeamento de dependências curriculares.
+                </p>
+            </div>
+            <div>
+                <a href="./index.html" class="doc-btn-back">
+                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2">
+                        <line x1="19" y1="12" x2="5" y2="12"></line>
+                        <polyline points="12 19 5 12 12 5"></polyline>
+                    </svg>
+                    Acessar Aplicação
+                </a>
+            </div>
+        </header>
+
+        <div class="doc-layout">
+            <!-- Navegação Lateral (Sticky) -->
+            <aside class="doc-sidebar">
+                <div class="doc-nav-title">Sumário de Tópicos</div>
+                <nav>
+                    <ul class="doc-nav-list">
+                        <li><a href="#arquitetura" class="doc-nav-link">1. Arquitetura da Solução</a></li>
+                        <li><a href="#fontes" class="doc-nav-link">2. Fontes e Referências</a></li>
+                        <li><a href="#embeddings" class="doc-nav-link">3. Vetorização e Embeddings</a></li>
+                        <li><a href="#calculo-relacoes" class="doc-nav-link">4. Cálculo das Relações</a></li>
+                        <li><a href="#linhagem" class="doc-nav-link">5. Linhagem e Pré-requisitos</a></li>
+                        <li><a href="#visualizacao" class="doc-nav-link">6. Visualizações em Grafos</a></li>
+                        <li><a href="#produtividade" class="doc-nav-link">7. Recursos de Interface</a></li>
+                        <li><a href="#deploy" class="doc-nav-link">8. Execução Local & Deploy</a></li>
+                    </ul>
+                </nav>
+            </aside>
+
+            <!-- Conteúdo Principal -->
+            <main class="doc-content">
+
+                <!-- 1. Arquitetura da Solução -->
+                <section id="arquitetura" class="doc-section">
+                    <div class="section-header">
+                        <span class="section-icon">🏛️</span>
+                        <h2 class="section-title">1. Arquitetura da Solução</h2>
+                    </div>
+                    <p class="doc-p">
+                        O <strong>Concecta BNCC</strong> foi projetado a partir de uma premissa fundamental: <strong>zero dependência de servidores em nuvem para busca e inferência (100% Client-Side)</strong>. 
+                        Toda a inteligência artificial semântica, cálculo de produtos escalares, renderização vetorial de grafos e desdobramento pedagógico roda diretamente no navegador do usuário via <strong>WebAssembly (Wasm)</strong> e <strong>Transformers.js</strong>.
+                    </p>
+
+                    <div class="flow-diagram">
++---------------------------------------------------------------------------------------------------+
+| ETAPA 1: BUILD & ENRIQUECIMENTO VETORIAL (Executado em Python offline)                            |
+|                                                                                                   |
+|  [ BNCC CSV Oficial ]  +  [ Mapas de Foco Reúna ]  +  [ Competências Gerais/Específicas MEC ]    |
+|               │                           │                                    │                  |
+|               ▼                           ▼                                    ▼                  |
+|       (gerar_base.py)         (extrair_progressao_foco.py)        (enriquecer_competencias.py)    |
+|               │                           │                                    │                  |
+|               ▼                           ▼                                    ▼                  |
+|     bncc_vetores.json         progressao_bncc.json                 competencias_bncc.json         |
+|  (384 dimensões L2 norm)   (Matriz de Pré-Requisitos)              (CG01 a CG10 + Específicas)    |
++---------------------------------------------------------------------------------------------------+
+                                                │
+                                                ▼  (Arquivos Estáticos servidos via GitHub Pages)
++---------------------------------------------------------------------------------------------------+
+| ETAPA 2: RUNTIME NO NAVEGADOR DO USUÁRIO (index.html + Transformers.js + D3.js)                   |
+|                                                                                                   |
+|  1. Usuário digita tema: "atividades de reciclagem e preservação ambiental"                       |
+|  2. Transformers.js gera o embedding da consulta via WebAssembly (modelo local all-MiniLM-L6-v2)  |
+|  3. Produto Escalar Vetorial contra 1.517 habilidades em < 25ms                                   |
+|  4. Matriz de Afinidade Pedagógica calcula conexões interdisciplinares e progressão curricular    |
+|  5. D3.js desenha o Organograma por Anos/Fases, Linhagem e Rede de Forças Físicas                |
++---------------------------------------------------------------------------------------------------+
+                    </div>
+
+                    <div class="feature-grid">
+                        <div class="feature-card">
+                            <h4>🔒 Privacidade Total</h4>
+                            <p>Nenhuma busca ou termo pedagógico digitado sai do computador ou celular do usuário.</p>
+                        </div>
+                        <div class="feature-card">
+                            <h4>⚡ Custo Zero de Infraestrutura</h4>
+                            <p>Funciona em hospedagens estáticas gratuitas como GitHub Pages, Netlify ou Vercel.</p>
+                        </div>
+                        <div class="feature-card">
+                            <h4>💾 Cache Offline Automático</h4>
+                            <p>Após o primeiro download, o modelo de IA fica armazenado no cache IndexedDB do navegador.</p>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- 2. Fontes e Referências -->
+                <section id="fontes" class="doc-section">
+                    <div class="section-header">
+                        <span class="section-icon">📚</span>
+                        <h2 class="section-title">2. Fontes e Referências Curriculares</h2>
+                    </div>
+                    <p class="doc-p">
+                        Os dados que alimentam a aplicação foram extraídos de documentos e matrizes oficiais do Ministério da Educação e de fundações parceiras de referência nacional em educação:
+                    </p>
+
+                    <table class="table-doc">
+                        <thead>
+                            <tr>
+                                <th>Origem / Documento</th>
+                                <th>Entidade</th>
+                                <th>Dados Extraídos e Função</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td><strong>Base Nacional Comum Curricular (BNCC)</strong></td>
+                                <td>Ministério da Educação (MEC)</td>
+                                <td>1.517 habilidades curriculares oficiais da Educação Infantil, Ensino Fundamental (Anos Iniciais e Finais) e Ensino Médio.</td>
+                            </tr>
+                            <tr>
+                                <td><strong>Mapas de Foco da BNCC</strong></td>
+                                <td>Instituto Reúna, Fundação Lemann e Itaú Social</td>
+                                <td>Identificação de habilidades focais, conhecimentos prévios indispensáveis, habilidades de apoio no mesmo ano e comentários de progressão.</td>
+                            </tr>
+                            <tr>
+                                <td><strong>10 Competências Gerais da Educação Básica</strong></td>
+                                <td>MEC / Conselho Nacional de Educação</td>
+                                <td>Conhecimento, Pensamento Científico, Repertório Cultural, Comunicação, Cultura Digital, Trabalho e Projeto de Vida, Argumentação, Autoconhecimento, Empatia e Responsabilidade.</td>
+                            </tr>
+                            <tr>
+                                <td><strong>Competências Específicas por Componente</strong></td>
+                                <td>MEC / Diretrizes Curriculares</td>
+                                <td>Competências das áreas de Língua Portuguesa, Matemática, Ciências da Natureza, História, Geografia, Arte, Educação Física e Língua Inglesa.</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </section>
+
+                <!-- 3. Vetorização e Embeddings -->
+                <section id="embeddings" class="doc-section">
+                    <div class="section-header">
+                        <span class="section-icon">🧠</span>
+                        <h2 class="section-title">3. Vetorização e Embeddings com Transformers.js</h2>
+                    </div>
+                    <p class="doc-p">
+                        Para viabilizar a busca por intenção pedagógica (onde o professor pesquisa por uma ideia ou atividade e encontra habilidades relacionadas mesmo sem conter palavras exatas), utilizamos o modelo de rede neural <code>all-MiniLM-L6-v2</code> da arquitetura <strong>Sentence-BERT</strong>.
+                    </p>
+
+                    <div class="formula-box">
+                        <div class="formula-title">Estrutura do Texto Base para Embedding (gerar_base.py)</div>
+Texto = [CÓDIGO_HABILIDADE] + [PALAVRAS_CHAVE_TFIDF] + [COMPONENTE_CURRICULAR] + [ANO_FAIXA] + [OBJETO_CONHECIMENTO] + [UNIDADE_TEMÁTICA] + [TEXTO_HABILIDADE]
+                    </div>
+
+                    <p class="doc-p">
+                        <strong>Processamento Estruturante com TF-IDF:</strong> O script Python aplica um extrator estatístico com n-grams (1 e 2 termos) e remoção de stopwords educacionais burocráticas (como <em>"currículo", "orientações", "processo"</em>), isolando os conceitos nucleares como <em>"consciência fonológica", "frações equivalentes", "biodiversidade"</em>. O código da habilidade (ex: <code>EF05MA08</code>) é fixado como a primeira palavra-chave, garantindo que buscas por código retornem 100% de precisão.
+                    </p>
+                    <p class="doc-p">
+                        <strong>Normalização Euclidiana (L2 Norm):</strong> Cada vetor produzido possui 384 números de ponto flutuante normalizados tal que $\|\vec{v}\|_2 = 1$. Graças a isso, a similaridade de cosseno entre a consulta $\vec{q}$ e qualquer habilidade $\vec{h}$ se reduz a uma multiplicação de produto escalar simples:
+                    </p>
+
+                    <div class="formula-box">
+                        <div class="formula-title">Equação do Produto Escalar Normalizado</div>
+                        $$\text{CosSim}(\vec{q}, \vec{h}) = \sum_{i=1}^{384} q_i \cdot h_i$$
+                    </div>
+                </section>
+
+                <!-- 4. Cálculo das Relações -->
+                <section id="calculo-relacoes" class="doc-section">
+                    <div class="section-header">
+                        <span class="section-icon">📐</span>
+                        <h2 class="section-title">4. Cálculo das Relações Pedagógicas e Conexões no Grafo</h2>
+                    </div>
+                    <p class="doc-p">
+                        No grafo, duas habilidades não devem se conectar apenas porque compartilham vocabulário similar; elas devem respeitar a <strong>coerência pedagógica da BNCC</strong>. Desenvolvemos o algoritmo <code>calcularCompatibilidadePedagogica(habA, habB)</code> que combina a proximidade vetorial bruta com a estrutura curricular:
+                    </p>
+
+                    <div class="formula-box">
+                        <div class="formula-title">Afinidade Pedagógica Ponderada</div>
+                        $$S_{\text{pedagógico}}(A, B) = \text{CosSim}(\vec{A}, \vec{B}) \times \text{Fator}_{\text{compat}}(A, B)$$
+                    </div>
+
+                    <p class="doc-p">
+                        A tabela abaixo descreve como o fator multiplicador é determinado entre duas habilidades $A$ e $B$:
+                    </p>
+
+                    <table class="table-doc">
+                        <thead>
+                            <tr>
+                                <th>Tipo de Relação</th>
+                                <th>Condição Curricular</th>
+                                <th>Fator Multiplicador</th>
+                                <th>Representação Visual</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td><strong>Intradisciplinar (Mesmo Ano)</strong></td>
+                                <td>Mesma disciplina e mesmo ano escolar</td>
+                                <td><code>1.25x</code> (Reforço)</td>
+                                <td>Linha contínua roxa (#8b5cf6)</td>
+                            </tr>
+                            <tr>
+                                <td><strong>Progressão Direta</strong></td>
+                                <td>Mesma disciplina e anos contíguos (ex: 4º &rarr; 5º ano)</td>
+                                <td><code>1.15x</code> (Sequência)</td>
+                                <td>Linha pontilhada âmbar (#f59e0b)</td>
+                            </tr>
+                            <tr>
+                                <td><strong>Interdisciplinar</strong></td>
+                                <td>Disciplinas diferentes no mesmo ciclo ou ano</td>
+                                <td><code>1.05x</code> (Transversal)</td>
+                                <td>Linha tracejada ciano (#06b6d4)</td>
+                            </tr>
+                            <tr>
+                                <td><strong>Transição de Ciclo</strong></td>
+                                <td>Passagem do 5º para o 6º ano ou 9º para o Ensino Médio</td>
+                                <td><code>1.10x</code> (Ponte de Etapa)</td>
+                                <td>Linha pontilhada âmbar</td>
+                            </tr>
+                            <tr>
+                                <td><strong>Defasagem Significativa</strong></td>
+                                <td>Diferença de mais de 3 anos escolares</td>
+                                <td><code>0.50x a 0.70x</code> (Atenuação)</td>
+                                <td>Filtrada pelo limiar anti-ruído</td>
+                            </tr>
+                        </tbody>
+                    </table>
+
+                    <p class="doc-p">
+                        <strong>Limiar Anti-Ruído (Threshold):</strong> Conexões cuja afinidade pedagógica final seja inferior ao limiar (configurado por padrão em 35% na interface) são descartadas, mantendo o grafo limpo e focado no essencial pedagógico.
+                    </p>
+                </section>
+
+                <!-- 5. Linhagem e Pré-requisitos -->
+                <section id="linhagem" class="doc-section">
+                    <div class="section-header">
+                        <span class="section-icon">🧬</span>
+                        <h2 class="section-title">5. Linhagem Pedagógica e Árvore de Dependências</h2>
+                    </div>
+                    <p class="doc-p">
+                        Um dos maiores diferenciais do Concecta BNCC é responder à pergunta: <em>"Para ensinar esta habilidade no 5º ano, o que meu estudante já deveria ter aprendido no 4º, 3º ou 2º ano? E o que essa habilidade prepara para o futuro?"</em>
+                    </p>
+
+                    <p class="doc-p">
+                        A visualização de <strong>Linhagem Pedagógica</strong> organiza a progressão em 3 colunas temporais e causais:
+                    </p>
+
+                    <div class="feature-grid">
+                        <div class="feature-card" style="border-left: 4px solid #f59e0b;">
+                            <h4>⏮️ 1. Anos Anteriores (Prévia)</h4>
+                            <p>Habilidades que constituem <strong>conhecimento prévio indispensável</strong>. Se o aluno não consolidou essas habilidades no passado, terá dificuldades na habilidade atual.</p>
+                        </div>
+                        <div class="feature-card" style="border-left: 4px solid #4f46e5;">
+                            <h4>📌 2. Mesmo Ano (Apoio & Foco)</h4>
+                            <p>Habilidades do mesmo componente curricular que servem de <strong>suporte direto</strong> ou que precisam ser trabalhadas no mesmo ciclo letivo.</p>
+                        </div>
+                        <div class="feature-card" style="border-left: 4px solid #8b5cf6;">
+                            <h4>⏭️ 3. Anos Seguintes (Futura)</h4>
+                            <p>Habilidades dos anos posteriores e Ensino Médio que <strong>desdobram e aprofundam</strong> o objeto de conhecimento da habilidade em foco.</p>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- 6. Visualizações em Grafos -->
+                <section id="visualizacao" class="doc-section">
+                    <div class="section-header">
+                        <span class="section-icon">📊</span>
+                        <h2 class="section-title">6. Visualizações em Grafos com D3.js</h2>
+                    </div>
+                    <p class="doc-p">
+                        A plataforma disponibiliza três representações visuais complementares construídas em <strong>D3.js v7</strong>:
+                    </p>
+
+                    <div class="feature-grid">
+                        <div class="feature-card">
+                            <h4>🌳 Organograma por Anos/Fases</h4>
+                            <p>Estrutura hierárquica tipo árvore de decisão organizada em raias verticais (<em>swimlanes</em>) cronológicas da Educação Infantil ao Ensino Médio, com o nó raiz da busca unificando as colunas.</p>
+                        </div>
+                        <div class="feature-card">
+                            <h4>🧭 Linhagem Pedagógica</h4>
+                            <p>Layout longitudinal em 3 colunas com setas vetoriais indicando fluxo de pré-requisito e continuidade pedagógica, halo pulsante no nó focal e orientações do Instituto Reúna.</p>
+                        </div>
+                        <div class="feature-card">
+                            <h4>🕸️ Rede de Forças Semântica</h4>
+                            <p>Simulação física em tempo real baseada em forças de atração gravitacional onde habilidades afins gravitam próximas e nós com menor afinidade se repelem.</p>
+                        </div>
+                    </div>
+
+                    <p class="doc-p" style="margin-top: 18px;">
+                        <strong>Controle de Zoom Inteligente:</strong> Para não travar a rolagem vertical de páginas longas em desktops, o zoom do grafo só é disparado quando o usuário segura a tecla <code>Ctrl</code> (Windows/Linux) ou <code>⌘ Cmd</code> (Mac) enquanto usa o scroll do mouse. No celular ou tablet, o gesto de pinça com dois dedos funciona naturalmente.
+                    </p>
+                </section>
+
+                <!-- 7. Recursos de Interface -->
+                <section id="produtividade" class="doc-section">
+                    <div class="section-header">
+                        <span class="section-icon">🎛️</span>
+                        <h2 class="section-title">7. Recursos de Produtividade & Experiência do Usuário</h2>
+                    </div>
+                    <p class="doc-p">
+                        Cada interação foi pensada para a agilidade do professor e coordenador pedagógico:
+                    </p>
+
+                    <div class="feature-grid">
+                        <div class="feature-card">
+                            <h4>🎛️ Filtros Laterais Verticais</h4>
+                            <p>Aba flutuante na borda esquerda da tela que expande e recolhe sem empurrar para baixo o cabeçalho nem ocupar espaço útil de leitura.</p>
+                        </div>
+                        <div class="feature-card">
+                            <h4>📌 Gaveta Não-Bloqueante com Fixação</h4>
+                            <p>A gaveta lateral de detalhes não desfoca o fundo, permitindo clicar livremente em outros nós do grafo mantendo os detalhes visíveis.</p>
+                        </div>
+                        <div class="feature-card">
+                            <h4>📋 Minimização Rápida</h4>
+                            <p>A gaveta pode ser minimizada em uma pílula no canto inferior direito para inspecionar o grafo por inteiro e reabrir num clique.</p>
+                        </div>
+                        <div class="feature-card">
+                            <h4>🏷️ Copiar com 1 Clique</h4>
+                            <p>O botão de cópia na gaveta e nos cartões copia automaticamente o código e a descrição limpa diretamente para a área de transferência.</p>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- 8. Execução Local & Deploy -->
+                <section id="deploy" class="doc-section">
+                    <div class="section-header">
+                        <span class="section-icon">🚀</span>
+                        <h2 class="section-title">8. Como Executar Localmente e Publicar no GitHub Pages</h2>
+                    </div>
+
+                    <p class="doc-p">
+                        <strong>Passo 1: Execução Local</strong><br>
+                        Como os navegadores restringem requisições de arquivos locais via protocolo <code>file://</code> por motivos de segurança (CORS), utilize o servidor HTTP embutido do Python:
+                    </p>
+
+                    <div class="code-snippet">
+# No terminal da pasta do projeto:
+python -m http.server 8000
+
+# Em seguida, acesse no navegador:
+http://localhost:8000
+                    </div>
+
+                    <p class="doc-p">
+                        <strong>Passo 2: Publicação no GitHub Pages</strong><br>
+                        O projeto é 100% estático e já vem estruturado para o GitHub:
+                    </p>
+
+                    <div class="code-snippet">
+# Inicializar o repositório git:
+git init
+git add .
+git commit -m "feat: lancamento do Concecta BNCC com busca semantica e grafos"
+git branch -M main
+git remote add origin https://github.com/SEU_USUARIO/concecta-bncc.git
+git push -u origin main
+                    </div>
+
+                    <p class="doc-p">
+                        No GitHub, acesse <strong>Settings &rarr; Pages &rarr; Branch: main / (root) &rarr; Save</strong>. Em poucos segundos, sua aplicação estará online mundialmente com HTTPS gratuito.
+                    </p>
+                </section>
+
+            </main>
+        </div>
+    </div>
+
+</body>
+</html>
