@@ -29,6 +29,9 @@ desktop.ini
 npm-debug.log*
 yarn-debug.log*
 
+# Pasta de Recursos Adicionais e Arquivos Brutos (Não enviados ao GitHub)
+recursos_adicionais/
+
 # Arquivos brutos de dados pesados e temporários
 *.pdf
 *.xlsx

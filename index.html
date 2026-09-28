@@ -18,8 +18,8 @@
 </head>
 <body>
 
-    <!-- Aba Flutuante Vertical para Filtros (Borda Esquerda) -->
-    <button type="button" id="filtersVerticalTab" class="filters-vertical-tab" onclick="window.toggleFiltersSidebar()" aria-label="Abrir filtros curriculares" title="Filtros Curriculares (Etapa, Ano, Disciplina, Top-K)">
+    <!-- Aba Flutuante Vertical para Filtros (Borda Esquerda - aparece quando recolhido) -->
+    <button type="button" id="filtersVerticalTab" class="filters-vertical-tab is-open" onclick="window.toggleFiltersSidebar(true)" aria-label="Abrir filtros curriculares" title="Filtros Curriculares (Etapa, Ano, Disciplina, Top-K)">
         <span class="filters-tab-icon">
             <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
                 <line x1="4" y1="21" x2="4" y2="14"></line>
@@ -40,8 +40,8 @@
     <!-- Backdrop do painel lateral de filtros -->
     <div class="filters-sidebar-backdrop" id="filtersBackdrop" onclick="window.toggleFiltersSidebar(false)"></div>
 
-    <!-- Barra Lateral Vertical de Filtros Curriculares (Expansível / Recolhível) -->
-    <aside class="filters-sidebar" id="filtersSidebar" aria-label="Painel de Filtros Curriculares">
+    <!-- Barra Lateral Vertical de Filtros Curriculares (Fixo e Aberto por padrão / Recolhível) -->
+    <aside class="filters-sidebar is-open" id="filtersSidebar" aria-label="Painel de Filtros Curriculares">
         <div class="filters-sidebar-header">
             <div class="filters-sidebar-title">
                 <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
@@ -49,11 +49,11 @@
                 </svg>
                 <span>Filtros Curriculares</span>
             </div>
-            <button type="button" class="filters-sidebar-close" onclick="window.toggleFiltersSidebar(false)" aria-label="Recolher filtros" title="Recolher aba de filtros">
-                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                    <line x1="18" y1="6" x2="6" y2="18"></line>
-                    <line x1="6" y1="6" x2="18" y2="18"></line>
+            <button type="button" class="filters-sidebar-collapse-btn" onclick="window.toggleFiltersSidebar(false)" aria-label="Recolher filtros" title="Recolher painel de filtros">
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
+                    <polyline points="15 18 9 12 15 6"></polyline>
                 </svg>
+                <span>Recolher</span>
             </button>
         </div>
         <div class="filters-sidebar-body">
@@ -164,14 +164,32 @@
                 </button>
             </form>
 
-            <!-- Sugestões de Busca Rápida -->
-            <div class="quick-queries">
-                <span class="quick-label">Sugestões rápidas:</span>
-                <button type="button" class="query-chip" data-query="atividades de pintura com materiais recicláveis">Pintura e reciclagem</button>
-                <button type="button" class="query-chip" data-query="jogos com regras e cooperação em grupo">Jogos cooperativos</button>
-                <button type="button" class="query-chip" data-query="leitura e consciência fonológica na alfabetização">Alfabetização inicial</button>
-                <button type="button" class="query-chip" data-query="operações fundamentais e resolução de problemas matemáticos">Problemas de adição</button>
-                <button type="button" class="query-chip" data-query="efeito estufa, aquecimento global e sustentabilidade">Aquecimento global</button>
+            <!-- Barra de Modos Rápidos e Sugestões -->
+            <div class="search-extras-bar">
+                <button type="button" id="btnHubInterdisciplinar" class="hub-tab-trigger-btn" onclick="window.ativarModoInterdisciplinar(event)" title="Descubra as habilidades com maior diálogo e conexão pedagógica com outros componentes no mesmo ano escolar">
+                    <span class="hub-tab-icon">🌐</span>
+                    <span class="hub-tab-text">
+                        <strong>Habilidades Mais Interdisciplinares</strong>
+                        <small>Mais conexões entre diferentes componentes no mesmo ano/fase</small>
+                    </span>
+                    <span class="hub-tab-badge">Explorar Hub ➔</span>
+                </button>
+
+                <!-- Sugestões de Busca Rápida -->
+                <div class="quick-queries">
+                    <span class="quick-label">Sugestões rápidas:</span>
+                    <button type="button" class="query-chip chip-interdisciplinar" onclick="window.ativarModoInterdisciplinar(event, '5º')" title="Ver habilidades com maior conexão interdisciplinar no 5º Ano">
+                        <span style="color: #4f46e5; font-weight: 700;">🌐</span> 5º Ano: Mais Relações
+                    </button>
+                    <button type="button" class="query-chip chip-interdisciplinar" onclick="window.ativarModoInterdisciplinar(event, '1º')" title="Ver habilidades com maior conexão interdisciplinar no 1º Ano">
+                        <span style="color: #4f46e5; font-weight: 700;">🌐</span> 1º Ano: Mais Relações
+                    </button>
+                    <button type="button" class="query-chip" data-query="atividades de pintura com materiais recicláveis">Pintura e reciclagem</button>
+                    <button type="button" class="query-chip" data-query="jogos com regras e cooperação em grupo">Jogos cooperativos</button>
+                    <button type="button" class="query-chip" data-query="leitura e consciência fonológica na alfabetização">Alfabetização inicial</button>
+                    <button type="button" class="query-chip" data-query="operações fundamentais e resolução de problemas matemáticos">Problemas de adição</button>
+                    <button type="button" class="query-chip" data-query="efeito estufa, aquecimento global e sustentabilidade">Aquecimento global</button>
+                </div>
             </div>
         </section>
 
@@ -1159,9 +1177,12 @@
                 if (info.etapa) etapas.add(info.etapa);
             }
 
-            const appendOpts = (set, selectId) => {
+            const appendOpts = (set, selectId, customSort) => {
                 const select = document.getElementById(selectId);
-                Array.from(set).sort().forEach(val => {
+                const arr = Array.from(set);
+                if (customSort) arr.sort(customSort);
+                else arr.sort();
+                arr.forEach(val => {
                     const opt = document.createElement('option');
                     opt.value = val;
                     opt.textContent = val;
@@ -1169,8 +1190,30 @@
                 });
             };
 
+            const ordenarAnos = (a, b) => {
+                const getVal = (s) => {
+                    if (!s) return 99;
+                    if (s.toLowerCase().includes('infantil')) return 0.2;
+                    if (s.includes('1º')) return 1;
+                    if (s.includes('2º')) return 2;
+                    if (s.includes('3º')) return 3;
+                    if (s.includes('4º')) return 4;
+                    if (s.includes('5º')) return 5;
+                    if (s.includes('6º')) return 6;
+                    if (s.includes('7º')) return 7;
+                    if (s.includes('8º')) return 8;
+                    if (s.includes('9º')) return 9;
+                    if (s.toLowerCase().includes('médio')) return 11;
+                    return 20;
+                };
+                const vA = getVal(a);
+                const vB = getVal(b);
+                if (vA !== vB) return vA - vB;
+                return a.localeCompare(b);
+            };
+
             appendOpts(etapas, 'filterEtapa');
-            appendOpts(anos, 'filterAno');
+            appendOpts(anos, 'filterAno', ordenarAnos);
             appendOpts(disciplinas, 'filterDiscipline');
         }
 
@@ -1311,6 +1354,173 @@
         }
 
         // ======================================================================
+        // Hub de Habilidades Mais Interdisciplinares (Conexão entre Componentes)
+        // ======================================================================
+        let isModoInterdisciplinarAtivo = false;
+
+        window.ativarModoInterdisciplinar = function(event, anoDesejado) {
+            if (event) {
+                try { event.preventDefault(); event.stopPropagation(); } catch (e) {}
+            }
+            if (!isReady || !baseBNCC || baseBNCC.length === 0) {
+                window.showToast("Aguarde a IA carregar os dados da BNCC.");
+                return;
+            }
+
+            isModoInterdisciplinarAtivo = true;
+            const btnHub = document.getElementById('btnHubInterdisciplinar');
+            if (btnHub) btnHub.classList.add('is-active');
+
+            const elAno = document.getElementById('filterAno');
+            if (anoDesejado) {
+                elAno.value = anoDesejado;
+            } else if (!elAno.value || elAno.value === 'todas') {
+                elAno.value = '5º'; // Padrão rico e representativo
+            }
+            atualizarBadgeFiltros();
+
+            searchInput.value = '';
+            searchInput.placeholder = `🌐 Modo Interdisciplinar: Habilidades mais articuladas (${elAno.value === 'todas' ? 'Todos os Anos' : elAno.value + ' Ano'})`;
+            clearBtn.style.display = 'none';
+
+            window.calcularHabilidadesMaisInterdisciplinares();
+            window.showToast(`Hub Interdisciplinar ativado para: ${elAno.value === 'todas' ? 'Todos os Anos' : elAno.value + ' Ano'}`);
+        };
+
+        window.filtrarHubPorAno = function(ano) {
+            const elAno = document.getElementById('filterAno');
+            if (elAno) {
+                elAno.value = ano;
+                atualizarBadgeFiltros();
+            }
+            window.calcularHabilidadesMaisInterdisciplinares();
+            window.showToast(`Exibindo conexões: ${ano === 'todas' ? 'Todos os Anos' : ano + ' Ano'}`);
+        };
+
+        window.calcularHabilidadesMaisInterdisciplinares = function() {
+            if (!isReady || !baseBNCC || baseBNCC.length === 0) return;
+
+            const t0 = performance.now();
+            const selEtapa = document.getElementById('filterEtapa').value;
+            const selAno = document.getElementById('filterAno').value;
+            const baseTopK = parseInt(document.getElementById('filterTopK').value, 10) || 12;
+
+            // 1. Filtragem por Etapa e Ano / Fase
+            let candidatos = baseBNCC;
+            if (selEtapa !== 'todas') {
+                candidatos = candidatos.filter(item => extrairEtapaCurricular(item).etapa === selEtapa);
+            }
+            if (selAno !== 'todas') {
+                candidatos = candidatos.filter(item => {
+                    if (item.ano_faixa === selAno) return true;
+                    const info = extrairEtapaCurricular(item);
+                    const numAno = parseInt(selAno.replace(/\D/g, ''), 10);
+                    if (numAno && info.anos && info.anos.includes(numAno)) return true;
+                    return false;
+                });
+            }
+
+            if (candidatos.length === 0) {
+                resultsHeader.style.display = 'flex';
+                resultsCount.textContent = `Nenhuma habilidade encontrada para o filtro de ano: ${selAno}`;
+                resultsList.innerHTML = `<div class="empty-state"><p>Tente selecionar outro ano/fase no painel de filtros à esquerda.</p></div>`;
+                return;
+            }
+
+            // 2. Cálculo das pontes interdisciplinares entre componentes distintos
+            const hubList = [];
+
+            for (let i = 0; i < candidatos.length; i++) {
+                const hA = candidatos[i];
+                const discA = hA.disciplina ? hA.disciplina.trim() : '';
+                const distinctDiscs = new Set();
+                const conexoesCruzadas = [];
+
+                for (let j = 0; j < candidatos.length; j++) {
+                    if (i === j) continue;
+                    const hB = candidatos[j];
+                    const discB = hB.disciplina ? hB.disciplina.trim() : '';
+                    if (!discA || !discB || discA === discB) continue; // Componentes curriculares distintos!
+
+                    const compat = calcularCompatibilidadePedagogica(hA, hB);
+                    if (compat.fator <= 0) continue;
+
+                    const simCos = calcularSimilaridade(hA.vetor, hB.vetor);
+                    const scorePedagogico = simCos * compat.fator;
+
+                    if (scorePedagogico >= 0.34) {
+                        distinctDiscs.add(discB);
+                        conexoesCruzadas.push({
+                            item: hB,
+                            codigo: hB.codigo,
+                            disciplina: discB,
+                            ano: hB.ano_faixa,
+                            score: scorePedagogico,
+                            simCos: simCos,
+                            rotuloPedagogico: compat.rotulo,
+                            habilidade: hB.habilidade
+                        });
+                    }
+                }
+
+                conexoesCruzadas.sort((a, b) => b.score - a.score);
+
+                const numDisciplinas = distinctDiscs.size;
+                const totalConexoes = conexoesCruzadas.length;
+                const scoreTotal = conexoesCruzadas.reduce((acc, c) => acc + c.score, 0);
+                const scoreMedio = totalConexoes > 0 ? scoreTotal / totalConexoes : 0;
+
+                hubList.push({
+                    item: hA,
+                    numDisciplinas,
+                    disciplinasConectadas: Array.from(distinctDiscs),
+                    conexoesInterdisciplinares: conexoesCruzadas,
+                    totalConexoes,
+                    scoreTotal,
+                    scoreMedio
+                });
+            }
+
+            // 3. Ordenação por centralidade interdisciplinar
+            hubList.sort((a, b) => {
+                if (b.numDisciplinas !== a.numDisciplinas) {
+                    return b.numDisciplinas - a.numDisciplinas; // Quem conecta com mais componentes vem primeiro
+                }
+                if (b.totalConexoes !== a.totalConexoes) {
+                    return b.totalConexoes - a.totalConexoes; // Maior volume de pontes
+                }
+                return b.scoreTotal - a.scoreTotal;
+            });
+
+            const duracao = (performance.now() - t0).toFixed(0);
+
+            // 4. Converte para o padrão de resultadosAtuais
+            resultadosAtuais = hubList.slice(0, Math.max(12, baseTopK)).map(hub => {
+                const scoreNormalizado = Math.min(0.99, (hub.numDisciplinas * 0.16) + (hub.scoreMedio * 0.35) + Math.min(0.20, hub.totalConexoes * 0.015));
+                return {
+                    item: hub.item,
+                    score: scoreNormalizado,
+                    isInterdisciplinarHub: true,
+                    numDisciplinas: hub.numDisciplinas,
+                    disciplinasConectadas: hub.disciplinasConectadas,
+                    conexoesInterdisciplinares: hub.conexoesInterdisciplinares.slice(0, 4),
+                    totalConexoes: hub.totalConexoes
+                };
+            });
+
+            viewTabs.style.display = 'flex';
+            cachedQuery = `[Hub Interdisciplinar: ${selAno}]`;
+            cachedDuracao = duracao;
+            cachedTotalAnalisados = candidatos.length;
+
+            atualizarVisualizacaoLista();
+
+            if (currentView === 'graph') {
+                renderizarGrafo();
+            }
+        };
+
+        // ======================================================================
         // Renderização em Lista, Agrupamento e Ordenação
         // ======================================================================
         function obterOrdemAno(item) {
@@ -1396,6 +1606,7 @@
                     event.target.closest('.term-tag') || 
                     event.target.closest('.comp-badge') ||
                     event.target.closest('.btn-explore-lineage') ||
+                    event.target.closest('.partner-mini-card') ||
                     event.target.closest('.accordion-toggle') ||
                     event.target.closest('.accordion-content')) {
                     return;
@@ -1436,7 +1647,8 @@
             document.querySelectorAll('.skill-card').forEach(el => el.classList.add('is-collapsed'));
         };
 
-        function renderizarCardHabilidade({ item, score }, index, query) {
+        function renderizarCardHabilidade(resObj, index, query) {
+            const { item, score, isInterdisciplinarHub, numDisciplinas, disciplinasConectadas, conexoesInterdisciplinares, totalConexoes } = resObj;
             const percentual = (score * 100).toFixed(1);
             let scoreClass = 'low';
             if (score >= 0.65) scoreClass = 'high';
@@ -1448,7 +1660,7 @@
             const cardId = `${item.codigo}_${index}`.replace(/[^a-zA-Z0-9_]/g, '_');
 
             return `
-                <article class="skill-card is-collapsed" id="card-${cardId}" style="animation-delay: ${Math.min(index * 0.03, 0.4)}s">
+                <article class="skill-card is-collapsed ${isInterdisciplinarHub ? 'is-hub-card' : ''}" id="card-${cardId}" style="animation-delay: ${Math.min(index * 0.03, 0.4)}s">
                     <div class="skill-card-header" onclick="window.toggleCardExpand('${cardId}', event)" role="button" tabindex="0" onkeydown="if(event.key==='Enter'||event.key===' '){event.preventDefault(); this.click();}" title="Clique para expandir ou recolher os detalhes desta habilidade">
                         <div class="skill-card-top">
                             <div class="skill-meta-tags">
@@ -1467,15 +1679,22 @@
                                 ${item.ano_faixa ? `<span class="year-badge">${item.ano_faixa}</span>` : ''}
                             </div>
 
-                            <div class="score-box" title="Similaridade de Cosseno: ${score.toFixed(4)}">
-                                <div class="score-badge ${scoreClass}">
-                                    ${percentual}% aderência
+                            <div class="score-box" title="${isInterdisciplinarHub ? `Articulação Interdisciplinar: conecta com ${numDisciplinas} componentes distintos em ${totalConexoes} pontes curriculares` : `Similaridade de Cosseno: ${score.toFixed(4)}`}">
+                                <div class="score-badge ${isInterdisciplinarHub ? 'hub-score-badge' : scoreClass}">
+                                    ${isInterdisciplinarHub ? `🌐 ${numDisciplinas} componentes &bull; ${totalConexoes} pontes` : `${percentual}% aderência`}
                                 </div>
                                 <div class="score-bar-bg">
                                     <div class="score-bar-fill" style="width: ${Math.min(100, Math.max(0, percentual))}%;"></div>
                                 </div>
                             </div>
                         </div>
+
+                        ${isInterdisciplinarHub && disciplinasConectadas && disciplinasConectadas.length > 0 ? `
+                            <div class="inter-connected-disciplines-row">
+                                <span class="inter-conn-label">Articula com:</span>
+                                ${disciplinasConectadas.map(d => `<span class="inter-conn-chip">${d}</span>`).join('')}
+                            </div>
+                        ` : ''}
 
                         <!-- Preview conciso quando colapsada -->
                         <p class="skill-text-preview" id="preview-${cardId}">${item.habilidade}</p>
@@ -1497,6 +1716,32 @@
 
                     <!-- Corpo detalhado (revelado ao expandir) -->
                     <div class="skill-card-details" id="details-${cardId}">
+                        ${isInterdisciplinarHub && conexoesInterdisciplinares && conexoesInterdisciplinares.length > 0 ? `
+                            <div class="inter-hub-partners-container">
+                                <div class="inter-hub-title">
+                                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                        <circle cx="12" cy="12" r="10"></circle>
+                                        <line x1="2" y1="12" x2="22" y2="12"></line>
+                                        <path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"></path>
+                                    </svg>
+                                    <span>Habilidades Parceiras de Outras Disciplinas no Mesmo Ano (${conexoesInterdisciplinares.length} mais afins):</span>
+                                </div>
+                                <div class="inter-hub-grid">
+                                    ${conexoesInterdisciplinares.map(p => `
+                                        <div class="partner-mini-card" onclick="event.stopPropagation(); window.abrirHabilidadePorCodigo('${p.codigo}')" role="button" tabindex="0" onkeydown="if(event.key==='Enter'||event.key===' '){event.preventDefault(); this.click();}" title="Clique para abrir detalhes da parceira ${p.codigo}">
+                                            <div class="partner-mini-top">
+                                                <span class="partner-code-badge">${p.codigo}</span>
+                                                <span class="partner-disc-name">${p.disciplina}</span>
+                                                <span class="partner-score-tag">${(p.score * 100).toFixed(0)}% afinidade</span>
+                                            </div>
+                                            <p class="partner-desc">${p.habilidade}</p>
+                                            <div class="partner-card-action">Ver detalhes completos ➔</div>
+                                        </div>
+                                    `).join('')}
+                                </div>
+                            </div>
+                        ` : ''}
+
                         <div class="skill-full-desc-section">
                             <div class="skill-full-label">Texto Integral da Habilidade:</div>
                             <p class="skill-text-full">${item.habilidade}</p>
@@ -1627,16 +1872,63 @@
 
         function atualizarVisualizacaoLista() {
             resultsHeader.style.display = 'flex';
-            resultsCount.textContent = `Exibindo ${resultadosAtuais.length} correspondências encontradas`;
+            resultsCount.textContent = isModoInterdisciplinarAtivo 
+                ? `Exibindo ${resultadosAtuais.length} habilidades com maior diálogo interdisciplinar` 
+                : `Exibindo ${resultadosAtuais.length} correspondências encontradas`;
             executionTime.textContent = `${cachedDuracao} ms (${cachedTotalAnalisados.toLocaleString()} analisadas)`;
 
             if (resultadosAtuais.length === 0) {
                 resultsList.innerHTML = `
                     <div class="empty-state">
                         <h3 class="empty-title">Nenhuma habilidade encontrada</h3>
-                        <p class="empty-desc">Tente alterar os termos da busca ou selecionar "Todas as Disciplinas".</p>
+                        <p class="empty-desc">Tente alterar os termos da busca ou selecionar outro ano/disciplina no painel de filtros.</p>
                     </div>
                 `;
+                return;
+            }
+
+            // MODO HUB INTERDISCIPLINAR (Exibe Banner rico + Seletor de Anos em Pílulas)
+            if (isModoInterdisciplinarAtivo) {
+                const elAno = document.getElementById('filterAno');
+                const selAno = (elAno && elAno.value) ? elAno.value : '5º';
+                const bannerHtml = `
+                    <div class="hub-header-banner">
+                        <div class="hub-banner-top">
+                            <div class="hub-banner-title-col">
+                                <span class="hub-badge-pill">🌐 Hub de Articulação Curricular</span>
+                                <h2 class="hub-banner-title">Habilidades com Mais Relações entre Componentes • ${selAno === 'todas' ? 'Todos os Anos' : selAno + ' Ano'}</h2>
+                                <p class="hub-banner-subtitle">
+                                    Abaixo estão as habilidades com maior número de conexões pedagógicas com <strong>diferentes componentes curriculares no mesmo período escolar</strong>. Ideais para <strong>planejamento conjunto</strong>, <strong>projetos integradores</strong> e <strong>aulas transversais</strong>.
+                                </p>
+                            </div>
+                            <div class="hub-banner-stats">
+                                <div class="hub-stat-item">
+                                    <span class="hub-stat-val">${resultadosAtuais.length}</span>
+                                    <span class="hub-stat-label">Habilidades</span>
+                                </div>
+                                <div class="hub-stat-item">
+                                    <span class="hub-stat-val">${cachedDuracao} ms</span>
+                                    <span class="hub-stat-label">Tempo IA</span>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Seletor Rápido de Anos (Pills) -->
+                        <div class="hub-years-bar">
+                            <span class="hub-years-title">Filtrar por Ano / Fase:</span>
+                            <div class="hub-years-pill-group">
+                                ${['1º', '2º', '3º', '4º', '5º', '6º', '7º', '8º', '9º', 'todas'].map(a => `
+                                    <button type="button" class="hub-pill-btn ${selAno === a ? 'is-active' : ''}" onclick="window.filtrarHubPorAno('${a}')">
+                                        ${a === 'todas' ? 'Todos os Anos' : `${a} Ano`}
+                                    </button>
+                                `).join('')}
+                            </div>
+                        </div>
+                    </div>
+                `;
+
+                const ordenados = ordenarLista(resultadosAtuais, sortMode);
+                resultsList.innerHTML = bannerHtml + ordenados.map((res, i) => renderizarCardHabilidade(res, i, cachedQuery)).join('');
                 return;
             }
 
@@ -3440,6 +3732,8 @@
             const score = achado ? achado.score : 0.90;
             abrirDrawerDetalhes(item, score);
         };
+        window.abrirGavetaDetalhes = window.abrirHabilidadePorCodigo;
+        window.abrirGavetaPorCodigo = window.abrirHabilidadePorCodigo;
 
         window.verLinhagemNoGrafo = function(codigo) {
             selectedNodeCode = codigo;
@@ -4169,20 +4463,40 @@
             if (el) {
                 el.addEventListener('change', () => {
                     atualizarBadgeFiltros();
-                    if (searchInput.value.trim().length >= 2) {
+                    if (isModoInterdisciplinarAtivo) {
+                        window.calcularHabilidadesMaisInterdisciplinares();
+                    } else if (searchInput.value.trim().length >= 2) {
                         executarBusca();
                     }
                 });
             }
         });
 
+        // Quando o usuário digita no campo de busca, desativa o modo hub interdisciplinar
+        if (searchInput) {
+            searchInput.addEventListener('input', () => {
+                if (isModoInterdisciplinarAtivo && searchInput.value.trim().length > 0) {
+                    isModoInterdisciplinarAtivo = false;
+                    const btnHub = document.getElementById('btnHubInterdisciplinar');
+                    if (btnHub) btnHub.classList.remove('is-active');
+                }
+            });
+        }
+
         // Chips de busca rápida
-        document.querySelectorAll('.query-chip').forEach(chip => {
+        document.querySelectorAll('.query-chip:not(.chip-interdisciplinar)').forEach(chip => {
             chip.addEventListener('click', () => {
                 const query = chip.getAttribute('data-query');
-                searchInput.value = query;
-                clearBtn.style.display = 'flex';
-                executarBusca();
+                if (query) {
+                    if (isModoInterdisciplinarAtivo) {
+                        isModoInterdisciplinarAtivo = false;
+                        const btnHub = document.getElementById('btnHubInterdisciplinar');
+                        if (btnHub) btnHub.classList.remove('is-active');
+                    }
+                    searchInput.value = query;
+                    clearBtn.style.display = 'flex';
+                    executarBusca();
+                }
             });
         });
 
@@ -4214,6 +4528,9 @@
 
         // Inicia o app
         inicializarApp();
+
+        // Abre os filtros por padrão na lateral conforme solicitado
+        window.toggleFiltersSidebar(true);
     </script>
 </body>
 </html>

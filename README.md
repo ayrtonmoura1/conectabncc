@@ -39,14 +39,18 @@ A inteligência artificial roda **100% dentro do navegador do usuário**:
   - *⏭️ Futura (Continuidade):* Habilidades dos anos posteriores que desdobram a habilidade em foco.
 - **Rede de Forças Semântica:** Simulação física com forças gravitacionais e repulsivas agrupando nós por afinidade temática.
 
-### 📋 3. Relação com Competências Gerais e Específicas
+### 🌐 3. Hub de Articulação Interdisciplinar (Mais Conexões)
+- **Descoberta de Pontes Curriculares:** Algoritmo de centralidade que identifica quais habilidades de um determinado Ano/Fase dialogam com o maior número de disciplinas diferentes (ex: Ciências articulada com Matemática, Geografia e História).
+- **Seletor Rápido de Anos (Pills):** Alterne entre 1º ao 9º Ano e Ensino Médio em 1 clique para ver os centros de convergência curricular de cada período.
+- **Exibição de Habilidades Parceiras:** Cada card exibe as habilidades de outras disciplinas mais conectadas com percentual de afinidade, abrindo a gaveta de detalhes ou o grafo diretamente.
+
+### 📋 4. Relação com Competências Gerais e Específicas
 - Mapeamento detalhado das **10 Competências Gerais da Educação Básica (CG01 a CG10)**.
 - Competências específicas vinculadas ao componente curricular (Língua Portuguesa, Matemática, Ciências da Natureza, História, Geografia, Arte, Educação Física e Língua Inglesa).
 
-### 🎛️ 4. Experiência de Usuário e Produtividade
-- **Painel de Filtros Retrátil na Borda Esquerda:** Aba vertical deslizante com filtros de *Etapa*, *Ano/Fase*, *Disciplina* e *Top K*.
-- **Gaveta Lateral Não-Bloqueante:** Não desfoca o fundo, permitindo navegar e clicar livremente em outros nós do grafo.
-- **Controles da Gaveta:** Botões de **Fixar (Pin)**, **Expandir**, **Minimizar em Pílula Flutuante** e **Fechar**.
+### 🎛️ 5. Experiência de Usuário e Produtividade
+- **Painel de Filtros Fixo por Padrão:** Inicia aberto na lateral esquerda para fácil ajuste de *Etapa*, *Ano/Fase*, *Disciplina* e *Top K*, com botão de **Recolher ◀** a qualquer momento para ganho de tela.
+- **Gaveta Lateral Não-Bloqueante:** Mantém o grafo 100% interativo, com controles de **Fixar (Pin)**, **Expandir**, **Minimizar em Pílula Flutuante** e **Fechar**.
 - **Cópia Instantânea com 1 Clique:** Copia o código e a descrição limpa diretamente para a área de transferência.
 
 ---
