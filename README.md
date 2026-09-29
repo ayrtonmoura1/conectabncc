@@ -49,7 +49,7 @@ A inteligência artificial roda **100% dentro do navegador do usuário**:
 - Competências específicas vinculadas ao componente curricular (Língua Portuguesa, Matemática, Ciências da Natureza, História, Geografia, Arte, Educação Física e Língua Inglesa).
 
 ### 🎛️ 5. Experiência de Usuário e Produtividade
-- **Painel de Filtros Fixo por Padrão:** Inicia aberto na lateral esquerda para fácil ajuste de *Etapa*, *Ano/Fase*, *Disciplina* e *Top K*, com botão de **Recolher ◀** a qualquer momento para ganho de tela.
+- **Filtros Curriculares Agrupados com Multiseleção:** Painel lateral fixo por padrão (e recolhível) com organização hierárquica por Etapa de Ensino (Educação Infantil, Fundamental Anos Iniciais, Fundamental Anos Finais e Ensino Médio), permitindo selecionar múltiplos anos simultaneamente, com master checkboxes (com estado indeterminado inteligente), botões de ação rápida `[Todos]` / `[Limpar]` e contadores dinâmicos por etapa.
 - **Gaveta Lateral Não-Bloqueante:** Mantém o grafo 100% interativo, com controles de **Fixar (Pin)**, **Expandir**, **Minimizar em Pílula Flutuante** e **Fechar**.
 - **Cópia Instantânea com 1 Clique:** Copia o código e a descrição limpa diretamente para a área de transferência.
 

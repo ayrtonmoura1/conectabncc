@@ -57,25 +57,254 @@
             </button>
         </div>
         <div class="filters-sidebar-body">
-            <div class="sidebar-filter-item">
-                <label for="filterEtapa" class="filter-label">Etapa de Ensino:</label>
-                <select id="filterEtapa" class="filter-select"><option value="todas">Todas as Etapas</option></select>
+            <!-- GRUPO CURRICULAR HIERÁRQUICO (ETAPA - ANO/FASE COM MULTISELEÇÃO) -->
+            <div class="sidebar-curriculo-group">
+                <div class="sidebar-curriculo-header">
+                    <span class="filter-label">Etapa - Ano / Fase:</span>
+                    <div class="curriculo-quick-actions">
+                        <button type="button" class="btn-curriculo-quick" onclick="window.marcarTodosAnos(true)" title="Selecionar todos os anos e etapas">Todos</button>
+                        <button type="button" class="btn-curriculo-quick" onclick="window.marcarTodosAnos(false)" title="Limpar seleções">Limpar</button>
+                    </div>
+                </div>
+
+                <div class="curriculo-status-summary" id="curriculoStatusSummary">
+                    <span class="status-summary-dot" id="curriculoStatusDot"></span>
+                    <span id="curriculoStatusText">Todos selecionados (15 de 15)</span>
+                </div>
+
+                <div class="curriculo-tree" id="curriculoTree">
+                    <!-- 1. EDUCAÇÃO INFANTIL -->
+                    <div class="etapa-tree-group" id="group_EI" data-etapa="EI">
+                        <div class="etapa-group-header">
+                            <button type="button" class="etapa-collapse-toggle" onclick="window.toggleEtapaAccordion('EI')" aria-label="Expandir/Recolher Educação Infantil">
+                                <svg class="chevron-icon" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="6 9 12 15 18 9"></polyline></svg>
+                            </button>
+                            <label class="etapa-master-label">
+                                <input type="checkbox" class="etapa-master-checkbox" id="master_EI" checked onchange="window.onEtapaMasterChange('EI')">
+                                <span class="etapa-name">👶 Educação Infantil</span>
+                            </label>
+                            <span class="etapa-count-badge" id="badge_EI">3/3</span>
+                        </div>
+                        <div class="etapa-subitems-list" id="subitems_EI">
+                            <label class="ano-subitem-label">
+                                <input type="checkbox" class="ano-item-checkbox" data-etapa="EI" value="bebes" checked onchange="window.onAnoItemChange('EI')">
+                                <span class="ano-subitem-text">Bebês <small class="ano-code-tag">EI01 • 0 a 1a 6m</small></span>
+                            </label>
+                            <label class="ano-subitem-label">
+                                <input type="checkbox" class="ano-item-checkbox" data-etapa="EI" value="bem_pequenas" checked onchange="window.onAnoItemChange('EI')">
+                                <span class="ano-subitem-text">Crianças bem pequenas <small class="ano-code-tag">EI02 • 1a 7m a 3a 11m</small></span>
+                            </label>
+                            <label class="ano-subitem-label">
+                                <input type="checkbox" class="ano-item-checkbox" data-etapa="EI" value="pequenas" checked onchange="window.onAnoItemChange('EI')">
+                                <span class="ano-subitem-text">Crianças pequenas <small class="ano-code-tag">EI03 • 4 a 5a 11m</small></span>
+                            </label>
+                        </div>
+                    </div>
+
+                    <!-- 2. FUNDAMENTAL - ANOS INICIAIS -->
+                    <div class="etapa-tree-group" id="group_EF_INICIAIS" data-etapa="EF_INICIAIS">
+                        <div class="etapa-group-header">
+                            <button type="button" class="etapa-collapse-toggle" onclick="window.toggleEtapaAccordion('EF_INICIAIS')" aria-label="Expandir/Recolher Fund. Anos Iniciais">
+                                <svg class="chevron-icon" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="6 9 12 15 18 9"></polyline></svg>
+                            </button>
+                            <label class="etapa-master-label">
+                                <input type="checkbox" class="etapa-master-checkbox" id="master_EF_INICIAIS" checked onchange="window.onEtapaMasterChange('EF_INICIAIS')">
+                                <span class="etapa-name">🎒 Fund. Anos Iniciais</span>
+                            </label>
+                            <span class="etapa-count-badge" id="badge_EF_INICIAIS">6/6</span>
+                        </div>
+                        <div class="etapa-subitems-list" id="subitems_EF_INICIAIS">
+                            <label class="ano-subitem-label">
+                                <input type="checkbox" class="ano-item-checkbox" data-etapa="EF_INICIAIS" value="1" checked onchange="window.onAnoItemChange('EF_INICIAIS')">
+                                <span class="ano-subitem-text">1º Ano <small class="ano-code-tag">EF01 / EF12</small></span>
+                            </label>
+                            <label class="ano-subitem-label">
+                                <input type="checkbox" class="ano-item-checkbox" data-etapa="EF_INICIAIS" value="2" checked onchange="window.onAnoItemChange('EF_INICIAIS')">
+                                <span class="ano-subitem-text">2º Ano <small class="ano-code-tag">EF02 / EF12</small></span>
+                            </label>
+                            <label class="ano-subitem-label">
+                                <input type="checkbox" class="ano-item-checkbox" data-etapa="EF_INICIAIS" value="3" checked onchange="window.onAnoItemChange('EF_INICIAIS')">
+                                <span class="ano-subitem-text">3º Ano <small class="ano-code-tag">EF03 / EF35</small></span>
+                            </label>
+                            <label class="ano-subitem-label">
+                                <input type="checkbox" class="ano-item-checkbox" data-etapa="EF_INICIAIS" value="4" checked onchange="window.onAnoItemChange('EF_INICIAIS')">
+                                <span class="ano-subitem-text">4º Ano <small class="ano-code-tag">EF04 / EF35</small></span>
+                            </label>
+                            <label class="ano-subitem-label">
+                                <input type="checkbox" class="ano-item-checkbox" data-etapa="EF_INICIAIS" value="5" checked onchange="window.onAnoItemChange('EF_INICIAIS')">
+                                <span class="ano-subitem-text">5º Ano <small class="ano-code-tag">EF05 / EF35</small></span>
+                            </label>
+                            <label class="ano-subitem-label">
+                                <input type="checkbox" class="ano-item-checkbox" data-etapa="EF_INICIAIS" value="multi_iniciais" checked onchange="window.onAnoItemChange('EF_INICIAIS')">
+                                <span class="ano-subitem-text">Multiano Iniciais <small class="ano-code-tag">EF12, EF35, EF15</small></span>
+                            </label>
+                        </div>
+                    </div>
+
+                    <!-- 3. FUNDAMENTAL - ANOS FINAIS -->
+                    <div class="etapa-tree-group" id="group_EF_FINAIS" data-etapa="EF_FINAIS">
+                        <div class="etapa-group-header">
+                            <button type="button" class="etapa-collapse-toggle" onclick="window.toggleEtapaAccordion('EF_FINAIS')" aria-label="Expandir/Recolher Fund. Anos Finais">
+                                <svg class="chevron-icon" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="6 9 12 15 18 9"></polyline></svg>
+                            </button>
+                            <label class="etapa-master-label">
+                                <input type="checkbox" class="etapa-master-checkbox" id="master_EF_FINAIS" checked onchange="window.onEtapaMasterChange('EF_FINAIS')">
+                                <span class="etapa-name">📚 Fund. Anos Finais</span>
+                            </label>
+                            <span class="etapa-count-badge" id="badge_EF_FINAIS">5/5</span>
+                        </div>
+                        <div class="etapa-subitems-list" id="subitems_EF_FINAIS">
+                            <label class="ano-subitem-label">
+                                <input type="checkbox" class="ano-item-checkbox" data-etapa="EF_FINAIS" value="6" checked onchange="window.onAnoItemChange('EF_FINAIS')">
+                                <span class="ano-subitem-text">6º Ano <small class="ano-code-tag">EF06 / EF67 / EF69</small></span>
+                            </label>
+                            <label class="ano-subitem-label">
+                                <input type="checkbox" class="ano-item-checkbox" data-etapa="EF_FINAIS" value="7" checked onchange="window.onAnoItemChange('EF_FINAIS')">
+                                <span class="ano-subitem-text">7º Ano <small class="ano-code-tag">EF07 / EF67 / EF69</small></span>
+                            </label>
+                            <label class="ano-subitem-label">
+                                <input type="checkbox" class="ano-item-checkbox" data-etapa="EF_FINAIS" value="8" checked onchange="window.onAnoItemChange('EF_FINAIS')">
+                                <span class="ano-subitem-text">8º Ano <small class="ano-code-tag">EF08 / EF89 / EF69</small></span>
+                            </label>
+                            <label class="ano-subitem-label">
+                                <input type="checkbox" class="ano-item-checkbox" data-etapa="EF_FINAIS" value="9" checked onchange="window.onAnoItemChange('EF_FINAIS')">
+                                <span class="ano-subitem-text">9º Ano <small class="ano-code-tag">EF09 / EF89 / EF69</small></span>
+                            </label>
+                            <label class="ano-subitem-label">
+                                <input type="checkbox" class="ano-item-checkbox" data-etapa="EF_FINAIS" value="multi_finais" checked onchange="window.onAnoItemChange('EF_FINAIS')">
+                                <span class="ano-subitem-text">Multiano Finais <small class="ano-code-tag">EF67, EF89, EF69</small></span>
+                            </label>
+                        </div>
+                    </div>
+
+                    <!-- 4. ENSINO MÉDIO -->
+                    <div class="etapa-tree-group" id="group_EM" data-etapa="EM">
+                        <div class="etapa-group-header">
+                            <button type="button" class="etapa-collapse-toggle" onclick="window.toggleEtapaAccordion('EM')" aria-label="Expandir/Recolher Ensino Médio">
+                                <svg class="chevron-icon" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="6 9 12 15 18 9"></polyline></svg>
+                            </button>
+                            <label class="etapa-master-label">
+                                <input type="checkbox" class="etapa-master-checkbox" id="master_EM" checked onchange="window.onEtapaMasterChange('EM')">
+                                <span class="etapa-name">🎓 Ensino Médio</span>
+                            </label>
+                            <span class="etapa-count-badge" id="badge_EM">1/1</span>
+                        </div>
+                        <div class="etapa-subitems-list" id="subitems_EM">
+                            <label class="ano-subitem-label">
+                                <input type="checkbox" class="ano-item-checkbox" data-etapa="EM" value="EM13" checked onchange="window.onAnoItemChange('EM')">
+                                <span class="ano-subitem-text">1º ao 3º Anos <small class="ano-code-tag">EM13 Geral</small></span>
+                            </label>
+                        </div>
+                    </div>
+                </div>
             </div>
-            <div class="sidebar-filter-item">
-                <label for="filterAno" class="filter-label">Ano / Fase:</label>
-                <select id="filterAno" class="filter-select"><option value="todas">Todos os Anos</option></select>
+            <!-- GRUPO DISCIPLINA / COMPONENTE (CUSTOM DROPDOWN COM BUSCA E QUICK CHIPS) -->
+            <div class="sidebar-discipline-group" id="disciplineGroup">
+                <div class="sidebar-discipline-header">
+                    <span class="filter-label">Disciplina / Componente:</span>
+                    <button type="button" class="btn-discipline-reset" id="btnDisciplineReset" onclick="window.selecionarDisciplinaCustom('todas')" title="Ver todas as disciplinas">Todas</button>
+                </div>
+
+                <!-- Gatilho Customizado com Ícone e Contagem -->
+                <div class="custom-discipline-trigger" id="disciplineTrigger" onclick="window.toggleDisciplineDropdown()" tabindex="0" role="button" aria-haspopup="listbox" aria-expanded="false">
+                    <div class="discipline-trigger-content">
+                        <span class="discipline-trigger-icon" id="disciplineTriggerIcon">🌐</span>
+                        <div class="discipline-trigger-meta">
+                            <span class="discipline-trigger-label" id="disciplineTriggerLabel">Todas as Disciplinas</span>
+                            <span class="discipline-trigger-sub" id="disciplineTriggerSub">1.517 habilidades disponíveis</span>
+                        </div>
+                    </div>
+                    <div class="discipline-trigger-arrow">
+                        <svg class="chevron-discipline-icon" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
+                            <polyline points="6 9 12 15 18 9"></polyline>
+                        </svg>
+                    </div>
+                </div>
+
+                <!-- Painel Suspenso de Seleção de Disciplina -->
+                <div class="custom-discipline-dropdown" id="disciplineDropdown">
+                    <div class="discipline-search-box">
+                        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <circle cx="11" cy="11" r="8"></circle>
+                            <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
+                        </svg>
+                        <input type="text" id="disciplineSearchInput" placeholder="Filtrar componente..." oninput="window.filtrarListaDisciplinas(this.value)">
+                        <button type="button" class="discipline-search-clear" onclick="window.limparBuscaDisciplina()" title="Limpar busca">&times;</button>
+                    </div>
+                    
+                    <div class="discipline-options-list" id="disciplineOptionsList">
+                        <!-- Itens gerados dinamicamente via JS -->
+                    </div>
+                </div>
+
+                <!-- Quick Chips para Disciplinas Populares -->
+                <div class="discipline-quick-chips" id="disciplineQuickChips">
+                    <!-- Chips gerados dinamicamente via JS -->
+                </div>
+
+                <!-- Select nativo oculto mantido para total compatibilidade -->
+                <select id="filterDiscipline" class="filter-select-hidden" aria-hidden="true" tabindex="-1">
+                    <option value="todas">Todas as Disciplinas</option>
+                </select>
             </div>
-            <div class="sidebar-filter-item">
-                <label for="filterDiscipline" class="filter-label">Disciplina / Componente:</label>
-                <select id="filterDiscipline" class="filter-select"><option value="todas">Todas as Disciplinas</option></select>
-            </div>
-            <div class="sidebar-filter-item">
-                <label for="filterTopK" class="filter-label">Exibir no Resultado (Top K):</label>
-                <select id="filterTopK" class="filter-select">
+
+            <!-- GRUPO TOP K (SEGMENTED BUTTONS + SLIDER + BADGE LIVE) -->
+            <div class="sidebar-topk-group" id="topkGroup">
+                <div class="sidebar-topk-header">
+                    <span class="filter-label">Exibir no Resultado (Top K):</span>
+                    <span class="topk-badge-pill" id="topkBadgePill">Top 10</span>
+                </div>
+
+                <!-- Botões Segmentados -->
+                <div class="topk-segmented-selector" role="radiogroup" aria-label="Densidade de habilidades no resultado">
+                    <button type="button" class="topk-seg-btn" data-value="5" onclick="window.setTopK(5)" role="radio" aria-checked="false">
+                        <span class="topk-seg-num">5</span>
+                        <span class="topk-seg-label">Rápido</span>
+                    </button>
+                    <button type="button" class="topk-seg-btn active" data-value="10" onclick="window.setTopK(10)" role="radio" aria-checked="true">
+                        <span class="topk-seg-num">10</span>
+                        <span class="topk-seg-label">⭐ Ideal</span>
+                    </button>
+                    <button type="button" class="topk-seg-btn" data-value="15" onclick="window.setTopK(15)" role="radio" aria-checked="false">
+                        <span class="topk-seg-num">15</span>
+                        <span class="topk-seg-label">Equilib.</span>
+                    </button>
+                    <button type="button" class="topk-seg-btn" data-value="20" onclick="window.setTopK(20)" role="radio" aria-checked="false">
+                        <span class="topk-seg-num">20</span>
+                        <span class="topk-seg-label">Amplo</span>
+                    </button>
+                    <button type="button" class="topk-seg-btn" data-value="30" onclick="window.setTopK(30)" role="radio" aria-checked="false">
+                        <span class="topk-seg-num">30</span>
+                        <span class="topk-seg-label">Máx</span>
+                    </button>
+                </div>
+
+                <!-- Slider Interativo -->
+                <div class="topk-slider-container">
+                    <input type="range" class="topk-slider" id="topkSlider" min="5" max="30" step="5" value="10" oninput="window.setTopKFromSlider(this.value)" aria-label="Ajustar limite de resultados">
+                    <div class="topk-slider-ticks">
+                        <span>5</span>
+                        <span>10</span>
+                        <span>15</span>
+                        <span>20</span>
+                        <span>25</span>
+                        <span>30</span>
+                    </div>
+                </div>
+
+                <!-- Micro-Dica Contextual -->
+                <div class="topk-helper-hint" id="topkHelperHint">
+                    <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><circle cx="12" cy="12" r="10"></circle><line x1="12" y1="16" x2="12" y2="12"></line><line x1="12" y1="8" x2="12.01" y2="8"></line></svg>
+                    <span id="topkHelperText">⭐ Top 10 é o ponto ideal para equilíbrio entre clareza do grafo e cobertura.</span>
+                </div>
+
+                <!-- Select nativo oculto mantido para total compatibilidade -->
+                <select id="filterTopK" class="filter-select-hidden" aria-hidden="true" tabindex="-1">
                     <option value="5">Top 5</option>
-                    <option value="10" selected>Top 10 (Ideal p/ Grafo)</option>
+                    <option value="10" selected>Top 10</option>
                     <option value="15">Top 15</option>
                     <option value="20">Top 20</option>
+                    <option value="25">Top 25</option>
                     <option value="30">Top 30</option>
                 </select>
             </div>
@@ -531,6 +760,7 @@
         let baseBNCC = [];
         let catalogoCompetencias = { competencias_gerais: {}, competencias_especificas: {} };
         let catalogoProgressao = {};
+        let catalogoRelacoesFinais = {};
         let isReady = false;
         let debounceTimer = null;
         
@@ -1099,10 +1329,11 @@
                 statusText.innerHTML = '<strong>Carregando dados da BNCC, Competências e Linhagem...</strong>';
                 statusDetails.textContent = 'Lendo vetores, competências e progressão pedagógica...';
                 
-                const [responseVetores, responseComp, responseProg] = await Promise.all([
+                const [responseVetores, responseComp, responseProg, responseRelFinal] = await Promise.all([
                     fetch('./bncc_vetores.json'),
                     fetch('./competencias_bncc.json'),
-                    fetch('./bncc_progressao_pre_requisitos.json')
+                    fetch('./bncc_progressao_pre_requisitos.json'),
+                    fetch('./relacoes_bncc_final.json')
                 ]);
                 if (!responseVetores.ok) {
                     throw new Error(`Não foi possível carregar 'bncc_vetores.json' (HTTP ${responseVetores.status}).`);
@@ -1115,7 +1346,10 @@
                 if (responseProg && responseProg.ok) {
                     catalogoProgressao = await responseProg.json();
                 }
-                statusDetails.textContent = `${baseBNCC.length.toLocaleString()} habilidades e linhagem pedagógica carregadas`;
+                if (responseRelFinal && responseRelFinal.ok) {
+                    catalogoRelacoesFinais = await responseRelFinal.json();
+                }
+                statusDetails.textContent = `${baseBNCC.length.toLocaleString()} habilidades e relações pedagógicas carregadas`;
 
                 // Popula os seletores de filtros
                 popularFiltros();
@@ -1164,58 +1398,496 @@
             }
         }
 
-        // Popula os filtros avançados
-        function popularFiltros() {
-            const etapas = new Set();
-            const anos = new Set();
-            const disciplinas = new Set();
+        // ======================================================================
+        // Gestão do Filtro Curricular Hierárquico (Etapa - Ano/Fase Multiseleção)
+        // ======================================================================
+        window.obterTagsHabilidade = function(item) {
+            const p = ((item && item.codigo) || '').substring(0, 4).toUpperCase();
+            const tags = new Set();
+            if (p.startsWith('EI01')) {
+                tags.add('bebes');
+                tags.add('EI');
+            } else if (p.startsWith('EI02')) {
+                tags.add('bem_pequenas');
+                tags.add('EI');
+            } else if (p.startsWith('EI03')) {
+                tags.add('pequenas');
+                tags.add('EI');
+            } else if (p === 'EF01') {
+                tags.add('1');
+                tags.add('EF_INICIAIS');
+            } else if (p === 'EF02') {
+                tags.add('2');
+                tags.add('EF_INICIAIS');
+            } else if (p === 'EF12') {
+                tags.add('1');
+                tags.add('2');
+                tags.add('multi_iniciais');
+                tags.add('EF_INICIAIS');
+            } else if (p === 'EF03') {
+                tags.add('3');
+                tags.add('EF_INICIAIS');
+            } else if (p === 'EF04') {
+                tags.add('4');
+                tags.add('EF_INICIAIS');
+            } else if (p === 'EF05') {
+                tags.add('5');
+                tags.add('EF_INICIAIS');
+            } else if (p === 'EF35') {
+                tags.add('3');
+                tags.add('4');
+                tags.add('5');
+                tags.add('multi_iniciais');
+                tags.add('EF_INICIAIS');
+            } else if (p === 'EF15') {
+                tags.add('1');
+                tags.add('2');
+                tags.add('3');
+                tags.add('4');
+                tags.add('5');
+                tags.add('multi_iniciais');
+                tags.add('EF_INICIAIS');
+            } else if (p === 'EF06') {
+                tags.add('6');
+                tags.add('EF_FINAIS');
+            } else if (p === 'EF07') {
+                tags.add('7');
+                tags.add('EF_FINAIS');
+            } else if (p === 'EF67') {
+                tags.add('6');
+                tags.add('7');
+                tags.add('multi_finais');
+                tags.add('EF_FINAIS');
+            } else if (p === 'EF08') {
+                tags.add('8');
+                tags.add('EF_FINAIS');
+            } else if (p === 'EF09') {
+                tags.add('9');
+                tags.add('EF_FINAIS');
+            } else if (p === 'EF89') {
+                tags.add('8');
+                tags.add('9');
+                tags.add('multi_finais');
+                tags.add('EF_FINAIS');
+            } else if (p === 'EF69') {
+                tags.add('6');
+                tags.add('7');
+                tags.add('8');
+                tags.add('9');
+                tags.add('multi_finais');
+                tags.add('EF_FINAIS');
+            } else if (p.startsWith('EM')) {
+                tags.add('EM13');
+                tags.add('EM');
+            }
+            return tags;
+        };
+
+        window.habilidadeAtendeFiltroCurricular = function(item, selectedTagsSet) {
+            if (!selectedTagsSet || selectedTagsSet.size === 0) return false;
+            const itemTags = window.obterTagsHabilidade(item);
+            for (const tag of itemTags) {
+                if (selectedTagsSet.has(tag)) return true;
+            }
+            return false;
+        };
+
+        window.obterAnosSelecionados = function() {
+            const checkboxes = document.querySelectorAll('.ano-item-checkbox:checked');
+            return Array.from(checkboxes).map(cb => cb.value);
+        };
+
+        window.atualizarResumoCurricular = function() {
+            const totalAnos = 15;
+            const selecionados = window.obterAnosSelecionados();
+            const count = selecionados.length;
             
-            for (const item of baseBNCC) {
-                if (item.disciplina) disciplinas.add(item.disciplina);
-                if (item.ano_faixa) anos.add(item.ano_faixa);
-                const info = extrairEtapaCurricular(item);
-                if (info.etapa) etapas.add(info.etapa);
+            ['EI', 'EF_INICIAIS', 'EF_FINAIS', 'EM'].forEach(etapaId => {
+                const cbs = document.querySelectorAll(`.ano-item-checkbox[data-etapa="${etapaId}"]`);
+                const checked = document.querySelectorAll(`.ano-item-checkbox[data-etapa="${etapaId}"]:checked`);
+                const master = document.getElementById(`master_${etapaId}`);
+                const badge = document.getElementById(`badge_${etapaId}`);
+                
+                if (badge) {
+                    badge.textContent = `${checked.length}/${cbs.length}`;
+                    badge.classList.toggle('has-none', checked.length === 0);
+                    badge.classList.toggle('has-all', checked.length === cbs.length);
+                }
+                
+                if (master) {
+                    master.checked = (checked.length === cbs.length && cbs.length > 0);
+                    master.indeterminate = (checked.length > 0 && checked.length < cbs.length);
+                }
+            });
+
+            const summaryText = document.getElementById('curriculoStatusText');
+            const summaryDot = document.getElementById('curriculoStatusDot');
+            if (summaryText) {
+                if (count === totalAnos) {
+                    summaryText.textContent = `Todos selecionados (${totalAnos} de ${totalAnos})`;
+                    if (summaryDot) summaryDot.className = 'status-summary-dot all';
+                } else if (count === 0) {
+                    summaryText.textContent = 'Nenhum ano selecionado';
+                    if (summaryDot) summaryDot.className = 'status-summary-dot none';
+                } else {
+                    summaryText.textContent = `${count} de ${totalAnos} anos/fases selecionados`;
+                    if (summaryDot) summaryDot.className = 'status-summary-dot partial';
+                }
             }
 
-            const appendOpts = (set, selectId, customSort) => {
-                const select = document.getElementById(selectId);
-                const arr = Array.from(set);
-                if (customSort) arr.sort(customSort);
-                else arr.sort();
-                arr.forEach(val => {
+            if (window.atualizarBadgeFiltros) {
+                window.atualizarBadgeFiltros();
+            }
+        };
+
+        window.onEtapaMasterChange = function(etapaId) {
+            const master = document.getElementById(`master_${etapaId}`);
+            const shouldCheck = master ? master.checked : true;
+            const cbs = document.querySelectorAll(`.ano-item-checkbox[data-etapa="${etapaId}"]`);
+            cbs.forEach(cb => { cb.checked = shouldCheck; });
+            window.atualizarResumoCurricular();
+            window.aplicarMudancaFiltros();
+        };
+
+        window.onAnoItemChange = function(etapaId) {
+            window.atualizarResumoCurricular();
+            window.aplicarMudancaFiltros();
+        };
+
+        window.marcarTodosAnos = function(checkBool) {
+            const cbs = document.querySelectorAll('.ano-item-checkbox');
+            cbs.forEach(cb => { cb.checked = !!checkBool; });
+            window.atualizarResumoCurricular();
+            window.aplicarMudancaFiltros();
+            window.showToast(checkBool ? 'Todas as etapas e anos selecionados.' : 'Seleções curriculares limpas.');
+        };
+
+        window.toggleEtapaAccordion = function(etapaId) {
+            const group = document.getElementById(`group_${etapaId}`);
+            if (group) {
+                group.classList.toggle('is-collapsed');
+            }
+        };
+
+        window.selecionarApenasAno = function(ano) {
+            const cbs = document.querySelectorAll('.ano-item-checkbox');
+            if (ano === 'todas') {
+                cbs.forEach(cb => { cb.checked = true; });
+            } else {
+                const anoLimpo = ano.replace(/º/g, '').trim().toLowerCase();
+                cbs.forEach(cb => {
+                    if (cb.value === anoLimpo) {
+                        cb.checked = true;
+                    } else if (anoLimpo.includes('bebe') && cb.value === 'bebes') {
+                        cb.checked = true;
+                    } else if (anoLimpo.includes('crian') && (cb.value === 'pequenas' || cb.value === 'bem_pequenas')) {
+                        cb.checked = true;
+                    } else if ((anoLimpo.includes('medio') || anoLimpo.includes('médio')) && cb.value === 'EM13') {
+                        cb.checked = true;
+                    } else {
+                        cb.checked = false;
+                    }
+                });
+            }
+            window.atualizarResumoCurricular();
+        };
+
+        window.obterResumoCurricularFormatado = function() {
+            const selecionados = window.obterAnosSelecionados();
+            if (selecionados.length === 15) return 'Todos os Anos e Etapas';
+            if (selecionados.length === 0) return 'Nenhuma seleção';
+            
+            const mapaNomes = {
+                'bebes': 'Bebês (EI01)',
+                'bem_pequenas': 'Crianças Bem Pequenas (EI02)',
+                'pequenas': 'Crianças Pequenas (EI03)',
+                '1': '1º Ano',
+                '2': '2º Ano',
+                '3': '3º Ano',
+                '4': '4º Ano',
+                '5': '5º Ano',
+                'multi_iniciais': 'Multiano Iniciais',
+                '6': '6º Ano',
+                '7': '7º Ano',
+                '8': '8º Ano',
+                '9': '9º Ano',
+                'multi_finais': 'Multiano Finais',
+                'EM13': 'Ensino Médio'
+            };
+            
+            if (selecionados.length <= 3) {
+                return selecionados.map(k => mapaNomes[k] || k).join(', ');
+            }
+            return `${selecionados.length} anos/fases selecionados`;
+        };
+
+        window.aplicarMudancaFiltros = function() {
+            if (isModoInterdisciplinarAtivo) {
+                window.calcularHabilidadesMaisInterdisciplinares();
+            } else if (searchInput && searchInput.value.trim().length >= 2) {
+                executarBusca();
+            }
+        };
+
+        // Metadados visuais e cores por disciplina / componente
+        function getDisciplinaMeta(disciplina) {
+            const d = (disciplina || '').toLowerCase();
+            if (d.includes('portuguesa') || d.includes('linguag')) return { icon: '📖', cor: '#0284c7', categoria: 'Linguagens', short: 'Português' };
+            if (d.includes('matemática') || d.includes('matematica')) return { icon: '📐', cor: '#d97706', categoria: 'Matemática', short: 'Matemática' };
+            if (d.includes('ciência') || d.includes('natureza')) return { icon: '🧪', cor: '#059669', categoria: 'Ciências', short: 'Ciências' };
+            if (d.includes('história')) return { icon: '🏛️', cor: '#db2777', categoria: 'Ciências Humanas', short: 'História' };
+            if (d.includes('geografia') || d.includes('humanas')) return { icon: '🌍', cor: '#7c3aed', categoria: 'Ciências Humanas', short: 'Geografia' };
+            if (d.includes('arte')) return { icon: '🎨', cor: '#e11d48', categoria: 'Linguagens', short: 'Arte' };
+            if (d.includes('educação física') || d.includes('fisica')) return { icon: '🏃', cor: '#ea580c', categoria: 'Linguagens', short: 'Ed. Física' };
+            if (d.includes('inglesa') || d.includes('inglês')) return { icon: '🇬🇧', cor: '#0891b2', categoria: 'Linguagens', short: 'Inglês' };
+            if (d.includes('religioso')) return { icon: '🕊️', cor: '#475569', categoria: 'Ensino Religioso', short: 'Ens. Religioso' };
+            if (d.includes('infantil')) return { icon: '👶', cor: '#ca8a04', categoria: 'Educação Infantil', short: 'Ed. Infantil' };
+            return { icon: '📚', cor: '#64748b', categoria: 'Geral', short: disciplina || 'Geral' };
+        }
+
+        let cacheDiscCounts = {};
+
+        // Popula os filtros avançados e controloes modernos
+        function popularFiltros() {
+            cacheDiscCounts = {};
+            for (const item of (baseBNCC || [])) {
+                if (item.disciplina) {
+                    cacheDiscCounts[item.disciplina] = (cacheDiscCounts[item.disciplina] || 0) + 1;
+                }
+            }
+
+            const select = document.getElementById('filterDiscipline');
+            if (select) {
+                select.innerHTML = '<option value="todas">Todas as Disciplinas</option>';
+                Object.keys(cacheDiscCounts).sort().forEach(val => {
                     const opt = document.createElement('option');
                     opt.value = val;
-                    opt.textContent = val;
+                    opt.textContent = `${val} (${cacheDiscCounts[val]})`;
                     select.appendChild(opt);
                 });
-            };
+            }
 
-            const ordenarAnos = (a, b) => {
-                const getVal = (s) => {
-                    if (!s) return 99;
-                    if (s.toLowerCase().includes('infantil')) return 0.2;
-                    if (s.includes('1º')) return 1;
-                    if (s.includes('2º')) return 2;
-                    if (s.includes('3º')) return 3;
-                    if (s.includes('4º')) return 4;
-                    if (s.includes('5º')) return 5;
-                    if (s.includes('6º')) return 6;
-                    if (s.includes('7º')) return 7;
-                    if (s.includes('8º')) return 8;
-                    if (s.includes('9º')) return 9;
-                    if (s.toLowerCase().includes('médio')) return 11;
-                    return 20;
-                };
-                const vA = getVal(a);
-                const vB = getVal(b);
-                if (vA !== vB) return vA - vB;
-                return a.localeCompare(b);
-            };
-
-            appendOpts(etapas, 'filterEtapa');
-            appendOpts(anos, 'filterAno', ordenarAnos);
-            appendOpts(disciplinas, 'filterDiscipline');
+            renderizarDropdownDisciplinas(cacheDiscCounts);
+            renderizarQuickChipsDisciplinas(cacheDiscCounts);
+            window.atualizarResumoCurricular();
         }
+
+        function renderizarDropdownDisciplinas(discCounts) {
+            const listEl = document.getElementById('disciplineOptionsList');
+            if (!listEl) return;
+
+            const totalHab = baseBNCC ? baseBNCC.length : 1517;
+            const currentVal = document.getElementById('filterDiscipline')?.value || 'todas';
+
+            let html = `
+                <div class="discipline-option-item ${currentVal === 'todas' ? 'is-selected' : ''}" data-val="todas" onclick="window.selecionarDisciplinaCustom('todas')">
+                    <div class="discipline-option-left">
+                        <span class="discipline-option-icon">🌐</span>
+                        <div class="discipline-option-info">
+                            <span class="discipline-option-name">Todas as Disciplinas</span>
+                            <span class="discipline-option-sub">Currículo Integral BNCC</span>
+                        </div>
+                    </div>
+                    <div class="discipline-option-right">
+                        <span class="discipline-option-count">${totalHab.toLocaleString()}</span>
+                        <span class="discipline-option-check">✓</span>
+                    </div>
+                </div>
+            `;
+
+            const sortedDiscs = Object.keys(discCounts).sort((a, b) => discCounts[b] - discCounts[a]);
+
+            sortedDiscs.forEach(disc => {
+                const meta = getDisciplinaMeta(disc);
+                const count = discCounts[disc];
+                const isSel = currentVal === disc;
+
+                html += `
+                    <div class="discipline-option-item ${isSel ? 'is-selected' : ''}" data-val="${disc.replace(/"/g, '&quot;')}" onclick="window.selecionarDisciplinaCustom('${disc.replace(/'/g, "\\'")}')">
+                        <div class="discipline-option-left">
+                            <span class="discipline-option-icon">${meta.icon}</span>
+                            <div class="discipline-option-info">
+                                <span class="discipline-option-name" title="${disc}">${disc}</span>
+                                <span class="discipline-option-sub">${meta.categoria}</span>
+                            </div>
+                        </div>
+                        <div class="discipline-option-right">
+                            <span class="discipline-option-count">${count}</span>
+                            <span class="discipline-option-check">✓</span>
+                        </div>
+                    </div>
+                `;
+            });
+
+            listEl.innerHTML = html;
+        }
+
+        function renderizarQuickChipsDisciplinas(discCounts) {
+            const container = document.getElementById('disciplineQuickChips');
+            if (!container) return;
+
+            const currentVal = document.getElementById('filterDiscipline')?.value || 'todas';
+
+            const topChips = [
+                { val: 'todas', label: 'Todas', icon: '🌐' },
+                { val: 'Matemática', label: 'Matemática', icon: '📐' },
+                { val: 'Língua Portuguesa', label: 'Português', icon: '📖' },
+                { val: 'Ciências', label: 'Ciências', icon: '🧪' },
+                { val: 'História', label: 'História', icon: '🏛️' },
+                { val: 'Geografia', label: 'Geografia', icon: '🌍' },
+                { val: 'Língua Inglesa', label: 'Inglês', icon: '🇬🇧' },
+                { val: 'Arte', label: 'Arte', icon: '🎨' },
+                { val: 'Educação Física', label: 'Ed. Física', icon: '🏃' }
+            ];
+
+            let html = '';
+            topChips.forEach(chip => {
+                if (chip.val === 'todas' || discCounts[chip.val]) {
+                    const isActive = currentVal === chip.val;
+                    html += `
+                        <button type="button" class="discipline-chip-btn ${isActive ? 'is-active' : ''}" data-val="${chip.val}" onclick="window.selecionarDisciplinaCustom('${chip.val}')" title="Filtrar por ${chip.label}">
+                            <span class="chip-icon">${chip.icon}</span>
+                            <span>${chip.label}</span>
+                        </button>
+                    `;
+                }
+            });
+
+            container.innerHTML = html;
+        }
+
+        window.toggleDisciplineDropdown = function(forceState) {
+            const dropdown = document.getElementById('disciplineDropdown');
+            const trigger = document.getElementById('disciplineTrigger');
+            if (!dropdown || !trigger) return;
+
+            const isOpen = typeof forceState === 'boolean' ? forceState : !dropdown.classList.contains('is-open');
+            dropdown.classList.toggle('is-open', isOpen);
+            trigger.classList.toggle('is-open', isOpen);
+            trigger.setAttribute('aria-expanded', isOpen ? 'true' : 'false');
+
+            if (isOpen) {
+                const searchInp = document.getElementById('disciplineSearchInput');
+                if (searchInp) {
+                    searchInp.value = '';
+                    window.filtrarListaDisciplinas('');
+                    setTimeout(() => searchInp.focus(), 50);
+                }
+            }
+        };
+
+        window.fecharDisciplineDropdown = function() {
+            window.toggleDisciplineDropdown(false);
+        };
+
+        window.filtrarListaDisciplinas = function(query) {
+            const q = (query || '').toLowerCase().trim();
+            const items = document.querySelectorAll('.discipline-option-item');
+            items.forEach(it => {
+                const name = (it.querySelector('.discipline-option-name')?.textContent || '').toLowerCase();
+                const sub = (it.querySelector('.discipline-option-sub')?.textContent || '').toLowerCase();
+                const matches = !q || name.includes(q) || sub.includes(q);
+                it.style.display = matches ? 'flex' : 'none';
+            });
+        };
+
+        window.limparBuscaDisciplina = function() {
+            const searchInp = document.getElementById('disciplineSearchInput');
+            if (searchInp) {
+                searchInp.value = '';
+                window.filtrarListaDisciplinas('');
+                searchInp.focus();
+            }
+        };
+
+        window.selecionarDisciplinaCustom = function(valor, autoTrigger = true) {
+            const select = document.getElementById('filterDiscipline');
+            if (select) {
+                select.value = valor;
+            }
+
+            const iconEl = document.getElementById('disciplineTriggerIcon');
+            const labelEl = document.getElementById('disciplineTriggerLabel');
+            const subEl = document.getElementById('disciplineTriggerSub');
+            const totalHab = baseBNCC ? baseBNCC.length : 1517;
+
+            if (valor === 'todas') {
+                if (iconEl) iconEl.textContent = '🌐';
+                if (labelEl) labelEl.textContent = 'Todas as Disciplinas';
+                if (subEl) subEl.textContent = `${totalHab.toLocaleString()} habilidades disponíveis`;
+            } else {
+                const meta = getDisciplinaMeta(valor);
+                const count = cacheDiscCounts[valor] || 0;
+                if (iconEl) iconEl.textContent = meta.icon;
+                if (labelEl) labelEl.textContent = valor;
+                if (subEl) subEl.textContent = `${count} habilidades • ${meta.categoria}`;
+            }
+
+            document.querySelectorAll('.discipline-option-item').forEach(it => {
+                it.classList.toggle('is-selected', it.getAttribute('data-val') === valor);
+            });
+
+            document.querySelectorAll('.discipline-chip-btn').forEach(chip => {
+                chip.classList.toggle('is-active', chip.getAttribute('data-val') === valor);
+            });
+
+            window.fecharDisciplineDropdown();
+
+            if (autoTrigger && select) {
+                select.dispatchEvent(new Event('change'));
+            }
+        };
+
+        // Funções para controle interativo do Top K
+        window.setTopK = function(valor, autoTrigger = true) {
+            const valNum = parseInt(valor, 10) || 10;
+            const select = document.getElementById('filterTopK');
+            if (select) {
+                select.value = valNum.toString();
+            }
+
+            // Atualiza Botões Segmentados
+            document.querySelectorAll('.topk-seg-btn').forEach(btn => {
+                const bVal = parseInt(btn.getAttribute('data-value'), 10);
+                const isActive = bVal === valNum;
+                btn.classList.toggle('active', isActive);
+                btn.setAttribute('aria-checked', isActive ? 'true' : 'false');
+            });
+
+            // Atualiza Slider
+            const slider = document.getElementById('topkSlider');
+            if (slider && parseInt(slider.value, 10) !== valNum) {
+                slider.value = valNum;
+            }
+
+            // Atualiza Badge Pill
+            const badge = document.getElementById('topkBadgePill');
+            if (badge) {
+                badge.textContent = `Top ${valNum}`;
+            }
+
+            // Atualiza Micro-Dica Contextual
+            const helperText = document.getElementById('topkHelperText');
+            if (helperText) {
+                const dicas = {
+                    5: "Top 5 foca estritamente nas correspondências mais idênticas da consulta.",
+                    10: "⭐ Top 10 é o ponto ideal para equilíbrio entre clareza do grafo e cobertura.",
+                    15: "Top 15 oferece maior amplitude curricular mantendo navegação fluida.",
+                    20: "Top 20 inclui conexões e nós interdisciplinares expandidos.",
+                    25: "Top 25 proporciona visão aprofundada de toda a rede temática.",
+                    30: "Top 30 exibe a totalidade das habilidades com afinidade temática detectada."
+                };
+                helperText.textContent = dicas[valNum] || `Exibindo até ${valNum} habilidades no resultado.`;
+            }
+
+            if (autoTrigger && select) {
+                select.dispatchEvent(new Event('change'));
+            }
+        };
+
+        window.setTopKFromSlider = function(valor) {
+            window.setTopK(parseInt(valor, 10), true);
+        };
 
         // ======================================================================
         // Execução da Busca Semântica
@@ -1281,21 +1953,21 @@
                 }
 
                 // 2. Aplica Filtros Multiplos
-                const selEtapa = document.getElementById('filterEtapa').value;
-                const selAno = document.getElementById('filterAno').value;
-                const selDisc = document.getElementById('filterDiscipline').value;
+                const selDisc = document.getElementById('filterDiscipline')?.value || 'todas';
                 const baseTopK = parseInt(filterTopK.value, 10) || 10;
                 
                 // Se estamos filtrando relações rígidas, precisamos de uma rede de candidatos maior
                 const topK = window.activeRelationFilter ? Math.max(35, baseTopK * 2) : baseTopK;
 
                 let candidatos = baseBNCC;
-                if (selEtapa !== 'todas') {
-                    candidatos = candidatos.filter(item => extrairEtapaCurricular(item).etapa === selEtapa);
+
+                // Filtro Curricular Hierárquico Multi-seleção (Etapa e Ano/Fase)
+                const anosSelecionados = window.obterAnosSelecionados();
+                if (anosSelecionados.length < 15) {
+                    const tagSet = new Set(anosSelecionados);
+                    candidatos = candidatos.filter(item => window.habilidadeAtendeFiltroCurricular(item, tagSet));
                 }
-                if (selAno !== 'todas') {
-                    candidatos = candidatos.filter(item => item.ano_faixa === selAno);
-                }
+
                 if (selDisc !== 'todas') {
                     candidatos = candidatos.filter(item => item.disciplina === selDisc);
                 }
@@ -1371,58 +2043,50 @@
             const btnHub = document.getElementById('btnHubInterdisciplinar');
             if (btnHub) btnHub.classList.add('is-active');
 
-            const elAno = document.getElementById('filterAno');
             if (anoDesejado) {
-                elAno.value = anoDesejado;
-            } else if (!elAno.value || elAno.value === 'todas') {
-                elAno.value = '5º'; // Padrão rico e representativo
+                window.selecionarApenasAno(anoDesejado);
+            } else {
+                const selecionados = window.obterAnosSelecionados();
+                if (selecionados.length === 0 || selecionados.length === 15) {
+                    window.selecionarApenasAno('5');
+                }
             }
             atualizarBadgeFiltros();
 
+            const resumoCurricular = window.obterResumoCurricularFormatado();
             searchInput.value = '';
-            searchInput.placeholder = `🌐 Modo Interdisciplinar: Habilidades mais articuladas (${elAno.value === 'todas' ? 'Todos os Anos' : elAno.value + ' Ano'})`;
+            searchInput.placeholder = `🌐 Modo Interdisciplinar: Habilidades mais articuladas (${resumoCurricular})`;
             clearBtn.style.display = 'none';
 
             window.calcularHabilidadesMaisInterdisciplinares();
-            window.showToast(`Hub Interdisciplinar ativado para: ${elAno.value === 'todas' ? 'Todos os Anos' : elAno.value + ' Ano'}`);
+            window.showToast(`Hub Interdisciplinar ativado: ${resumoCurricular}`);
         };
 
         window.filtrarHubPorAno = function(ano) {
-            const elAno = document.getElementById('filterAno');
-            if (elAno) {
-                elAno.value = ano;
-                atualizarBadgeFiltros();
-            }
+            window.selecionarApenasAno(ano);
             window.calcularHabilidadesMaisInterdisciplinares();
-            window.showToast(`Exibindo conexões: ${ano === 'todas' ? 'Todos os Anos' : ano + ' Ano'}`);
+            const resumo = window.obterResumoCurricularFormatado();
+            window.showToast(`Exibindo conexões: ${resumo}`);
         };
 
         window.calcularHabilidadesMaisInterdisciplinares = function() {
             if (!isReady || !baseBNCC || baseBNCC.length === 0) return;
 
             const t0 = performance.now();
-            const selEtapa = document.getElementById('filterEtapa').value;
-            const selAno = document.getElementById('filterAno').value;
-            const baseTopK = parseInt(document.getElementById('filterTopK').value, 10) || 12;
+            const baseTopK = parseInt(document.getElementById('filterTopK')?.value, 10) || 12;
 
-            // 1. Filtragem por Etapa e Ano / Fase
+            // 1. Filtragem por Etapa e Ano / Fase (Hierárquico Multiseleção)
             let candidatos = baseBNCC;
-            if (selEtapa !== 'todas') {
-                candidatos = candidatos.filter(item => extrairEtapaCurricular(item).etapa === selEtapa);
-            }
-            if (selAno !== 'todas') {
-                candidatos = candidatos.filter(item => {
-                    if (item.ano_faixa === selAno) return true;
-                    const info = extrairEtapaCurricular(item);
-                    const numAno = parseInt(selAno.replace(/\D/g, ''), 10);
-                    if (numAno && info.anos && info.anos.includes(numAno)) return true;
-                    return false;
-                });
+            const anosSelecionados = window.obterAnosSelecionados();
+            if (anosSelecionados.length < 15) {
+                const tagSet = new Set(anosSelecionados);
+                candidatos = candidatos.filter(item => window.habilidadeAtendeFiltroCurricular(item, tagSet));
             }
 
             if (candidatos.length === 0) {
                 resultsHeader.style.display = 'flex';
-                resultsCount.textContent = `Nenhuma habilidade encontrada para o filtro de ano: ${selAno}`;
+                const resumo = window.obterResumoCurricularFormatado();
+                resultsCount.textContent = `Nenhuma habilidade encontrada para o filtro: ${resumo}`;
                 resultsList.innerHTML = `<div class="empty-state"><p>Tente selecionar outro ano/fase no painel de filtros à esquerda.</p></div>`;
                 return;
             }
@@ -1889,14 +2553,13 @@
 
             // MODO HUB INTERDISCIPLINAR (Exibe Banner rico + Seletor de Anos em Pílulas)
             if (isModoInterdisciplinarAtivo) {
-                const elAno = document.getElementById('filterAno');
-                const selAno = (elAno && elAno.value) ? elAno.value : '5º';
+                const resumoCurricular = window.obterResumoCurricularFormatado();
                 const bannerHtml = `
                     <div class="hub-header-banner">
                         <div class="hub-banner-top">
                             <div class="hub-banner-title-col">
                                 <span class="hub-badge-pill">🌐 Hub de Articulação Curricular</span>
-                                <h2 class="hub-banner-title">Habilidades com Mais Relações entre Componentes • ${selAno === 'todas' ? 'Todos os Anos' : selAno + ' Ano'}</h2>
+                                <h2 class="hub-banner-title">Habilidades com Mais Relações entre Componentes • ${resumoCurricular}</h2>
                                 <p class="hub-banner-subtitle">
                                     Abaixo estão as habilidades com maior número de conexões pedagógicas com <strong>diferentes componentes curriculares no mesmo período escolar</strong>. Ideais para <strong>planejamento conjunto</strong>, <strong>projetos integradores</strong> e <strong>aulas transversais</strong>.
                                 </p>
@@ -1917,11 +2580,29 @@
                         <div class="hub-years-bar">
                             <span class="hub-years-title">Filtrar por Ano / Fase:</span>
                             <div class="hub-years-pill-group">
-                                ${['1º', '2º', '3º', '4º', '5º', '6º', '7º', '8º', '9º', 'todas'].map(a => `
-                                    <button type="button" class="hub-pill-btn ${selAno === a ? 'is-active' : ''}" onclick="window.filtrarHubPorAno('${a}')">
-                                        ${a === 'todas' ? 'Todos os Anos' : `${a} Ano`}
-                                    </button>
-                                `).join('')}
+                                ${[
+                                    { key: 'bebes', label: 'Bebês' },
+                                    { key: 'pequenas', label: 'Crianças' },
+                                    { key: '1', label: '1º' },
+                                    { key: '2', label: '2º' },
+                                    { key: '3', label: '3º' },
+                                    { key: '4', label: '4º' },
+                                    { key: '5', label: '5º' },
+                                    { key: '6', label: '6º' },
+                                    { key: '7', label: '7º' },
+                                    { key: '8', label: '8º' },
+                                    { key: '9', label: '9º' },
+                                    { key: 'EM13', label: 'Médio' },
+                                    { key: 'todas', label: 'Todos os Anos' }
+                                ].map(p => {
+                                    const anosSel = window.obterAnosSelecionados ? window.obterAnosSelecionados() : [];
+                                    const isActive = p.key === 'todas' ? anosSel.length === 15 : (anosSel.length === 1 && anosSel[0] === p.key);
+                                    return `
+                                        <button type="button" class="hub-pill-btn ${isActive ? 'is-active' : ''}" onclick="window.filtrarHubPorAno('${p.key}')">
+                                            ${p.label}
+                                        </button>
+                                    `;
+                                }).join('')}
                             </div>
                         </div>
                     </div>
@@ -2606,14 +3287,62 @@
             const focalItem = obterItemBaseBNCC(focalCode);
             if (!focalItem) return;
 
-            const prog = catalogoProgressao[focalCode] || {
-                pre_mesmo: [],
-                pre_ant: [],
-                apoio: [],
-                post_mesmo: [],
-                post_seg: [],
-                comentario: ''
-            };
+            const relFinal = catalogoRelacoesFinais[focalCode];
+            const focalAnoInfo = extrairInfoAnoOrganograma(focalItem);
+            const justificativaMap = new Map();
+            let prog;
+
+            if (relFinal) {
+                const pre_ant = [];
+                const pre_mesmo = [];
+                (relFinal.requisitos || []).forEach(r => {
+                    justificativaMap.set(r.codigo, r.justificativa);
+                    const it = obterItemBaseBNCC(r.codigo);
+                    const ano = extrairInfoAnoOrganograma(it);
+                    if (ano.ordem < focalAnoInfo.ordem) {
+                        pre_ant.push(r.codigo);
+                    } else {
+                        pre_mesmo.push(r.codigo);
+                    }
+                });
+
+                const post_seg = [];
+                const post_mesmo = [];
+                (relFinal.prepara_para || []).forEach(p => {
+                    justificativaMap.set(p.codigo, p.justificativa);
+                    const it = obterItemBaseBNCC(p.codigo);
+                    const ano = extrairInfoAnoOrganograma(it);
+                    if (ano.ordem > focalAnoInfo.ordem) {
+                        post_seg.push(p.codigo);
+                    } else {
+                        post_mesmo.push(p.codigo);
+                    }
+                });
+
+                const apoio = (relFinal.relacionadas || []).map(a => {
+                    justificativaMap.set(a.codigo, a.justificativa);
+                    return a.codigo;
+                });
+
+                const reunaProg = catalogoProgressao[focalCode] || {};
+                prog = {
+                    pre_ant,
+                    pre_mesmo,
+                    apoio,
+                    post_seg,
+                    post_mesmo,
+                    comentario: reunaProg.comentario || ''
+                };
+            } else {
+                prog = catalogoProgressao[focalCode] || {
+                    pre_mesmo: [],
+                    pre_ant: [],
+                    apoio: [],
+                    post_mesmo: [],
+                    post_seg: [],
+                    comentario: ''
+                };
+            }
 
             const width = Math.max(graphContainer.clientWidth || 980, 1150);
             const height = graphContainer.clientHeight || 620;
@@ -3203,6 +3932,12 @@
                 card.on('mouseenter', (event) => {
                     const it = pos.item;
                     const anoInfo = extrairInfoAnoOrganograma(it);
+                    const just = justificativaMap.get(pos.codigo);
+                    const justHtml = just ? `
+                        <div style="margin-top: 8px; padding: 6px 9px; background: #eef2ff; border-left: 3px solid #6366f1; border-radius: 4px; font-size: 0.77rem; color: #3730a3; line-height: 1.35;">
+                            <strong>💡 Justificativa Pedagógica:</strong> ${just}
+                        </div>
+                    ` : '';
                     const tipHtml = `
                         <div class="tooltip-header" style="display: flex; align-items: center; justify-content: space-between; margin-bottom: 4px;">
                             <span class="tooltip-code" style="font-family: var(--font-mono); font-weight: 800; font-size: 0.90rem; color: #1e293b;">${it.codigo}</span>
@@ -3214,6 +3949,7 @@
                         <div class="tooltip-body" style="font-size: 0.80rem; color: #334155; line-height: 1.45;">
                             ${it.habilidade}
                         </div>
+                        ${justHtml}
                         <div style="margin-top: 8px; font-size: 0.74rem; color: var(--text-muted); border-top: 1px solid var(--border-color); padding-top: 6px;">
                             Clique para abrir detalhes &bull; Duplo-clique para focar a linhagem nesta
                         </div>
@@ -3678,7 +4414,7 @@
             };
         }
 
-        function renderizarCardMiniLinhagem(codigo, tipo) {
+        function renderizarCardMiniLinhagem(codigo, tipo, justificativa) {
             const item = obterItemBaseBNCC(codigo);
             const discCor = getDisciplinaCor(item.disciplina);
             const anoInfo = extrairInfoAnoOrganograma(item);
@@ -3690,17 +4426,17 @@
             if (tipo === 'pre_mesmo') {
                 tipoLabel = '📌 Mesmo Ano';
                 borderAccent = '#4f46e5';
-            } else if (tipo === 'pre_ant') {
-                tipoLabel = '⏮️ Prévia';
+            } else if (tipo === 'pre_ant' || tipo === 'requisito') {
+                tipoLabel = '⏮️ Requisito';
                 borderAccent = '#d97706';
-            } else if (tipo === 'apoio') {
-                tipoLabel = '🤝 Apoio';
+            } else if (tipo === 'apoio' || tipo === 'relacionada') {
+                tipoLabel = '🤝 Articulação';
                 borderAccent = '#059669';
             } else if (tipo === 'post_mesmo') {
                 tipoLabel = '📌 Mesmo Ano';
                 borderAccent = '#4f46e5';
-            } else if (tipo === 'post_seg') {
-                tipoLabel = '⏭️ Futura';
+            } else if (tipo === 'post_seg' || tipo === 'prepara_para') {
+                tipoLabel = '⏭️ Prepara Para';
                 borderAccent = '#7c3aed';
             }
 
@@ -3717,6 +4453,7 @@
                         </div>
                     </div>
                     <div class="lineage-card-text">${textoCurto}</div>
+                    ${justificativa ? `<div class="lineage-justification-callout">💡 <em>${justificativa}</em></div>` : ''}
                     <div class="lineage-card-action">
                         <span>Inspecionar habilidade &rarr;</span>
                     </div>
@@ -3756,6 +4493,7 @@
             const percentual = (score * 100).toFixed(1);
             const discClass = getDisciplinaClass(item.disciplina);
             const explicacao = gerarExplicacaoIA(queryAtual, item, score);
+            const relFinal = catalogoRelacoesFinais[item.codigo] || null;
             const prog = catalogoProgressao[item.codigo] || null;
 
             // Cabeçalho do Drawer
@@ -3856,8 +4594,92 @@
                         </button>
                     </div>
 
-                    ${prog ? `
-                        <!-- 1. Pré-Requisitos no Mesmo Ano e Componente -->
+                    ${relFinal ? `
+                        <!-- 1. Pré-Requisitos Cognitivos e Temporais (Bloom & Anos Anteriores) -->
+                        <div class="lineage-subgroup anos-anteriores">
+                            <div class="lineage-subgroup-header">
+                                <span class="lineage-icon">⏮️</span>
+                                <div>
+                                    <span class="lineage-group-title">Requisitos Curriculares e Cognitivos (${(relFinal.requisitos || []).length}/3)</span>
+                                    <span class="lineage-count-tag">${(relFinal.requisitos || []).length}</span>
+                                </div>
+                            </div>
+                            <p class="lineage-group-desc">
+                                Habilidades que constroem a base cognitiva para a alvo (Taxonomia de Bloom: verbos de menor complexidade em ano anterior ou início do ciclo).
+                            </p>
+                            <div class="lineage-cards-list">
+                                ${(relFinal.requisitos && relFinal.requisitos.length > 0) ? 
+                                    relFinal.requisitos.map(r => renderizarCardMiniLinhagem(r.codigo, 'requisito', r.justificativa)).join('') : 
+                                    `<div class="lineage-empty-notice">Habilidade introdutória / alicerce inicial (sem pré-requisitos cadastrados).</div>`
+                                }
+                            </div>
+                        </div>
+
+                        <!-- 2. Prepara Para (Degrau Formativo para Anos Posteriores) -->
+                        <div class="lineage-subgroup continuidade">
+                            <div class="lineage-subgroup-header">
+                                <span class="lineage-icon">⏭️</span>
+                                <div>
+                                    <span class="lineage-group-title">Prepara Para & Degraus Formativos (${(relFinal.prepara_para || []).length}/3)</span>
+                                    <span class="lineage-count-tag">${(relFinal.prepara_para || []).length}</span>
+                                </div>
+                            </div>
+                            <p class="lineage-group-desc">
+                                Habilidades futuras (ano posterior ou aprofundamento do ciclo) para as quais esta aprendizagem atua como degrau formativo essencial.
+                            </p>
+                            <div class="lineage-cards-list">
+                                ${(relFinal.prepara_para && relFinal.prepara_para.length > 0) ? 
+                                    relFinal.prepara_para.map(p => renderizarCardMiniLinhagem(p.codigo, 'prepara_para', p.justificativa)).join('') : 
+                                    `<div class="lineage-empty-notice">Habilidade terminal ou de culminância do ciclo formativo.</div>`
+                                }
+                            </div>
+                        </div>
+
+                        <!-- 3. Relações Interdisciplinares / Transversais no Ciclo -->
+                        <div class="lineage-subgroup apoio">
+                            <div class="lineage-subgroup-header">
+                                <span class="lineage-icon">🤝</span>
+                                <div>
+                                    <span class="lineage-group-title">Articulações Interdisciplinares no Ciclo (${(relFinal.relacionadas || []).length}/5)</span>
+                                    <span class="lineage-count-tag">${(relFinal.relacionadas || []).length}</span>
+                                </div>
+                            </div>
+                            <p class="lineage-group-desc">
+                                Conexões interdisciplinares com outros componentes no mesmo ano compartilhando objetos de conhecimento ou temas integradores.
+                            </p>
+                            <div class="lineage-cards-list">
+                                ${(relFinal.relacionadas && relFinal.relacionadas.length > 0) ? 
+                                    relFinal.relacionadas.map(a => renderizarCardMiniLinhagem(a.codigo, 'relacionada', a.justificativa)).join('') : 
+                                    `<div class="lineage-empty-notice">Nenhuma articulação interdisciplinar direta com o mesmo tema encontrada.</div>`
+                                }
+                            </div>
+                        </div>
+
+                        <!-- 4. Objetos de Conhecimento Estruturados -->
+                        ${(relFinal.objetos_conhecimento && relFinal.objetos_conhecimento.length > 0) ? `
+                            <div class="lineage-subgroup" style="border-left: 3px solid #0f766e; background: #f0fdfa; padding: 10px 12px; border-radius: var(--radius-sm); margin-top: 10px;">
+                                <div style="display: flex; align-items: center; gap: 6px; font-size: 0.80rem; font-weight: 700; color: #115e59; margin-bottom: 6px;">
+                                    <span>📚</span>
+                                    <span>Objetos de Conhecimento Associados (BNCC):</span>
+                                </div>
+                                <div style="display: flex; flex-wrap: wrap; gap: 4px;">
+                                    ${relFinal.objetos_conhecimento.map(obj => `<span class="lineage-obj-tag">${obj}</span>`).join('')}
+                                </div>
+                            </div>
+                        ` : ''}
+
+                        <!-- 5. Comentário Didático Oficial (se disponível via Instituto Reúna) -->
+                        ${(prog && prog.comentario) ? `
+                            <div class="lineage-reuna-box" style="margin-top: 12px;">
+                                <div class="reuna-header">
+                                    <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"></path></svg>
+                                    <span>Orientações Didáticas e Lógica de Progressão (Instituto Reúna):</span>
+                                </div>
+                                <p class="reuna-text">${prog.comentario}</p>
+                            </div>
+                        ` : ''}
+                    ` : (prog ? `
+                        <!-- Fallback para catálogo legado Reúna -->
                         <div class="lineage-subgroup mesmo-ano">
                             <div class="lineage-subgroup-header">
                                 <span class="lineage-icon">📌</span>
@@ -3866,98 +4688,44 @@
                                     <span class="lineage-count-tag">${(prog.pre_mesmo || []).length}</span>
                                 </div>
                             </div>
-                            <p class="lineage-group-desc">
-                                Habilidades essenciais do <strong>mesmo ano letivo</strong> que devem ser consolidadas <strong>antes</strong> desta habilidade para viabilizar a compreensão do objeto de conhecimento.
-                            </p>
                             <div class="lineage-cards-list">
                                 ${(prog.pre_mesmo && prog.pre_mesmo.length > 0) ? 
                                     prog.pre_mesmo.map(cod => renderizarCardMiniLinhagem(cod, 'pre_mesmo')).join('') : 
-                                    `<div class="lineage-empty-notice">Habilidade introdutória no planejamento do ano (não exige pré-requisitos internos no mesmo ano).</div>`
+                                    `<div class="lineage-empty-notice">Habilidade introdutória no planejamento do ano.</div>`
                                 }
                             </div>
                         </div>
 
-                        <!-- 2. Pré-Requisitos de Anos Anteriores -->
                         <div class="lineage-subgroup anos-anteriores">
                             <div class="lineage-subgroup-header">
                                 <span class="lineage-icon">⏮️</span>
                                 <div>
-                                    <span class="lineage-group-title">Pré-requisitos de Anos Anteriores (Alicerces Curriculares)</span>
+                                    <span class="lineage-group-title">Pré-requisitos de Anos Anteriores</span>
                                     <span class="lineage-count-tag">${(prog.pre_ant || []).length}</span>
                                 </div>
                             </div>
-                            <p class="lineage-group-desc">
-                                Habilidades de <strong>anos e etapas anteriores</strong> (incluindo Educação Infantil e ciclos preparatórios) fundamentais para o desenvolvimento cognitivo prévio do estudante.
-                            </p>
                             <div class="lineage-cards-list">
                                 ${(prog.pre_ant && prog.pre_ant.length > 0) ? 
                                     prog.pre_ant.map(cod => renderizarCardMiniLinhagem(cod, 'pre_ant')).join('') : 
-                                    `<div class="lineage-empty-notice">Nenhum pré-requisito formal de anos anteriores registrado.</div>`
+                                    `<div class="lineage-empty-notice">Nenhum pré-requisito formal registrado.</div>`
                                 }
                             </div>
                         </div>
 
-                        <!-- 3. Habilidades de Apoio Simultâneo no Mesmo Ano -->
-                        ${(prog.apoio && prog.apoio.length > 0) ? `
-                        <div class="lineage-subgroup apoio">
-                            <div class="lineage-subgroup-header">
-                                <span class="lineage-icon">🤝</span>
-                                <div>
-                                    <span class="lineage-group-title">Habilidades de Apoio no Mesmo Ano (${item.ano_faixa || 'Mesmo Ano'})</span>
-                                    <span class="lineage-count-tag">${prog.apoio.length}</span>
-                                </div>
-                            </div>
-                            <p class="lineage-group-desc">Habilidades complementares trabalhadas sinergicamente durante o mesmo período letivo.</p>
-                            <div class="lineage-cards-list">
-                                ${prog.apoio.map(cod => renderizarCardMiniLinhagem(cod, 'apoio')).join('')}
-                            </div>
-                        </div>
-                        ` : ''}
-
-                        <!-- 4. Continuidade e Desdobramentos Posteriores -->
-                        <div class="lineage-subgroup continuidade">
-                            <div class="lineage-subgroup-header">
-                                <span class="lineage-icon">⏭️</span>
-                                <div>
-                                    <span class="lineage-group-title">Desdobramentos e Continuidade Curricular</span>
-                                    <span class="lineage-count-tag">${(prog.post_mesmo || []).length + (prog.post_seg || []).length}</span>
-                                </div>
-                            </div>
-                            
-                            ${(prog.post_mesmo && prog.post_mesmo.length > 0) ? `
-                                <div class="lineage-nested-block">
-                                    <span class="lineage-nested-label">📌 Continuidade no Mesmo Ano (${item.ano_faixa || ''}):</span>
-                                    <div class="lineage-cards-list">
-                                        ${prog.post_mesmo.map(cod => renderizarCardMiniLinhagem(cod, 'post_mesmo')).join('')}
-                                    </div>
-                                </div>
-                            ` : ''}
-                            
-                            ${(prog.post_seg && prog.post_seg.length > 0) ? `
-                                <div class="lineage-nested-block" style="margin-top: 10px;">
-                                    <span class="lineage-nested-label">🎓 Anos Seguintes e Ensino Médio:</span>
-                                    <div class="lineage-cards-list">
-                                        ${prog.post_seg.map(cod => renderizarCardMiniLinhagem(cod, 'post_seg')).join('')}
-                                    </div>
-                                </div>
-                            ` : ''}
-                        </div>
-
-                        <!-- 5. Comentário Didático Oficial (Instituto Reúna / MEC) -->
                         ${prog.comentario ? `
                             <div class="lineage-reuna-box">
                                 <div class="reuna-header">
                                     <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"></path></svg>
-                                    <span>Orientações Didáticas e Lógica de Progressão (Instituto Reúna):</span>
+                                    <span>Orientações Didáticas (Instituto Reúna):</span>
                                 </div>
                                 <p class="reuna-text">${prog.comentario}</p>
                             </div>
                         ` : ''}
                     ` : `
                         <div class="lineage-empty-notice" style="margin-top: 10px;">
-                            Esta habilidade não possui ficha individual de mapa de foco prioritário, mas pode ser explorada articulando-se com os objetos de conhecimento do ciclo de ${item.ano_faixa || 'ensino'}.
+                            Esta habilidade não possui ficha individual de mapa de foco prioritário.
                         </div>
-                    `}
+                    `)}
                 </div>
 
                 <!-- Relações Pedagógicas Articuláveis no Grafo -->
@@ -4173,14 +4941,9 @@
         };
 
         window.resetarFiltros = function() {
-            const elEtapa = document.getElementById('filterEtapa');
-            const elAno = document.getElementById('filterAno');
-            const elDisc = document.getElementById('filterDiscipline');
-            const elTopK = document.getElementById('filterTopK');
-            if (elEtapa) elEtapa.value = 'todas';
-            if (elAno) elAno.value = 'todas';
-            if (elDisc) elDisc.value = 'todas';
-            if (elTopK) elTopK.value = '10';
+            window.marcarTodosAnos(true);
+            window.selecionarDisciplinaCustom('todas', false);
+            window.setTopK(10, false);
             atualizarBadgeFiltros();
             if (searchInput && searchInput.value.trim().length >= 2) {
                 executarBusca();
@@ -4189,16 +4952,16 @@
         };
 
         function atualizarBadgeFiltros() {
-            const elEtapa = document.getElementById('filterEtapa');
-            const elAno = document.getElementById('filterAno');
             const elDisc = document.getElementById('filterDiscipline');
-            const etapa = elEtapa ? elEtapa.value : 'todas';
-            const ano = elAno ? elAno.value : 'todas';
+            const elTopK = document.getElementById('filterTopK');
             const disc = elDisc ? elDisc.value : 'todas';
+            const topK = elTopK ? elTopK.value : '10';
+
+            const selecionados = window.obterAnosSelecionados ? window.obterAnosSelecionados() : [];
             let ativos = 0;
-            if (etapa !== 'todas') ativos++;
-            if (ano !== 'todas') ativos++;
+            if (selecionados.length < 15) ativos++; // Se houver restrição curricular ativa
             if (disc !== 'todas') ativos++;
+            if (topK !== '10') ativos++;
 
             const badge = document.getElementById('filtersBadgeActive');
             if (badge) {
@@ -4458,7 +5221,7 @@
             `;
         });
 
-        ['filterEtapa', 'filterAno', 'filterDiscipline', 'filterTopK'].forEach(id => {
+        ['filterDiscipline', 'filterTopK'].forEach(id => {
             const el = document.getElementById(id);
             if (el) {
                 el.addEventListener('change', () => {
@@ -4525,6 +5288,14 @@
         });
 
         window.executarBusca = executarBusca;
+
+        // Fecha o dropdown de disciplina ao clicar fora dele
+        document.addEventListener('click', (e) => {
+            const group = document.getElementById('disciplineGroup');
+            if (group && !group.contains(e.target)) {
+                window.fecharDisciplineDropdown();
+            }
+        });
 
         // Inicia o app
         inicializarApp();
