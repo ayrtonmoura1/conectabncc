@@ -57,6 +57,17 @@
             </button>
         </div>
         <div class="filters-sidebar-body">
+            <!-- BOTÃO DE ATALHO PARA O CATÁLOGO COMPLETO -->
+            <div class="sidebar-catalog-shortcut-wrap">
+                <button type="button" class="btn-sidebar-browse-catalog" onclick="window.abrirModalCatalogoBNCC()" title="Abrir catálogo completo para selecionar por Etapa e Componente">
+                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+                        <path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"></path>
+                        <path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"></path>
+                    </svg>
+                    <span>Explorar Catálogo de Habilidades</span>
+                </button>
+            </div>
+
             <!-- GRUPO CURRICULAR HIERÁRQUICO (ETAPA - ANO/FASE COM MULTISELEÇÃO) -->
             <div class="sidebar-curriculo-group">
                 <div class="sidebar-curriculo-header">
@@ -395,14 +406,25 @@
 
             <!-- Barra de Modos Rápidos e Sugestões -->
             <div class="search-extras-bar">
-                <button type="button" id="btnHubInterdisciplinar" class="hub-tab-trigger-btn" onclick="window.ativarModoInterdisciplinar(event)" title="Descubra as habilidades com maior diálogo e conexão pedagógica com outros componentes no mesmo ano escolar">
-                    <span class="hub-tab-icon">🌐</span>
-                    <span class="hub-tab-text">
-                        <strong>Habilidades Mais Interdisciplinares</strong>
-                        <small>Mais conexões entre diferentes componentes no mesmo ano/fase</small>
-                    </span>
-                    <span class="hub-tab-badge">Explorar Hub ➔</span>
-                </button>
+                <div class="search-extras-actions-row">
+                    <button type="button" id="btnExplorarCatalogo" class="catalog-tab-trigger-btn" onclick="window.abrirModalCatalogoBNCC()" title="Navegar por todas as habilidades organizadas por Etapa e Componente Curricular">
+                        <span class="catalog-tab-icon">📖</span>
+                        <span class="catalog-tab-text">
+                            <strong>Catálogo de Habilidades</strong>
+                            <small>Selecione por Etapa, Componente e Ano Escolar</small>
+                        </span>
+                        <span class="catalog-tab-badge">Explorar Lista ➔</span>
+                    </button>
+
+                    <button type="button" id="btnHubInterdisciplinar" class="hub-tab-trigger-btn" onclick="window.ativarModoInterdisciplinar(event)" title="Descubra as habilidades com maior diálogo e conexão pedagógica com outros componentes no mesmo ano escolar">
+                        <span class="hub-tab-icon">🌐</span>
+                        <span class="hub-tab-text">
+                            <strong>Habilidades Mais Interdisciplinares</strong>
+                            <small>Mais conexões entre diferentes componentes no mesmo ano/fase</small>
+                        </span>
+                        <span class="hub-tab-badge">Explorar Hub ➔</span>
+                    </button>
+                </div>
 
                 <!-- Sugestões de Busca Rápida -->
                 <div class="quick-queries">
@@ -740,6 +762,88 @@
         </div>
     </div>
 
+    <!-- Modal do Catálogo Curricular da BNCC (Navegação Direta por Etapa e Componente) -->
+    <div class="catalog-modal-backdrop" id="catalogModalBackdrop" style="display: none;" onclick="window.fecharModalCatalogoBNCC(event)">
+        <div class="catalog-modal" id="catalogModal" onclick="event.stopPropagation()">
+            <div class="catalog-modal-header">
+                <div class="catalog-modal-title-wrap">
+                    <div class="catalog-modal-badge">
+                        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"></path>
+                            <path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"></path>
+                        </svg>
+                        <span>Catálogo Curricular BNCC</span>
+                    </div>
+                    <h2 class="catalog-modal-title">Navegar e Selecionar Habilidades</h2>
+                    <p class="catalog-modal-subtitle">Filtre por Etapa de Ensino e Componente Curricular para escolher qualquer habilidade e visualizar suas relações e progressão no grafo.</p>
+                </div>
+                <button type="button" class="catalog-modal-close-btn" onclick="window.fecharModalCatalogoBNCC()" aria-label="Fechar catálogo" title="Fechar (Esc)">
+                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2">
+                        <line x1="18" y1="6" x2="6" y2="18"></line>
+                        <line x1="6" y1="6" x2="18" y2="18"></line>
+                    </svg>
+                </button>
+            </div>
+
+            <!-- Barra de Filtros do Catálogo -->
+            <div class="catalog-filters-bar">
+                <div class="catalog-filter-control">
+                    <label for="catFilterEtapa" class="cat-label">1. Etapa de Ensino:</label>
+                    <div class="cat-select-wrapper">
+                        <select id="catFilterEtapa" class="cat-select" onchange="window.onCatEtapaChange()">
+                            <option value="todas">Todas as Etapas</option>
+                            <option value="EI">👶 Educação Infantil</option>
+                            <option value="EF_INICIAIS">🌱 Ensino Fundamental - Anos Iniciais (1º ao 5º)</option>
+                            <option value="EF_FINAIS">🌿 Ensino Fundamental - Anos Finais (6º ao 9º)</option>
+                            <option value="EM">🎓 Ensino Médio</option>
+                        </select>
+                    </div>
+                </div>
+
+                <div class="catalog-filter-control">
+                    <label for="catFilterAno" class="cat-label">2. Ano / Faixa Etária:</label>
+                    <div class="cat-select-wrapper">
+                        <select id="catFilterAno" class="cat-select" onchange="window.filtrarCatalogoHabilidades()">
+                            <option value="todos">Todos os Anos / Faixas</option>
+                        </select>
+                    </div>
+                </div>
+
+                <div class="catalog-filter-control">
+                    <label for="catFilterComponente" class="cat-label">3. Disciplina / Componente:</label>
+                    <div class="cat-select-wrapper">
+                        <select id="catFilterComponente" class="cat-select" onchange="window.filtrarCatalogoHabilidades()">
+                            <option value="todas">Todos os Componentes</option>
+                        </select>
+                    </div>
+                </div>
+
+                <div class="catalog-filter-control catalog-search-control">
+                    <label for="catSearchInput" class="cat-label">Filtrar Texto ou Código:</label>
+                    <div class="cat-search-input-wrap">
+                        <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <circle cx="11" cy="11" r="8"></circle>
+                            <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
+                        </svg>
+                        <input type="text" id="catSearchInput" class="cat-search-input" placeholder="Ex: EF05MA, frações, fotossíntese..." oninput="window.filtrarCatalogoHabilidades()">
+                        <button type="button" id="catClearSearchBtn" class="cat-clear-search" onclick="window.limparBuscaCatalogo()" style="display: none;" title="Limpar busca do catálogo">&times;</button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Subheader de Estatísticas e Ações Rápidas -->
+            <div class="catalog-meta-strip">
+                <div class="catalog-stats-info" id="catStatsInfo">
+                    Carregando habilidades do catálogo...
+                </div>
+                <div class="catalog-quick-tags" id="catQuickTags"></div>
+            </div>
+
+            <!-- Lista de Habilidades Filtradas -->
+            <div class="catalog-cards-container" id="catCardsContainer"></div>
+        </div>
+    </div>
+
     <!-- Rodapé -->
     <footer>
         <p>Concecta BNCC &bull; 100% Frontend (GitHub Pages Ready) &bull; Modelo: <code>all-MiniLM-L6-v2</code> via Transformers.js &bull; <a href="./documentacao.html" style="color: var(--accent-primary); text-decoration: underline; font-weight: 600;">📖 Documentação Técnica</a></p>
@@ -758,6 +862,9 @@
         // Estados globais
         let extratorEmbeddings = null;
         let baseBNCC = [];
+        let mapaBNCCPorCodigo = new Map();
+        let queryEmbeddingCache = new Map();
+        let currentSearchSequence = 0;
         let catalogoCompetencias = { competencias_gerais: {}, competencias_especificas: {} };
         let catalogoProgressao = {};
         let catalogoRelacoesFinais = {};
@@ -1340,6 +1447,13 @@
                 }
                 
                 baseBNCC = await responseVetores.json();
+                mapaBNCCPorCodigo.clear();
+                baseBNCC.forEach(item => {
+                    const cod = (item.codigo || '').toUpperCase();
+                    mapaBNCCPorCodigo.set(cod, item);
+                    item._searchLower = (item.codigo + ' ' + (item.disciplina || '') + ' ' + (item.ano_faixa || '') + ' ' + (item.habilidade || '')).toLowerCase();
+                });
+
                 if (responseComp.ok) {
                     catalogoCompetencias = await responseComp.json();
                 }
@@ -1667,6 +1781,17 @@
                 });
             }
 
+            const catCompSelect = document.getElementById('catFilterComponente');
+            if (catCompSelect) {
+                catCompSelect.innerHTML = '<option value="todas">Todos os Componentes</option>';
+                Object.keys(cacheDiscCounts).sort().forEach(val => {
+                    const opt = document.createElement('option');
+                    opt.value = val;
+                    opt.textContent = `${val} (${cacheDiscCounts[val]})`;
+                    catCompSelect.appendChild(opt);
+                });
+            }
+
             renderizarDropdownDisciplinas(cacheDiscCounts);
             renderizarQuickChipsDisciplinas(cacheDiscCounts);
             window.atualizarResumoCurricular();
@@ -1900,6 +2025,7 @@
 
             const query = searchInput.value.trim();
             if (query.length < 2) {
+                currentSearchSequence++;
                 resultsHeader.style.display = 'none';
                 viewTabs.style.display = 'none';
                 graphViewSection.style.display = 'none';
@@ -1907,7 +2033,8 @@
                 resultsList.innerHTML = `
                     <div class="empty-state">
                         <h3 class="empty-title">Digite pelo menos 2 caracteres</h3>
-                        <p class="empty-desc">Escreva o tema da aula, intenção pedagógica ou palavra-chave para realizar a busca semântica.</p>
+                        <p class="empty-desc">Escreva o tema da aula, intenção pedagógica ou palavra-chave para realizar a busca semântica, ou use o catálogo para navegar.</p>
+                        <button type="button" class="btn-empty-catalog-action" onclick="window.abrirModalCatalogoBNCC()">📖 Explorar Catálogo por Etapa e Componente</button>
                     </div>
                 `;
                 return;
@@ -1925,6 +2052,7 @@
                 window.activeRelationSource = null;
             }
 
+            const mySearchSequence = ++currentSearchSequence;
             queryAtual = query;
 
             // Interface em modo "Processando"
@@ -1938,7 +2066,7 @@
                 // 1. Gera embedding da query com o Transformers.js no navegador
                 // OU usa o vetor exato se a query for um código de habilidade
                 const queryUpper = query.toUpperCase();
-                const exactSkill = baseBNCC.find(item => item.codigo === queryUpper);
+                const exactSkill = (mapaBNCCPorCodigo && mapaBNCCPorCodigo.get(queryUpper)) || baseBNCC.find(item => item.codigo === queryUpper);
                 let vetorBusca;
 
                 if (exactSkill) {
@@ -1946,10 +2074,21 @@
                     window.isExactSkillQuery = true;
                     window.exactSkillItem = exactSkill;
                 } else {
-                    const output = await extratorEmbeddings(query, { pooling: 'mean', normalize: true });
-                    vetorBusca = Array.from(output.data);
+                    const cacheKey = query.toLowerCase();
+                    if (queryEmbeddingCache.has(cacheKey)) {
+                        vetorBusca = queryEmbeddingCache.get(cacheKey);
+                    } else {
+                        const output = await extratorEmbeddings(query, { pooling: 'mean', normalize: true });
+                        vetorBusca = Array.from(output.data);
+                        queryEmbeddingCache.set(cacheKey, vetorBusca);
+                    }
                     window.isExactSkillQuery = false;
                     window.exactSkillItem = null;
+                }
+
+                // Se uma nova busca foi solicitada enquanto essa computava, cancela imediatamente
+                if (mySearchSequence !== currentSearchSequence) {
+                    return;
                 }
 
                 // 2. Aplica Filtros Multiplos
@@ -1980,7 +2119,7 @@
 
                 // Aplica o filtro estrito de relação (Mesmo Ano ou Progressão)
                 if (window.activeRelationFilter && window.activeRelationSource) {
-                    const sourceSkill = baseBNCC.find(s => s.codigo === window.activeRelationSource);
+                    const sourceSkill = (mapaBNCCPorCodigo && mapaBNCCPorCodigo.get(window.activeRelationSource)) || baseBNCC.find(s => s.codigo === window.activeRelationSource);
                     if (sourceSkill) {
                         pontuados = pontuados.filter(res => {
                             if (res.item.codigo === sourceSkill.codigo) return true; // Sempre mantém o nó central
@@ -1997,6 +2136,12 @@
 
                 // 4. Ordena do maior para o menor score
                 pontuados.sort((a, b) => b.score - a.score);
+
+                // Verificação final antes de aplicar estado e renderizar no DOM
+                if (mySearchSequence !== currentSearchSequence) {
+                    return;
+                }
+
                 resultadosAtuais = pontuados.slice(0, window.activeRelationFilter ? baseTopK : topK);
 
                 const duracao = (performance.now() - t0).toFixed(0);
@@ -2012,16 +2157,20 @@
                 }
 
             } catch (err) {
-                console.error("Erro ao realizar busca:", err);
-                window.showToast("Erro durante o processamento da busca.");
+                if (mySearchSequence === currentSearchSequence) {
+                    console.error("Erro ao realizar busca:", err);
+                    window.showToast("Erro durante o processamento da busca.");
+                }
             } finally {
-                searchBtn.disabled = false;
-                document.getElementById('btnText').textContent = 'Buscar';
-                document.getElementById('btnIcon').innerHTML = `
-                    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                        <path d="m21 21-6-6m2-5a7 7 0 1 1-14 0 7 7 0 0 1 14 0z"></path>
-                    </svg>
-                `;
+                if (mySearchSequence === currentSearchSequence) {
+                    searchBtn.disabled = false;
+                    document.getElementById('btnText').textContent = 'Buscar';
+                    document.getElementById('btnIcon').innerHTML = `
+                        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <path d="m21 21-6-6m2-5a7 7 0 1 1-14 0 7 7 0 0 1 14 0z"></path>
+                        </svg>
+                    `;
+                }
             }
         }
 
@@ -4389,7 +4538,7 @@
         function obterItemBaseBNCC(codigo) {
             if (!codigo) return null;
             const codUpper = codigo.toUpperCase();
-            const found = baseBNCC.find(i => i.codigo === codUpper);
+            const found = (mapaBNCCPorCodigo && mapaBNCCPorCodigo.get(codUpper)) || baseBNCC.find(i => i.codigo === codUpper);
             if (found) return found;
 
             // Gera metadados curriculares automáticos se o código não estiver no banco vetorial
@@ -5018,16 +5167,25 @@
         const customAutocomplete = document.getElementById('customAutocomplete');
 
         function renderizarAutocomplete(textoBusca) {
-            if (!textoBusca || textoBusca.length < 2) {
+            if (!textoBusca || textoBusca.trim().length < 2) {
                 customAutocomplete.style.display = 'none';
                 return;
             }
 
-            const textLower = textoBusca.toLowerCase();
-            const correspondencias = baseBNCC.filter(item => 
-                item.codigo.toLowerCase().includes(textLower) || 
-                item.habilidade.toLowerCase().includes(textLower)
-            ).slice(0, 50); // Limita a 50 p/ performance
+            const textLower = textoBusca.trim().toLowerCase();
+            const correspondencias = [];
+            
+            // Busca rápida usando o índice em cache _searchLower, limitando a 15 para zero lag
+            for (let i = 0; i < baseBNCC.length; i++) {
+                const item = baseBNCC[i];
+                if (item._searchLower && item._searchLower.includes(textLower)) {
+                    correspondencias.push(item);
+                    if (correspondencias.length >= 15) break;
+                } else if (item.codigo && item.codigo.toLowerCase().includes(textLower)) {
+                    correspondencias.push(item);
+                    if (correspondencias.length >= 15) break;
+                }
+            }
 
             if (correspondencias.length === 0) {
                 customAutocomplete.style.display = 'none';
@@ -5051,12 +5209,6 @@
             clearBtn.style.display = 'flex';
             executarBusca();
         };
-
-        searchInput.addEventListener('input', (e) => {
-            const val = e.target.value;
-            clearBtn.style.display = val ? 'flex' : 'none';
-            renderizarAutocomplete(val);
-        });
 
         // Fecha autocomplete se clicar fora
         document.addEventListener('click', (e) => {
@@ -5192,22 +5344,62 @@
             }, { passive: true });
         }
 
-        // Input de busca e debounce
+        // Unificação do Input de busca, cancelamento de buscas obsoletas e debounce inteligente
         searchInput.addEventListener('input', (e) => {
-            const val = e.target.value;
-            clearBtn.style.display = val.length > 0 ? 'flex' : 'none';
+            const rawVal = e.target.value;
+            const val = rawVal.trim();
+            clearBtn.style.display = rawVal.length > 0 ? 'flex' : 'none';
+
+            // Desativa modo hub interdisciplinar se usuário digitou algo
+            if (isModoInterdisciplinarAtivo && val.length > 0) {
+                isModoInterdisciplinarAtivo = false;
+                const btnHub = document.getElementById('btnHubInterdisciplinar');
+                if (btnHub) btnHub.classList.remove('is-active');
+            }
+
+            // Autocomplete ágil (com limite de 15 itens e zero travamento)
+            renderizarAutocomplete(rawVal);
 
             clearTimeout(debounceTimer);
-            if (val.trim().length >= 3) {
-                debounceTimer = setTimeout(() => {
-                    executarBusca();
-                }, 350);
+
+            // Se o usuário apagou o texto (< 2 caracteres), cancela imediatamente buscas pendentes
+            if (val.length < 2) {
+                currentSearchSequence++;
+                resultsHeader.style.display = 'none';
+                viewTabs.style.display = 'none';
+                graphViewSection.style.display = 'none';
+                resultsArea.style.display = 'block';
+                resultsList.innerHTML = `
+                    <div class="empty-state">
+                        <h3 class="empty-title">Aguardando sua pesquisa</h3>
+                        <p class="empty-desc">Digite acima o tema da sua aula ou uma habilidade pedagógica, ou utilize o catálogo para explorar por Etapa e Componente.</p>
+                        <button type="button" class="btn-empty-catalog-action" onclick="window.abrirModalCatalogoBNCC()">📖 Explorar Catálogo por Etapa e Componente</button>
+                    </div>
+                `;
+                return;
             }
+
+            // Se o usuário iniciou uma nova busca e a gaveta não estiver fixada (pinned), fecha a gaveta para dar espaço à lista/grafo
+            if (typeof skillDrawer !== 'undefined' && skillDrawer && skillDrawer.classList.contains('active') && !skillDrawer.classList.contains('is-pinned')) {
+                fecharDrawer();
+            }
+
+            // Se o texto é um código exato da BNCC (ex: EF05MA02, EM13LP01), busca quase imediata (120ms); texto livre: 450ms
+            const isCodigoProvavel = /^(EI\d{2}|EF\d{2}|EM\d{2})[A-Za-z]{2}\d{2}$/i.test(val);
+            const delay = isCodigoProvavel ? 120 : 450;
+
+            debounceTimer = setTimeout(() => {
+                executarBusca();
+            }, delay);
         });
 
         clearBtn.addEventListener('click', () => {
+            currentSearchSequence++;
+            clearTimeout(debounceTimer);
             searchInput.value = '';
             clearBtn.style.display = 'none';
+            if (customAutocomplete) customAutocomplete.style.display = 'none';
+            fecharDrawer();
             searchInput.focus();
             resultsHeader.style.display = 'none';
             viewTabs.style.display = 'none';
@@ -5217,6 +5409,7 @@
                 <div class="empty-state">
                     <h3 class="empty-title">Aguardando sua pesquisa</h3>
                     <p class="empty-desc">Digite acima o tema da sua aula ou uma habilidade pedagógica para encontrar as correspondências mais próximas na BNCC.</p>
+                    <button type="button" class="btn-empty-catalog-action" onclick="window.abrirModalCatalogoBNCC()">📖 Explorar Catálogo por Etapa e Componente</button>
                 </div>
             `;
         });
@@ -5235,16 +5428,368 @@
             }
         });
 
-        // Quando o usuário digita no campo de busca, desativa o modo hub interdisciplinar
-        if (searchInput) {
-            searchInput.addEventListener('input', () => {
-                if (isModoInterdisciplinarAtivo && searchInput.value.trim().length > 0) {
-                    isModoInterdisciplinarAtivo = false;
-                    const btnHub = document.getElementById('btnHubInterdisciplinar');
-                    if (btnHub) btnHub.classList.remove('is-active');
+        // ======================================================================
+        // Catálogo Curricular BNCC (Navegação Direta por Etapa e Componente)
+        // ======================================================================
+        let catalogoItensFiltrados = [];
+        let catalogoLimiteExibicao = 40;
+
+        window.abrirModalCatalogoBNCC = function() {
+            const backdrop = document.getElementById('catalogModalBackdrop');
+            if (!backdrop) return;
+            backdrop.style.display = 'flex';
+            document.body.style.overflow = 'hidden';
+
+            // Garante que o seletor de componentes está populado
+            if (cacheDiscCounts && Object.keys(cacheDiscCounts).length > 0) {
+                const catComp = document.getElementById('catFilterComponente');
+                if (catComp && catComp.options.length <= 1) {
+                    popularFiltros();
                 }
-            });
+            }
+
+            window.filtrarCatalogoHabilidades();
+        };
+
+        window.fecharModalCatalogoBNCC = function(event) {
+            if (event && event.target && event.target.id !== 'catalogModalBackdrop' && !event.target.classList.contains('catalog-modal-close-btn') && !event.target.closest('.catalog-modal-close-btn')) {
+                return;
+            }
+            const backdrop = document.getElementById('catalogModalBackdrop');
+            if (backdrop) {
+                backdrop.style.display = 'none';
+            }
+            document.body.style.overflow = '';
+        };
+
+        window.onCatEtapaChange = function() {
+            const etapa = document.getElementById('catFilterEtapa')?.value || 'todas';
+            const anoSelect = document.getElementById('catFilterAno');
+            if (!anoSelect) return;
+
+            let optionsHtml = '<option value="todos">Todos os Anos / Faixas</option>';
+            if (etapa === 'EI') {
+                optionsHtml += `
+                    <option value="bebes">Bebês (0 a 1 ano e 6 meses) [EI01]</option>
+                    <option value="bem_pequenas">Crianças bem pequenas (1 ano e 7 meses a 3 anos e 11 meses) [EI02]</option>
+                    <option value="pequenas">Crianças pequenas (4 anos a 5 anos e 11 meses) [EI03]</option>
+                `;
+            } else if (etapa === 'EF_INICIAIS') {
+                optionsHtml += `
+                    <option value="1">1º Ano do Ensino Fundamental</option>
+                    <option value="2">2º Ano do Ensino Fundamental</option>
+                    <option value="3">3º Ano do Ensino Fundamental</option>
+                    <option value="4">4º Ano do Ensino Fundamental</option>
+                    <option value="5">5º Ano do Ensino Fundamental</option>
+                    <option value="multi_iniciais">Multianual (1º ao 5º Ano)</option>
+                `;
+            } else if (etapa === 'EF_FINAIS') {
+                optionsHtml += `
+                    <option value="6">6º Ano do Ensino Fundamental</option>
+                    <option value="7">7º Ano do Ensino Fundamental</option>
+                    <option value="8">8º Ano do Ensino Fundamental</option>
+                    <option value="9">9º Ano do Ensino Fundamental</option>
+                    <option value="multi_finais">Multianual (6º ao 9º Ano)</option>
+                `;
+            } else if (etapa === 'EM') {
+                optionsHtml += `
+                    <option value="EM13">1º ao 3º Ano do Ensino Médio (EM13)</option>
+                `;
+            } else {
+                optionsHtml += `
+                    <optgroup label="Educação Infantil">
+                        <option value="bebes">Bebês (EI01)</option>
+                        <option value="bem_pequenas">Crianças bem pequenas (EI02)</option>
+                        <option value="pequenas">Crianças pequenas (EI03)</option>
+                    </optgroup>
+                    <optgroup label="EF - Anos Iniciais">
+                        <option value="1">1º Ano</option>
+                        <option value="2">2º Ano</option>
+                        <option value="3">3º Ano</option>
+                        <option value="4">4º Ano</option>
+                        <option value="5">5º Ano</option>
+                    </optgroup>
+                    <optgroup label="EF - Anos Finais">
+                        <option value="6">6º Ano</option>
+                        <option value="7">7º Ano</option>
+                        <option value="8">8º Ano</option>
+                        <option value="9">9º Ano</option>
+                    </optgroup>
+                    <optgroup label="Ensino Médio">
+                        <option value="EM13">Ensino Médio (EM13)</option>
+                    </optgroup>
+                `;
+            }
+
+            anoSelect.innerHTML = optionsHtml;
+            window.filtrarCatalogoHabilidades();
+        };
+
+        window.limparBuscaCatalogo = function() {
+            const input = document.getElementById('catSearchInput');
+            if (input) {
+                input.value = '';
+                const btn = document.getElementById('catClearSearchBtn');
+                if (btn) btn.style.display = 'none';
+                input.focus();
+                window.filtrarCatalogoHabilidades();
+            }
+        };
+
+        window.limparFiltrosCatalogo = function() {
+            const etapa = document.getElementById('catFilterEtapa');
+            const ano = document.getElementById('catFilterAno');
+            const comp = document.getElementById('catFilterComponente');
+            const search = document.getElementById('catSearchInput');
+            if (etapa) etapa.value = 'todas';
+            if (ano) ano.value = 'todos';
+            if (comp) comp.value = 'todas';
+            if (search) search.value = '';
+            const clearBtn = document.getElementById('catClearSearchBtn');
+            if (clearBtn) clearBtn.style.display = 'none';
+            window.onCatEtapaChange();
+        };
+
+        window.carregarMaisCatalogo = function() {
+            catalogoLimiteExibicao += 40;
+            renderizarCardsCatalogo();
+        };
+
+        window.filtrarCatalogoHabilidades = function() {
+            const etapa = document.getElementById('catFilterEtapa')?.value || 'todas';
+            const ano = document.getElementById('catFilterAno')?.value || 'todos';
+            const comp = document.getElementById('catFilterComponente')?.value || 'todas';
+            const term = (document.getElementById('catSearchInput')?.value || '').trim().toLowerCase();
+            const clearSearchBtn = document.getElementById('catClearSearchBtn');
+            if (clearSearchBtn) {
+                clearSearchBtn.style.display = term ? 'flex' : 'none';
+            }
+
+            if (!baseBNCC || baseBNCC.length === 0) return;
+
+            let itens = baseBNCC;
+
+            // Filtro por Etapa
+            if (etapa !== 'todas') {
+                itens = itens.filter(item => {
+                    const tags = window.obterTagsHabilidade(item);
+                    return tags && tags.has(etapa);
+                });
+            }
+
+            // Filtro por Ano/Faixa
+            if (ano !== 'todos') {
+                itens = itens.filter(item => {
+                    const tags = window.obterTagsHabilidade(item);
+                    return tags && tags.has(ano);
+                });
+            }
+
+            // Filtro por Componente Curricular
+            if (comp !== 'todas') {
+                itens = itens.filter(item => item.disciplina === comp);
+            }
+
+            // Filtro de Texto / Código em tempo real
+            if (term.length > 0) {
+                itens = itens.filter(item => {
+                    if (item._searchLower) {
+                        return item._searchLower.includes(term);
+                    }
+                    return (item.codigo || '').toLowerCase().includes(term) ||
+                           (item.disciplina || '').toLowerCase().includes(term) ||
+                           (item.habilidade || '').toLowerCase().includes(term);
+                });
+            }
+
+            // Ordenação padrão: por código alfanumérico
+            itens.sort((a, b) => (a.codigo || '').localeCompare(b.codigo || ''));
+
+            catalogoItensFiltrados = itens;
+            catalogoLimiteExibicao = 40; // reset paginação
+
+            atualizarStatsEFiltrosCatalogo(etapa, ano, comp, term, itens.length);
+            renderizarCardsCatalogo();
+        };
+
+        function extrairBloomCatalogo(item) {
+            const texto = item.habilidade || '';
+            const limpo = texto.replace(/^\([A-Za-z0-9]+\)\s*/, '').trim();
+            const primeiroVerbo = (limpo.split(/\s+/)[0] || '').toLowerCase();
+
+            if (/^(lembrar|recordar|reconhecer|identificar|nomear|listar|localizar|relatar)/i.test(primeiroVerbo)) {
+                return { nivel: 'Lembrar / Reconhecer', cor: '#0284c7', bg: '#e0f2fe' };
+            }
+            if (/^(compreender|entender|interpretar|explicar|descrever|exemplificar|classificar|resumir|inferir)/i.test(primeiroVerbo)) {
+                return { nivel: 'Compreender', cor: '#2563eb', bg: '#dbeafe' };
+            }
+            if (/^(aplicar|usar|utilizar|executar|implementar|resolver|calcular|demonstrar|operar|praticar)/i.test(primeiroVerbo)) {
+                return { nivel: 'Aplicar', cor: '#059669', bg: '#d1fae5' };
+            }
+            if (/^(analisar|diferenciar|organizar|estruturar|comparar|contrastar|examinar|investigar|relacionar)/i.test(primeiroVerbo)) {
+                return { nivel: 'Analisar', cor: '#d97706', bg: '#fef3c7' };
+            }
+            if (/^(avaliar|julgar|criticar|verificar|checar|validar|defender|justificar|argumentar)/i.test(primeiroVerbo)) {
+                return { nivel: 'Avaliar', cor: '#db2777', bg: '#fce7f3' };
+            }
+            if (/^(criar|produzir|planejar|elaborar|construir|desenvolver|formular|projetar|compor)/i.test(primeiroVerbo)) {
+                return { nivel: 'Criar / Elaborar', cor: '#7c3aed', bg: '#ede9fe' };
+            }
+            return { nivel: 'Cognitivo BNCC', cor: '#4f46e5', bg: '#eef2ff' };
         }
+
+        function atualizarStatsEFiltrosCatalogo(etapa, ano, comp, term, total) {
+            const statsEl = document.getElementById('catStatsInfo');
+            const tagsEl = document.getElementById('catQuickTags');
+            if (!statsEl) return;
+
+            let partes = [];
+            if (comp !== 'todas') partes.push(`<strong>${comp}</strong>`);
+            if (etapa !== 'todas') {
+                const nomesEtapa = {
+                    'EI': 'Educação Infantil',
+                    'EF_INICIAIS': 'Anos Iniciais',
+                    'EF_FINAIS': 'Anos Finais',
+                    'EM': 'Ensino Médio'
+                };
+                partes.push(`em <strong>${nomesEtapa[etapa] || etapa}</strong>`);
+            }
+            if (ano !== 'todos') {
+                partes.push(`(Fase: <strong>${ano}</strong>)`);
+            }
+            if (term) {
+                partes.push(`contendo "<em>${term}</em>"`);
+            }
+
+            const descFiltro = partes.length > 0 ? partes.join(' ') : 'no currículo completo da BNCC';
+            statsEl.innerHTML = `Exibindo <strong>${total.toLocaleString()}</strong> de <strong>${(baseBNCC ? baseBNCC.length : 1517).toLocaleString()}</strong> habilidades ${descFiltro}`;
+
+            const temFiltroAtivo = etapa !== 'todas' || ano !== 'todos' || comp !== 'todas' || term.length > 0;
+            if (tagsEl) {
+                if (temFiltroAtivo) {
+                    tagsEl.innerHTML = `
+                        <button type="button" class="btn-cat-reset-filters" onclick="window.limparFiltrosCatalogo()" title="Restaurar visualização de todas as habilidades">
+                            <span>🔄 Limpar Filtros</span>
+                        </button>
+                    `;
+                } else {
+                    tagsEl.innerHTML = `<span class="cat-all-badge">✨ Todas as habilidades carregadas</span>`;
+                }
+            }
+        }
+
+        function renderizarCardsCatalogo() {
+            const container = document.getElementById('catCardsContainer');
+            if (!container) return;
+
+            if (catalogoItensFiltrados.length === 0) {
+                container.innerHTML = `
+                    <div class="cat-empty-state">
+                        <div class="cat-empty-icon">🔍</div>
+                        <h4 class="cat-empty-title">Nenhuma habilidade encontrada</h4>
+                        <p class="cat-empty-desc">Tente ajustar a etapa, o componente ou o termo de busca para visualizar as habilidades.</p>
+                        <button type="button" class="btn-cat-empty-reset" onclick="window.limparFiltrosCatalogo()">Ver Todas as Habilidades</button>
+                    </div>
+                `;
+                return;
+            }
+
+            const visiveis = catalogoItensFiltrados.slice(0, catalogoLimiteExibicao);
+            let html = '';
+
+            visiveis.forEach(item => {
+                const discCor = getDisciplinaCor(item.disciplina);
+                const bloom = extrairBloomCatalogo(item);
+                const relInfo = catalogoRelacoesFinais ? catalogoRelacoesFinais[item.codigo] : null;
+
+                const countReq = relInfo && relInfo.requisitos ? relInfo.requisitos.length : 0;
+                const countPrep = relInfo && relInfo.prepara_para ? relInfo.prepara_para.length : 0;
+                const countRel = relInfo && relInfo.relacionadas ? relInfo.relacionadas.length : 0;
+
+                const textoLimpo = (item.habilidade || '').replace(/^\([A-Za-z0-9]+\)\s*/, '');
+
+                html += `
+                    <div class="cat-skill-card" onclick="window.selecionarHabilidadeDoCatalogo('${item.codigo}')" style="--cat-card-accent: ${discCor};" title="Clique para selecionar ${item.codigo} e abrir no mapa e na gaveta">
+                        <div class="cat-card-header">
+                            <div class="cat-card-tags">
+                                <span class="cat-code-badge">${item.codigo}</span>
+                                <span class="cat-disc-badge" style="background-color: ${discCor}18; color: ${discCor}; border: 1px solid ${discCor}40;">
+                                    ${item.disciplina || 'Geral'}
+                                </span>
+                                <span class="cat-ano-badge">${item.ano_faixa || 'BNCC'}</span>
+                            </div>
+                            <span class="cat-bloom-badge" style="background-color: ${bloom.bg}; color: ${bloom.cor};" title="Taxonomia de Bloom: Nível Cognitivo">
+                                ${bloom.nivel}
+                            </span>
+                        </div>
+
+                        <p class="cat-card-desc">${textoLimpo}</p>
+
+                        ${item.objeto_conhecimento ? `
+                            <div class="cat-card-objeto">
+                                <strong>Objeto:</strong> ${item.objeto_conhecimento}
+                            </div>
+                        ` : ''}
+
+                        <div class="cat-card-footer">
+                            <div class="cat-card-relations">
+                                ${countReq > 0 ? `<span class="cat-rel-pill req" title="${countReq} pré-requisitos identificados">⚡ ${countReq} pré-req</span>` : ''}
+                                ${countPrep > 0 ? `<span class="cat-rel-pill prep" title="Prepara para ${countPrep} habilidades posteriores">➔ ${countPrep} avança</span>` : ''}
+                                ${countRel > 0 ? `<span class="cat-rel-pill rel" title="${countRel} relações intradisciplinares e interdisciplinares">🔄 ${countRel} conexões</span>` : ''}
+                                ${countReq === 0 && countPrep === 0 && countRel === 0 ? `<span class="cat-rel-pill generic">📚 BNCC</span>` : ''}
+                            </div>
+                            <button type="button" class="btn-select-cat-skill" onclick="event.stopPropagation(); window.selecionarHabilidadeDoCatalogo('${item.codigo}')">
+                                <span>Selecionar</span>
+                                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="9 18 15 12 9 6"></polyline></svg>
+                            </button>
+                        </div>
+                    </div>
+                `;
+            });
+
+            if (catalogoItensFiltrados.length > catalogoLimiteExibicao) {
+                const restantes = catalogoItensFiltrados.length - catalogoLimiteExibicao;
+                html += `
+                    <div class="cat-load-more-wrap">
+                        <button type="button" class="btn-cat-load-more" onclick="window.carregarMaisCatalogo()">
+                            Carregar mais ${Math.min(40, restantes)} habilidades (restam ${restantes}) ➔
+                        </button>
+                    </div>
+                `;
+            }
+
+            container.innerHTML = html;
+        }
+
+        window.selecionarHabilidadeDoCatalogo = function(codigo) {
+            if (!codigo) return;
+            window.fecharModalCatalogoBNCC();
+
+            // Seta o valor no campo de busca
+            searchInput.value = codigo;
+            clearBtn.style.display = 'flex';
+            if (customAutocomplete) customAutocomplete.style.display = 'none';
+
+            // Executa a busca (caminho rápido exato, sem inferência de rede neural!)
+            executarBusca();
+
+            // Abre o drawer com os detalhes completos pedagógicos e foca no grafo
+            setTimeout(() => {
+                window.abrirHabilidadePorCodigo(codigo);
+            }, 120);
+
+            window.showToast(`Habilidade ${codigo} selecionada com sucesso!`);
+        };
+
+        // Fecha o modal do catálogo ao pressionar Escape
+        document.addEventListener('keydown', (e) => {
+            if (e.key === 'Escape') {
+                const catModal = document.getElementById('catalogModalBackdrop');
+                if (catModal && catModal.style.display !== 'none') {
+                    window.fecharModalCatalogoBNCC();
+                }
+            }
+        });
 
         // Chips de busca rápida
         document.querySelectorAll('.query-chip:not(.chip-interdisciplinar)').forEach(chip => {
