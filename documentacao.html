@@ -375,10 +375,10 @@
 +---------------------------------------------------------------------------------------------------+
 | ETAPA 1: BUILD & ENRIQUECIMENTO VETORIAL (Executado em Python offline)                            |
 |                                                                                                   |
-|  [ BNCC CSV Oficial ]  +  [ Mapas de Foco Reúna ]  +  [ Competências Gerais/Específicas MEC ]    |
+|  [ BNCC CSV Oficial ]  +  [ Matriz de Progressão ]  +  [ Competências Gerais/Específicas MEC ]   |
 |               │                           │                                    │                  |
 |               ▼                           ▼                                    ▼                  |
-|       (gerar_base.py)         (extrair_progressao_foco.py)        (enriquecer_competencias.py)    |
+|       (gerar_base.py)         (construir_relacoes_finais.py)      (enriquecer_competencias.py)    |
 |               │                           │                                    │                  |
 |               ▼                           ▼                                    ▼                  |
 |     bncc_vetores.json         progressao_bncc.json                 competencias_bncc.json         |
@@ -438,9 +438,9 @@
                                 <td>1.517 habilidades curriculares oficiais da Educação Infantil, Ensino Fundamental (Anos Iniciais e Finais) e Ensino Médio.</td>
                             </tr>
                             <tr>
-                                <td><strong>Mapas de Foco da BNCC</strong></td>
-                                <td>Instituto Reúna, Fundação Lemann e Itaú Social</td>
-                                <td>Identificação de habilidades focais, conhecimentos prévios indispensáveis, habilidades de apoio no mesmo ano e comentários de progressão.</td>
+                                <td><strong>Matriz de Progressão Curricular e Taxonomia de Bloom</strong></td>
+                                <td>Algoritmo Concecta BNCC / Referencial Curricular BNCC</td>
+                                <td>Mapeamento estruturado de habilidades essenciais e estruturantes, conhecimentos prévios indispensáveis, habilidades de suporte e encadeamento longitudinal da BNCC.</td>
                             </tr>
                             <tr>
                                 <td><strong>10 Competências Gerais da Educação Básica</strong></td>
@@ -571,12 +571,12 @@ Texto = [CÓDIGO_HABILIDADE] + [PALAVRAS_CHAVE_TFIDF] + [COMPONENTE_CURRICULAR] 
                             <p>Habilidades que constituem <strong>conhecimento prévio indispensável</strong>. Se o aluno não consolidou essas habilidades no passado, terá dificuldades na habilidade atual.</p>
                         </div>
                         <div class="feature-card" style="border-left: 4px solid #4f46e5;">
-                            <h4>📌 2. Mesmo Ano (Apoio & Foco)</h4>
+                            <h4>📌 2. Mesmo Ano (Apoio & Habilidade Selecionada)</h4>
                             <p>Habilidades do mesmo componente curricular que servem de <strong>suporte direto</strong> ou que precisam ser trabalhadas no mesmo ciclo letivo.</p>
                         </div>
                         <div class="feature-card" style="border-left: 4px solid #8b5cf6;">
                             <h4>⏭️ 3. Anos Seguintes (Futura)</h4>
-                            <p>Habilidades dos anos posteriores e Ensino Médio que <strong>desdobram e aprofundam</strong> o objeto de conhecimento da habilidade em foco.</p>
+                            <p>Habilidades dos anos posteriores e Ensino Médio que <strong>desdobram e aprofundam</strong> o objeto de conhecimento da habilidade selecionada.</p>
                         </div>
                     </div>
                 </section>
@@ -598,7 +598,7 @@ Texto = [CÓDIGO_HABILIDADE] + [PALAVRAS_CHAVE_TFIDF] + [COMPONENTE_CURRICULAR] 
                         </div>
                         <div class="feature-card">
                             <h4>🧭 Linhagem Pedagógica</h4>
-                            <p>Layout longitudinal em 3 colunas com setas vetoriais indicando fluxo de pré-requisito e continuidade pedagógica, halo pulsante no nó focal e orientações do Instituto Reúna.</p>
+                            <p>Layout longitudinal em 3 colunas com setas vetoriais indicando fluxo de pré-requisito e continuidade pedagógica, halo pulsante no nó selecionado e orientações didáticas curriculares.</p>
                         </div>
                         <div class="feature-card">
                             <h4>🕸️ Rede de Forças Semântica</h4>

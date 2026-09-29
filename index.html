@@ -3473,14 +3473,14 @@
                     return a.codigo;
                 });
 
-                const reunaProg = catalogoProgressao[focalCode] || {};
+                const matrizProg = catalogoProgressao[focalCode] || {};
                 prog = {
                     pre_ant,
                     pre_mesmo,
                     apoio,
                     post_seg,
                     post_mesmo,
-                    comentario: reunaProg.comentario || ''
+                    comentario: matrizProg.comentario || ''
                 };
             } else {
                 prog = catalogoProgressao[focalCode] || {
@@ -3539,7 +3539,7 @@
 
             // Largura e coordenadas das 3 colunas pedagógicas
             const col1X = 190; // Anos Anteriores
-            const col2X = 600; // Mesmo Ano & Foco
+            const col2X = 600; // Mesmo Ano & Habilidade Selecionada
             const col3X = 1010; // Continuidade & Desdobramentos
 
             const cardW = 250;
@@ -3605,8 +3605,8 @@
                     bg: '#fffbeb'
                 },
                 {
-                    title: `📌 Mesmo Ano (${focalItem.ano_faixa || 'Ano Atual'}) & Foco`,
-                    sub: `${preMesmoNodes.length} pré-req. mesmo ano • 1 foco • ${apoioNodes.length} apoio`,
+                    title: `📌 Mesmo Ano (${focalItem.ano_faixa || 'Ano Atual'}) & Habilidade Selecionada`,
+                    sub: `${preMesmoNodes.length} pré-req. mesmo ano • 1 selecionada • ${apoioNodes.length} apoio`,
                     x: col2X,
                     cor: '#4f46e5',
                     bg: '#eef2ff'
@@ -3693,7 +3693,7 @@
                 });
             });
 
-            // Posições Coluna 2: Pré-requisitos no Mesmo Ano (Acima do Foco)
+            // Posições Coluna 2: Pré-requisitos no Mesmo Ano (Acima da Habilidade Selecionada)
             preMesmoNodes.forEach((node, idx) => {
                 const py = startContentY + (idx * gapY);
                 nodePosMap.set(node.codigo, {
@@ -3709,7 +3709,7 @@
                 });
             });
 
-            // Posições Coluna 2: Apoio no Mesmo Ano (Abaixo do Foco)
+            // Posições Coluna 2: Apoio no Mesmo Ano (Abaixo da Habilidade Selecionada)
             const apoioStartY = focalPos.y + focalCardH + 35;
             apoioNodes.forEach((node, idx) => {
                 const py = apoioStartY + (idx * gapY);
@@ -3764,7 +3764,7 @@
             // Linhas de Conexão
             const linksGroup = g.append('g').attr('class', 'lineage-links');
 
-            // 1. Pré-requisitos de Anos Anteriores -> Foco
+            // 1. Pré-requisitos de Anos Anteriores -> Habilidade Selecionada
             preAntNodes.forEach(node => {
                 const src = nodePosMap.get(node.codigo);
                 if (src && focalPos) {
@@ -3784,7 +3784,7 @@
                 }
             });
 
-            // 2. Pré-requisitos no Mesmo Ano -> Foco (Vêm de cima para o topo do foco)
+            // 2. Pré-requisitos no Mesmo Ano -> Habilidade Selecionada (Vêm de cima para o topo da selecionada)
             preMesmoNodes.forEach(node => {
                 const src = nodePosMap.get(node.codigo);
                 if (src && focalPos) {
@@ -3804,7 +3804,7 @@
                 }
             });
 
-            // 3. Foco -> Apoio (Tracejada verde de sinergia)
+            // 3. Habilidade Selecionada -> Apoio (Tracejada verde de sinergia)
             apoioNodes.forEach(node => {
                 const tgt = nodePosMap.get(node.codigo);
                 if (tgt && focalPos) {
@@ -3824,7 +3824,7 @@
                 }
             });
 
-            // 4. Foco -> Continuidade no Mesmo Ano
+            // 4. Habilidade Selecionada -> Continuidade no Mesmo Ano
             postMesmoNodes.forEach(node => {
                 const tgt = nodePosMap.get(node.codigo);
                 if (tgt && focalPos) {
@@ -3844,7 +3844,7 @@
                 }
             });
 
-            // 5. Foco -> Continuidade Anos Seguintes e EM
+            // 5. Habilidade Selecionada -> Continuidade Anos Seguintes e EM
             postSegNodes.forEach(node => {
                 const tgt = nodePosMap.get(node.codigo);
                 if (tgt && focalPos) {
@@ -3912,7 +3912,7 @@
                         .attr('font-size', '11px')
                         .attr('font-weight', '700')
                         .attr('fill', '#ffffff')
-                        .text('⭐ HABILIDADE EM FOCO');
+                        .text('⭐ HABILIDADE SELECIONADA');
 
                     // Linha 1: Código (esquerda) + Ano/Faixa (direita)
                     card.append('text')
@@ -4533,7 +4533,7 @@
         }
 
         // ======================================================================
-        // Helpers de Linhagem Pedagógica e Pré-Requisitos (BNCC & Mapas de Foco)
+        // Helpers de Linhagem Pedagógica e Pré-Requisitos (Progressão BNCC)
         // ======================================================================
         function obterItemBaseBNCC(codigo) {
             if (!codigo) return null;
@@ -4727,14 +4727,14 @@
                     </div>
                 ` : ''}
 
-                <!-- Linhagem Pedagógica e Pré-Requisitos (Mapas de Foco & BNCC) -->
+                <!-- Linhagem Pedagógica e Pré-Requisitos (Progressão Curricular BNCC) -->
                 <div class="drawer-lineage-card">
                     <div class="lineage-card-header">
                         <div style="display: flex; align-items: center; gap: 8px;">
                             <span style="font-size: 1.25rem;">🧬</span>
                             <div>
                                 <h4 class="lineage-main-title">Linhagem Pedagógica e Pré-Requisitos</h4>
-                                <span class="lineage-sub-title">Mapeamento oficial de encadeamento didático (Instituto Reúna / MEC)</span>
+                                <span class="lineage-sub-title">Mapeamento estruturado de progressão curricular e Taxonomia de Bloom</span>
                             </div>
                         </div>
                         <button type="button" class="btn-focus-lineage" onclick="window.verLinhagemNoGrafo('${item.codigo}')" title="Abrir árvore de progressão e pré-requisitos no grafo interativo">
@@ -4754,7 +4754,7 @@
                                 </div>
                             </div>
                             <p class="lineage-group-desc">
-                                Habilidades que constroem a base cognitiva para a alvo (Taxonomia de Bloom: verbos de menor complexidade em ano anterior ou início do ciclo).
+                                Habilidades que constroem a base cognitiva para a habilidade selecionada (Taxonomia de Bloom: verbos de menor complexidade em ano anterior ou início do ciclo).
                             </p>
                             <div class="lineage-cards-list">
                                 ${(relFinal.requisitos && relFinal.requisitos.length > 0) ? 
@@ -4817,18 +4817,17 @@
                             </div>
                         ` : ''}
 
-                        <!-- 5. Comentário Didático Oficial (se disponível via Instituto Reúna) -->
+                        <!-- 5. Orientações Didáticas e Lógica de Progressão -->
                         ${(prog && prog.comentario) ? `
-                            <div class="lineage-reuna-box" style="margin-top: 12px;">
-                                <div class="reuna-header">
+                            <div class="lineage-orientacao-box" style="margin-top: 12px;">
+                                <div class="orientacao-header">
                                     <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"></path></svg>
-                                    <span>Orientações Didáticas e Lógica de Progressão (Instituto Reúna):</span>
+                                    <span>Orientações Didáticas e Lógica de Progressão Curricular:</span>
                                 </div>
-                                <p class="reuna-text">${prog.comentario}</p>
+                                <p class="orientacao-text">${prog.comentario}</p>
                             </div>
                         ` : ''}
                     ` : (prog ? `
-                        <!-- Fallback para catálogo legado Reúna -->
                         <div class="lineage-subgroup mesmo-ano">
                             <div class="lineage-subgroup-header">
                                 <span class="lineage-icon">📌</span>
@@ -4862,17 +4861,17 @@
                         </div>
 
                         ${prog.comentario ? `
-                            <div class="lineage-reuna-box">
-                                <div class="reuna-header">
+                            <div class="lineage-orientacao-box">
+                                <div class="orientacao-header">
                                     <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"></path></svg>
-                                    <span>Orientações Didáticas (Instituto Reúna):</span>
+                                    <span>Orientações Didáticas e Encadeamento Curricular:</span>
                                 </div>
-                                <p class="reuna-text">${prog.comentario}</p>
+                                <p class="orientacao-text">${prog.comentario}</p>
                             </div>
                         ` : ''}
                     ` : `
                         <div class="lineage-empty-notice" style="margin-top: 10px;">
-                            Esta habilidade não possui ficha individual de mapa de foco prioritário.
+                            Progressão pedagógica mapeada via Taxonomia de Bloom e encadeamento temporal curricular.
                         </div>
                     `)}
                 </div>

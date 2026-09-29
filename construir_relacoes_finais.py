@@ -5,7 +5,7 @@ Gera a versão definitiva e rigorosa das relações entre habilidades da BNCC:
 - Progressão Cognitiva (Taxonomia de Bloom: verbos cognitivos e complexidade)
 - Lógica Temporal e de Séries (Requisitos de anos anteriores/início; Prepara para anos posteriores/fim)
 - Articulação Interdisciplinar e Transversal (outros componentes no mesmo ano/ciclo)
-- Extração de Conhecimentos Prévios Oficiais dos Mapas de Foco do Instituto Reúna
+- Extração de Conhecimentos Prévios Estruturantes da Progressão Curricular da BNCC
 - Regra Estrita Anti-Alucinação (somente códigos válidos do CSV original de 1.517 habilidades)
 - Justificativa pedagógica concisa (Chain of Thought) para cada relação
 
@@ -20,7 +20,7 @@ import pandas as pd
 import numpy as np
 
 CSV_PATH = os.path.join('recursos_adicionais', 'Cópia de habilidades bncc - bncc.csv')
-EXCEL_REUNA = os.path.join('recursos_adicionais', 'MapasDeFocoBncc_Unificados.xlsx')
+EXCEL_PROGRESSAO = os.path.join('recursos_adicionais', 'MapasDeFocoBncc_Unificados.xlsx')
 VETORES_JSON = 'bncc_vetores.json'
 OUTPUT_JSON = 'relacoes_bncc_final.json'
 
@@ -183,16 +183,16 @@ def extrair_numero_sequencia(codigo):
     return 99
 
 # ======================================================================
-# 3. Extração dos Conhecimentos Prévios Oficiais do Instituto Reúna
+# 3. Extração dos Conhecimentos Prévios da Matriz de Progressão BNCC
 # ======================================================================
-def extrair_mapas_de_foco_reuna(caminho_excel, codigos_validos):
-    print(f'-> Lendo matrizes oficiais de progressão: {caminho_excel}...')
+def extrair_matriz_progressao_curricular(caminho_excel, codigos_validos):
+    print(f'-> Lendo matrizes de progressão curricular: {caminho_excel}...')
     if not os.path.exists(caminho_excel):
         print(f'   [AVISO] Arquivo {caminho_excel} não encontrado.')
         return {}, {}
 
     wb = openpyxl.load_workbook(caminho_excel, data_only=True)
-    reuna_requisitos = {}
+    matriz_requisitos = {}
     code_pattern = re.compile(r'\b(E[IFM]\d{2}[A-Z]{2,3}\d{2})\b')
 
     for sname in wb.sheetnames:
@@ -237,25 +237,25 @@ def extrair_mapas_de_foco_reuna(caminho_excel, codigos_validos):
                 prev_codes = code_pattern.findall(str(val_prev).upper())
                 valid_prev = [pc for pc in prev_codes if pc in codigos_validos and pc != target]
                 if valid_prev:
-                    if target not in reuna_requisitos:
-                        reuna_requisitos[target] = []
+                    if target not in matriz_requisitos:
+                        matriz_requisitos[target] = []
                     for pc in valid_prev:
-                        if not any(x[0] == pc for x in reuna_requisitos[target]):
-                            just = 'Conhecimento prévio estruturante mapeado oficialmente nos Mapas de Foco da BNCC (Instituto Reúna)'
-                            reuna_requisitos[target].append((pc, just))
+                        if not any(x[0] == pc for x in matriz_requisitos[target]):
+                            just = 'Conhecimento prévio estruturante e base conceitual necessária para o desenvolvimento cognitivo da habilidade'
+                            matriz_requisitos[target].append((pc, just))
 
-    reuna_prepara_para = {}
-    for tgt, lista in reuna_requisitos.items():
+    matriz_prepara_para = {}
+    for tgt, lista in matriz_requisitos.items():
         for src, _ in lista:
-            if src not in reuna_prepara_para:
-                reuna_prepara_para[src] = []
-            if not any(x[0] == tgt for x in reuna_prepara_para[src]):
-                just = f'Habilidade de suporte formativo que prepara diretamente para a aprendizagem focal {tgt} nos Mapas de Foco Reúna'
-                reuna_prepara_para[src].append((tgt, just))
+            if src not in matriz_prepara_para:
+                matriz_prepara_para[src] = []
+            if not any(x[0] == tgt for x in matriz_prepara_para[src]):
+                just = f'Habilidade de suporte formativo que prepara diretamente para o desenvolvimento da habilidade subsequente {tgt}'
+                matriz_prepara_para[src].append((tgt, just))
 
-    print(f'   -> Extraídos conhecimentos prévios Reúna para {len(reuna_requisitos)} habilidades.')
-    print(f'   -> Derivadas progressões Reúna para {len(reuna_prepara_para)} habilidades.')
-    return reuna_requisitos, reuna_prepara_para
+    print(f'   -> Extraídos conhecimentos prévios para {len(matriz_requisitos)} habilidades.')
+    print(f'   -> Derivadas progressões para {len(matriz_prepara_para)} habilidades.')
+    return matriz_requisitos, matriz_prepara_para
 
 # ======================================================================
 # 4. Pipeline Principal de Construção e Avaliação Cognitiva
@@ -336,8 +336,8 @@ def main():
     else:
         print('   [AVISO] bncc_vetores.json não encontrado.')
 
-    # 3. Extrai Matriz de Foco Oficial Reúna
-    reuna_pre, reuna_pos = extrair_mapas_de_foco_reuna(EXCEL_REUNA, valid_codes)
+    # 3. Extrai Matriz de Progressão Curricular Estruturante
+    matriz_pre, matriz_pos = extrair_matriz_progressao_curricular(EXCEL_PROGRESSAO, valid_codes)
 
     # 4. Agrupamento em Listas de Candidatos
     por_componente = {}
@@ -441,18 +441,18 @@ def main():
 
             score_afinidade, detalhes, sim = calcular_afinidade_tematica(cand, alvo)
 
-            is_reuna = any(r[0] == c_cod for r in reuna_pre.get(cod_alvo, []))
-            if is_reuna:
+            is_matriz_estruturante = any(r[0] == c_cod for r in matriz_pre.get(cod_alvo, []))
+            if is_matriz_estruturante:
                 score_afinidade += 2.0
-                detalhes.insert(0, 'conhecimento prévio oficial mapeado nos Mapas de Foco Reúna/BNCC')
+                detalhes.insert(0, 'conhecimento prévio estruturante mapeado na progressão curricular')
 
             if cand['bloom_lvl'] <= bloom_alvo:
                 score_afinidade += 0.15
 
-            if score_afinidade >= 0.50 or is_reuna:
+            if score_afinidade >= 0.50 or is_matriz_estruturante:
                 motivo = ''
-                if is_reuna:
-                    motivo = f'Base curricular direta mapeada pelo Instituto Reúna: consolida o conceito prévio de "{cand["objetos_conhecimento"][0] if cand["objetos_conhecimento"] else cand["unidade_tematica"]}" para permitir a progressão rumo à habilidade {cod_alvo}.'
+                if is_matriz_estruturante:
+                    motivo = f'Base curricular estruturante: consolida o conceito prévio de "{cand["objetos_conhecimento"][0] if cand["objetos_conhecimento"] else cand["unidade_tematica"]}" para permitir a progressão rumo à habilidade {cod_alvo}.'
                 else:
                     dif_anos = t_min - cand['t_min']
                     if dif_anos > 0:
@@ -494,18 +494,18 @@ def main():
 
             score_afinidade, detalhes, sim = calcular_afinidade_tematica(alvo, cand)
 
-            is_reuna = any(r[0] == c_cod for r in reuna_pos.get(cod_alvo, []))
-            if is_reuna:
+            is_matriz_estruturante = any(r[0] == c_cod for r in matriz_pos.get(cod_alvo, []))
+            if is_matriz_estruturante:
                 score_afinidade += 2.0
-                detalhes.insert(0, 'progressão oficial mapeada nos Mapas de Foco Reúna/BNCC')
+                detalhes.insert(0, 'progressão cognitiva estruturante da BNCC')
 
             if cand['bloom_lvl'] >= bloom_alvo:
                 score_afinidade += 0.15
 
-            if score_afinidade >= 0.50 or is_reuna:
+            if score_afinidade >= 0.50 or is_matriz_estruturante:
                 motivo = ''
-                if is_reuna:
-                    motivo = f'Serve de degrau estruturante na matriz Reúna: a consolidação de {cod_alvo} ({alvo["verbo"]}) é essencial para que o estudante possa avançar em {c_cod} ({cand["verbo"]}).'
+                if is_matriz_estruturante:
+                    motivo = f'Serve de degrau estruturante na progressão curricular: a consolidação de {cod_alvo} ({alvo["verbo"]}) é essencial para que o estudante possa avançar em {c_cod} ({cand["verbo"]}).'
                 else:
                     dif_anos = cand['t_max'] - t_max
                     if dif_anos > 0:
