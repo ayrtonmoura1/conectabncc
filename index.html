@@ -4014,7 +4014,35 @@
         }
 
         // ======================================================================
-        // Renderização em Linhagem Pedagógica e Pré-Requisitos (Árvore de Progressão)
+        // Helper: Quebra de texto inteligente sem partir palavras ao meio
+        // ======================================================================
+        function formatarLinhasPedagogicas(texto, maxLinhas = 2, maxChars = 40) {
+            if (!texto) return [];
+            const limpo = texto.replace(/^\([A-Za-z0-9]+\)\s*/, '').trim();
+            const palavras = limpo.split(/\s+/);
+            const linhas = [];
+            let atual = '';
+            for (const p of palavras) {
+                if ((atual ? atual + ' ' + p : p).length <= maxChars) {
+                    atual = atual ? atual + ' ' + p : p;
+                } else {
+                    if (atual) linhas.push(atual);
+                    atual = p;
+                    if (linhas.length >= maxLinhas - 1) break;
+                }
+            }
+            if (atual && linhas.length < maxLinhas) {
+                linhas.push(atual);
+            }
+            const totalChars = linhas.join(' ').length;
+            if (limpo.length > totalChars && linhas.length > 0) {
+                linhas[linhas.length - 1] = linhas[linhas.length - 1].replace(/[.,;: ]+$/, '') + '...';
+            }
+            return linhas;
+        }
+
+        // ======================================================================
+        // Renderização em Linhagem Pedagógica e Pré-Requisitos (Fluxo Didático 1 -> 2 -> 3)
         // ======================================================================
         function renderizarLinhagemTree(focalCode) {
             if (!focalCode) {
@@ -4034,67 +4062,108 @@
             const relFinal = catalogoRelacoesFinais[focalCode];
             const focalAnoInfo = extrairInfoAnoOrganograma(focalItem);
             const justificativaMap = new Map();
-            let prog;
+            const jaUsados = new Set([focalCode]);
+
+            // Listas higienizadas sem sobreposição
+            const rawPreAnt = [];
+            const rawPreMesmo = [];
+            const rawPostSeg = [];
+            const rawPostMesmo = [];
+            const rawApoio = [];
 
             if (relFinal) {
-                const pre_ant = [];
-                const pre_mesmo = [];
+                // 1. Requisitos
                 (relFinal.requisitos || []).forEach(r => {
+                    if (jaUsados.has(r.codigo)) return;
+                    jaUsados.add(r.codigo);
                     justificativaMap.set(r.codigo, r.justificativa);
                     const it = obterItemBaseBNCC(r.codigo);
+                    if (!it) return;
                     const ano = extrairInfoAnoOrganograma(it);
                     if (ano.ordem < focalAnoInfo.ordem) {
-                        pre_ant.push(r.codigo);
+                        rawPreAnt.push({ codigo: r.codigo, item: it, anoInfo: ano, subTipo: 'ant' });
                     } else {
-                        pre_mesmo.push(r.codigo);
+                        rawPreMesmo.push({ codigo: r.codigo, item: it, anoInfo: ano, subTipo: 'mesmo' });
                     }
                 });
 
-                const post_seg = [];
-                const post_mesmo = [];
+                // 2. Prepara Para (Continuidade)
                 (relFinal.prepara_para || []).forEach(p => {
+                    if (jaUsados.has(p.codigo)) return;
+                    jaUsados.add(p.codigo);
                     justificativaMap.set(p.codigo, p.justificativa);
                     const it = obterItemBaseBNCC(p.codigo);
+                    if (!it) return;
                     const ano = extrairInfoAnoOrganograma(it);
                     if (ano.ordem > focalAnoInfo.ordem) {
-                        post_seg.push(p.codigo);
+                        rawPostSeg.push({ codigo: p.codigo, item: it, anoInfo: ano, subTipo: 'seg' });
                     } else {
-                        post_mesmo.push(p.codigo);
+                        rawPostMesmo.push({ codigo: p.codigo, item: it, anoInfo: ano, subTipo: 'mesmo' });
                     }
                 });
 
-                const apoio = (relFinal.relacionadas || []).map(a => {
+                // 3. Relacionadas / Apoio Interdisciplinar (Máximo 2 no grafo para manter visual limpo)
+                (relFinal.relacionadas || []).slice(0, 2).forEach(a => {
+                    if (jaUsados.has(a.codigo)) return;
+                    jaUsados.add(a.codigo);
                     justificativaMap.set(a.codigo, a.justificativa);
-                    return a.codigo;
+                    const it = obterItemBaseBNCC(a.codigo);
+                    if (it) {
+                        rawApoio.push({ codigo: a.codigo, item: it, anoInfo: extrairInfoAnoOrganograma(it), subTipo: 'apoio' });
+                    }
                 });
-
-                const matrizProg = catalogoProgressao[focalCode] || {};
-                prog = {
-                    pre_ant,
-                    pre_mesmo,
-                    apoio,
-                    post_seg,
-                    post_mesmo,
-                    comentario: matrizProg.comentario || ''
-                };
             } else {
-                prog = catalogoProgressao[focalCode] || {
-                    pre_mesmo: [],
-                    pre_ant: [],
-                    apoio: [],
-                    post_mesmo: [],
-                    post_seg: [],
-                    comentario: ''
-                };
+                const prog = catalogoProgressao[focalCode] || {};
+                (prog.pre_ant || []).forEach(c => {
+                    if (jaUsados.has(c)) return;
+                    jaUsados.add(c);
+                    const it = obterItemBaseBNCC(c);
+                    if (it) rawPreAnt.push({ codigo: c, item: it, anoInfo: extrairInfoAnoOrganograma(it), subTipo: 'ant' });
+                });
+                (prog.pre_mesmo || []).forEach(c => {
+                    if (jaUsados.has(c)) return;
+                    jaUsados.add(c);
+                    const it = obterItemBaseBNCC(c);
+                    if (it) rawPreMesmo.push({ codigo: c, item: it, anoInfo: extrairInfoAnoOrganograma(it), subTipo: 'mesmo' });
+                });
+                (prog.post_seg || []).forEach(c => {
+                    if (jaUsados.has(c)) return;
+                    jaUsados.add(c);
+                    const it = obterItemBaseBNCC(c);
+                    if (it) rawPostSeg.push({ codigo: c, item: it, anoInfo: extrairInfoAnoOrganograma(it), subTipo: 'seg' });
+                });
+                (prog.post_mesmo || []).forEach(c => {
+                    if (jaUsados.has(c)) return;
+                    jaUsados.add(c);
+                    const it = obterItemBaseBNCC(c);
+                    if (it) rawPostMesmo.push({ codigo: c, item: it, anoInfo: extrairInfoAnoOrganograma(it), subTipo: 'mesmo' });
+                });
+                (prog.apoio || []).slice(0, 2).forEach(c => {
+                    if (jaUsados.has(c)) return;
+                    jaUsados.add(c);
+                    const it = obterItemBaseBNCC(c);
+                    if (it) rawApoio.push({ codigo: c, item: it, anoInfo: extrairInfoAnoOrganograma(it), subTipo: 'apoio' });
+                });
             }
 
-            const width = Math.max(graphContainer.clientWidth || 980, 1150);
+            // Coluna 1 unificada: Todos os pré-requisitos (anos anteriores primeiro, depois início do mesmo ano)
+            rawPreAnt.sort((a, b) => a.anoInfo.ordem - b.anoInfo.ordem);
+            const col1Nodes = [...rawPreAnt, ...rawPreMesmo];
+
+            // Coluna 3 unificada: Todos os desdobramentos (mesmo ano primeiro, depois anos seguintes)
+            rawPostSeg.sort((a, b) => a.anoInfo.ordem - b.anoInfo.ordem);
+            const col3Nodes = [...rawPostMesmo, ...rawPostSeg];
+
+            // Apoio interdisciplinar (fica na Coluna 2 diretamente abaixo da focal)
+            const apoioNodes = rawApoio;
+
+            const width = Math.max(graphContainer.clientWidth || 980, 1180);
             const height = graphContainer.clientHeight || 620;
 
             const svg = d3.select(graphSvg);
             svg.selectAll('*').remove();
 
-            // Marcadores de seta SVG
+            // Marcadores de seta SVG com pontas refinadas
             const defs = svg.append('defs');
             
             const criarMarcador = (id, cor) => {
@@ -4103,24 +4172,36 @@
                     .attr('viewBox', '0 -5 10 10')
                     .attr('refX', 8)
                     .attr('refY', 0)
-                    .attr('markerWidth', 7)
-                    .attr('markerHeight', 7)
+                    .attr('markerWidth', 6.5)
+                    .attr('markerHeight', 6.5)
                     .attr('orient', 'auto')
                     .append('path')
-                    .attr('d', 'M0,-4L9,0L0,4')
+                    .attr('d', 'M0,-3.5L8,0L0,3.5')
                     .attr('fill', cor);
             };
 
-            criarMarcador('arrow-pre-mesmo', '#4f46e5');
             criarMarcador('arrow-pre-ant', '#d97706');
+            criarMarcador('arrow-pre-mesmo', '#4f46e5');
             criarMarcador('arrow-post-mesmo', '#4f46e5');
             criarMarcador('arrow-post-seg', '#7c3aed');
+            criarMarcador('arrow-apoio', '#059669');
+
+            // Filtro de sombra suave
+            const filter = defs.append('filter')
+                .attr('id', 'soft-card-shadow')
+                .attr('x', '-10%').attr('y', '-10%')
+                .attr('width', '120%').attr('height', '130%');
+            filter.append('feDropShadow')
+                .attr('dx', '0')
+                .attr('dy', '3')
+                .attr('stdDeviation', '4')
+                .attr('flood-color', 'rgba(15, 23, 42, 0.08)');
 
             // Grupo principal com zoom e pan
             const g = svg.append('g').attr('class', 'main-lineage-group');
 
             zoomBehavior = d3.zoom()
-                .scaleExtent([0.2, 4])
+                .scaleExtent([0.25, 3.5])
                 .filter((event) => {
                     if (event.type === 'wheel') return event.ctrlKey || event.metaKey;
                     if (event.type === 'touchstart') return event.touches && event.touches.length >= 2;
@@ -4132,148 +4213,145 @@
 
             svg.call(zoomBehavior);
 
-            // Largura e coordenadas das 3 colunas pedagógicas
-            const col1X = 190; // Anos Anteriores
-            const col2X = 600; // Mesmo Ano & Habilidade Selecionada
-            const col3X = 1010; // Continuidade & Desdobramentos
+            // Coordenadas das 3 colunas pedagógicas
+            const col1X = 220;  // Coluna 1: O que ensinar antes (Pré-requisitos)
+            const col2X = 640;  // Coluna 2: Foco atual da aula (Habilidade Selecionada)
+            const col3X = 1060; // Coluna 3: Para onde o aluno vai (Continuidade & Futuro)
 
             const cardW = 250;
-            const cardH = 88;
+            const cardH = 82;
             const focalCardW = 320;
-            const focalCardH = 114;
+            const focalCardH = 110;
 
-            // Ordena os nós de anos anteriores cronologicamente
-            const preAntNodes = (prog.pre_ant || []).map(cod => {
-                const it = obterItemBaseBNCC(cod);
-                return { codigo: cod, item: it, anoInfo: extrairInfoAnoOrganograma(it) };
-            }).sort((a, b) => a.anoInfo.ordem - b.anoInfo.ordem);
+            const headerY = 46;
+            const startContentY = 120;
+            const gapY = 96;
 
-            // Pré-requisitos no mesmo ano
-            const preMesmoNodes = (prog.pre_mesmo || []).map(cod => ({
-                codigo: cod,
-                item: obterItemBaseBNCC(cod),
-                anoInfo: extrairInfoAnoOrganograma(obterItemBaseBNCC(cod))
-            }));
+            const totalCol1H = Math.max(1, col1Nodes.length) * gapY;
+            const totalCol3H = Math.max(1, col3Nodes.length) * gapY;
+            const maxSidesH = Math.max(totalCol1H, totalCol3H, 220);
 
-            // Apoio no mesmo ano
-            const apoioNodes = (prog.apoio || []).map(cod => ({
-                codigo: cod,
-                item: obterItemBaseBNCC(cod),
-                anoInfo: extrairInfoAnoOrganograma(obterItemBaseBNCC(cod))
-            }));
+            // Altura central da focal: alinhada ao centro vertical das colunas laterais
+            const focalCenterY = startContentY + (maxSidesH / 2);
+            const focalY = focalCenterY - (focalCardH / 2);
 
-            // Continuidade no mesmo ano
-            const postMesmoNodes = (prog.post_mesmo || []).map(cod => ({
-                codigo: cod,
-                item: obterItemBaseBNCC(cod),
-                anoInfo: extrairInfoAnoOrganograma(obterItemBaseBNCC(cod))
-            }));
+            // Posicionamento vertical centralizado para as colunas 1 e 3
+            const col1StartY = focalCenterY - (totalCol1H / 2);
+            const col3StartY = focalCenterY - (totalCol3H / 2);
 
-            // Continuidade anos seguintes e EM
-            const postSegNodes = (prog.post_seg || []).map(cod => {
-                const it = obterItemBaseBNCC(cod);
-                return { codigo: cod, item: it, anoInfo: extrairInfoAnoOrganograma(it) };
-            }).sort((a, b) => a.anoInfo.ordem - b.anoInfo.ordem);
-
-            // Alturas e espaçamentos
-            const headerY = 50;
-            const startContentY = 125;
-            const gapY = 104;
-
-            const totalCol1H = Math.max(1, preAntNodes.length) * gapY;
-            const totalCol2H = (preMesmoNodes.length * gapY) + focalCardH + (apoioNodes.length * gapY) + 70;
-            const totalCol3H = (postMesmoNodes.length + postSegNodes.length) * gapY;
-
-            const maxColH = Math.max(totalCol1H, totalCol2H, totalCol3H, 500);
-            const totalSvgHeight = Math.max(height, startContentY + maxColH + 120);
-            const totalSvgWidth = Math.max(width, 1260);
+            const apoioStartY = focalY + focalCardH + 34;
+            const totalCol2H = focalCardH + (apoioNodes.length > 0 ? (apoioNodes.length * gapY) + 34 : 0);
+            const totalSvgHeight = Math.max(height, startContentY + Math.max(maxSidesH, totalCol2H) + 100);
+            const totalSvgWidth = Math.max(width, 1300);
 
             svg.attr('viewBox', [0, 0, totalSvgWidth, totalSvgHeight]);
 
-            // Cabeçalhos das 3 colunas
+            // ==============================================================
+            // CABEÇALHOS DIDÁTICOS DAS 3 COLUNAS (FLUXO PEDAGÓGICO CLARO)
+            // ==============================================================
             const colHeaders = [
                 {
-                    title: '⏮️ Anos Anteriores (Pré-requisitos)',
-                    sub: `${preAntNodes.length} habilidades base de ciclos preparatórios`,
+                    stepNum: '1',
+                    title: 'O que ensinar antes',
+                    subtitle: `${col1Nodes.length} conhecimentos prévios diagnosticáveis`,
                     x: col1X,
-                    cor: '#d97706',
-                    bg: '#fffbeb'
+                    w: cardW + 10,
+                    cor: '#b45309',
+                    bg: '#fef3c7',
+                    border: '#fde68a'
                 },
                 {
-                    title: `📌 Mesmo Ano (${focalItem.ano_faixa || 'Ano Atual'}) & Habilidade Selecionada`,
-                    sub: `${preMesmoNodes.length} pré-req. mesmo ano • 1 selecionada • ${apoioNodes.length} apoio`,
+                    stepNum: '2',
+                    title: 'Foco da aula de hoje',
+                    subtitle: `${focalItem.ano_faixa || 'Ano Atual'} • ${focalItem.disciplina || 'Componente'}`,
                     x: col2X,
-                    cor: '#4f46e5',
-                    bg: '#eef2ff'
+                    w: focalCardW + 10,
+                    cor: '#4338ca',
+                    bg: '#e0e7ff',
+                    border: '#c7d2fe'
                 },
                 {
-                    title: '⏭️ Continuidade & Desdobramentos',
-                    sub: `${postMesmoNodes.length} mesmo ano • ${postSegNodes.length} anos seguintes/EM`,
+                    stepNum: '3',
+                    title: 'Para onde o aluno vai',
+                    subtitle: `${col3Nodes.length} desdobramentos e aprofundamentos`,
                     x: col3X,
-                    cor: '#7c3aed',
-                    bg: '#f5f3ff'
+                    w: cardW + 10,
+                    cor: '#6d28d9',
+                    bg: '#ede9fe',
+                    border: '#ddd6fe'
                 }
             ];
 
             colHeaders.forEach(ch => {
                 const hdr = g.append('g').attr('transform', `translate(${ch.x}, ${headerY})`);
-                const hdrW = ch.x === col2X ? (focalCardW + 16) : (cardW + 16);
                 
                 hdr.append('rect')
-                    .attr('x', -hdrW / 2)
+                    .attr('x', -ch.w / 2)
                     .attr('y', 0)
-                    .attr('width', hdrW)
-                    .attr('height', 46)
+                    .attr('width', ch.w)
+                    .attr('height', 44)
                     .attr('rx', 8)
                     .attr('fill', ch.bg)
-                    .attr('stroke', ch.cor)
-                    .attr('stroke-width', 1.5)
-                    .attr('stroke-opacity', 0.6);
+                    .attr('stroke', ch.border)
+                    .attr('stroke-width', 1.5);
 
                 hdr.append('text')
                     .attr('x', 0)
-                    .attr('y', 20)
+                    .attr('y', 19)
                     .attr('text-anchor', 'middle')
                     .attr('font-family', 'var(--font-sans)')
-                    .attr('font-size', '12.5px')
+                    .attr('font-size', '12px')
                     .attr('font-weight', '800')
                     .attr('fill', ch.cor)
-                    .text(ch.title);
+                    .text(`${ch.stepNum}. ${ch.title}`);
 
                 hdr.append('text')
                     .attr('x', 0)
-                    .attr('y', 36)
+                    .attr('y', 33)
                     .attr('text-anchor', 'middle')
                     .attr('font-family', 'var(--font-sans)')
-                    .attr('font-size', '10.5px')
-                    .attr('font-weight', '500')
-                    .attr('fill', 'var(--text-muted)')
-                    .text(ch.sub);
+                    .attr('font-size', '10px')
+                    .attr('font-weight', '600')
+                    .attr('fill', '#64748b')
+                    .text(ch.subtitle);
             });
 
-            // Mapeamento de posições
+            // Setas direcionais entre as colunas no topo (1 -> 2 e 2 -> 3)
+            const arrowY = headerY + 22;
+            const midArrow1 = (col1X + (cardW / 2) + col2X - (focalCardW / 2)) / 2;
+            const midArrow2 = (col2X + (focalCardW / 2) + col3X - (cardW / 2)) / 2;
+
+            [midArrow1, midArrow2].forEach(ax => {
+                g.append('text')
+                    .attr('x', ax)
+                    .attr('y', arrowY + 5)
+                    .attr('text-anchor', 'middle')
+                    .attr('font-family', 'var(--font-sans)')
+                    .attr('font-size', '16px')
+                    .attr('font-weight', '800')
+                    .attr('fill', '#94a3b8')
+                    .text('➔');
+            });
+
+            // Mapeamento de posições absolutas dos cartões
             const nodePosMap = new Map();
 
-            // Posição Focal (Centro da Coluna 2)
-            const preMesmoHeight = preMesmoNodes.length * gapY;
-            const focalY = startContentY + preMesmoHeight + (focalCardH / 2) + (preMesmoNodes.length > 0 ? 25 : 0);
-
+            // 1. Nó Focal
             const focalPos = {
                 codigo: focalCode,
                 x: col2X - (focalCardW / 2),
-                y: focalY - (focalCardH / 2),
+                y: focalY,
                 w: focalCardW,
                 h: focalCardH,
                 centerX: col2X,
-                centerY: focalY,
+                centerY: focalCenterY,
                 item: focalItem,
                 isFocal: true
             };
             nodePosMap.set(focalCode, focalPos);
 
-            // Posições Coluna 1 (Anos Anteriores)
-            const col1StartY = Math.max(startContentY, focalY - (totalCol1H / 2));
-            preAntNodes.forEach((node, idx) => {
+            // 2. Nós Coluna 1 (Pré-requisitos)
+            col1Nodes.forEach((node, idx) => {
                 const py = col1StartY + (idx * gapY);
                 nodePosMap.set(node.codigo, {
                     codigo: node.codigo,
@@ -4284,28 +4362,12 @@
                     centerX: col1X,
                     centerY: py + (cardH / 2),
                     item: node.item,
-                    tipo: 'pre_ant'
+                    tipo: 'pre',
+                    subTipo: node.subTipo
                 });
             });
 
-            // Posições Coluna 2: Pré-requisitos no Mesmo Ano (Acima da Habilidade Selecionada)
-            preMesmoNodes.forEach((node, idx) => {
-                const py = startContentY + (idx * gapY);
-                nodePosMap.set(node.codigo, {
-                    codigo: node.codigo,
-                    x: col2X - (cardW / 2),
-                    y: py,
-                    w: cardW,
-                    h: cardH,
-                    centerX: col2X,
-                    centerY: py + (cardH / 2),
-                    item: node.item,
-                    tipo: 'pre_mesmo'
-                });
-            });
-
-            // Posições Coluna 2: Apoio no Mesmo Ano (Abaixo da Habilidade Selecionada)
-            const apoioStartY = focalPos.y + focalCardH + 35;
+            // 3. Nós Coluna 2 Abaixo (Apoio Interdisciplinar)
             apoioNodes.forEach((node, idx) => {
                 const py = apoioStartY + (idx * gapY);
                 nodePosMap.set(node.codigo, {
@@ -4317,15 +4379,14 @@
                     centerX: col2X,
                     centerY: py + (cardH / 2),
                     item: node.item,
-                    tipo: 'apoio'
+                    tipo: 'apoio',
+                    subTipo: 'apoio'
                 });
             });
 
-            // Posições Coluna 3: Continuidade no Mesmo Ano & Anos Seguintes
-            const col3StartY = Math.max(startContentY, focalY - (totalCol3H / 2));
-            let col3CurIdx = 0;
-            postMesmoNodes.forEach((node) => {
-                const py = col3StartY + (col3CurIdx * gapY);
+            // 4. Nós Coluna 3 (Continuidade & Futuro)
+            col3Nodes.forEach((node, idx) => {
+                const py = col3StartY + (idx * gapY);
                 nodePosMap.set(node.codigo, {
                     codigo: node.codigo,
                     x: col3X - (cardW / 2),
@@ -4335,136 +4396,123 @@
                     centerX: col3X,
                     centerY: py + (cardH / 2),
                     item: node.item,
-                    tipo: 'post_mesmo'
+                    tipo: 'post',
+                    subTipo: node.subTipo
                 });
-                col3CurIdx++;
             });
 
-            postSegNodes.forEach((node) => {
-                const py = col3StartY + (col3CurIdx * gapY);
-                nodePosMap.set(node.codigo, {
-                    codigo: node.codigo,
-                    x: col3X - (cardW / 2),
-                    y: py,
-                    w: cardW,
-                    h: cardH,
-                    centerX: col3X,
-                    centerY: py + (cardH / 2),
-                    item: node.item,
-                    tipo: 'post_seg'
-                });
-                col3CurIdx++;
-            });
-
-            // Linhas de Conexão
+            // ==============================================================
+            // CONECTORES VISUAIS SUAVES (LINHAS DIRECIONADAS SEM CRUZAMENTOS)
+            // ==============================================================
             const linksGroup = g.append('g').attr('class', 'lineage-links');
+            const numPre = col1Nodes.length;
+            const numPost = col3Nodes.length;
 
-            // 1. Pré-requisitos de Anos Anteriores -> Habilidade Selecionada
-            preAntNodes.forEach(node => {
-                const src = nodePosMap.get(node.codigo);
-                if (src && focalPos) {
-                    const startX = src.x + src.w;
-                    const startY = src.centerY;
-                    const endX = focalPos.x;
-                    const endY = focalPos.centerY;
-                    const midX = (startX + endX) / 2;
+            // Função para destacar link ao passar mouse no nó correspondente
+            window.highlightLineageLink = function(codigo, ativar) {
+                linksGroup.selectAll(`.link-to-${codigo}, .link-from-${codigo}`)
+                    .classed('is-active', ativar)
+                    .attr('stroke-width', ativar ? 3.5 : (d => d.baseWidth || 2))
+                    .attr('stroke-opacity', ativar ? 1 : 0.7);
 
-                    linksGroup.append('path')
-                        .attr('d', `M ${startX} ${startY} C ${midX} ${startY}, ${midX} ${endY}, ${endX} ${endY}`)
-                        .attr('fill', 'none')
-                        .attr('stroke', '#f59e0b')
-                        .attr('stroke-width', 2)
-                        .attr('stroke-opacity', 0.8)
-                        .attr('marker-end', 'url(#arrow-pre-ant)');
+                if (ativar) {
+                    linksGroup.selectAll('path:not(.is-active)')
+                        .attr('stroke-opacity', 0.15);
+                } else {
+                    linksGroup.selectAll('path')
+                        .attr('stroke-opacity', 0.7);
                 }
+            };
+
+            // 1. Conexões da Coluna 1 (Pré-requisitos) -> Borda Esquerda da Focal
+            col1Nodes.forEach((node, idx) => {
+                const src = nodePosMap.get(node.codigo);
+                if (!src || !focalPos) return;
+
+                const startX = src.x + src.w;
+                const startY = src.centerY;
+                const endX = focalPos.x;
+                // Distribui os pontos de entrada na lateral esquerda do card focal
+                const offsetSpread = numPre > 1 ? (idx - (numPre - 1) / 2) * 20 : 0;
+                const endY = focalPos.centerY + offsetSpread;
+                const midX = (startX + endX) / 2;
+
+                const isAnt = node.subTipo === 'ant';
+                const strokeColor = isAnt ? '#f59e0b' : '#6366f1';
+                const markerId = isAnt ? 'url(#arrow-pre-ant)' : 'url(#arrow-pre-mesmo)';
+
+                const p = linksGroup.append('path')
+                    .attr('class', `lineage-path link-from-${node.codigo}`)
+                    .attr('d', `M ${startX} ${startY} C ${midX} ${startY}, ${midX} ${endY}, ${endX} ${endY}`)
+                    .attr('fill', 'none')
+                    .attr('stroke', strokeColor)
+                    .attr('stroke-width', 2)
+                    .attr('stroke-opacity', 0.7)
+                    .attr('marker-end', markerId);
+
+                p.datum({ baseWidth: 2 });
             });
 
-            // 2. Pré-requisitos no Mesmo Ano -> Habilidade Selecionada (Vêm de cima para o topo da selecionada)
-            preMesmoNodes.forEach(node => {
-                const src = nodePosMap.get(node.codigo);
-                if (src && focalPos) {
-                    const startX = src.centerX;
-                    const startY = src.y + src.h;
-                    const endX = focalPos.centerX;
-                    const endY = focalPos.y;
-                    const midY = (startY + endY) / 2;
+            // 2. Conexões da Focal -> Borda Esquerda da Coluna 3 (Continuidade)
+            col3Nodes.forEach((node, idx) => {
+                const tgt = nodePosMap.get(node.codigo);
+                if (!tgt || !focalPos) return;
 
-                    linksGroup.append('path')
-                        .attr('d', `M ${startX} ${startY} C ${startX} ${midY}, ${endX} ${midY}, ${endX} ${endY}`)
-                        .attr('fill', 'none')
-                        .attr('stroke', '#4f46e5')
-                        .attr('stroke-width', 2.5)
-                        .attr('stroke-opacity', 0.9)
-                        .attr('marker-end', 'url(#arrow-pre-mesmo)');
-                }
+                const offsetSpread = numPost > 1 ? (idx - (numPost - 1) / 2) * 20 : 0;
+                const startX = focalPos.x + focalPos.w;
+                const startY = focalPos.centerY + offsetSpread;
+                const endX = tgt.x;
+                const endY = tgt.centerY;
+                const midX = (startX + endX) / 2;
+
+                const isSeg = node.subTipo === 'seg';
+                const strokeColor = isSeg ? '#8b5cf6' : '#6366f1';
+                const markerId = isSeg ? 'url(#arrow-post-seg)' : 'url(#arrow-post-mesmo)';
+
+                const p = linksGroup.append('path')
+                    .attr('class', `lineage-path link-to-${node.codigo}`)
+                    .attr('d', `M ${startX} ${startY} C ${midX} ${startY}, ${midX} ${endY}, ${endX} ${endY}`)
+                    .attr('fill', 'none')
+                    .attr('stroke', strokeColor)
+                    .attr('stroke-width', 2)
+                    .attr('stroke-opacity', 0.7)
+                    .attr('marker-end', markerId);
+
+                p.datum({ baseWidth: 2 });
             });
 
-            // 3. Habilidade Selecionada -> Apoio (Tracejada verde de sinergia)
+            // 3. Conexões da Focal -> Abaixo (Apoio Interdisciplinar)
             apoioNodes.forEach(node => {
                 const tgt = nodePosMap.get(node.codigo);
-                if (tgt && focalPos) {
-                    const startX = focalPos.centerX;
-                    const startY = focalPos.y + focalPos.h;
-                    const endX = tgt.centerX;
-                    const endY = tgt.y;
-                    const midY = (startY + endY) / 2;
+                if (!tgt || !focalPos) return;
 
-                    linksGroup.append('path')
-                        .attr('d', `M ${startX} ${startY} C ${startX} ${midY}, ${endX} ${midY}, ${endX} ${endY}`)
-                        .attr('fill', 'none')
-                        .attr('stroke', '#059669')
-                        .attr('stroke-width', 2)
-                        .attr('stroke-dasharray', '5 4')
-                        .attr('stroke-opacity', 0.8);
-                }
+                const startX = focalPos.centerX;
+                const startY = focalPos.y + focalPos.h;
+                const endX = tgt.centerX;
+                const endY = tgt.y;
+                const midY = (startY + endY) / 2;
+
+                const p = linksGroup.append('path')
+                    .attr('class', `lineage-path link-to-${node.codigo}`)
+                    .attr('d', `M ${startX} ${startY} L ${endX} ${endY}`)
+                    .attr('fill', 'none')
+                    .attr('stroke', '#059669')
+                    .attr('stroke-width', 2)
+                    .attr('stroke-dasharray', '5 4')
+                    .attr('stroke-opacity', 0.8)
+                    .attr('marker-end', 'url(#arrow-apoio)');
+
+                p.datum({ baseWidth: 2 });
             });
 
-            // 4. Habilidade Selecionada -> Continuidade no Mesmo Ano
-            postMesmoNodes.forEach(node => {
-                const tgt = nodePosMap.get(node.codigo);
-                if (tgt && focalPos) {
-                    const startX = focalPos.x + focalPos.w;
-                    const startY = focalPos.centerY;
-                    const endX = tgt.x;
-                    const endY = tgt.centerY;
-                    const midX = (startX + endX) / 2;
-
-                    linksGroup.append('path')
-                        .attr('d', `M ${startX} ${startY} C ${midX} ${startY}, ${midX} ${endY}, ${endX} ${endY}`)
-                        .attr('fill', 'none')
-                        .attr('stroke', '#4f46e5')
-                        .attr('stroke-width', 2.5)
-                        .attr('stroke-opacity', 0.9)
-                        .attr('marker-end', 'url(#arrow-post-mesmo)');
-                }
-            });
-
-            // 5. Habilidade Selecionada -> Continuidade Anos Seguintes e EM
-            postSegNodes.forEach(node => {
-                const tgt = nodePosMap.get(node.codigo);
-                if (tgt && focalPos) {
-                    const startX = focalPos.x + focalPos.w;
-                    const startY = focalPos.centerY;
-                    const endX = tgt.x;
-                    const endY = tgt.centerY;
-                    const midX = (startX + endX) / 2;
-
-                    linksGroup.append('path')
-                        .attr('d', `M ${startX} ${startY} C ${midX} ${startY}, ${midX} ${endY}, ${endX} ${endY}`)
-                        .attr('fill', 'none')
-                        .attr('stroke', '#7c3aed')
-                        .attr('stroke-width', 2)
-                        .attr('stroke-opacity', 0.85)
-                        .attr('marker-end', 'url(#arrow-post-seg)');
-                }
-            });
-
-            // Renderização de Nós / Cartões
+            // ==============================================================
+            // RENDERIZAÇÃO DOS CARTÕES PEDAGÓGICOS (DESIGN LIMPO & INTUITIVO)
+            // ==============================================================
             const nodesGroup = g.append('g').attr('class', 'lineage-nodes');
 
             nodePosMap.forEach(pos => {
                 const card = nodesGroup.append('g')
-                    .attr('class', `lineage-graph-card ${pos.isFocal ? 'focal-node' : ''}`)
+                    .attr('class', `lineage-node-card ${pos.isFocal ? 'is-focal' : 'is-neighbor'}`)
                     .attr('transform', `translate(${pos.x}, ${pos.y})`)
                     .style('cursor', 'pointer');
 
@@ -4472,29 +4520,17 @@
                 const anoInfo = extrairInfoAnoOrganograma(pos.item);
 
                 if (pos.isFocal) {
-                    // Halo decorativo
-                    card.append('rect')
-                        .attr('x', -6)
-                        .attr('y', -6)
-                        .attr('width', pos.w + 12)
-                        .attr('height', pos.h + 12)
-                        .attr('rx', 12)
-                        .attr('fill', 'none')
-                        .attr('stroke', '#6366f1')
-                        .attr('stroke-width', 2)
-                        .attr('stroke-opacity', 0.35);
-
-                    // Fundo do card focal
+                    // Sombra e Fundo do Card Focal
                     card.append('rect')
                         .attr('width', pos.w)
                         .attr('height', pos.h)
                         .attr('rx', 8)
                         .attr('fill', '#ffffff')
                         .attr('stroke', '#4f46e5')
-                        .attr('stroke-width', 2.5)
-                        .attr('filter', 'drop-shadow(0 4px 14px rgba(79, 70, 229, 0.22))');
+                        .attr('stroke-width', 2.2)
+                        .attr('filter', 'url(#soft-card-shadow)');
 
-                    // Faixa superior do card focal
+                    // Faixa Superior Roxa
                     card.append('path')
                         .attr('d', `M 0 8 Q 0 0 8 0 L ${pos.w - 8} 0 Q ${pos.w} 0 ${pos.w} 8 L ${pos.w} 24 L 0 24 Z`)
                         .attr('fill', '#4f46e5');
@@ -4504,12 +4540,13 @@
                         .attr('y', 16)
                         .attr('text-anchor', 'middle')
                         .attr('font-family', 'var(--font-sans)')
-                        .attr('font-size', '11px')
-                        .attr('font-weight', '700')
+                        .attr('font-size', '10.5px')
+                        .attr('font-weight', '800')
                         .attr('fill', '#ffffff')
-                        .text('⭐ HABILIDADE SELECIONADA');
+                        .attr('letter-spacing', '0.04em')
+                        .text('⭐ HABILIDADE EM FOCO');
 
-                    // Linha 1: Código (esquerda) + Ano/Faixa (direita)
+                    // Linha 1: Código (esquerda) + Ano Escolar (direita)
                     card.append('text')
                         .attr('x', 14)
                         .attr('y', 44)
@@ -4529,81 +4566,87 @@
                         .attr('fill', '#6366f1')
                         .text(anoInfo.label || pos.item.ano_faixa || '');
 
-                    // Linha 2: Disciplina / Componente Curricular em linha exclusiva destacada (sem colisão com o código)
+                    // Linha 2: Disciplina / Componente
                     const discNome = pos.item.disciplina || 'Geral';
-                    const discDisplay = discNome.length > 44 ? discNome.substring(0, 42) + '...' : discNome;
-
+                    const discDisplay = discNome.length > 40 ? discNome.substring(0, 38) + '...' : discNome;
                     card.append('text')
                         .attr('x', 14)
-                        .attr('y', 61)
+                        .attr('y', 60)
                         .attr('font-family', 'var(--font-sans)')
-                        .attr('font-size', '11.5px')
+                        .attr('font-size', '11px')
                         .attr('font-weight', '700')
                         .attr('fill', discCor)
                         .text(discDisplay);
 
-                    // Linhas 3 e 4: Texto da habilidade
-                    const habLimpa = (pos.item.habilidade || '').replace(/^\([A-Za-z0-9]+\)\s*/, '');
-                    const texto1 = habLimpa.substring(0, 48);
-                    const texto2 = habLimpa.length > 48 ? habLimpa.substring(48, 92) + '...' : '';
-
-                    card.append('text')
-                        .attr('x', 14)
-                        .attr('y', 80)
-                        .attr('font-family', 'var(--font-sans)')
-                        .attr('font-size', '11px')
-                        .attr('fill', '#475569')
-                        .text(texto1);
-
-                    if (texto2) {
+                    // Linhas 3 e 4: Descrição formatada sem quebrar palavras
+                    const linhasFocal = formatarLinhasPedagogicas(pos.item.habilidade, 2, 44);
+                    linhasFocal.forEach((lText, i) => {
                         card.append('text')
                             .attr('x', 14)
-                            .attr('y', 96)
+                            .attr('y', 78 + (i * 15))
                             .attr('font-family', 'var(--font-sans)')
                             .attr('font-size', '11px')
                             .attr('fill', '#475569')
-                            .text(texto2);
-                    }
+                            .text(lText);
+                    });
 
                 } else {
+                    // Cartão Vizinho (Pré-requisito, Apoio ou Continuidade)
                     let strokeColor = '#cbd5e1';
-                    let tipoTag = '';
+                    let tagText = '';
+                    let tagColor = '#64748b';
+                    let tagBg = '#f1f5f9';
 
-                    if (pos.tipo === 'pre_mesmo') {
-                        strokeColor = '#6366f1';
-                        tipoTag = '📌 Mesmo Ano';
-                    } else if (pos.tipo === 'pre_ant') {
-                        strokeColor = '#f59e0b';
-                        tipoTag = '⏮️ Prévia';
+                    if (pos.tipo === 'pre') {
+                        if (pos.subTipo === 'ant') {
+                            strokeColor = '#f59e0b';
+                            tagText = '⏮️ Ano Anterior';
+                            tagColor = '#b45309';
+                            tagBg = '#fef3c7';
+                        } else {
+                            strokeColor = '#6366f1';
+                            tagText = '📌 Início do Ano';
+                            tagColor = '#4338ca';
+                            tagBg = '#e0e7ff';
+                        }
+                    } else if (pos.tipo === 'post') {
+                        if (pos.subTipo === 'seg') {
+                            strokeColor = '#8b5cf6';
+                            tagText = '⏭️ Ano Seguinte';
+                            tagColor = '#6d28d9';
+                            tagBg = '#ede9fe';
+                        } else {
+                            strokeColor = '#6366f1';
+                            tagText = '📌 Avanço no Ano';
+                            tagColor = '#4338ca';
+                            tagBg = '#e0e7ff';
+                        }
                     } else if (pos.tipo === 'apoio') {
                         strokeColor = '#10b981';
-                        tipoTag = '🤝 Apoio';
-                    } else if (pos.tipo === 'post_mesmo') {
-                        strokeColor = '#6366f1';
-                        tipoTag = '📌 Mesmo Ano';
-                    } else if (pos.tipo === 'post_seg') {
-                        strokeColor = '#8b5cf6';
-                        tipoTag = '⏭️ Futura';
+                        tagText = '🤝 Interdisciplinar';
+                        tagColor = '#047857';
+                        tagBg = '#d1fae5';
                     }
 
-                    // Fundo
+                    // Fundo com borda sutil
                     card.append('rect')
+                        .attr('class', 'node-bg-rect')
                         .attr('width', pos.w)
                         .attr('height', pos.h)
                         .attr('rx', 6)
                         .attr('fill', '#ffffff')
                         .attr('stroke', strokeColor)
                         .attr('stroke-width', 1.5)
-                        .attr('filter', 'drop-shadow(0 2px 4px rgba(0,0,0,0.05))');
+                        .attr('filter', 'url(#soft-card-shadow)');
 
-                    // Faixa lateral esquerda com a cor da disciplina
+                    // Indicador lateral colorido
                     card.append('rect')
                         .attr('width', 4)
                         .attr('height', pos.h)
                         .attr('rx', 2)
                         .attr('fill', discCor);
 
-                    // Linha 1: Código (esquerda) e Tag de Relação (direita)
+                    // Linha 1: Código (esquerda) e Badge de Papel Didático (direita)
                     card.append('text')
                         .attr('x', 12)
                         .attr('y', 20)
@@ -4618,84 +4661,67 @@
                         .attr('y', 20)
                         .attr('text-anchor', 'end')
                         .attr('font-family', 'var(--font-sans)')
-                        .attr('font-size', '10px')
+                        .attr('font-size', '9.5px')
                         .attr('font-weight', '700')
-                        .attr('fill', strokeColor)
-                        .text(tipoTag);
+                        .attr('fill', tagColor)
+                        .text(tagText);
 
-                    // Linha 2: Disciplina • Ano em linha dedicada
-                    const discItemNome = pos.item.disciplina || 'Geral';
-                    const subMeta = `${discItemNome} • ${anoInfo.label}`;
-                    const subMetaDisp = subMeta.length > 36 ? subMeta.substring(0, 34) + '...' : subMeta;
-
+                    // Linha 2: Disciplina • Ano
+                    const subMeta = `${pos.item.disciplina || 'Geral'} • ${anoInfo.label}`;
+                    const subMetaDisp = subMeta.length > 34 ? subMeta.substring(0, 32) + '...' : subMeta;
                     card.append('text')
                         .attr('x', 12)
-                        .attr('y', 35)
+                        .attr('y', 36)
                         .attr('font-family', 'var(--font-sans)')
                         .attr('font-size', '10px')
                         .attr('font-weight', '700')
                         .attr('fill', discCor)
                         .text(subMetaDisp);
 
-                    // Linhas 3 e 4: Texto da habilidade truncado
-                    const habLimpa = (pos.item.habilidade || '').replace(/^\([A-Za-z0-9]+\)\s*/, '');
-                    const txt1 = habLimpa.substring(0, 38);
-                    const txt2 = habLimpa.length > 38 ? habLimpa.substring(38, 76) + '...' : '';
-
-                    card.append('text')
-                        .attr('x', 12)
-                        .attr('y', 50)
-                        .attr('font-family', 'var(--font-sans)')
-                        .attr('font-size', '10.5px')
-                        .attr('fill', '#475569')
-                        .text(txt1);
-
-                    if (txt2) {
+                    // Linhas 3 e 4: Descrição formatada sem partir palavras
+                    const linhasVizinho = formatarLinhasPedagogicas(pos.item.habilidade, 2, 38);
+                    linhasVizinho.forEach((lText, i) => {
                         card.append('text')
                             .attr('x', 12)
-                            .attr('y', 63)
+                            .attr('y', 52 + (i * 14))
                             .attr('font-family', 'var(--font-sans)')
                             .attr('font-size', '10.5px')
                             .attr('fill', '#475569')
-                            .text(txt2);
-                    }
-
-                    // Ação de exploração no rodapé do card
-                    card.append('text')
-                        .attr('x', pos.w - 10)
-                        .attr('y', 78)
-                        .attr('text-anchor', 'end')
-                        .attr('font-family', 'var(--font-sans)')
-                        .attr('font-size', '9.5px')
-                        .attr('font-weight', '700')
-                        .attr('fill', '#6366f1')
-                        .text('🎯 Explorar linhagem desta →');
+                            .text(lText);
+                    });
                 }
 
-                // Tooltip e cliques
+                // ==============================================================
+                // EVENTOS INTERATIVOS: HOVER DESTACA O CAMINHO, CLIQUE ABRE FICHA
+                // ==============================================================
                 card.on('mouseenter', (event) => {
+                    if (!pos.isFocal) {
+                        window.highlightLineageLink(pos.codigo, true);
+                    }
+
                     const it = pos.item;
                     const anoInfo = extrairInfoAnoOrganograma(it);
                     const just = justificativaMap.get(pos.codigo);
                     const justHtml = just ? `
-                        <div style="margin-top: 8px; padding: 6px 9px; background: #eef2ff; border-left: 3px solid #6366f1; border-radius: 4px; font-size: 0.77rem; color: #3730a3; line-height: 1.35;">
+                        <div style="margin-top: 8px; padding: 7px 10px; background: #eef2ff; border-left: 3px solid #6366f1; border-radius: 4px; font-size: 0.78rem; color: #3730a3; line-height: 1.4;">
                             <strong>💡 Justificativa Pedagógica:</strong> ${just}
                         </div>
                     ` : '';
+
                     const tipHtml = `
                         <div class="tooltip-header" style="display: flex; align-items: center; justify-content: space-between; margin-bottom: 4px;">
-                            <span class="tooltip-code" style="font-family: var(--font-mono); font-weight: 800; font-size: 0.90rem; color: #1e293b;">${it.codigo}</span>
+                            <span class="tooltip-code" style="font-family: var(--font-mono); font-weight: 800; font-size: 0.92rem; color: #1e293b;">${it.codigo}</span>
                             <span class="tooltip-badge ${getDisciplinaClass(it.disciplina)}" style="font-size: 0.72rem; font-weight: 700; color: ${discCor};">${it.disciplina || 'Geral'}</span>
                         </div>
                         <div class="tooltip-meta" style="font-size: 0.76rem; color: var(--accent-primary); font-weight: 600; margin-bottom: 6px;">
                             ${anoInfo.label} &bull; ${anoInfo.sub}
                         </div>
-                        <div class="tooltip-body" style="font-size: 0.80rem; color: #334155; line-height: 1.45;">
+                        <div class="tooltip-body" style="font-size: 0.82rem; color: #334155; line-height: 1.45;">
                             ${it.habilidade}
                         </div>
                         ${justHtml}
                         <div style="margin-top: 8px; font-size: 0.74rem; color: var(--text-muted); border-top: 1px solid var(--border-color); padding-top: 6px;">
-                            Clique para abrir detalhes &bull; Duplo-clique para focar a linhagem nesta
+                            Clique para abrir ficha completa &bull; Duplo-clique para centrar o fluxo nesta
                         </div>
                     `;
                     exibirTooltipGrafo(tipHtml, event);
@@ -4704,6 +4730,9 @@
                     atualizarPosicaoTooltip(event);
                 })
                 .on('mouseleave', () => {
+                    if (!pos.isFocal) {
+                        window.highlightLineageLink(pos.codigo, false);
+                    }
                     ocultarTooltipGrafo();
                 })
                 .on('click', (event) => {
@@ -4716,9 +4745,49 @@
                 });
             });
 
-            // Ajuste do zoom inicial
-            const initialScale = Math.min(1.0, width / (totalSvgWidth + 80), height / (totalSvgHeight + 80));
-            svg.call(zoomBehavior.transform, d3.zoomIdentity.translate(20, 10).scale(Math.max(0.75, initialScale)));
+            // ==============================================================
+            // BARRA DE LEGENDA PEDAGÓGICA NO RODAPÉ DO CANVAS
+            // ==============================================================
+            const legendY = totalSvgHeight - 34;
+            const legendG = g.append('g').attr('transform', `translate(${totalSvgWidth / 2}, ${legendY})`);
+
+            legendG.append('rect')
+                .attr('x', -340)
+                .attr('y', -12)
+                .attr('width', 680)
+                .attr('height', 26)
+                .attr('rx', 13)
+                .attr('fill', '#ffffff')
+                .attr('stroke', '#e2e8f0')
+                .attr('stroke-width', 1)
+                .attr('filter', 'url(#soft-card-shadow)');
+
+            const legendItems = [
+                { text: '⏮️ Ano Anterior', color: '#b45309' },
+                { text: '📌 Mesmo Ano', color: '#4338ca' },
+                { text: '🤝 Interdisciplinar', color: '#047857' },
+                { text: '⏭️ Ano Seguinte', color: '#6d28d9' }
+            ];
+
+            const itemSpacing = 160;
+            const legendStartX = -240;
+
+            legendItems.forEach((li, idx) => {
+                const ix = legendStartX + (idx * itemSpacing);
+                legendG.append('text')
+                    .attr('x', ix)
+                    .attr('y', 4)
+                    .attr('text-anchor', 'middle')
+                    .attr('font-family', 'var(--font-sans)')
+                    .attr('font-size', '10.5px')
+                    .attr('font-weight', '700')
+                    .attr('fill', li.color)
+                    .text(li.text);
+            });
+
+            // Ajuste do zoom inicial confortável
+            const initialScale = Math.min(1.0, width / (totalSvgWidth + 40), height / (totalSvgHeight + 40));
+            svg.call(zoomBehavior.transform, d3.zoomIdentity.translate(20, 10).scale(Math.max(0.72, initialScale)));
         }
 
         // ======================================================================

@@ -435,8 +435,8 @@ def main():
 
             is_same_year = (cand['t_min'] == t_min and cand['t_max'] == t_max)
             if is_same_year:
-                # No mesmo ano, deve ser preliminar (sequência menor ou bloom menor/igual)
-                if cand['seq_num'] > alvo['seq_num'] and cand['bloom_lvl'] > bloom_alvo:
+                # No mesmo ano, um pré-requisito deve ser estritamente preliminar na sequência curricular
+                if cand['seq_num'] >= alvo['seq_num']:
                     continue
 
             score_afinidade, detalhes, sim = calcular_afinidade_tematica(cand, alvo)
@@ -468,6 +468,7 @@ def main():
 
         candidatos_requisitos.sort(key=lambda x: x['score'], reverse=True)
         final_requisitos = [{'codigo': item['codigo'], 'justificativa': item['justificativa']} for item in candidatos_requisitos[:3]]
+        codigos_requisitos_set = set(item['codigo'] for item in final_requisitos)
 
         # --------------------------------------------------------------
         # B) PREPARA_PARA (Máx 3)
@@ -475,7 +476,7 @@ def main():
         candidatos_prepara = []
 
         for c_cod in codigos_candidatos:
-            if c_cod == cod_alvo:
+            if c_cod == cod_alvo or c_cod in codigos_requisitos_set:
                 continue
             cand = habilidades[c_cod]
 
@@ -488,8 +489,8 @@ def main():
 
             is_same_year = (cand['t_min'] == t_min and cand['t_max'] == t_max)
             if is_same_year:
-                # No mesmo ano, deve ser posterior (sequência maior ou bloom maior/igual)
-                if cand['seq_num'] < alvo['seq_num'] and cand['bloom_lvl'] < bloom_alvo:
+                # No mesmo ano, deve ser estritamente posterior na sequência curricular
+                if cand['seq_num'] <= alvo['seq_num']:
                     continue
 
             score_afinidade, detalhes, sim = calcular_afinidade_tematica(alvo, cand)
