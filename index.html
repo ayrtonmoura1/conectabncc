@@ -416,6 +416,15 @@
                         <span class="catalog-tab-badge">Explorar Lista ➔</span>
                     </button>
 
+                    <button type="button" id="btnRankingRelacoes" class="ranking-tab-trigger-btn" onclick="window.abrirModalRankingRelacoes()" title="Ver ranking completo de habilidades com mais relações na BNCC">
+                        <span class="ranking-tab-icon">🏆</span>
+                        <span class="ranking-tab-text">
+                            <strong>Ranking de Mais Relações</strong>
+                            <small>Habilidades mais articuladas e centrais da BNCC</small>
+                        </span>
+                        <span class="ranking-tab-badge">Ver Ranking ➔</span>
+                    </button>
+
                     <button type="button" id="btnHubInterdisciplinar" class="hub-tab-trigger-btn" onclick="window.ativarModoInterdisciplinar(event)" title="Descubra as habilidades com maior diálogo e conexão pedagógica com outros componentes no mesmo ano escolar">
                         <span class="hub-tab-icon">🌐</span>
                         <span class="hub-tab-text">
@@ -429,11 +438,14 @@
                 <!-- Sugestões de Busca Rápida -->
                 <div class="quick-queries">
                     <span class="quick-label">Sugestões rápidas:</span>
-                    <button type="button" class="query-chip chip-interdisciplinar" onclick="window.ativarModoInterdisciplinar(event, '5º')" title="Ver habilidades com maior conexão interdisciplinar no 5º Ano">
-                        <span style="color: #4f46e5; font-weight: 700;">🌐</span> 5º Ano: Mais Relações
+                    <button type="button" class="query-chip" style="border-color: #f59e0b; background: #fffdf5; color: #92400e; font-weight: 700;" onclick="window.abrirModalRankingRelacoes()" title="Abrir modal com o ranking completo em ordem decrescente de relações">
+                        🏆 Ranking Geral de Relações
                     </button>
-                    <button type="button" class="query-chip chip-interdisciplinar" onclick="window.ativarModoInterdisciplinar(event, '1º')" title="Ver habilidades com maior conexão interdisciplinar no 1º Ano">
-                        <span style="color: #4f46e5; font-weight: 700;">🌐</span> 1º Ano: Mais Relações
+                    <button type="button" class="query-chip" style="border-color: #6366f1; background: #f5f3ff; color: #4338ca; font-weight: 600;" onclick="window.filtrarPorMaisRelacoesAno('5º')" title="Ver habilidades com mais conexões no 5º Ano">
+                        ⚡ 5º Ano: Mais Relações
+                    </button>
+                    <button type="button" class="query-chip" style="border-color: #6366f1; background: #f5f3ff; color: #4338ca; font-weight: 600;" onclick="window.filtrarPorMaisRelacoesAno('1º')" title="Ver habilidades com mais conexões no 1º Ano">
+                        ⚡ 1º Ano: Mais Relações
                     </button>
                     <button type="button" class="query-chip" data-query="atividades de pintura com materiais recicláveis">Pintura e reciclagem</button>
                     <button type="button" class="query-chip" data-query="jogos com regras e cooperação em grupo">Jogos cooperativos</button>
@@ -844,9 +856,89 @@
         </div>
     </div>
 
+    <!-- Modal de Ranking de Habilidades com Mais Relações da BNCC -->
+    <div class="ranking-modal-backdrop" id="rankingModalBackdrop" style="display: none;" onclick="window.fecharModalRankingRelacoes(event)">
+        <div class="ranking-modal" id="rankingModal" onclick="event.stopPropagation()">
+            <div class="ranking-modal-header">
+                <div class="ranking-modal-title-wrap">
+                    <div class="ranking-modal-badge">
+                        <span>🏆</span>
+                        <span>Liderança e Articulação Pedagógica &bull; BNCC</span>
+                    </div>
+                    <h2 class="ranking-modal-title">Ranking de Habilidades com Mais Relações</h2>
+                    <p class="ranking-modal-subtitle">
+                        Habilidades estruturantes da BNCC ordenadas pelo número de pré-requisitos pedagógicos, preparações curriculares e conexões interdisciplinares.
+                    </p>
+                </div>
+                <button type="button" class="ranking-modal-close-btn" onclick="window.fecharModalRankingRelacoes()" aria-label="Fechar ranking" title="Fechar (Esc)">
+                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2">
+                        <line x1="18" y1="6" x2="6" y2="18"></line>
+                        <line x1="6" y1="6" x2="18" y2="18"></line>
+                    </svg>
+                </button>
+            </div>
+
+            <!-- Filtros do Ranking -->
+            <div class="ranking-filters-bar">
+                <div class="ranking-filter-item">
+                    <label for="rankingFilterEtapa" class="ranking-label">1. Etapa de Ensino:</label>
+                    <select id="rankingFilterEtapa" class="ranking-select" onchange="window.filtrarRankingRelacoes()">
+                        <option value="todas">Todas as Etapas</option>
+                        <option value="EI">👶 Educação Infantil</option>
+                        <option value="EF_INICIAIS">🌱 EF - Anos Iniciais (1º ao 5º)</option>
+                        <option value="EF_FINAIS">🌿 EF - Anos Finais (6º ao 9º)</option>
+                        <option value="EM">🎓 Ensino Médio</option>
+                    </select>
+                </div>
+
+                <div class="ranking-filter-item">
+                    <label for="rankingFilterComponente" class="ranking-label">2. Componente Curricular:</label>
+                    <select id="rankingFilterComponente" class="ranking-select" onchange="window.filtrarRankingRelacoes()">
+                        <option value="todas">Todos os Componentes</option>
+                    </select>
+                </div>
+
+                <div class="ranking-filter-item">
+                    <label for="rankingFilterCriterio" class="ranking-label">3. Critério de Ordenação:</label>
+                    <select id="rankingFilterCriterio" class="ranking-select" onchange="window.filtrarRankingRelacoes()">
+                        <option value="total">Mais Relações Totais (Pré + Prep + Conexões)</option>
+                        <option value="requisitos">Mais Pré-Requisitos Formativos</option>
+                        <option value="prepara">Mais Progressão Posterior (Prepara Para)</option>
+                        <option value="relacionadas">Mais Conexões Pedagógicas no Ciclo</option>
+                    </select>
+                </div>
+
+                <div class="ranking-filter-item">
+                    <label for="rankingSearchInput" class="ranking-label">Filtrar Texto ou Código:</label>
+                    <div class="ranking-search-wrap">
+                        <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <circle cx="11" cy="11" r="8"></circle>
+                            <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
+                        </svg>
+                        <input type="text" id="rankingSearchInput" class="ranking-search-input" placeholder="Ex: EF07CI12, células, frações..." oninput="window.filtrarRankingRelacoes()">
+                    </div>
+                </div>
+            </div>
+
+            <!-- Barra de Status do Ranking -->
+            <div class="ranking-status-bar">
+                <span id="rankingStatsCount">Carregando dados do ranking...</span>
+                <div class="ranking-metric-pills">
+                    <span class="rpm-pill total">Total de Conexões</span>
+                    <span class="rpm-pill req">⚡ Pré-Requisitos</span>
+                    <span class="rpm-pill prep">➔ Prepara Para</span>
+                    <span class="rpm-pill rel">🔄 Articulações</span>
+                </div>
+            </div>
+
+            <!-- Lista do Ranking -->
+            <div class="ranking-list-body" id="rankingListBody"></div>
+        </div>
+    </div>
+
     <!-- Rodapé -->
     <footer>
-        <p>Concecta BNCC &bull; 100% Frontend (GitHub Pages Ready) &bull; Modelo: <code>all-MiniLM-L6-v2</code> via Transformers.js &bull; <a href="./documentacao.html" style="color: var(--accent-primary); text-decoration: underline; font-weight: 600;">📖 Documentação Técnica</a></p>
+        <p>Concecta BNCC &bull; 100% Frontend no Navegador &bull; Modelo: <code>all-MiniLM-L6-v2</code> via Transformers.js &bull; <a href="./documentacao.html" style="color: var(--accent-primary); text-decoration: underline; font-weight: 600;">📖 Documentação Técnica</a></p>
     </footer>
 
     <!-- Lógica de Inteligência Artificial, Grafo D3 e Aplicação -->
@@ -968,6 +1060,91 @@
             if (!graphTooltip) return;
             graphTooltip.style.display = 'none';
             graphTooltip.style.opacity = '0';
+        }
+
+        // Exibe legenda/tooltip rica ao passar o mouse sobre uma linha de conexão no grafo
+        function exibirLegendaLinhaRelacao(d, event) {
+            const sourceCode = (d.source && d.source.id) ? d.source.id : d.source;
+            const targetCode = (d.target && d.target.id) ? d.target.id : d.target;
+            const relA = catalogoRelacoesFinais ? catalogoRelacoesFinais[sourceCode] : null;
+            let justificativa = '';
+            let tipoEspecifico = '';
+
+            if (relA) {
+                const req = (relA.requisitos || []).find(r => r.codigo === targetCode);
+                const prep = (relA.prepara_para || []).find(r => r.codigo === targetCode);
+                const rel = (relA.relacionadas || []).find(r => r.codigo === targetCode);
+                if (req) { justificativa = req.justificativa; tipoEspecifico = '⚡ Pré-Requisito Formativo'; }
+                else if (prep) { justificativa = prep.justificativa; tipoEspecifico = '➔ Prepara Para (Avanço)'; }
+                else if (rel) { justificativa = rel.justificativa; tipoEspecifico = '🔄 Articulação Conceitual'; }
+            }
+            if (!justificativa && catalogoRelacoesFinais) {
+                const relB = catalogoRelacoesFinais[targetCode];
+                if (relB) {
+                    const req = (relB.requisitos || []).find(r => r.codigo === sourceCode);
+                    const prep = (relB.prepara_para || []).find(r => r.codigo === sourceCode);
+                    const rel = (relB.relacionadas || []).find(r => r.codigo === sourceCode);
+                    if (req) { justificativa = req.justificativa; tipoEspecifico = '⚡ Pré-Requisito Formativo'; }
+                    else if (prep) { justificativa = prep.justificativa; tipoEspecifico = '➔ Prepara Para (Avanço)'; }
+                    else if (rel) { justificativa = rel.justificativa; tipoEspecifico = '🔄 Articulação Conceitual'; }
+                }
+            }
+
+            const percAfinidade = (d.score * 100).toFixed(0);
+            const itemA = (d.posA && d.posA.item) || mapaBNCCPorCodigo.get(sourceCode) || {};
+            const itemB = (d.posB && d.posB.item) || mapaBNCCPorCodigo.get(targetCode) || {};
+            const discA = itemA.disciplina || 'Geral';
+            const discB = itemB.disciplina || 'Geral';
+            const anoA = itemA.ano_faixa || '';
+            const anoB = itemB.ano_faixa || '';
+            
+            let tipoRotulo = tipoEspecifico;
+            let tipoIcone = '🔗';
+            if (!tipoRotulo) {
+                if (d.isSameCol || anoA === anoB) {
+                    if (discA === discB) {
+                        tipoRotulo = `Articulação Intradisciplinar (${discA})`;
+                        tipoIcone = '🔄';
+                    } else {
+                        tipoRotulo = `Ponte Interdisciplinar (${discA} ↔ ${discB})`;
+                        tipoIcone = '🌐';
+                    }
+                } else {
+                    tipoRotulo = `Progressão Curricular (${anoA || 'Ciclo'} ➔ ${anoB || 'Ciclo'})`;
+                    tipoIcone = '📈';
+                }
+            }
+
+            const tipHtml = `
+                <div style="min-width: 260px; max-width: 350px;">
+                    <div style="display: flex; align-items: center; justify-content: space-between; gap: 8px; margin-bottom: 6px; border-bottom: 1px solid var(--border-color); padding-bottom: 6px;">
+                        <span style="font-weight: 800; font-size: 0.84rem; color: #1e293b; display: flex; align-items: center; gap: 5px;">
+                            <span>${tipoIcone}</span> ${tipoRotulo}
+                        </span>
+                        <span style="font-size: 0.74rem; font-weight: 800; color: #4338ca; background: #e0e7ff; padding: 2px 7px; border-radius: 10px;">
+                            ${percAfinidade}% afinidade
+                        </span>
+                    </div>
+                    <div style="display: flex; align-items: center; justify-content: space-between; gap: 6px; font-family: var(--font-mono); font-size: 0.82rem; font-weight: 700; color: var(--accent-primary); margin-bottom: 6px;">
+                        <span>${sourceCode} <small style="font-family: var(--font-sans); color: #64748b; font-weight: 600;">(${discA} • ${anoA})</small></span>
+                        <span style="color: #94a3b8;">${d.isSameCol ? '⟷' : '➔'}</span>
+                        <span>${targetCode} <small style="font-family: var(--font-sans); color: #64748b; font-weight: 600;">(${discB} • ${anoB})</small></span>
+                    </div>
+                    ${justificativa ? `
+                        <div style="font-size: 0.78rem; color: #334155; line-height: 1.45; background: #f8fafc; padding: 6px 8px; border-radius: 4px; border-left: 3px solid #6366f1; margin-bottom: 6px;">
+                            ${justificativa}
+                        </div>
+                    ` : `
+                        <div style="font-size: 0.76rem; color: #64748b; line-height: 1.4; margin-bottom: 6px;">
+                            Conexão pedagógica identificada por equivalência semântica de habilidades e objetos de conhecimento.
+                        </div>
+                    `}
+                    <div style="font-size: 0.72rem; color: #94a3b8;">
+                        💡 Dica: Clique na habilidade para manter suas conexões destacadas
+                    </div>
+                </div>
+            `;
+            exibirTooltipGrafo(tipHtml, event);
         }
 
         // Elementos do Drawer Lateral
@@ -1463,10 +1640,28 @@
                 if (responseRelFinal && responseRelFinal.ok) {
                     catalogoRelacoesFinais = await responseRelFinal.json();
                 }
+
+                // Pré-computa o total de relações em cada item da BNCC
+                baseBNCC.forEach(item => {
+                    const rel = catalogoRelacoesFinais ? catalogoRelacoesFinais[item.codigo] : null;
+                    const nReq = (rel && rel.requisitos) ? rel.requisitos.length : 0;
+                    const nPrep = (rel && rel.prepara_para) ? rel.prepara_para.length : 0;
+                    const nRel = (rel && rel.relacionadas) ? rel.relacionadas.length : 0;
+                    item._totalRelacoes = nReq + nPrep + nRel;
+                    item._countReq = nReq;
+                    item._countPrep = nPrep;
+                    item._countRel = nRel;
+                });
+
                 statusDetails.textContent = `${baseBNCC.length.toLocaleString()} habilidades e relações pedagógicas carregadas`;
 
                 // Popula os seletores de filtros
                 popularFiltros();
+
+                // Exibe imediatamente a listagem ordenada pelas habilidades com mais relações da BNCC
+                if (window.exibirListagemPorRelacoes) {
+                    window.exibirListagemPorRelacoes();
+                }
 
                 // 2. Carrega o modelo de IA a partir da pasta local do projeto
                 statusText.innerHTML = '<strong>Carregando modelo de IA local...</strong> (Lendo arquivos de ./models)';
@@ -1740,6 +1935,8 @@
                 window.calcularHabilidadesMaisInterdisciplinares();
             } else if (searchInput && searchInput.value.trim().length >= 2) {
                 executarBusca();
+            } else {
+                window.exibirListagemPorRelacoes();
             }
         };
 
@@ -1789,6 +1986,17 @@
                     opt.value = val;
                     opt.textContent = `${val} (${cacheDiscCounts[val]})`;
                     catCompSelect.appendChild(opt);
+                });
+            }
+
+            const rankCompSelect = document.getElementById('rankingFilterComponente');
+            if (rankCompSelect) {
+                rankCompSelect.innerHTML = '<option value="todas">Todos os Componentes</option>';
+                Object.keys(cacheDiscCounts).sort().forEach(val => {
+                    const opt = document.createElement('option');
+                    opt.value = val;
+                    opt.textContent = `${val} (${cacheDiscCounts[val]})`;
+                    rankCompSelect.appendChild(opt);
                 });
             }
 
@@ -2026,17 +2234,8 @@
             const query = searchInput.value.trim();
             if (query.length < 2) {
                 currentSearchSequence++;
-                resultsHeader.style.display = 'none';
-                viewTabs.style.display = 'none';
-                graphViewSection.style.display = 'none';
-                resultsArea.style.display = 'block';
-                resultsList.innerHTML = `
-                    <div class="empty-state">
-                        <h3 class="empty-title">Digite pelo menos 2 caracteres</h3>
-                        <p class="empty-desc">Escreva o tema da aula, intenção pedagógica ou palavra-chave para realizar a busca semântica, ou use o catálogo para navegar.</p>
-                        <button type="button" class="btn-empty-catalog-action" onclick="window.abrirModalCatalogoBNCC()">📖 Explorar Catálogo por Etapa e Componente</button>
-                    </div>
-                `;
+                clearBtn.style.display = 'none';
+                window.exibirListagemPorRelacoes();
                 return;
             }
 
@@ -2173,6 +2372,98 @@
                 }
             }
         }
+
+        // ======================================================================
+        // Modo Habilidades com Mais Relações da BNCC (Ordenação Inicial e por Filtros)
+        // ======================================================================
+        window.isModoRankingRelacoesAtivo = true;
+
+        window.exibirListagemPorRelacoes = function() {
+            if (!baseBNCC || baseBNCC.length === 0) return;
+
+            const t0 = performance.now();
+            const baseTopK = parseInt(document.getElementById('filterTopK')?.value, 10) || 12;
+            const selDisc = document.getElementById('filterDiscipline')?.value || 'todas';
+
+            // 1. Filtragem por Etapa e Ano / Fase (Hierárquico Multiseleção)
+            let candidatos = baseBNCC;
+            const anosSelecionados = window.obterAnosSelecionados ? window.obterAnosSelecionados() : [];
+            if (anosSelecionados.length < 15 && anosSelecionados.length > 0) {
+                const tagSet = new Set(anosSelecionados);
+                candidatos = candidatos.filter(item => window.habilidadeAtendeFiltroCurricular(item, tagSet));
+            }
+
+            if (selDisc !== 'todas') {
+                candidatos = candidatos.filter(item => item.disciplina === selDisc);
+            }
+
+            if (candidatos.length === 0) {
+                resultsHeader.style.display = 'flex';
+                const resumo = window.obterResumoCurricularFormatado ? window.obterResumoCurricularFormatado() : '';
+                resultsCount.textContent = `Nenhuma habilidade encontrada para o filtro: ${resumo}`;
+                resultsList.innerHTML = `<div class="empty-state"><p>Tente selecionar outro ano/fase ou componente curricular no painel de filtros à esquerda.</p></div>`;
+                return;
+            }
+
+            // 2. Garante contagem de relações em cada habilidade
+            candidatos.forEach(item => {
+                if (typeof item._totalRelacoes !== 'number') {
+                    const rel = catalogoRelacoesFinais ? catalogoRelacoesFinais[item.codigo] : null;
+                    const nReq = (rel && rel.requisitos) ? rel.requisitos.length : 0;
+                    const nPrep = (rel && rel.prepara_para) ? rel.prepara_para.length : 0;
+                    const nRel = (rel && rel.relacionadas) ? rel.relacionadas.length : 0;
+                    item._totalRelacoes = nReq + nPrep + nRel;
+                    item._countReq = nReq;
+                    item._countPrep = nPrep;
+                    item._countRel = nRel;
+                }
+            });
+
+            // 3. Ordena em ordem decrescente de relações
+            const ordenados = [...candidatos].sort((a, b) => (b._totalRelacoes || 0) - (a._totalRelacoes || 0));
+
+            const maxRel = Math.max(1, ordenados[0]._totalRelacoes || 1);
+            const pontuados = ordenados.map((item, idx) => ({
+                item,
+                score: Math.max(0.40, Number((item._totalRelacoes / maxRel).toFixed(2))),
+                isRankingRelacoes: true,
+                rankPos: idx + 1
+            }));
+
+            resultadosAtuais = pontuados.slice(0, baseTopK);
+            const duracao = (performance.now() - t0).toFixed(0);
+
+            viewTabs.style.display = 'flex';
+            isModoInterdisciplinarAtivo = false;
+            window.isModoRankingRelacoesAtivo = true;
+
+            const btnHub = document.getElementById('btnHubInterdisciplinar');
+            if (btnHub) btnHub.classList.remove('is-active');
+
+            renderizarResultadosLista(resultadosAtuais, '', duracao, candidatos.length);
+
+            resultsHeader.style.display = 'flex';
+            const resumoCurricular = window.obterResumoCurricularFormatado ? window.obterResumoCurricularFormatado() : 'Todos os Anos';
+            const discTexto = selDisc === 'todas' ? '' : ` • ${selDisc}`;
+            resultsCount.innerHTML = `<strong>Habilidades com Mais Relações na BNCC</strong> &bull; ${resumoCurricular}${discTexto}`;
+            executionTime.textContent = `${duracao} ms (${candidatos.length.toLocaleString()} habilidades)`;
+
+            if (currentView === 'graph') {
+                renderizarGrafo();
+            }
+        };
+
+        window.filtrarPorMaisRelacoesAno = function(ano) {
+            window.selecionarApenasAno(ano);
+            isModoInterdisciplinarAtivo = false;
+            const btnHub = document.getElementById('btnHubInterdisciplinar');
+            if (btnHub) btnHub.classList.remove('is-active');
+            searchInput.value = '';
+            clearBtn.style.display = 'none';
+            window.exibirListagemPorRelacoes();
+            const resumo = window.obterResumoCurricularFormatado();
+            window.showToast(`⚡ Exibindo habilidades com mais relações: ${resumo}`);
+        };
 
         // ======================================================================
         // Hub de Habilidades Mais Interdisciplinares (Conexão entre Componentes)
@@ -2461,22 +2752,60 @@
         };
 
         function renderizarCardHabilidade(resObj, index, query) {
-            const { item, score, isInterdisciplinarHub, numDisciplinas, disciplinasConectadas, conexoesInterdisciplinares, totalConexoes } = resObj;
+            const { item, score, isInterdisciplinarHub, isRankingRelacoes, rankPos, numDisciplinas, disciplinasConectadas, conexoesInterdisciplinares, totalConexoes } = resObj;
             const percentual = (score * 100).toFixed(1);
             let scoreClass = 'low';
             if (score >= 0.65) scoreClass = 'high';
             else if (score >= 0.45) scoreClass = 'medium';
 
             const discClass = getDisciplinaClass(item.disciplina);
+            const totalRel = item._totalRelacoes || 0;
             const hasPedagogy = (item.comentario && item.comentario.trim()) || (item.possibilidades && item.possibilidades.trim());
             const explicacao = gerarExplicacaoIA(query, item, score);
             const cardId = `${item.codigo}_${index}`.replace(/[^a-zA-Z0-9_]/g, '_');
 
+            let scoreBoxHtml = '';
+            if (isRankingRelacoes) {
+                scoreBoxHtml = `
+                    <div class="score-box" title="Ranking: ${totalRel} conexões pedagógicas identificadas">
+                        <div class="score-badge ranking-score-badge" style="background: #fef3c7; color: #92400e; border: 1px solid #fde68a; font-weight: 800;">
+                            ⚡ ${totalRel} conexões
+                        </div>
+                        <div class="score-bar-bg">
+                            <div class="score-bar-fill" style="width: ${Math.min(100, Math.max(10, percentual))}%; background: linear-gradient(90deg, #f59e0b, #d97706);"></div>
+                        </div>
+                    </div>
+                `;
+            } else if (isInterdisciplinarHub) {
+                scoreBoxHtml = `
+                    <div class="score-box" title="Articulação Interdisciplinar: conecta com ${numDisciplinas} componentes distintos em ${totalConexoes} pontes curriculares">
+                        <div class="score-badge hub-score-badge">
+                            🌐 ${numDisciplinas} componentes &bull; ${totalConexoes} pontes
+                        </div>
+                        <div class="score-bar-bg">
+                            <div class="score-bar-fill" style="width: ${Math.min(100, Math.max(0, percentual))}%;"></div>
+                        </div>
+                    </div>
+                `;
+            } else {
+                scoreBoxHtml = `
+                    <div class="score-box" title="Similaridade de Cosseno: ${score.toFixed(4)}">
+                        <div class="score-badge ${scoreClass}">
+                            ${percentual}% aderência
+                        </div>
+                        <div class="score-bar-bg">
+                            <div class="score-bar-fill" style="width: ${Math.min(100, Math.max(0, percentual))}%;"></div>
+                        </div>
+                    </div>
+                `;
+            }
+
             return `
-                <article class="skill-card is-collapsed ${isInterdisciplinarHub ? 'is-hub-card' : ''}" id="card-${cardId}" style="animation-delay: ${Math.min(index * 0.03, 0.4)}s">
+                <article class="skill-card is-collapsed ${isInterdisciplinarHub ? 'is-hub-card' : ''} ${isRankingRelacoes ? 'is-ranking-card' : ''}" id="card-${cardId}" style="animation-delay: ${Math.min(index * 0.03, 0.4)}s">
                     <div class="skill-card-header" onclick="window.toggleCardExpand('${cardId}', event)" role="button" tabindex="0" onkeydown="if(event.key==='Enter'||event.key===' '){event.preventDefault(); this.click();}" title="Clique para expandir ou recolher os detalhes desta habilidade">
                         <div class="skill-card-top">
                             <div class="skill-meta-tags">
+                                ${isRankingRelacoes && rankPos ? `<span class="ranking-pos-badge" style="font-family: var(--font-mono); font-size: 0.76rem; font-weight: 800; background: #fef3c7; color: #92400e; padding: 2px 7px; border-radius: 4px; border: 1px solid #fde68a;">#${rankPos}</span>` : ''}
                                 <button type="button" class="code-badge" onclick="event.stopPropagation(); copiarCodigo('${item.codigo}')" title="Clique para copiar código e descrição">
                                     <span>${item.codigo}</span>
                                     <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
@@ -2492,15 +2821,16 @@
                                 ${item.ano_faixa ? `<span class="year-badge">${item.ano_faixa}</span>` : ''}
                             </div>
 
-                            <div class="score-box" title="${isInterdisciplinarHub ? `Articulação Interdisciplinar: conecta com ${numDisciplinas} componentes distintos em ${totalConexoes} pontes curriculares` : `Similaridade de Cosseno: ${score.toFixed(4)}`}">
-                                <div class="score-badge ${isInterdisciplinarHub ? 'hub-score-badge' : scoreClass}">
-                                    ${isInterdisciplinarHub ? `🌐 ${numDisciplinas} componentes &bull; ${totalConexoes} pontes` : `${percentual}% aderência`}
-                                </div>
-                                <div class="score-bar-bg">
-                                    <div class="score-bar-fill" style="width: ${Math.min(100, Math.max(0, percentual))}%;"></div>
-                                </div>
-                            </div>
+                            ${scoreBoxHtml}
                         </div>
+
+                        ${isRankingRelacoes ? `
+                            <div class="ranking-breakdown-row" style="display: flex; gap: 6px; margin: 4px 0 6px 0; flex-wrap: wrap;">
+                                ${item._countReq > 0 ? `<span class="ranking-pill-req">⚡ ${item._countReq} pré-req</span>` : ''}
+                                ${item._countPrep > 0 ? `<span class="ranking-pill-prep">➔ ${item._countPrep} prepara</span>` : ''}
+                                ${item._countRel > 0 ? `<span class="ranking-pill-rel">🔄 ${item._countRel} articulações</span>` : ''}
+                            </div>
+                        ` : ''}
 
                         ${isInterdisciplinarHub && disciplinasConectadas && disciplinasConectadas.length > 0 ? `
                             <div class="inter-connected-disciplines-row">
@@ -2664,8 +2994,11 @@
 
                         <!-- Ações do rodapé do card -->
                         <div class="skill-card-footer-actions">
-                            <button type="button" class="btn-explore-lineage" onclick="event.stopPropagation(); window.abrirLinhagemModal('${item.codigo}')" title="Visualizar a linhagem e pré-requisitos desta habilidade no Grafo">
-                                <span>🧬 Ver Linhagem & Pré-requisitos</span>
+                            <button type="button" class="btn-explore-graph" onclick="event.stopPropagation(); window.focarHabilidadeNoGrafo('${item.codigo}')" title="Visualizar esta habilidade e suas conexões no Grafo / Organograma">
+                                <span>🌐 Ver no Grafo</span>
+                            </button>
+                            <button type="button" class="btn-explore-lineage" onclick="event.stopPropagation(); window.focarHabilidadeNoGrafo('${item.codigo}', 'lineage')" title="Visualizar a linhagem e pré-requisitos desta habilidade no Grafo">
+                                <span>🧬 Linhagem & Pré-requisitos</span>
                             </button>
                             <button type="button" class="btn-card-recolher" onclick="event.stopPropagation(); window.toggleCardExpand('${cardId}')" title="Recolher detalhes desta habilidade">
                                 <span>▲ Recolher detalhes</span>
@@ -3228,8 +3561,22 @@
                         return `M ${leftPos.rightX} ${leftPos.centerY} C ${cp1X} ${leftPos.centerY}, ${cp2X} ${rightPos.centerY}, ${rightPos.leftX} ${rightPos.centerY}`;
                     }
                 })
-                .attr('stroke-width', d => Math.max(1.4, (d.score - thresholdRelacao) * 4 + 1.2))
-                .attr('stroke-opacity', d => Math.max(0.25, d.score * 0.7));
+                .attr('stroke-width', d => Math.max(1.8, (d.score - thresholdRelacao) * 4 + 1.4))
+                .attr('stroke-opacity', d => Math.max(0.3, d.score * 0.7));
+
+            // Interação de hover sobre as linhas de relação para exibir legenda
+            relLinkElements
+                .on('mouseenter', (event, d) => {
+                    d3.select(event.currentTarget).classed('line-hover-glow', true);
+                    exibirLegendaLinhaRelacao(d, event);
+                })
+                .on('mousemove', (event) => {
+                    atualizarPosicaoTooltip(event);
+                })
+                .on('mouseleave', (event, d) => {
+                    d3.select(event.currentTarget).classed('line-hover-glow', false);
+                    ocultarTooltipGrafo();
+                });
 
             // 4. Cabeçalhos das Colunas de Ano/Fase
             const headersLayer = g.append('g').attr('class', 'organogram-headers-layer');
@@ -3325,7 +3672,7 @@
 
                         const tipHtml = `
                             <div style="font-weight: 800; font-size: 0.90rem; color: #1e293b; margin-bottom: 2px;">
-                                ${item.codigo} <span style="font-weight: 600; font-size: 0.78rem; color: var(--color-success-text);">(${(score * 100).toFixed(1)}% similaridade)</span>
+                                ${item.codigo} <span style="font-weight: 600; font-size: 0.78rem; color: var(--color-success-text);">(${(score * 100).toFixed(1)}% ${item._totalRelacoes ? 'aderência' : 'similaridade'})</span>
                             </div>
                             <div style="font-size: 0.78rem; color: ${corDisc}; font-weight: 700; margin-bottom: 6px;">
                                 ${item.disciplina || 'Geral'} &bull; ${item.ano_faixa || ''}
@@ -3334,7 +3681,7 @@
                                 ${item.habilidade}
                             </div>
                             <div style="margin-top: 8px; font-size: 0.74rem; color: var(--accent-primary); font-weight: 600; border-top: 1px solid var(--border-color); padding-top: 6px;">
-                                Clique para abrir orientações pedagógicas e competências
+                                Clique para abrir detalhes e manter conexões destacadas
                             </div>
                         `;
                         exibirTooltipGrafo(tipHtml, event);
@@ -3343,19 +3690,57 @@
                         atualizarPosicaoTooltip(event);
                     })
                     .on('mouseleave', () => {
-                        relLinkElements
-                            .classed('active-highlight', false)
-                            .classed('dimmed', false);
+                        if (selectedNodeCode) {
+                            aplicarDestaqueOrganograma(selectedNodeCode);
+                        } else {
+                            relLinkElements
+                                .classed('active-highlight', false)
+                                .classed('dimmed', false);
+                            d3.selectAll('.organogram-node-group').classed('dimmed-card', false).classed('connected-highlight', false);
+                        }
                         ocultarTooltipGrafo();
                     })
                     .on('click', (event) => {
                         if (event) event.stopPropagation();
                         selectedNodeCode = codigo;
-                        d3.selectAll('.organogram-node-group').classed('active-selected', false);
-                        cardGroup.classed('active-selected', true);
+                        aplicarDestaqueOrganograma(codigo);
                         abrirDrawerDetalhes(item, score);
                     });
             });
+
+            // Aplica e mantém destaque nas conexões da habilidade selecionada
+            function aplicarDestaqueOrganograma(targetCode) {
+                if (!targetCode) {
+                    relLinkElements.classed('active-highlight', false).classed('dimmed', false);
+                    nodesLayer.selectAll('.organogram-node-group').classed('dimmed-card', false).classed('connected-highlight', false);
+                    return;
+                }
+                const connected = new Set([targetCode]);
+                relLinksData.forEach(l => {
+                    if (l.source === targetCode) connected.add(l.target);
+                    if (l.target === targetCode) connected.add(l.source);
+                });
+
+                relLinkElements
+                    .classed('active-highlight', l => l.source === targetCode || l.target === targetCode)
+                    .classed('dimmed', l => l.source !== targetCode && l.target !== targetCode);
+
+                nodesLayer.selectAll('.organogram-node-group')
+                    .classed('active-selected', function() { return this.id === `card-${targetCode}`; })
+                    .classed('connected-highlight', function() {
+                        const c = this.id.replace('card-', '');
+                        return c !== targetCode && connected.has(c);
+                    })
+                    .classed('dimmed-card', function() {
+                        const c = this.id.replace('card-', '');
+                        return !connected.has(c);
+                    });
+            }
+            window.aplicarDestaqueOrganograma = aplicarDestaqueOrganograma;
+
+            if (selectedNodeCode) {
+                aplicarDestaqueOrganograma(selectedNodeCode);
+            }
 
             // 6. Card Raiz (Topo Central)
             const rootGroup = g.append('g')
@@ -4461,12 +4846,16 @@
                     }
                     exibirTooltipGrafo(tipHtml, event);
 
-                    // Destaca arestas conectadas
+                    // Destaca arestas conectadas no hover temporário
                     linkSelection.style('stroke-opacity', l => {
-                        if (l.source.id === d.id || l.target.id === d.id) return 1;
+                        const sId = l.source.id || l.source;
+                        const tId = l.target.id || l.target;
+                        if (sId === d.id || tId === d.id) return 1;
                         return 0.08;
                     }).style('stroke', l => {
-                        if (l.source.id === d.id || l.target.id === d.id) return '#38bdf8';
+                        const sId = l.source.id || l.source;
+                        const tId = l.target.id || l.target;
+                        if (sId === d.id || tId === d.id) return '#38bdf8';
                         return null;
                     });
                 })
@@ -4475,30 +4864,73 @@
                 })
                 .on('mouseleave', () => {
                     ocultarTooltipGrafo();
-                    // Restaura arestas
-                    linkSelection.style('stroke-opacity', null).style('stroke', null);
+                    // Se houver habilidade selecionada com gaveta aberta, mantém o destaque nela
+                    if (selectedNodeCode) {
+                        aplicarDestaqueGrafoForcas(selectedNodeCode);
+                    } else {
+                        linkSelection.style('stroke-opacity', null).style('stroke', null);
+                        nodeSelection.classed('dimmed-card', false);
+                    }
                 })
                 .on('click', (event, d) => {
                     if (event) event.stopPropagation();
                     if (d.type === 'skill') {
                         selectedNodeCode = d.item.codigo;
-                        nodeSelection.classed('active-selected', n => n.id === d.id);
+                        aplicarDestaqueGrafoForcas(d.item.codigo);
                         abrirDrawerDetalhes(d.item, d.score);
                     }
                 });
 
-            // Hover sobre as arestas para exibir a afinidade exata
+            // Aplica e mantém destaque nas conexões da bolha selecionada
+            function aplicarDestaqueGrafoForcas(targetCode) {
+                if (!targetCode) {
+                    linkSelection.style('stroke-opacity', null).style('stroke', null);
+                    nodeSelection.classed('active-selected', false).classed('dimmed-card', false);
+                    return;
+                }
+                const connected = new Set([targetCode]);
+                links.forEach(l => {
+                    const sId = l.source.id || l.source;
+                    const tId = l.target.id || l.target;
+                    if (sId === targetCode) connected.add(tId);
+                    if (tId === targetCode) connected.add(sId);
+                });
+
+                linkSelection.style('stroke-opacity', l => {
+                    const sId = l.source.id || l.source;
+                    const tId = l.target.id || l.target;
+                    if (sId === targetCode || tId === targetCode) return 1;
+                    return 0.08;
+                }).style('stroke', l => {
+                    const sId = l.source.id || l.source;
+                    const tId = l.target.id || l.target;
+                    if (sId === targetCode || tId === targetCode) return '#38bdf8';
+                    return null;
+                });
+
+                nodeSelection
+                    .classed('active-selected', d => (d.item && d.item.codigo === targetCode) || d.id === targetCode)
+                    .classed('dimmed-card', d => {
+                        const code = (d.item && d.item.codigo) || d.id;
+                        return !connected.has(code);
+                    });
+            }
+            window.aplicarDestaqueGrafoForcas = aplicarDestaqueGrafoForcas;
+
+            if (selectedNodeCode) {
+                aplicarDestaqueGrafoForcas(selectedNodeCode);
+            }
+
+            // Hover sobre as arestas para exibir a legenda de relações da BNCC
             linkSelection
                 .on('mouseenter', (event, d) => {
-                    const perc = (d.similarity * 100).toFixed(0);
-                    let labelAresta = '';
                     if (d.type === 'query') {
-                        labelAresta = `Aderência com a busca: <strong>${perc}%</strong>`;
+                        const perc = (d.similarity * 100).toFixed(0);
+                        const labelAresta = `Aderência com a busca: <strong>${perc}%</strong><br><span style="font-size: 0.72rem; color: #64748b;">${d.source.id || d.source} ↔ ${d.target.id || d.target}</span>`;
+                        exibirTooltipGrafo(labelAresta, event);
                     } else {
-                        const rotulo = d.compat && d.compat.rotulo ? `<br><span style="font-size: 0.76rem; color: #4f46e5; font-weight: 600;">${d.compat.rotulo}</span>` : '';
-                        labelAresta = `Afinidade Pedagógica: <strong>${perc}%</strong>${rotulo}<br><span style="font-size: 0.72rem; color: #64748b;">${d.source.id} ↔ ${d.target.id}</span>`;
+                        exibirLegendaLinhaRelacao(d, event);
                     }
-                    exibirTooltipGrafo(labelAresta, event);
                 })
                 .on('mousemove', (event) => {
                     atualizarPosicaoTooltip(event);
@@ -4621,18 +5053,79 @@
         window.abrirGavetaDetalhes = window.abrirHabilidadePorCodigo;
         window.abrirGavetaPorCodigo = window.abrirHabilidadePorCodigo;
 
-        window.verLinhagemNoGrafo = function(codigo) {
+        window.focarHabilidadeNoGrafo = async function(codigo, modo = null) {
+            if (!codigo) return;
+
+            // 1. Fecha modais que possam estar abertos (Ranking, Catálogo, etc.)
+            const rankModal = document.getElementById('rankingModalBackdrop');
+            if (rankModal) rankModal.style.display = 'none';
+            const catModal = document.getElementById('catalogModalBackdrop');
+            if (catModal) catModal.style.display = 'none';
+            document.body.style.overflow = '';
+
+            // 2. Fecha a gaveta lateral para que a tela mostre o grafo limpo e completo
+            fecharDrawer();
+
+            // 3. Define a habilidade selecionada e o modo de grafo (se passado)
             selectedNodeCode = codigo;
-            graphLayoutMode = 'lineage';
-            if (typeof atualizarBotoesLayoutGrafo === 'function') {
-                atualizarBotoesLayoutGrafo('lineage');
+            if (modo) {
+                graphLayoutMode = modo;
+                if (typeof atualizarBotoesLayoutGrafo === 'function') {
+                    atualizarBotoesLayoutGrafo(modo);
+                }
             }
-            if (currentView !== 'graph') {
-                tabGraphBtn.click();
-            } else {
-                renderizarGrafo();
+
+            // 4. Configura o campo de busca com o código da habilidade
+            searchInput.value = codigo;
+            clearBtn.style.display = 'flex';
+            if (customAutocomplete) customAutocomplete.style.display = 'none';
+
+            // 5. Ativa imediatamente a aba do Grafo
+            currentView = 'graph';
+            if (tabGraphBtn) tabGraphBtn.classList.add('active');
+            if (tabListBtn) tabListBtn.classList.remove('active');
+            if (resultsArea) resultsArea.style.display = 'none';
+            if (graphViewSection) graphViewSection.style.display = 'flex';
+            if (viewTabs) viewTabs.style.display = 'flex';
+
+            // 6. Executa a busca para compor os nós e relações dessa habilidade
+            await executarBusca();
+
+            // 7. Garante que a visualização está em modo grafo e renderiza
+            currentView = 'graph';
+            if (tabGraphBtn) tabGraphBtn.classList.add('active');
+            if (tabListBtn) tabListBtn.classList.remove('active');
+            if (resultsArea) resultsArea.style.display = 'none';
+            if (graphViewSection) graphViewSection.style.display = 'flex';
+
+            selectedNodeCode = codigo;
+            renderizarGrafo();
+
+            // 8. Aplica o destaque na habilidade e em suas arestas
+            if (window.aplicarDestaqueOrganograma) {
+                window.aplicarDestaqueOrganograma(codigo);
             }
-            window.showToast(`Linhagem pedagógica de ${codigo} ativada no Grafo`);
+            if (window.aplicarDestaqueGrafoForcas) {
+                window.aplicarDestaqueGrafoForcas(codigo);
+            }
+
+            // 9. Rola a tela suavemente para a seção do grafo
+            setTimeout(() => {
+                const targetEl = document.getElementById('graphViewSection') || document.getElementById('graphContainer');
+                if (targetEl) {
+                    targetEl.scrollIntoView({ behavior: 'smooth', block: 'start' });
+                }
+            }, 60);
+
+            window.showToast(`🌐 Grafo centrado na habilidade ${codigo}`);
+        };
+        window.abrirNoGrafo = window.focarHabilidadeNoGrafo;
+        window.abrirLinhagemModal = function(codigo) {
+            window.focarHabilidadeNoGrafo(codigo, 'lineage');
+        };
+
+        window.verLinhagemNoGrafo = function(codigo) {
+            window.focarHabilidadeNoGrafo(codigo, 'lineage');
         };
 
         // ======================================================================
@@ -5032,8 +5525,12 @@
             if (drawerExpandBtn) drawerExpandBtn.classList.remove('active');
             if (drawerMinimizedTab) drawerMinimizedTab.style.display = 'none';
             skillDrawer.setAttribute('aria-hidden', 'true');
-            d3.selectAll('.graph-node').classed('active-selected', false);
-            d3.selectAll('.organogram-node-group').classed('active-selected', false);
+            selectedNodeCode = null;
+            if (window.aplicarDestaqueOrganograma) window.aplicarDestaqueOrganograma(null);
+            if (window.aplicarDestaqueGrafoForcas) window.aplicarDestaqueGrafoForcas(null);
+            d3.selectAll('.graph-node').classed('active-selected', false).classed('dimmed-card', false);
+            d3.selectAll('.organogram-node-group').classed('active-selected', false).classed('dimmed-card', false).classed('connected-highlight', false);
+            d3.selectAll('.organogram-rel-link').classed('active-highlight', false).classed('dimmed', false);
         }
         window.fecharDrawer = fecharDrawer;
 
@@ -5165,24 +5662,32 @@
         // ======================================================================
         const customAutocomplete = document.getElementById('customAutocomplete');
 
+        function destacarTermoBusca(texto, termo) {
+            if (!texto || !termo) return texto || '';
+            const t = termo.trim();
+            if (!t) return texto;
+            const escaped = t.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
+            const regex = new RegExp(`(${escaped})`, 'gi');
+            return texto.replace(regex, '<mark>$1</mark>');
+        }
+
         function renderizarAutocomplete(textoBusca) {
             if (!textoBusca || textoBusca.trim().length < 2) {
                 customAutocomplete.style.display = 'none';
                 return;
             }
 
-            const textLower = textoBusca.trim().toLowerCase();
+            const rawTerm = textoBusca.trim();
+            const textLower = rawTerm.toLowerCase();
             const correspondencias = [];
             
-            // Busca rápida usando o índice em cache _searchLower, limitando a 15 para zero lag
+            // Busca rápida usando o índice em cache _searchLower, priorizando código exato e habilidades relevantes
             for (let i = 0; i < baseBNCC.length; i++) {
                 const item = baseBNCC[i];
-                if (item._searchLower && item._searchLower.includes(textLower)) {
+                if ((item.codigo && item.codigo.toLowerCase().includes(textLower)) ||
+                    (item._searchLower && item._searchLower.includes(textLower))) {
                     correspondencias.push(item);
-                    if (correspondencias.length >= 15) break;
-                } else if (item.codigo && item.codigo.toLowerCase().includes(textLower)) {
-                    correspondencias.push(item);
-                    if (correspondencias.length >= 15) break;
+                    if (correspondencias.length >= 12) break;
                 }
             }
 
@@ -5191,13 +5696,42 @@
                 return;
             }
 
-            customAutocomplete.innerHTML = correspondencias.map(item => `
-                <div class="autocomplete-item" onclick="selecionarAutocomplete('${item.codigo}')">
-                    <div class="ac-codigo">${item.codigo}</div>
-                    <div class="ac-desc">${item.disciplina || 'Área Geral'} &bull; ${item.ano_faixa || ''}</div>
-                    <div class="ac-text">${item.habilidade.substring(0, 75)}...</div>
-                </div>
-            `).join('');
+            customAutocomplete.innerHTML = correspondencias.map(item => {
+                // Remove prefixo de código redundante se já existir no início da descrição (ex: "(EF02CI05) ")
+                let habTexto = item.habilidade || '';
+                const codePrefixRegex = new RegExp(`^\\(${item.codigo}\\)\\s*`, 'i');
+                habTexto = habTexto.replace(codePrefixRegex, '');
+
+                const codDestacado = destacarTermoBusca(item.codigo, rawTerm);
+                const habDestacada = destacarTermoBusca(habTexto, rawTerm);
+                const discCor = getDisciplinaCor(item.disciplina);
+                const totalRels = typeof item._totalRelacoes === 'number' ? item._totalRelacoes : (catalogoRelacoesFinais && catalogoRelacoesFinais[item.codigo] ? 
+                    ((catalogoRelacoesFinais[item.codigo].requisitos || []).length +
+                     (catalogoRelacoesFinais[item.codigo].prepara_para || []).length +
+                     (catalogoRelacoesFinais[item.codigo].relacionadas || []).length) : 0);
+
+                return `
+                    <div class="autocomplete-item" onclick="selecionarAutocomplete('${item.codigo}')" title="Selecionar habilidade ${item.codigo}">
+                        <div class="ac-main-col">
+                            <div class="ac-header-line">
+                                <span class="ac-codigo">${codDestacado}</span>
+                                <span class="ac-tag-disc ${getDisciplinaClass(item.disciplina)}" style="border-left: 3px solid ${discCor}; background-color: ${discCor}18; color: ${discCor};">
+                                    ${item.disciplina || 'Área Geral'}
+                                </span>
+                                ${item.ano_faixa ? `<span class="ac-tag-ano">${item.ano_faixa}</span>` : ''}
+                                ${totalRels > 0 ? `<span class="ac-tag-rel" title="${totalRels} conexões curriculares diretas">🔗 ${totalRels} relações</span>` : ''}
+                            </div>
+                            <div class="ac-text">${habDestacada}</div>
+                        </div>
+                        <div class="ac-action-col">
+                            <span class="ac-select-btn">
+                                <span>Ver Habilidade</span>
+                                <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="9 18 15 12 9 6"></polyline></svg>
+                            </span>
+                        </div>
+                    </div>
+                `;
+            }).join('');
             
             customAutocomplete.style.display = 'block';
         }
@@ -5361,20 +5895,12 @@
 
             clearTimeout(debounceTimer);
 
-            // Se o usuário apagou o texto (< 2 caracteres), cancela imediatamente buscas pendentes
+            // Se o usuário apagou o texto (< 2 caracteres), cancela imediatamente buscas pendentes e exibe o ranking de mais relações
             if (val.length < 2) {
                 currentSearchSequence++;
-                resultsHeader.style.display = 'none';
-                viewTabs.style.display = 'none';
-                graphViewSection.style.display = 'none';
-                resultsArea.style.display = 'block';
-                resultsList.innerHTML = `
-                    <div class="empty-state">
-                        <h3 class="empty-title">Aguardando sua pesquisa</h3>
-                        <p class="empty-desc">Digite acima o tema da sua aula ou uma habilidade pedagógica, ou utilize o catálogo para explorar por Etapa e Componente.</p>
-                        <button type="button" class="btn-empty-catalog-action" onclick="window.abrirModalCatalogoBNCC()">📖 Explorar Catálogo por Etapa e Componente</button>
-                    </div>
-                `;
+                if (window.exibirListagemPorRelacoes) {
+                    window.exibirListagemPorRelacoes();
+                }
                 return;
             }
 
@@ -5400,17 +5926,9 @@
             if (customAutocomplete) customAutocomplete.style.display = 'none';
             fecharDrawer();
             searchInput.focus();
-            resultsHeader.style.display = 'none';
-            viewTabs.style.display = 'none';
-            graphViewSection.style.display = 'none';
-            resultsArea.style.display = 'block';
-            resultsList.innerHTML = `
-                <div class="empty-state">
-                    <h3 class="empty-title">Aguardando sua pesquisa</h3>
-                    <p class="empty-desc">Digite acima o tema da sua aula ou uma habilidade pedagógica para encontrar as correspondências mais próximas na BNCC.</p>
-                    <button type="button" class="btn-empty-catalog-action" onclick="window.abrirModalCatalogoBNCC()">📖 Explorar Catálogo por Etapa e Componente</button>
-                </div>
-            `;
+            if (window.exibirListagemPorRelacoes) {
+                window.exibirListagemPorRelacoes();
+            }
         });
 
         ['filterDiscipline', 'filterTopK'].forEach(id => {
@@ -5737,10 +6255,15 @@
                                 ${countRel > 0 ? `<span class="cat-rel-pill rel" title="${countRel} relações intradisciplinares e interdisciplinares">🔄 ${countRel} conexões</span>` : ''}
                                 ${countReq === 0 && countPrep === 0 && countRel === 0 ? `<span class="cat-rel-pill generic">📚 BNCC</span>` : ''}
                             </div>
-                            <button type="button" class="btn-select-cat-skill" onclick="event.stopPropagation(); window.selecionarHabilidadeDoCatalogo('${item.codigo}')">
-                                <span>Selecionar</span>
-                                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="9 18 15 12 9 6"></polyline></svg>
-                            </button>
+                            <div style="display: flex; align-items: center; gap: 6px;">
+                                <button type="button" class="btn-select-cat-skill" onclick="event.stopPropagation(); window.focarHabilidadeNoGrafo('${item.codigo}')" title="Visualizar esta habilidade no Grafo" style="background: #e0e7ff; color: #4338ca; border: 1px solid #c7d2fe;">
+                                    <span>🌐 Grafo</span>
+                                </button>
+                                <button type="button" class="btn-select-cat-skill" onclick="event.stopPropagation(); window.selecionarHabilidadeDoCatalogo('${item.codigo}')" title="Abrir ficha pedagógica completa na gaveta">
+                                    <span>Ficha</span>
+                                    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="9 18 15 12 9 6"></polyline></svg>
+                                </button>
+                            </div>
                         </div>
                     </div>
                 `;
@@ -5780,12 +6303,249 @@
             window.showToast(`Habilidade ${codigo} selecionada com sucesso!`);
         };
 
-        // Fecha o modal do catálogo ao pressionar Escape
+        // ======================================================================
+        // Modal de Ranking de Habilidades com Mais Relações na BNCC
+        // ======================================================================
+        let rankingItensFiltrados = [];
+        let rankingLimiteExibicao = 50;
+
+        window.abrirModalRankingRelacoes = function() {
+            const backdrop = document.getElementById('rankingModalBackdrop');
+            if (!backdrop) return;
+            backdrop.style.display = 'flex';
+            document.body.style.overflow = 'hidden';
+
+            // Garante que o select de componente está populado
+            const compSelect = document.getElementById('rankingFilterComponente');
+            if (compSelect && compSelect.options.length <= 1 && cacheDiscCounts) {
+                const discs = Object.keys(cacheDiscCounts).sort();
+                discs.forEach(d => {
+                    const opt = document.createElement('option');
+                    opt.value = d;
+                    opt.textContent = `${d} (${cacheDiscCounts[d]})`;
+                    compSelect.appendChild(opt);
+                });
+            }
+
+            window.filtrarRankingRelacoes();
+        };
+
+        window.fecharModalRankingRelacoes = function(event) {
+            if (event && event.target && event.target.id !== 'rankingModalBackdrop' && !event.target.classList.contains('ranking-modal-close-btn') && !event.target.closest('.ranking-modal-close-btn')) {
+                return;
+            }
+            const backdrop = document.getElementById('rankingModalBackdrop');
+            if (backdrop) backdrop.style.display = 'none';
+            document.body.style.overflow = '';
+        };
+
+        window.filtrarRankingRelacoes = function() {
+            if (!baseBNCC || baseBNCC.length === 0) return;
+
+            const etapa = document.getElementById('rankingFilterEtapa')?.value || 'todas';
+            const comp = document.getElementById('rankingFilterComponente')?.value || 'todas';
+            const criterio = document.getElementById('rankingFilterCriterio')?.value || 'total';
+            const termo = (document.getElementById('rankingSearchInput')?.value || '').trim().toLowerCase();
+
+            // Garante cálculo de relações em cada item
+            baseBNCC.forEach(item => {
+                if (typeof item._totalRelacoes !== 'number') {
+                    const rel = catalogoRelacoesFinais ? catalogoRelacoesFinais[item.codigo] : null;
+                    const nReq = (rel && rel.requisitos) ? rel.requisitos.length : 0;
+                    const nPrep = (rel && rel.prepara_para) ? rel.prepara_para.length : 0;
+                    const nRel = (rel && rel.relacionadas) ? rel.relacionadas.length : 0;
+                    item._totalRelacoes = nReq + nPrep + nRel;
+                    item._countReq = nReq;
+                    item._countPrep = nPrep;
+                    item._countRel = nRel;
+                }
+            });
+
+            let itens = baseBNCC.filter(item => {
+                // Filtro de Etapa
+                if (etapa !== 'todas') {
+                    const info = extrairEtapaCurricular(item);
+                    if (etapa === 'EI' && info.etapa !== 'EI') return false;
+                    if (etapa === 'EM' && info.etapa !== 'EM') return false;
+                    if (etapa === 'EF_INICIAIS') {
+                        if (info.etapa !== 'EF') return false;
+                        if (!info.anos.some(a => a <= 5)) return false;
+                    }
+                    if (etapa === 'EF_FINAIS') {
+                        if (info.etapa !== 'EF') return false;
+                        if (!info.anos.some(a => a >= 6)) return false;
+                    }
+                }
+
+                // Filtro de Componente
+                if (comp !== 'todas' && item.disciplina !== comp) return false;
+
+                // Filtro de Termo
+                if (termo) {
+                    const matchCod = item.codigo && item.codigo.toLowerCase().includes(termo);
+                    const matchTxt = item._searchLower ? item._searchLower.includes(termo) : (item.habilidade && item.habilidade.toLowerCase().includes(termo));
+                    const matchObj = item.objeto_conhecimento && item.objeto_conhecimento.toLowerCase().includes(termo);
+                    if (!matchCod && !matchTxt && !matchObj) return false;
+                }
+
+                return true;
+            });
+
+            // Ordenação pelo critério escolhido
+            itens.sort((a, b) => {
+                if (criterio === 'requisitos') {
+                    return (b._countReq || 0) - (a._countReq || 0) || (b._totalRelacoes || 0) - (a._totalRelacoes || 0);
+                }
+                if (criterio === 'prepara') {
+                    return (b._countPrep || 0) - (a._countPrep || 0) || (b._totalRelacoes || 0) - (a._totalRelacoes || 0);
+                }
+                if (criterio === 'relacionadas') {
+                    return (b._countRel || 0) - (a._countRel || 0) || (b._totalRelacoes || 0) - (a._totalRelacoes || 0);
+                }
+                // default 'total'
+                return (b._totalRelacoes || 0) - (a._totalRelacoes || 0);
+            });
+
+            rankingItensFiltrados = itens;
+            rankingLimiteExibicao = 50;
+            renderizarCardsRanking();
+        };
+
+        function renderizarCardsRanking() {
+            const container = document.getElementById('rankingListBody');
+            const stats = document.getElementById('rankingStatsCount');
+            if (!container) return;
+
+            if (stats) {
+                stats.innerHTML = `Exibindo <strong>${Math.min(rankingLimiteExibicao, rankingItensFiltrados.length)}</strong> de <strong>${rankingItensFiltrados.length.toLocaleString()}</strong> habilidades estruturantes`;
+            }
+
+            if (rankingItensFiltrados.length === 0) {
+                container.innerHTML = `
+                    <div class="empty-state" style="padding: 40px 20px;">
+                        <h4 style="font-size: 1rem; color: #1e293b; margin-bottom: 6px;">Nenhuma habilidade encontrada</h4>
+                        <p style="font-size: 0.82rem; color: #64748b;">Tente selecionar outra etapa, componente ou limpar o termo de pesquisa do ranking.</p>
+                    </div>
+                `;
+                return;
+            }
+
+            const visiveis = rankingItensFiltrados.slice(0, rankingLimiteExibicao);
+            let html = '';
+
+            visiveis.forEach((item, index) => {
+                const pos = index + 1;
+                let rankClass = 'rank-badge-wrap default';
+                let cardRankClass = '';
+                let rankIcon = `#${pos}`;
+
+                if (pos === 1) {
+                    rankClass = 'rank-badge-wrap gold';
+                    cardRankClass = 'rank-gold';
+                    rankIcon = '🥇 1º';
+                } else if (pos === 2) {
+                    rankClass = 'rank-badge-wrap silver';
+                    cardRankClass = 'rank-silver';
+                    rankIcon = '🥈 2º';
+                } else if (pos === 3) {
+                    rankClass = 'rank-badge-wrap bronze';
+                    cardRankClass = 'rank-bronze';
+                    rankIcon = '🥉 3º';
+                }
+
+                const discCor = getDisciplinaCor(item.disciplina);
+                const total = item._totalRelacoes || 0;
+                const req = item._countReq || 0;
+                const prep = item._countPrep || 0;
+                const rel = item._countRel || 0;
+
+                const textoLimpo = (item.habilidade || '').replace(/^\([A-Za-z0-9]+\)\s*/, '');
+
+                html += `
+                    <div class="ranking-card ${cardRankClass}">
+                        <div class="${rankClass}">
+                            <span>${rankIcon}</span>
+                        </div>
+                        <div class="ranking-card-main">
+                            <div class="ranking-card-header-row">
+                                <span class="ranking-code-badge">${item.codigo}</span>
+                                <span class="ranking-disc-badge ${getDisciplinaClass(item.disciplina)}" style="border-left: 3px solid ${discCor}; background: ${discCor}18; color: ${discCor};">
+                                    ${item.disciplina || 'Área Geral'}
+                                </span>
+                                ${item.ano_faixa ? `<span class="ranking-ano-badge">${item.ano_faixa}</span>` : ''}
+                                <span class="ranking-total-badge" title="${total} conexões formativas diretas">
+                                    🔗 ${total} relações totais
+                                </span>
+                            </div>
+                            <p class="ranking-card-desc">${textoLimpo}</p>
+                            <div class="ranking-card-metrics-row">
+                                ${req > 0 ? `<span class="ranking-pill-req" title="Esta habilidade necessita de ${req} pré-requisitos para ser construída com solidez">⚡ ${req} Pré-Requisitos</span>` : ''}
+                                ${prep > 0 ? `<span class="ranking-pill-prep" title="Esta habilidade prepara e serve de base para ${prep} habilidades seguintes">➔ Prepara ${prep} Posteriores</span>` : ''}
+                                ${rel > 0 ? `<span class="ranking-pill-rel" title="Esta habilidade possui ${rel} conexões pedagógicas e articulações conceituais">🔄 ${rel} Articulações</span>` : ''}
+                            </div>
+                        </div>
+                        <div class="ranking-card-actions">
+                            <button type="button" class="btn-ranking-action graph" onclick="window.selecionarHabilidadeDoRanking('${item.codigo}', 'grafo')" title="Visualizar mapa de conexões desta habilidade no Grafo / Organograma">
+                                <span>🌐 Ver no Grafo</span>
+                            </button>
+                            <button type="button" class="btn-ranking-action details" onclick="window.selecionarHabilidadeDoRanking('${item.codigo}', 'drawer')" title="Abrir ficha pedagógica completa na gaveta lateral">
+                                <span>📋 Ficha Completa</span>
+                            </button>
+                        </div>
+                    </div>
+                `;
+            });
+
+            if (rankingItensFiltrados.length > rankingLimiteExibicao) {
+                const restam = rankingItensFiltrados.length - rankingLimiteExibicao;
+                html += `
+                    <div style="text-align: center; padding: 14px 0;">
+                        <button type="button" class="btn-cat-load-more" onclick="window.carregarMaisRanking()">
+                            Carregar mais ${Math.min(50, restam)} habilidades do ranking (restam ${restam}) ➔
+                        </button>
+                    </div>
+                `;
+            }
+
+            container.innerHTML = html;
+        }
+
+        window.carregarMaisRanking = function() {
+            rankingLimiteExibicao += 50;
+            renderizarCardsRanking();
+        };
+
+        window.selecionarHabilidadeDoRanking = function(codigo, acao) {
+            if (!codigo) return;
+            window.fecharModalRankingRelacoes();
+
+            if (acao === 'grafo') {
+                window.focarHabilidadeNoGrafo(codigo);
+            } else {
+                searchInput.value = codigo;
+                clearBtn.style.display = 'flex';
+                if (customAutocomplete) customAutocomplete.style.display = 'none';
+
+                executarBusca();
+
+                setTimeout(() => {
+                    window.abrirHabilidadePorCodigo(codigo);
+                }, 120);
+
+                window.showToast(`📋 Ficha pedagógica de ${codigo} aberta`);
+            }
+        };
+
+        // Fecha modais ao pressionar Escape
         document.addEventListener('keydown', (e) => {
             if (e.key === 'Escape') {
                 const catModal = document.getElementById('catalogModalBackdrop');
                 if (catModal && catModal.style.display !== 'none') {
                     window.fecharModalCatalogoBNCC();
+                }
+                const rankModal = document.getElementById('rankingModalBackdrop');
+                if (rankModal && rankModal.style.display !== 'none') {
+                    window.fecharModalRankingRelacoes();
                 }
             }
         });

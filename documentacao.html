@@ -352,7 +352,7 @@
                         <li><a href="#linhagem" class="doc-nav-link">5. Linhagem e Pré-requisitos</a></li>
                         <li><a href="#visualizacao" class="doc-nav-link">6. Visualizações em Grafos</a></li>
                         <li><a href="#produtividade" class="doc-nav-link">7. Recursos de Interface</a></li>
-                        <li><a href="#deploy" class="doc-nav-link">8. Execução Local & Deploy</a></li>
+                        <li><a href="#processo-habilidades" class="doc-nav-link">8. O Processo das Habilidades na BNCC</a></li>
                     </ul>
                 </nav>
             </aside>
@@ -385,7 +385,7 @@
 |  (384 dimensões L2 norm)   (Matriz de Pré-Requisitos)              (CG01 a CG10 + Específicas)    |
 +---------------------------------------------------------------------------------------------------+
                                                 │
-                                                ▼  (Arquivos Estáticos servidos via GitHub Pages)
+                                                ▼  (Arquivos Estáticos servidos via Servidor Web ou Navegador)
 +---------------------------------------------------------------------------------------------------+
 | ETAPA 2: RUNTIME NO NAVEGADOR DO USUÁRIO (index.html + Transformers.js + D3.js)                   |
 |                                                                                                   |
@@ -403,8 +403,8 @@
                             <p>Nenhuma busca ou termo pedagógico digitado sai do computador ou celular do usuário.</p>
                         </div>
                         <div class="feature-card">
-                            <h4>⚡ Custo Zero de Infraestrutura</h4>
-                            <p>Funciona em hospedagens estáticas gratuitas como GitHub Pages, Netlify ou Vercel.</p>
+                            <h4>⚡ 100% Estático e Descentralizado</h4>
+                            <p>Funciona em qualquer servidor web ou navegador moderno sem backend ou banco de dados.</p>
                         </div>
                         <div class="feature-card">
                             <h4>💾 Cache Offline Automático</h4>
@@ -641,43 +641,86 @@ Texto = [CÓDIGO_HABILIDADE] + [PALAVRAS_CHAVE_TFIDF] + [COMPONENTE_CURRICULAR] 
                     </div>
                 </section>
 
-                <!-- 8. Execução Local & Deploy -->
-                <section id="deploy" class="doc-section">
+                <!-- 8. Processo das Habilidades na BNCC -->
+                <section id="processo-habilidades" class="doc-section">
                     <div class="section-header">
-                        <span class="section-icon">🚀</span>
-                        <h2 class="section-title">8. Como Executar Localmente e Publicar no GitHub Pages</h2>
+                        <span class="section-icon">🧬</span>
+                        <h2 class="section-title">8. O Processo das Habilidades na BNCC: Mapeamento, Encadeamento e Relações</h2>
                     </div>
 
                     <p class="doc-p">
-                        <strong>Passo 1: Execução Local</strong><br>
-                        Como os navegadores restringem requisições de arquivos locais via protocolo <code>file://</code> por motivos de segurança (CORS), utilize o servidor HTTP embutido do Python:
+                        As <strong>1.517 habilidades oficiais</strong> da Base Nacional Comum Curricular (BNCC) não operam como tópicos isolados, mas formam uma <strong>rede pedagógica integrada e evolutiva</strong>. O Concecta BNCC processa cada habilidade estruturando sua linhagem formativa, relações pré-requisitas, articulações interdisciplinares e níveis cognitivos.
                     </p>
 
-                    <div class="code-snippet">
-# No terminal da pasta do projeto:
-python -m http.server 8000
-
-# Em seguida, acesse no navegador:
-http://localhost:8000
-                    </div>
-
+                    <h3 style="font-size: 1.1rem; color: var(--text-primary); margin: 20px 0 10px 0; font-weight: 700;">
+                        1. A Anatomia do Código Alfanumérico da Habilidade
+                    </h3>
                     <p class="doc-p">
-                        <strong>Passo 2: Publicação no GitHub Pages</strong><br>
-                        O projeto é 100% estático e já vem estruturado para o GitHub:
+                        Cada habilidade na BNCC segue uma convenção alfanumérica precisa que sintetiza etapa escolar, ano letivo e componente curricular:
                     </p>
 
-                    <div class="code-snippet">
-# Inicializar o repositório git:
-git init
-git add .
-git commit -m "feat: lancamento do Concecta BNCC com busca semantica e grafos"
-git branch -M main
-git remote add origin https://github.com/SEU_USUARIO/concecta-bncc.git
-git push -u origin main
+                    <div class="formula-box">
+Exemplo: EF07CI12
+[ EF ] -> Etapa: Ensino Fundamental
+[ 07 ] -> Ano Escolar: 7º Ano (ou EF15 para 1º ao 5º ano, EF69 para 6º ao 9º ano)
+[ CI ] -> Componente Curricular: Ciências da Natureza
+[ 12 ] -> Posição Sequencial: 12ª habilidade normativa deste componente
                     </div>
 
+                    <h3 style="font-size: 1.1rem; color: var(--text-primary); margin: 20px 0 10px 0; font-weight: 700;">
+                        2. O Ciclo de Processamento e Vetorização
+                    </h3>
                     <p class="doc-p">
-                        No GitHub, acesse <strong>Settings &rarr; Pages &rarr; Branch: main / (root) &rarr; Save</strong>. Em poucos segundos, sua aplicação estará online mundialmente com HTTPS gratuito.
+                        Cada habilidade passa por uma esteira de extração que combina análise léxica, processamento de linguagem natural e semântica vetorial:
+                    </p>
+
+                    <ul class="doc-p" style="padding-left: 20px;">
+                        <li><strong>Separação do Verbo Operacional:</strong> Identificação do verbo cognitivo inicial (ex: <em>"Investigar"</em>, <em>"Comparar"</em>, <em>"Construir"</em>) que define o processo cognitivo requerido.</li>
+                        <li><strong>Identificação do Objeto de Conhecimento:</strong> Extração dos conceitos científicos, matemáticos ou linguísticos sobre os quais a habilidade atua.</li>
+                        <li><strong>Contextualização e Modificadores:</strong> Detalhamento do escopo de aplicação prática, experimentos ou produções textuais esperadas.</li>
+                        <li><strong>Geração de Embeddings:</strong> Vetorização semântica em 384 dimensões L2-normalizadas com o modelo <code>all-MiniLM-L6-v2</code>, permitindo comparar conceitos mesmo quando expressos com palavras distintas.</li>
+                    </ul>
+
+                    <h3 style="font-size: 1.1rem; color: var(--text-primary); margin: 20px 0 10px 0; font-weight: 700;">
+                        3. A Matriz de Relações: Pré-Requisitos e Progressão Plurianual
+                    </h3>
+                    <p class="doc-p">
+                        Para cada habilidade, o sistema mapeia três tipos fundamentais de relações pedagógicas:
+                    </p>
+
+                    <table class="table-doc">
+                        <thead>
+                            <tr>
+                                <th>Tipo de Relação</th>
+                                <th>Sentido Pedagógico</th>
+                                <th>Impacto no Planejamento Escolar</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td><strong>⚡ Pré-Requisitos (Âncoras)</strong></td>
+                                <td>Habilidades de anos anteriores ou do mesmo ciclo essenciais para o domínio da habilidade atual.</td>
+                                <td>Permite ao professor diagnosticar lacunas de aprendizagem antes de introduzir novos conteúdos.</td>
+                            </tr>
+                            <tr>
+                                <td><strong>➔ Prepara Para (Avanço)</strong></td>
+                                <td>Habilidades de etapas posteriores que dependem diretamente da assimilação do conteúdo atual.</td>
+                                <td>Garante a continuidade formativa vertical ao longo dos anos escolares.</td>
+                            </tr>
+                            <tr>
+                                <td><strong>🔄 Articulações Pedagógicas</strong></td>
+                                <td>Conexões entre componentes curriculares distintos no mesmo ano letivo (interdisciplinaridade) ou no mesmo componente.</td>
+                                <td>Base ideal para projetos integradores, feiras culturais e planejamento pedagógico conjunto.</td>
+                            </tr>
+                        </tbody>
+                    </table>
+
+                    <h3 style="font-size: 1.1rem; color: var(--text-primary); margin: 20px 0 10px 0; font-weight: 700;">
+                        4. Alinhamento com a Taxonomia de Bloom
+                    </h3>
+                    <p class="doc-p">
+                        Toda habilidade da BNCC mobiliza um nível cognitivo específico da Taxonomia de Bloom revisada. O sistema classifica cada código em:
+                        <strong>Lembrar</strong> (recuperar fatos), <strong>Entender</strong> (explicar ideias e relações), <strong>Aplicar</strong> (usar informações em situações concretas), <strong>Analisar</strong> (decompor dados e estabelecer correlações), <strong>Avaliar</strong> (justificar posições e emitir julgamentos fundamentados) ou <strong>Criar</strong> (elaborar soluções inéditas e novas produções).
                     </p>
                 </section>
 
