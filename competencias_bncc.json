@@ -20,7 +20,120 @@
         "evolução",
         "fenômeno",
         "histórico"
-      ]
+      ],
+      "dimensoes_reuna": [
+        {
+          "dimensao": "APRENDIZAGEM E CONHECIMENTO",
+          "subdimensao": "Busca de informação",
+          "marcos": {
+            "ate_3_ef": {
+              "etapa_label": "Até 3º Ensino Fundamental",
+              "descricao_marco": "Percebe que há diferentes fontes de informação (rádio, TV, jornal, internet, livros etc.) e começa a utilizá-las para buscas simples."
+            },
+            "ate_6_ef": {
+              "etapa_label": "Até 6º Ensino Fundamental",
+              "descricao_marco": "Acessa diferentes fontes de informação e realiza buscas com foco em problemas a serem resolvidos."
+            },
+            "ate_9_ef": {
+              "etapa_label": "Até 9º Ensino Fundamental",
+              "descricao_marco": "Avalia a pertinência e confiabilidade de uma variedade de fontes e estratégias de busca e acessa informações para resolução de problemas mais complexos."
+            },
+            "ate_3_em": {
+              "etapa_label": "Até 3º Ensino Médio",
+              "descricao_marco": "Desenvolve estratégias de busca e curadoria para acessar informações junto a uma ampla variedade de fontes, considerando a natureza e o escopo do problema a ser resolvido."
+            }
+          }
+        },
+        {
+          "dimensao": "APRENDIZAGEM E CONHECIMENTO",
+          "subdimensao": "Aplicação do conhecimento",
+          "marcos": {
+            "ate_3_ef": {
+              "etapa_label": "Até 3º Ensino Fundamental",
+              "descricao_marco": "Lista conhecimentos relevantes, classifica seus elementos básicos e tira conclusões simples a partir das informações coletadas."
+            },
+            "ate_6_ef": {
+              "etapa_label": "Até 6º Ensino Fundamental",
+              "descricao_marco": "Resume os elementos principais de um novo conhecimento, articula com conhecimentos prévios, reconhece as interrelações entre os conceitos, tira conclusões, compreende suas implicações, constrói significado."
+            },
+            "ate_9_ef": {
+              "etapa_label": "Até 9º Ensino Fundamental",
+              "descricao_marco": "Seleciona os elementos mais importantes de um novo conhecimento, articula com conhecimentos prévios, encontra os significados e as conexões entre as diferentes partes de uma informação, integra diversas técnicas e métodos necessários para organizar os conhecimentos."
+            },
+            "ate_3_em": {
+              "etapa_label": "Até 3º Ensino Médio",
+              "descricao_marco": "Une elementos de conhecimentos novos e prévios para formar um todo coerente, reúne diferentes elementos de um mesmo conhecimento, cria um fluxo eficiente para (re)organizar um novo padrão ou estrutura de pensamento."
+            }
+          }
+        },
+        {
+          "dimensao": "APRENDIZAGEM E CONHECIMENTO",
+          "subdimensao": "Aprendizagem ao longo da vida",
+          "marcos": {
+            "ate_3_ef": {
+              "etapa_label": "Até 3º Ensino Fundamental",
+              "descricao_marco": "Demonstra motivação para a aprendizagem, começa a desenvolver autonomia para aprender."
+            },
+            "ate_6_ef": {
+              "etapa_label": "Até 6º Ensino Fundamental",
+              "descricao_marco": "Demonstra mais motivação e autonomia para aprender."
+            },
+            "ate_9_ef": {
+              "etapa_label": "Até 9º Ensino Fundamental",
+              "descricao_marco": "Demonstra motivação e autonomia para dar conta do que precisa e deseja aprender."
+            },
+            "ate_3_em": {
+              "etapa_label": "Até 3º Ensino Médio",
+              "descricao_marco": "Demonstra motivação e capacidade de aprender em diferentes contextos e ao longo da vida, assume responsabilidade por sua aprendizagem."
+            }
+          }
+        },
+        {
+          "dimensao": "APRENDIZAGEM E CONHECIMENTO",
+          "subdimensao": "Metacognição",
+          "marcos": {
+            "ate_3_ef": {
+              "etapa_label": "Até 3º Ensino Fundamental",
+              "descricao_marco": "Reflete a respeito e compreende seus processos de aprendizagem."
+            },
+            "ate_6_ef": {
+              "etapa_label": "Até 6º Ensino Fundamental",
+              "descricao_marco": "Reflete sobre o que, como e por que aprender."
+            },
+            "ate_9_ef": {
+              "etapa_label": "Até 9º Ensino Fundamental",
+              "descricao_marco": "Demonstra consciência sobre sua própria capacidade de aprender, refletindo sobre por que e como a aprendizagem desenvolvida pode ser relevante e duradoura."
+            },
+            "ate_3_em": {
+              "etapa_label": "Até 3º Ensino Médio",
+              "descricao_marco": "Reconhece sua própria capacidade de aprender."
+            }
+          }
+        },
+        {
+          "dimensao": "APRENDIZAGEM E CONHECIMENTO",
+          "subdimensao": "Contextualização sociocultural do conhecimento",
+          "marcos": {
+            "ate_3_ef": {
+              "etapa_label": "Até 3º Ensino Fundamental",
+              "descricao_marco": "Discute ideias em grupo durante processo de pesquisa."
+            },
+            "ate_6_ef": {
+              "etapa_label": "Até 6º Ensino Fundamental",
+              "descricao_marco": "Discute ideias e tópicos em grupo durante o processo de construção do conhecimento."
+            },
+            "ate_9_ef": {
+              "etapa_label": "Até 9º Ensino Fundamental",
+              "descricao_marco": "Utiliza estratégias de debate para explorar ideias durante o processo de construção do conhecimento, compartilha informações com os outros."
+            },
+            "ate_3_em": {
+              "etapa_label": "Até 3º Ensino Médio",
+              "descricao_marco": "Constrói conhecimento de forma coletiva."
+            }
+          }
+        }
+      ],
+      "referencia_pedagogica": "Instituto Reúna, Instituto Ayrton Senna e Fundação Lemann (Dimensões e Desenvolvimento das Competências Gerais da BNCC)"
     },
     "2": {
       "numero": 2,
@@ -45,7 +158,208 @@
         "raciocínio",
         "verificar",
         "evidência"
-      ]
+      ],
+      "dimensoes_reuna": [
+        {
+          "dimensao": "CRIATIVIDADE",
+          "subdimensao": "Exploração de ideias",
+          "marcos": {
+            "ate_3_ef": {
+              "etapa_label": "Até 3º Ensino Fundamental",
+              "descricao_marco": "Testa, combina e modifica ideias para criar algo novo."
+            },
+            "ate_6_ef": {
+              "etapa_label": "Até 6º Ensino Fundamental",
+              "descricao_marco": "Combina ideias de diversas maneiras para criar novas possibilidades."
+            },
+            "ate_9_ef": {
+              "etapa_label": "Até 9º Ensino Fundamental",
+              "descricao_marco": "Combina ideias que já existem com novas possibilidades para criar formas novas de atingir objetivos."
+            },
+            "ate_3_em": {
+              "etapa_label": "Até 3º Ensino Médio",
+              "descricao_marco": "Domina o processo de geração e combinação de ideias complexas para resolver problemas e implementar soluções de formas diferentes e"
+            }
+          }
+        },
+        {
+          "dimensao": "CRIATIVIDADE",
+          "subdimensao": "Criação de processos de investigação",
+          "marcos": {
+            "ate_3_ef": {
+              "etapa_label": "Até 3º Ensino Fundamental",
+              "descricao_marco": "Identifica uma abordagem geral para investigar uma questão ou solucionar um problema."
+            },
+            "ate_6_ef": {
+              "etapa_label": "Até 6º Ensino Fundamental",
+              "descricao_marco": "Identifica os primeiros passos de uma abordagem específica para investigar uma questão ou solucionar um problema."
+            },
+            "ate_9_ef": {
+              "etapa_label": "Até 9º Ensino Fundamental",
+              "descricao_marco": "Cria um plano de investigação que aborda diversos aspectos de um problema."
+            },
+            "ate_3_em": {
+              "etapa_label": "Até 3º Ensino Médio",
+              "descricao_marco": "Cria um plano de investigação claro e efetivo, que aborda todos os aspectos de um problema."
+            }
+          }
+        },
+        {
+          "dimensao": "CRIATIVIDADE",
+          "subdimensao": "Execução",
+          "marcos": {
+            "ate_3_ef": {
+              "etapa_label": "Até 3º Ensino Fundamental",
+              "descricao_marco": "Experimenta diversos caminhos para colocar ideias em prática, sem medo de errar."
+            },
+            "ate_6_ef": {
+              "etapa_label": "Até 6º Ensino Fundamental",
+              "descricao_marco": "Avalia e testa opções para colocar ideias em prática com confiança."
+            },
+            "ate_9_ef": {
+              "etapa_label": "Até 9º Ensino Fundamental",
+              "descricao_marco": "Prevê possibilidades, identifica e testa consequências para colocar ideias em prática, aprendendo com erros e acertos."
+            },
+            "ate_3_em": {
+              "etapa_label": "Até 3º Ensino Médio",
+              "descricao_marco": "Avalia e assume riscos, abraça e lida com as incertezas para colocar ideias complexas em prática."
+            }
+          }
+        },
+        {
+          "dimensao": "PENSAMENTO CIENTÍFICO e CRÍTICO",
+          "subdimensao": "Formulação de perguntas",
+          "marcos": {
+            "ate_3_ef": {
+              "etapa_label": "Até 3º Ensino Fundamental",
+              "descricao_marco": "Cria perguntas específicas para investigar um problema ou desafio."
+            },
+            "ate_6_ef": {
+              "etapa_label": "Até 6º Ensino Fundamental",
+              "descricao_marco": "Determina uma pergunta central e perguntas de esclarecimento para orientar a investigação, a partir de um tópico específico e de um problema ou desafio."
+            },
+            "ate_9_ef": {
+              "etapa_label": "Até 9º Ensino Fundamental",
+              "descricao_marco": "Desenvolve e refina um conjunto inicial de perguntas relacionadas a um problema ou desafio, priorizando questões centrais que proporcionam base sólida para investigação."
+            },
+            "ate_3_em": {
+              "etapa_label": "Até 3º Ensino Médio",
+              "descricao_marco": "Formula perguntas instigantes, que garantem a profundidade, qualidade e relevância das informações coletadas por meio da investigação."
+            }
+          }
+        },
+        {
+          "dimensao": "PENSAMENTO CIENTÍFICO e CRÍTICO",
+          "subdimensao": "Interpretação de dados",
+          "marcos": {
+            "ate_3_ef": {
+              "etapa_label": "Até 3º Ensino Fundamental",
+              "descricao_marco": "Interpreta dados e informações de maneira sensata."
+            },
+            "ate_6_ef": {
+              "etapa_label": "Até 6º Ensino Fundamental",
+              "descricao_marco": "Interpreta dados e informações de maneira precisa."
+            },
+            "ate_9_ef": {
+              "etapa_label": "Até 9º Ensino Fundamental",
+              "descricao_marco": "Interpreta dados e informações de maneira precisa, considerando o contexto em que foram produzidos."
+            },
+            "ate_3_em": {
+              "etapa_label": "Até 3º Ensino Médio",
+              "descricao_marco": "Interpreta dados e informações de maneira precisa, utilizando diferentes conceitos e estratégias analíticas."
+            }
+          }
+        },
+        {
+          "dimensao": "PENSAMENTO CIENTÍFICO e CRÍTICO",
+          "subdimensao": "Lógica e raciocínio",
+          "marcos": {
+            "ate_3_ef": {
+              "etapa_label": "Até 3º Ensino Fundamental",
+              "descricao_marco": "Utiliza formas de pensamento adequadas e exemplos concretos para explicar seu raciocínio."
+            },
+            "ate_6_ef": {
+              "etapa_label": "Até 6º Ensino Fundamental",
+              "descricao_marco": "Uitliza raciocínio lógico, exemplos concretos e conhecimentos para fundamentar os passos ou procedimentos de sua investigação."
+            },
+            "ate_9_ef": {
+              "etapa_label": "Até 9º Ensino Fundamental",
+              "descricao_marco": "Avalia argumentos, fontes de evidências, bem como a precisão e relevância das informações coletadas, identificando lacunas de raciocínio relacionadas à investigação."
+            },
+            "ate_3_em": {
+              "etapa_label": "Até 3º Ensino Médio",
+              "descricao_marco": "Utiliza raciocínio indutivo e dedutivo para analisar e explicar os recursos utilizados, as soluções aplicadas e as conclusões geradas pela investigação."
+            }
+          }
+        },
+        {
+          "dimensao": "PENSAMENTO CIENTÍFICO e CRÍTICO",
+          "subdimensao": "Desenvolvimento de hipóteses",
+          "marcos": {
+            "ate_3_ef": {
+              "etapa_label": "Até 3º Ensino Fundamental",
+              "descricao_marco": "Formula hipóteses relativas à pergunta do problema ou desafio investigado."
+            },
+            "ate_6_ef": {
+              "etapa_label": "Até 6º Ensino Fundamental",
+              "descricao_marco": "Formula uma hipótese lógica com relação ao problema ou desafio investigado."
+            },
+            "ate_9_ef": {
+              "etapa_label": "Até 9º Ensino Fundamental",
+              "descricao_marco": "Formula uma hipótese clara e testável."
+            },
+            "ate_3_em": {
+              "etapa_label": "Até 3º Ensino Médio",
+              "descricao_marco": "Formula hipóteses precisas e perspicazes sobre o problema ou desafio investigado."
+            }
+          }
+        },
+        {
+          "dimensao": "PENSAMENTO CIENTÍFICO e CRÍTICO",
+          "subdimensao": "Avaliação de raciocínio e explicação de evidências",
+          "marcos": {
+            "ate_3_ef": {
+              "etapa_label": "Até 3º Ensino Fundamental",
+              "descricao_marco": "Resume argumentos e afirmações e analisa se as evidências são relevantes."
+            },
+            "ate_6_ef": {
+              "etapa_label": "Até 6º Ensino Fundamental",
+              "descricao_marco": "Resume com precisão argumentos e afirmações específicas."
+            },
+            "ate_9_ef": {
+              "etapa_label": "Até 9º Ensino Fundamental",
+              "descricao_marco": "Analisa e explica como as evidências sustentam argumentos e afirmações."
+            },
+            "ate_3_em": {
+              "etapa_label": "Até 3º Ensino Médio",
+              "descricao_marco": "Analisa argumentos e afirmações, avaliando a validade do raciocínio e relevância das evidências."
+            }
+          }
+        },
+        {
+          "dimensao": "PENSAMENTO CIENTÍFICO e CRÍTICO",
+          "subdimensao": "Síntese",
+          "marcos": {
+            "ate_3_ef": {
+              "etapa_label": "Até 3º Ensino Fundamental",
+              "descricao_marco": "Integra informações de duas fontes, a partir de comparação."
+            },
+            "ate_6_ef": {
+              "etapa_label": "Até 6º Ensino Fundamental",
+              "descricao_marco": "Integra informações de várias fontes, a partir de comparação."
+            },
+            "ate_9_ef": {
+              "etapa_label": "Até 9º Ensino Fundamental",
+              "descricao_marco": "Compara, agrupa e sintetiza informações de diversas fontes, inclusive suas próprias ideias e afirmações, elaborando uma explicação ou um argumento coeso e embasado."
+            },
+            "ate_3_em": {
+              "etapa_label": "Até 3º Ensino Médio",
+              "descricao_marco": "Faz conexões significativas e sintetiza informações provenientes de diferentes fontes, para chegar a conclusões lógicas e para evitar erros de lógica."
+            }
+          }
+        }
+      ],
+      "referencia_pedagogica": "Instituto Reúna, Instituto Ayrton Senna e Fundação Lemann (Dimensões e Desenvolvimento das Competências Gerais da BNCC)"
     },
     "3": {
       "numero": 3,
@@ -70,7 +384,142 @@
         "tradição",
         "folclore",
         "manifestação"
-      ]
+      ],
+      "dimensoes_reuna": [
+        {
+          "dimensao": "REPERTÓRIO CULTURAL",
+          "subdimensao": "Fruição",
+          "marcos": {
+            "ate_3_ef": {
+              "etapa_label": "Até 3º Ensino Fundamental",
+              "descricao_marco": "Explora experiências pessoais, sociais e culturais, por meio de atividades artísticas."
+            },
+            "ate_6_ef": {
+              "etapa_label": "Até 6º Ensino Fundamental",
+              "descricao_marco": "Começa a vivenciar sua identidade, comunidade e cultura e a desenvolver sentimento de pertencimento por meio de experiências artísticas."
+            },
+            "ate_9_ef": {
+              "etapa_label": "Até 9º Ensino Fundamental",
+              "descricao_marco": "Vivencia sua identidade, comunidade e cultura e demonstra sentimento de pertencimento por meio de experiências artísticas, explorando relações entre culturas, sociedades e as artes."
+            },
+            "ate_3_em": {
+              "etapa_label": "Até 3º Ensino Médio",
+              "descricao_marco": "Demonstra compreensão e valorização de contextos pessoais, sociais, culturais, históricos e ambientais a partir das artes."
+            }
+          }
+        },
+        {
+          "dimensao": "REPERTÓRIO CULTURAL",
+          "subdimensao": "Expressão",
+          "marcos": {
+            "ate_3_ef": {
+              "etapa_label": "Até 3º Ensino Fundamental",
+              "descricao_marco": "Expressa sentimentos, ideias, histórias e experiências por meio de obras criativas."
+            },
+            "ate_6_ef": {
+              "etapa_label": "Até 6º Ensino Fundamental",
+              "descricao_marco": "Expressa sentimentos, ideias, histórias e experiências por meio de obras criativas mais complexas."
+            },
+            "ate_9_ef": {
+              "etapa_label": "Até 9º Ensino Fundamental",
+              "descricao_marco": "Assume riscos criativos para expressar sentimentos, ideias, histórias e experiências por meio de obras criativas mais complexas."
+            },
+            "ate_3_em": {
+              "etapa_label": "Até 3º Ensino Médio",
+              "descricao_marco": "Adapta e aplica conhecimentos e habilidades para expressar sentimentos, ideias, histórias e experiências por meio de obras criativas."
+            }
+          }
+        },
+        {
+          "dimensao": "IDENTIDADE e DIVERSIDADE CULTURAL",
+          "subdimensao": "Investigação e identidade cultural",
+          "marcos": {
+            "ate_3_ef": {
+              "etapa_label": "Até 3º Ensino Fundamental",
+              "descricao_marco": "Identifica e descreve os diversos grupos aos quais pertence e as formas como as pessoas agem e se comunicam dentro deles."
+            },
+            "ate_6_ef": {
+              "etapa_label": "Até 6º Ensino Fundamental",
+              "descricao_marco": "Identifica e discute o significado de diversos eventos culturais da escola, comunidade ou nação, identifica e descreve os papeis que a cultura exerce na formação da identidade dos grupos e da identidade nacional."
+            },
+            "ate_9_ef": {
+              "etapa_label": "Até 9º Ensino Fundamental",
+              "descricao_marco": "Explica as formas como grupos e identidades culturais mudam com o passar do tempo e em diferentes contextos."
+            },
+            "ate_3_em": {
+              "etapa_label": "Até 3º Ensino Médio",
+              "descricao_marco": "Analisa como o pertencimento a grupos locais, regionais, nacionais e internacionais modela identidades, inclusive a sua própria."
+            }
+          }
+        },
+        {
+          "dimensao": "IDENTIDADE e DIVERSIDADE CULTURAL",
+          "subdimensao": "Consciência multicultural",
+          "marcos": {
+            "ate_3_ef": {
+              "etapa_label": "Até 3º Ensino Fundamental",
+              "descricao_marco": "Desenvolve consciência sobre sua própria identidade e cultura."
+            },
+            "ate_6_ef": {
+              "etapa_label": "Até 6º Ensino Fundamental",
+              "descricao_marco": "Desenvolve um senso de identidade individual e cultural e compreende como isso afeta a forma como vê o mundo."
+            },
+            "ate_9_ef": {
+              "etapa_label": "Até 9º Ensino Fundamental",
+              "descricao_marco": "Demonstra consciência sobre sua própria identidade e cultura."
+            },
+            "ate_3_em": {
+              "etapa_label": "Até 3º Ensino Médio",
+              "descricao_marco": "Expande a consciência sobre sua própria identidade e cultura."
+            }
+          }
+        },
+        {
+          "dimensao": "IDENTIDADE e DIVERSIDADE CULTURAL",
+          "subdimensao": "Respeito à diversidade cultural",
+          "marcos": {
+            "ate_3_ef": {
+              "etapa_label": "Até 3º Ensino Fundamental",
+              "descricao_marco": "Vivencia e descreve como a diversidade cultural apresenta oportunidades para novas experiências e compreensões."
+            },
+            "ate_6_ef": {
+              "etapa_label": "Até 6º Ensino Fundamental",
+              "descricao_marco": "Experimenta diferentes vivências culturais e discute as oportunidades oferecidas pela diversidade cultural brasileira."
+            },
+            "ate_9_ef": {
+              "etapa_label": "Até 9º Ensino Fundamental",
+              "descricao_marco": "Vivencia e compreende a importância de manter, celebrar, respeitar e valorizar tradições e manifestações culturais para o desenvolvimento da identidade pessoal, nacional e dos grupos, demonstrando flexibilidade para transitar por diferentes culturas."
+            },
+            "ate_3_em": {
+              "etapa_label": "Até 3º Ensino Médio",
+              "descricao_marco": "Vivencia, compreende a importância e promove o respeito e a valorização mútua de identidades, manifestações, trocas e colaborações culturais em um mundo interconectado."
+            }
+          }
+        },
+        {
+          "dimensao": "IDENTIDADE e DIVERSIDADE CULTURAL",
+          "subdimensao": "Mediação da diversidade cultural",
+          "marcos": {
+            "ate_3_ef": {
+              "etapa_label": "Até 3º Ensino Fundamental",
+              "descricao_marco": "Reconhece que as diferenças culturais podem afetar o entendimento entre as pessoas."
+            },
+            "ate_6_ef": {
+              "etapa_label": "Até 6º Ensino Fundamental",
+              "descricao_marco": "Identifica formas de alcançar o entendimento entre grupos culturalmente diversos."
+            },
+            "ate_9_ef": {
+              "etapa_label": "Até 9º Ensino Fundamental",
+              "descricao_marco": "Identifica e aborda questões desafiadoras, respeitando e valorizando a diversidade cultural e o direito que todos têm de serem considerados."
+            },
+            "ate_3_em": {
+              "etapa_label": "Até 3º Ensino Médio",
+              "descricao_marco": "Reconhece os desafios e benefícios de se viver e trabalhar em uma sociedade culturalmente diversa."
+            }
+          }
+        }
+      ],
+      "referencia_pedagogica": "Instituto Reúna, Instituto Ayrton Senna e Fundação Lemann (Dimensões e Desenvolvimento das Competências Gerais da BNCC)"
     },
     "4": {
       "numero": 4,
@@ -97,7 +546,98 @@
         "discurso",
         "escuta",
         "libras"
-      ]
+      ],
+      "dimensoes_reuna": [
+        {
+          "dimensao": "COMUNICAÇÃO",
+          "subdimensao": "Escuta",
+          "marcos": {
+            "ate_3_ef": {
+              "etapa_label": "Até 3º Ensino Fundamental",
+              "descricao_marco": "Ouve e responde a outros em conversas, apresentações e leituras em voz alta."
+            },
+            "ate_6_ef": {
+              "etapa_label": "Até 6º Ensino Fundamental",
+              "descricao_marco": "Exerce a escuta ativa e receptiva."
+            },
+            "ate_9_ef": {
+              "etapa_label": "Até 9º Ensino Fundamental",
+              "descricao_marco": "Ouve outras pessoas com atenção, interesse e respeito por suas ideias e sentimentos."
+            },
+            "ate_3_em": {
+              "etapa_label": "Até 3º Ensino Médio",
+              "descricao_marco": "Compreende e processa o que é dito por outras pessoas, com abertura, ponderação e respeito."
+            }
+          }
+        },
+        {
+          "dimensao": "COMUNICAÇÃO",
+          "subdimensao": "Expressão",
+          "marcos": {
+            "ate_3_ef": {
+              "etapa_label": "Até 3º Ensino Fundamental",
+              "descricao_marco": "Expressa ideias, opiniões emoções e sentimentos simples."
+            },
+            "ate_6_ef": {
+              "etapa_label": "Até 6º Ensino Fundamental",
+              "descricao_marco": "Expressa ideias, opiniões, emoções e sentimentos simples com clareza."
+            },
+            "ate_9_ef": {
+              "etapa_label": "Até 9º Ensino Fundamental",
+              "descricao_marco": "Expressa ideias, opiniões, emoções e sentimentos com clareza."
+            },
+            "ate_3_em": {
+              "etapa_label": "Até 3º Ensino Médio",
+              "descricao_marco": "Expressa ideias, opiniões, emoções e sentimentos mais complexos com clareza."
+            }
+          }
+        },
+        {
+          "dimensao": "COMUNICAÇÃO",
+          "subdimensao": "Discussão",
+          "marcos": {
+            "ate_3_ef": {
+              "etapa_label": "Até 3º Ensino Fundamental",
+              "descricao_marco": "Faz comentários originais e/ou extrai conclusões que contribuem para discussões coletivas."
+            },
+            "ate_6_ef": {
+              "etapa_label": "Até 6º Ensino Fundamental",
+              "descricao_marco": "Expressa ideias originais com clareza e as conecta com as ideias de outras pessoas."
+            },
+            "ate_9_ef": {
+              "etapa_label": "Até 9º Ensino Fundamental",
+              "descricao_marco": "Expressa ideias originais com clareza, mantendo discussões conectadas com as ideias de outras pessoas e buscando o entendimento mútuo."
+            },
+            "ate_3_em": {
+              "etapa_label": "Até 3º Ensino Médio",
+              "descricao_marco": "Expressa ideias originais com clareza, construindo novos trajetos de discussão claramente conectados com as ideias de outras pessoas, promovendo o entedimento mútuo e estimulando conversas sobre temas mais amplos."
+            }
+          }
+        },
+        {
+          "dimensao": "COMUNICAÇÃO",
+          "subdimensao": "Multiletramento",
+          "marcos": {
+            "ate_3_ef": {
+              "etapa_label": "Até 3º Ensino Fundamental",
+              "descricao_marco": "Utiliza a comunicação verbal, textos, gestos, expressões artísticas e ilustrações para se comunicar."
+            },
+            "ate_6_ef": {
+              "etapa_label": "Até 6º Ensino Fundamental",
+              "descricao_marco": "Comunica-se por meio de linguagens verbais, textuais, corporais e artísticas, utilizando imagens e plataformas diversas (vídeos, quadrinhos, fanzines, blogs)."
+            },
+            "ate_9_ef": {
+              "etapa_label": "Até 9º Ensino Fundamental",
+              "descricao_marco": "Comunica-se por meio de plataformas multimídia analógicas e digitais, utilizando áudio, textos, imagens, gráficos e linguagens artísticas e científicas, matemáticas, cartográficas, corporais e multimodais de forma adequada."
+            },
+            "ate_3_em": {
+              "etapa_label": "Até 3º Ensino Médio",
+              "descricao_marco": "Comunica-se por meio de plataformas multimídia analógicas e digitais mais complexas, utilizando áudio, textos, imagens, gráficos e linguagens artísticas e científicas, matemáticas, cartográficas, corporais e multimodais de forma mais complexa."
+            }
+          }
+        }
+      ],
+      "referencia_pedagogica": "Instituto Reúna, Instituto Ayrton Senna e Fundação Lemann (Dimensões e Desenvolvimento das Competências Gerais da BNCC)"
     },
     "5": {
       "numero": 5,
@@ -121,7 +661,142 @@
         "virtual",
         "robótica",
         "pesquisa online"
-      ]
+      ],
+      "dimensoes_reuna": [
+        {
+          "dimensao": "COMPUTAÇÃO e PROGRAMAÇÃO",
+          "subdimensao": "Utilização de ferramentas digitais",
+          "marcos": {
+            "ate_3_ef": {
+              "etapa_label": "Até 3º Ensino Fundamental",
+              "descricao_marco": "Utiliza recursos multimídia adequados (por exemplo, livros interativos e softwares educativos) para apoiar a sua aprendizagem."
+            },
+            "ate_6_ef": {
+              "etapa_label": "Até 6º Ensino Fundamental",
+              "descricao_marco": "Utiliza ferramentas de finalidade geral e periféricos para ampliar a sua produtividade pessoal, suprir déficits de habilidades e facilitar a aprendizagem."
+            },
+            "ate_9_ef": {
+              "etapa_label": "Até 9º Ensino Fundamental",
+              "descricao_marco": "Utiliza uma variedade de ferramentas multimídia e periféricos para auxiliar na produtividade pessoal e na aprendizagem ao longo de todo o currículo."
+            },
+            "ate_3_em": {
+              "etapa_label": "Até 3º Ensino Médio",
+              "descricao_marco": "Utiliza uma variedade de ferramentas multimídia e periféricos para auxiliar na produtividade pessoal e na aprendizagem ao longo de todo o currículo e utiliza dispositivos móveis/ emuladores para projetar, desenvolver e implementar aplicativos de computação móvel."
+            }
+          }
+        },
+        {
+          "dimensao": "COMPUTAÇÃO e PROGRAMAÇÃO",
+          "subdimensao": "Linguagens de programação",
+          "marcos": {
+            "ate_3_ef": {
+              "etapa_label": "Até 3º Ensino Fundamental",
+              "descricao_marco": "Reúne e organiza informações utilizando ferramentas de mapeamento de conceitos, inclusive fluxogramas."
+            },
+            "ate_6_ef": {
+              "etapa_label": "Até 6º Ensino Fundamental",
+              "descricao_marco": "Constrói um programa como um conjunto de instruções passo a passo a serem executadas, implementa soluções para problemas utilizando uma linguagem de programação visual baseada em blocos."
+            },
+            "ate_9_ef": {
+              "etapa_label": "Até 9º Ensino Fundamental",
+              "descricao_marco": "Implementa soluções para problemas utilizando uma linguagem de programação, inclusive looping, expressões condicionais, lógica, expressões variáveis e funções."
+            },
+            "ate_3_em": {
+              "etapa_label": "Até 3º Ensino Médio",
+              "descricao_marco": "Utiliza Interfaces de Programação de Aplicações (Application Programming Interfaces - APIs) e bibliotecas para aprimorar soluções de programação, utiliza diversos métodos para identificar e corrigir problemas de programação (por exemplo, casos de teste, teste de unidades, caixa branca, caixa preta, testes de integração)."
+            }
+          }
+        },
+        {
+          "dimensao": "PENSAMENTO COMPUTACIONAL",
+          "subdimensao": "Domínio de algoritmos",
+          "marcos": {
+            "ate_3_ef": {
+              "etapa_label": "Até 3º Ensino Fundamental",
+              "descricao_marco": "Utiliza recursos tecnológicos (por exemplo, enigmas e programas de raciocínio lógico) para solucionar problemas adequados a sua idade."
+            },
+            "ate_6_ef": {
+              "etapa_label": "Até 6º Ensino Fundamental",
+              "descricao_marco": "Desenvolve compreensão simples de um algoritmo (por exemplo, pesquisa, sequência de eventos, organização), utilizando exercícios sem computador."
+            },
+            "ate_9_ef": {
+              "etapa_label": "Até 9º Ensino Fundamental",
+              "descricao_marco": "Escreve um algoritmo como uma sequência de instruções que podem ser processadas por um computador."
+            },
+            "ate_3_em": {
+              "etapa_label": "Até 3º Ensino Médio",
+              "descricao_marco": "Explica como sequência, seleção, iteração e recursão são blocos que compõem os algoritmos."
+            }
+          }
+        },
+        {
+          "dimensao": "PENSAMENTO COMPUTACIONAL",
+          "subdimensao": "Visualização e análise de dados",
+          "marcos": {
+            "ate_3_ef": {
+              "etapa_label": "Até 3º Ensino Fundamental",
+              "descricao_marco": "Compreende como ordenar (organizar) informações de uma forma útil (por exemplo, ordenar alunos por data de nascimento), com o uso do computador."
+            },
+            "ate_6_ef": {
+              "etapa_label": "Até 6º Ensino Fundamental",
+              "descricao_marco": "Utiliza representações visuais de problemas, estruturas e dados (por exemplo, gráficos, tabelas, diagramas de rede, fluxogramas)."
+            },
+            "ate_9_ef": {
+              "etapa_label": "Até 9º Ensino Fundamental",
+              "descricao_marco": "Representa dados de diversas maneiras, inclusive em textos, sons, imagens e números."
+            },
+            "ate_3_em": {
+              "etapa_label": "Até 3º Ensino Médio",
+              "descricao_marco": "Utiliza diferentes abordagens para visualizar e analisar grandes conjuntos de dados."
+            }
+          }
+        },
+        {
+          "dimensao": "CULTURA e MUNDO DIGITAL",
+          "subdimensao": "Mundo digital",
+          "marcos": {
+            "ate_3_ef": {
+              "etapa_label": "Até 3º Ensino Fundamental",
+              "descricao_marco": "Identifica a presença e os efeitos positivos e negativos da tecnologia na vida das pessoas."
+            },
+            "ate_6_ef": {
+              "etapa_label": "Até 6º Ensino Fundamental",
+              "descricao_marco": "Identifica o impacto da tecnologia na vida das pessoas e da sociedade (por exemplo, redes sociais, cyberbullying, computação e comunicação móvel, tecnologias da web, segurança cibernética e virtualização)."
+            },
+            "ate_9_ef": {
+              "etapa_label": "Até 9º Ensino Fundamental",
+              "descricao_marco": "Demonstra conhecimento sobre as mudanças nas tecnologias de informação com o passar do tempo e os efeitos dessas transformações sobre a educação, o mundo do trabalho e a sociedade, analisa os impactos positivos e negativos da computação sobre a cultura humana."
+            },
+            "ate_3_em": {
+              "etapa_label": "Até 3º Ensino Médio",
+              "descricao_marco": "Discute o impacto das tecnologias sobre as relações sociais (por exemplo, cidadania digital, exclusão digital, governo digital), comerciais (por exemplo, rastreio automático de produtos, transações financeiras automatizadas, e-commerce, computação em nuvem) e culturais (por exemplo, redes sociais, mídias, comunicação intercultural)."
+            }
+          }
+        },
+        {
+          "dimensao": "CULTURA e MUNDO DIGITAL",
+          "subdimensao": "Uso ético",
+          "marcos": {
+            "ate_3_ef": {
+              "etapa_label": "Até 3º Ensino Fundamental",
+              "descricao_marco": "Identifica comportamentos sociais e éticos positivos e negativos no uso de tecnologias e reconhece práticas de cidadania digital responsáveis (comportamentos legais e éticos)."
+            },
+            "ate_6_ef": {
+              "etapa_label": "Até 6º Ensino Fundamental",
+              "descricao_marco": "Discute e compreende questões éticas relativas ao uso das tecnologias e das redes sociais (por exemplo, igualdade de acesso, segurança, privacidade, direitos autorais e propriedade intelectual) e as consequências do uso inadequado e antiético."
+            },
+            "ate_9_ef": {
+              "etapa_label": "Até 9º Ensino Fundamental",
+              "descricao_marco": "Exibe comportamentos legais e éticos no uso das tecnologia e das redes sociais e discute as consequências do mau uso."
+            },
+            "ate_3_em": {
+              "etapa_label": "Até 3º Ensino Médio",
+              "descricao_marco": "Utiliza as tecnologias, mídias e dispositivos de comunicação modernos de forma ética e compara comportamentos adequados e inadequados em redes sociais."
+            }
+          }
+        }
+      ],
+      "referencia_pedagogica": "Instituto Reúna, Instituto Ayrton Senna e Fundação Lemann (Dimensões e Desenvolvimento das Competências Gerais da BNCC)"
     },
     "6": {
       "numero": 6,
@@ -144,7 +819,164 @@
         "futuro",
         "autonomia financeira",
         "produção"
-      ]
+      ],
+      "dimensoes_reuna": [
+        {
+          "dimensao": "PROJETO DE VIDA",
+          "subdimensao": "Determinação",
+          "marcos": {
+            "ate_3_ef": {
+              "etapa_label": "Até 3º Ensino Fundamental",
+              "descricao_marco": "Compreende o valor do planejamento e organização e começa a estabelecer combinados e metas."
+            },
+            "ate_6_ef": {
+              "etapa_label": "Até 6º Ensino Fundamental",
+              "descricao_marco": "Utiliza estratégias para planejar-se e estabelece metas realistas."
+            },
+            "ate_9_ef": {
+              "etapa_label": "Até 9º Ensino Fundamental",
+              "descricao_marco": "Utiliza estratégias para planejar-se e estabelece metas pessoais e de aprendizagem, tendo em vista projetos presentes e futuros."
+            },
+            "ate_3_em": {
+              "etapa_label": "Até 3º Ensino Médio",
+              "descricao_marco": "Analisa criticamente suas estratégias de planejamento e organização, estabelece e modifica metas de longo prazo e prioridades, exercitando-as em seus projetos presentes e futuros, em contextos pessoais, escolares e sociais, criando alternativas viáveis para o alcance de seus objetivos."
+            }
+          }
+        },
+        {
+          "dimensao": "PROJETO DE VIDA",
+          "subdimensao": "Esforço",
+          "marcos": {
+            "ate_3_ef": {
+              "etapa_label": "Até 3º Ensino Fundamental",
+              "descricao_marco": "Entende que habilidades podem ser desenvolvidas através do esforço contínuo."
+            },
+            "ate_6_ef": {
+              "etapa_label": "Até 6º Ensino Fundamental",
+              "descricao_marco": "Compreende o valor do esforço e trabalho árduo como caminho para a maestria."
+            },
+            "ate_9_ef": {
+              "etapa_label": "Até 9º Ensino Fundamental",
+              "descricao_marco": "Compreende o valor do esforço e trabalho árduo para o alcance de seus objetivos acadêmicos e projetos presentes e futuros."
+            },
+            "ate_3_em": {
+              "etapa_label": "Até 3º Ensino Médio",
+              "descricao_marco": "Alcança altos níveis de conquista, encarando obstáculos, desafios e adversidades como oportunidades de crescimento."
+            }
+          }
+        },
+        {
+          "dimensao": "PROJETO DE VIDA",
+          "subdimensao": "Autoeficácia",
+          "marcos": {
+            "ate_3_ef": {
+              "etapa_label": "Até 3º Ensino Fundamental",
+              "descricao_marco": "Acredita que suas ações e capacidades podem influenciar os resultados que deseja."
+            },
+            "ate_6_ef": {
+              "etapa_label": "Até 6º Ensino Fundamental",
+              "descricao_marco": "Utiliza suas experiências e a de outros para fortalecer a sua capacidade de agir em favor dos resultados que deseja."
+            },
+            "ate_9_ef": {
+              "etapa_label": "Até 9º Ensino Fundamental",
+              "descricao_marco": "Conhece e acredita em suas fortalezas e capacidade de influenciar resultados e utiliza diferentes formas de agir e pensar para enfrentar desafios, obstáculos e realizar projetos presentes e futuros com confiança."
+            },
+            "ate_3_em": {
+              "etapa_label": "Até 3º Ensino Médio",
+              "descricao_marco": "Percebe suas fortalezas e fragilidades como valores para influenciar resultados, mobilizando estratégias de interdependência para enfrentar desafios, obstáculos e realizar projetos presentes e futuros com confiança."
+            }
+          }
+        },
+        {
+          "dimensao": "PROJETO DE VIDA",
+          "subdimensao": "Perseverança",
+          "marcos": {
+            "ate_3_ef": {
+              "etapa_label": "Até 3º Ensino Fundamental",
+              "descricao_marco": "Persiste em tarefas quando encontra desafios, adia ganhos imediatos, percebe os lados negativos e positivos das situações adversas, continua trabalhando quando as coisas não estão indo bem e tenta novamente, visualizando os resultados finais."
+            },
+            "ate_6_ef": {
+              "etapa_label": "Até 6º Ensino Fundamental",
+              "descricao_marco": "Persiste em situações adversas ou desafiadoras e ao trabalhar em tarefas difíceis; não desiste diante de contratempos por visualizar os resultados finais."
+            },
+            "ate_9_ef": {
+              "etapa_label": "Até 9º Ensino Fundamental",
+              "descricao_marco": "Lida com estresse, frustração, fracasso e adversidade, persistindo mesmo em situações de ambiguidade e dificuldade, em prol de projetos presentes e futuros."
+            },
+            "ate_3_em": {
+              "etapa_label": "Até 3º Ensino Médio",
+              "descricao_marco": "Lida com estresse, frustração, fracasso e adversidade como parte do processo para alcançar metas acadêmicas e projetos presentes e futuros."
+            }
+          }
+        },
+        {
+          "dimensao": "PROJETO DE VIDA",
+          "subdimensao": "Autoavaliação",
+          "marcos": {
+            "ate_3_ef": {
+              "etapa_label": "Até 3º Ensino Fundamental",
+              "descricao_marco": "Reflete sobre pontos fortes e realizações pessoais, com base em estratégias de autoavaliação."
+            },
+            "ate_6_ef": {
+              "etapa_label": "Até 6º Ensino Fundamental",
+              "descricao_marco": "Monitora seu progresso, visando à consolidação de pontos fortes e ao enfrentamendo de desafios."
+            },
+            "ate_9_ef": {
+              "etapa_label": "Até 9º Ensino Fundamental",
+              "descricao_marco": "Prevê os resultados dos desafios pessoais e acadêmicos com base em estratégias anteriores de resolução de problemas e tomada de decisão."
+            },
+            "ate_3_em": {
+              "etapa_label": "Até 3º Ensino Médio",
+              "descricao_marco": "Analisa características pessoais e habilidades que contribuem ou limitam sua capacidade de realizar tarefas e enfrentar desafios."
+            }
+          }
+        },
+        {
+          "dimensao": "TRABALHO",
+          "subdimensao": "Compreensão sobre o mundo do trabalho",
+          "marcos": {
+            "ate_3_ef": {
+              "etapa_label": "Até 3º Ensino Fundamental",
+              "descricao_marco": "Reflete sobre a importância do trabalho e o impacto da atividade profissional dos seus familiares no seu cotidiano."
+            },
+            "ate_6_ef": {
+              "etapa_label": "Até 6º Ensino Fundamental",
+              "descricao_marco": "Compreende o valor do trabalho para as pessoas e a sociedade."
+            },
+            "ate_9_ef": {
+              "etapa_label": "Até 9º Ensino Fundamental",
+              "descricao_marco": "Identifica as transformações ocorridas nas relações e no mundo do trabalho e nos direitos do trabalhador no Brasil e no mundo. Reconhece em que medida fatores como gênero, raça/ etnia, territorialidade e condição socioeconômica geram desigualdades no mundo do trabalho."
+            },
+            "ate_3_em": {
+              "etapa_label": "Até 3º Ensino Médio",
+              "descricao_marco": "Apresenta visão ampla e crítica sobre dilemas, relações, desafios, tendências e oportunidades associadas ao mundo do trabalho na contemporaneidade."
+            }
+          }
+        },
+        {
+          "dimensao": "TRABALHO",
+          "subdimensao": "Preparação para o trabalho",
+          "marcos": {
+            "ate_3_ef": {
+              "etapa_label": "Até 3º Ensino Fundamental",
+              "descricao_marco": "Reflete sobre as tarefas que mais gosta e as que tem mais facilidade de desempenhar. Discute sobre as profissões que acha interessantes."
+            },
+            "ate_6_ef": {
+              "etapa_label": "Até 6º Ensino Fundamental",
+              "descricao_marco": "Explora suas aptidões, identificando caminhos para fortalecer as que já tem e desenvolver as que gostaria de ter. Investiga sobre o cotidiano de profissões que julga interessantes."
+            },
+            "ate_9_ef": {
+              "etapa_label": "Até 9º Ensino Fundamental",
+              "descricao_marco": "Reconhece suas aptidões e aspirações, associando- as a possíveis percursos acadêmicos e projetos profissionais."
+            },
+            "ate_3_em": {
+              "etapa_label": "Até 3º Ensino Médio",
+              "descricao_marco": "Analisa suas aptidões e aspirações e assume riscos e responsabilidades para realizar escolhas profissionais mais assertivas."
+            }
+          }
+        }
+      ],
+      "referencia_pedagogica": "Instituto Reúna, Instituto Ayrton Senna e Fundação Lemann (Dimensões e Desenvolvimento das Competências Gerais da BNCC)"
     },
     "7": {
       "numero": 7,
@@ -167,7 +999,120 @@
         "consumo responsável",
         "crítica",
         "posicionamento"
-      ]
+      ],
+      "dimensoes_reuna": [
+        {
+          "dimensao": "ARGUMENTAÇÃO",
+          "subdimensao": "Afirmação argumentativa",
+          "marcos": {
+            "ate_3_ef": {
+              "etapa_label": "Até 3º Ensino Fundamental",
+              "descricao_marco": "Introduz uma opinião/ afirmação e expõe motivos que sustentem seu ponto de vista."
+            },
+            "ate_6_ef": {
+              "etapa_label": "Até 6º Ensino Fundamental",
+              "descricao_marco": "Introduz uma opinião/ afirmação clara e expõe motivos ordenados de forma lógica que sustentem seu ponto de vista."
+            },
+            "ate_9_ef": {
+              "etapa_label": "Até 9º Ensino Fundamental",
+              "descricao_marco": "Introduz com clareza afirmações e sub- afirmações de forma ordenada e esclarece a relação entre elas, auxiliando a compreensão do ouvinte."
+            },
+            "ate_3_em": {
+              "etapa_label": "Até 3º Ensino Médio",
+              "descricao_marco": "Desenvolve uma opinião/ argumento sólido por meio de afirmações com significados claros e bem ordenadas em estruturas coerentes, que auxiliam a compreensão do ouvinte."
+            }
+          }
+        },
+        {
+          "dimensao": "ARGUMENTAÇÃO",
+          "subdimensao": "Inferências",
+          "marcos": {
+            "ate_3_ef": {
+              "etapa_label": "Até 3º Ensino Fundamental",
+              "descricao_marco": "Faz inferências com base em evidências e utiliza exemplos específicos e pertinentes."
+            },
+            "ate_6_ef": {
+              "etapa_label": "Até 6º Ensino Fundamental",
+              "descricao_marco": "Faz inferências pertinentes e com significado mais amplo, sempre com base em evidências."
+            },
+            "ate_9_ef": {
+              "etapa_label": "Até 9º Ensino Fundamental",
+              "descricao_marco": "Faz inferências pertinentes, explica seu significado e, quando possível, identifica limitações na argumentaçao de seus interlocutores com base em lacunas nas evidências."
+            },
+            "ate_3_em": {
+              "etapa_label": "Até 3º Ensino Médio",
+              "descricao_marco": "Faz inferências claras, pertinentes e perspicazes com base em evidências e explica seu significado de forma completa, com percepção sofisticada e intepretação original."
+            }
+          }
+        },
+        {
+          "dimensao": "ARGUMENTAÇÃO",
+          "subdimensao": "Confronto de pontos de vista",
+          "marcos": {
+            "ate_3_ef": {
+              "etapa_label": "Até 3º Ensino Fundamental",
+              "descricao_marco": "Compartilha perspectivas e discute diferenças, aprendendo a administrar conflitos pessoais e com os colegas."
+            },
+            "ate_6_ef": {
+              "etapa_label": "Até 6º Ensino Fundamental",
+              "descricao_marco": "Desenvolve uma abordagem ponderada no lidar com discordâncias, compartilhando perspectivas."
+            },
+            "ate_9_ef": {
+              "etapa_label": "Até 9º Ensino Fundamental",
+              "descricao_marco": "Debate e defende seus pontos de vista com firmeza e respeito, mesmo se for divergente dos de outras pessoas ou grupos."
+            },
+            "ate_3_em": {
+              "etapa_label": "Até 3º Ensino Médio",
+              "descricao_marco": "Expressa pontos de vista opostos com assertividade e respeito."
+            }
+          }
+        },
+        {
+          "dimensao": "CONSCIÊNCIA GLOBAL",
+          "subdimensao": "Perspectiva global",
+          "marcos": {
+            "ate_3_ef": {
+              "etapa_label": "Até 3º Ensino Fundamental",
+              "descricao_marco": "Interage com questões, oportunidades, desafios e problemas do mundo real."
+            },
+            "ate_6_ef": {
+              "etapa_label": "Até 6º Ensino Fundamental",
+              "descricao_marco": "Explora e demonstra interesse em questões globais, considerando-as a partir de diferentes pontos de vista à medida que tenta compreender causas e consequências."
+            },
+            "ate_9_ef": {
+              "etapa_label": "Até 9º Ensino Fundamental",
+              "descricao_marco": "Desenvolve conhecimento sobre causas e consequências de questões globais relevantes, como mudança climática, migração, pobreza e desigualdades."
+            },
+            "ate_3_em": {
+              "etapa_label": "Até 3º Ensino Médio",
+              "descricao_marco": "Compreende as interrelações entre problemas, tendências e sistemas ao redor do mundo."
+            }
+          }
+        },
+        {
+          "dimensao": "CONSCIÊNCIA GLOBAL",
+          "subdimensao": "Consciência socioambiental",
+          "marcos": {
+            "ate_3_ef": {
+              "etapa_label": "Até 3º Ensino Fundamental",
+              "descricao_marco": "Começa a reconhecer como as ações de cada pessoa exercem impacto sobre o coletivo e o meio ambiente e demonstra interesse por sua comunidade e o meio ambiente local."
+            },
+            "ate_6_ef": {
+              "etapa_label": "Até 6º Ensino Fundamental",
+              "descricao_marco": "Reconhece a importância do respeito aos direitos humanos e ao meio ambiente para a sobrevivência dos seres humanos pertencentes a uma sociedade e um mundo mais amplos."
+            },
+            "ate_9_ef": {
+              "etapa_label": "Até 9º Ensino Fundamental",
+              "descricao_marco": "Demonstra uma firme valorização do respeito aos direitos humanos e ao meio ambiente para a sobrevivência da humanidade e do planeta."
+            },
+            "ate_3_em": {
+              "etapa_label": "Até 3º Ensino Médio",
+              "descricao_marco": "Adquire uma visão sólida e uma atitude respeitosa para com questões sociais e ambientais."
+            }
+          }
+        }
+      ],
+      "referencia_pedagogica": "Instituto Reúna, Instituto Ayrton Senna e Fundação Lemann (Dimensões e Desenvolvimento das Competências Gerais da BNCC)"
     },
     "8": {
       "numero": 8,
@@ -191,7 +1136,120 @@
         "exercício",
         "limites",
         "autoestima"
-      ]
+      ],
+      "dimensoes_reuna": [
+        {
+          "dimensao": "AUTOCONHECIMENTO e AUTOCUIDADO",
+          "subdimensao": "Autoconsciência",
+          "marcos": {
+            "ate_3_ef": {
+              "etapa_label": "Até 3º Ensino Fundamental",
+              "descricao_marco": "Começa a construir sua identidade pessoal a partir do reconhececimento de suas características e seus interesses."
+            },
+            "ate_6_ef": {
+              "etapa_label": "Até 6º Ensino Fundamental",
+              "descricao_marco": "Reconstrói sua identidade pessoal na relação com seus pares e adultos, sabendo diferenciar-se em comparação com os outros."
+            },
+            "ate_9_ef": {
+              "etapa_label": "Até 9º Ensino Fundamental",
+              "descricao_marco": "Constrói um senso coerente de si mesmo como indivíduo distinto, sendo capaz de compreender a perspectiva dos outros e identificar quando essas perspectivas são diferentes das suas."
+            },
+            "ate_3_em": {
+              "etapa_label": "Até 3º Ensino Médio",
+              "descricao_marco": "Constrói um senso integrado de si mesmo em relação aos outros e uma autoconsciência de como sua identidade, perspectiva e valores influenciam sua tomada de decisão."
+            }
+          }
+        },
+        {
+          "dimensao": "AUTOCONHECIMENTO e AUTOCUIDADO",
+          "subdimensao": "Autoconfiança",
+          "marcos": {
+            "ate_3_ef": {
+              "etapa_label": "Até 3º Ensino Fundamental",
+              "descricao_marco": "Usa seus conhecimentos, habilidades e atitudes com confiança para realizar novas tarefas, identificando desafios e facilidades."
+            },
+            "ate_6_ef": {
+              "etapa_label": "Até 6º Ensino Fundamental",
+              "descricao_marco": "Usa seus conhecimentos, habilidades e atitudes com confiança, buscando estratégias para vencer desafios."
+            },
+            "ate_9_ef": {
+              "etapa_label": "Até 9º Ensino Fundamental",
+              "descricao_marco": "Usa seus conhecimentos, habilidades e atitudes com confiança e coragem, selecionando, utilizando e analisando estratégias para vencer desafios."
+            },
+            "ate_3_em": {
+              "etapa_label": "Até 3º Ensino Médio",
+              "descricao_marco": "Aborda novos desafios com confiança e coragem, aprimorando suas estratégias para vencer desafios presentes e futuros, em situações inesperadas ou difíceis ."
+            }
+          }
+        },
+        {
+          "dimensao": "AUTOCONHECIMENTO e AUTOCUIDADO",
+          "subdimensao": "Equilíbrio emocional",
+          "marcos": {
+            "ate_3_ef": {
+              "etapa_label": "Até 3º Ensino Fundamental",
+              "descricao_marco": "Reconhece suas emoções, assim como pessoas e situações que as despertam."
+            },
+            "ate_6_ef": {
+              "etapa_label": "Até 6º Ensino Fundamental",
+              "descricao_marco": "Reconhece suas emoções e sentimentos e a influência que pessoas e situações exercem sobre eles."
+            },
+            "ate_9_ef": {
+              "etapa_label": "Até 9º Ensino Fundamental",
+              "descricao_marco": "Reconhece o impacto de suas emoções e sentimentos no contexto escolar e social."
+            },
+            "ate_3_em": {
+              "etapa_label": "Até 3º Ensino Médio",
+              "descricao_marco": "Compreende com mais profundidade o impacto de suas emoções e sentimentos no contexto escolar e social."
+            }
+          }
+        },
+        {
+          "dimensao": "AUTOCONHECIMENTO e AUTOCUIDADO",
+          "subdimensao": "Saúde e desenvolvimento físico",
+          "marcos": {
+            "ate_3_ef": {
+              "etapa_label": "Até 3º Ensino Fundamental",
+              "descricao_marco": "Cuida da sua saúde física e do seu bem-estar."
+            },
+            "ate_6_ef": {
+              "etapa_label": "Até 6º Ensino Fundamental",
+              "descricao_marco": "Cuida da sua saúde física, bem-estar, afetividade e sexualidade."
+            },
+            "ate_9_ef": {
+              "etapa_label": "Até 9º Ensino Fundamental",
+              "descricao_marco": "Cuida da sua saúde física, bem-estar, afetividade, sexualidade e evita exposição a riscos."
+            },
+            "ate_3_em": {
+              "etapa_label": "Até 3º Ensino Médio",
+              "descricao_marco": "Avalia necessidades e riscos relativos a sua saúde e identifica estratégias para garantir o seu bem-estar e desenvolvimento pessoal, físico, social, emocional e intelectual ao longo de sua vida, elaborando estratégias para suprir as suas necessidades atuais e futuras."
+            }
+          }
+        },
+        {
+          "dimensao": "AUTOCONHECIMENTO e AUTOCUIDADO",
+          "subdimensao": "Atenção plena e capacidade de reflexão",
+          "marcos": {
+            "ate_3_ef": {
+              "etapa_label": "Até 3º Ensino Fundamental",
+              "descricao_marco": "Presta atenção e se concentra em suas tarefas."
+            },
+            "ate_6_ef": {
+              "etapa_label": "Até 6º Ensino Fundamental",
+              "descricao_marco": "Mantém atenção constante durante atividades contínuas e repetitivas."
+            },
+            "ate_9_ef": {
+              "etapa_label": "Até 9º Ensino Fundamental",
+              "descricao_marco": "Mantém atenção diante de estímulos que distraem ou competem por sua atenção."
+            },
+            "ate_3_em": {
+              "etapa_label": "Até 3º Ensino Médio",
+              "descricao_marco": "É capaz de mudar o foco de atenção e responder simultaneamente a múltiplas tarefas ou múltiplas demandas."
+            }
+          }
+        }
+      ],
+      "referencia_pedagogica": "Instituto Reúna, Instituto Ayrton Senna e Fundação Lemann (Dimensões e Desenvolvimento das Competências Gerais da BNCC)"
     },
     "9": {
       "numero": 9,
@@ -215,7 +1273,142 @@
         "preconceito",
         "diferenças",
         "convivência"
-      ]
+      ],
+      "dimensoes_reuna": [
+        {
+          "dimensao": "EMPATIA",
+          "subdimensao": "Valorização da diversidade",
+          "marcos": {
+            "ate_3_ef": {
+              "etapa_label": "Até 3º Ensino Fundamental",
+              "descricao_marco": "Valoriza diversas perspectivas, compreendendo pontos de vista diferentes dos seus."
+            },
+            "ate_6_ef": {
+              "etapa_label": "Até 6º Ensino Fundamental",
+              "descricao_marco": "Reconhece e valoriza culturas e pontos de vista diversos."
+            },
+            "ate_9_ef": {
+              "etapa_label": "Até 9º Ensino Fundamental",
+              "descricao_marco": "Participa de grupos, redes e ambientes culturalmente diversos."
+            },
+            "ate_3_em": {
+              "etapa_label": "Até 3º Ensino Médio",
+              "descricao_marco": "Constrói e participa de grupos, redes e ambientes culturalmente diversos."
+            }
+          }
+        },
+        {
+          "dimensao": "EMPATIA",
+          "subdimensao": "Alteridade (reconhecimento do outro)",
+          "marcos": {
+            "ate_3_ef": {
+              "etapa_label": "Até 3º Ensino Fundamental",
+              "descricao_marco": "Compreende as emocões dos demais e o impacto das suas ações nos outros."
+            },
+            "ate_6_ef": {
+              "etapa_label": "Até 6º Ensino Fundamental",
+              "descricao_marco": "Compreende as emocões dos demais e o impacto das suas ações nos outros."
+            },
+            "ate_9_ef": {
+              "etapa_label": "Até 9º Ensino Fundamental",
+              "descricao_marco": "Reconhece e se conecta com interesses e necessidades de diferentes atores em ambientes sociais mais próximos."
+            },
+            "ate_3_em": {
+              "etapa_label": "Até 3º Ensino Médio",
+              "descricao_marco": "Reconhece e se conecta com interesses e necessidades de diferentes atores em ambientes sociais complexos."
+            }
+          }
+        },
+        {
+          "dimensao": "EMPATIA",
+          "subdimensao": "Acolhimento da perspectiva do outro",
+          "marcos": {
+            "ate_3_ef": {
+              "etapa_label": "Até 3º Ensino Fundamental",
+              "descricao_marco": "Reconhece e se conecta com as ideias e sentimentos do outro."
+            },
+            "ate_6_ef": {
+              "etapa_label": "Até 6º Ensino Fundamental",
+              "descricao_marco": "Começa a perceber as situações a partir do ponto de vista do outro."
+            },
+            "ate_9_ef": {
+              "etapa_label": "Até 9º Ensino Fundamental",
+              "descricao_marco": "Começa a perceber as situações a partir do ponto de vista do outro."
+            },
+            "ate_3_em": {
+              "etapa_label": "Até 3º Ensino Médio",
+              "descricao_marco": "Compreende e considera as motivações, pontos de vista e sentimentos do outro."
+            }
+          }
+        },
+        {
+          "dimensao": "DIÁLOGO e COOPERAÇÃO",
+          "subdimensao": "Diálogo e convivência",
+          "marcos": {
+            "ate_3_ef": {
+              "etapa_label": "Até 3º Ensino Fundamental",
+              "descricao_marco": "Entende e se faz entender pelo outro."
+            },
+            "ate_6_ef": {
+              "etapa_label": "Até 6º Ensino Fundamental",
+              "descricao_marco": "Utiliza diferentes formas de diálogo para interagir com seus pares e adultos."
+            },
+            "ate_9_ef": {
+              "etapa_label": "Até 9º Ensino Fundamental",
+              "descricao_marco": "Utiliza diferentes formas de diálogo para promover o entendimento entre pessoas."
+            },
+            "ate_3_em": {
+              "etapa_label": "Até 3º Ensino Médio",
+              "descricao_marco": "Promove o diálogo e o entendimento entre as pessoas."
+            }
+          }
+        },
+        {
+          "dimensao": "DIÁLOGO e COOPERAÇÃO",
+          "subdimensao": "Colaboração",
+          "marcos": {
+            "ate_3_ef": {
+              "etapa_label": "Até 3º Ensino Fundamental",
+              "descricao_marco": "Trabalha em equipe para resolver problemas específicos."
+            },
+            "ate_6_ef": {
+              "etapa_label": "Até 6º Ensino Fundamental",
+              "descricao_marco": "Trabalha em equipe com maior proatividade, para resolver problemas mais complexos."
+            },
+            "ate_9_ef": {
+              "etapa_label": "Até 9º Ensino Fundamental",
+              "descricao_marco": "Planeja, decide e realiza ações e projetos colaborativamente."
+            },
+            "ate_3_em": {
+              "etapa_label": "Até 3º Ensino Médio",
+              "descricao_marco": "Planeja, decide e realiza ações e projetos desafiadores com elevada complexidade de colaboração."
+            }
+          }
+        },
+        {
+          "dimensao": "DIÁLOGO e COOPERAÇÃO",
+          "subdimensao": "Mediação de conflitos",
+          "marcos": {
+            "ate_3_ef": {
+              "etapa_label": "Até 3º Ensino Fundamental",
+              "descricao_marco": "Soluciona problemas interpessoais simples e reconhece várias maneiras de resolver conflitos."
+            },
+            "ate_6_ef": {
+              "etapa_label": "Até 6º Ensino Fundamental",
+              "descricao_marco": "Identifica causas de conflitos interpessoais e escolares e exercita formas eficazes de resolvê-los."
+            },
+            "ate_9_ef": {
+              "etapa_label": "Até 9º Ensino Fundamental",
+              "descricao_marco": "Identifica causas de conflitos e exercita formas eficazes de resolvê-los em diversas situações interpessoais, escolares e sociais."
+            },
+            "ate_3_em": {
+              "etapa_label": "Até 3º Ensino Médio",
+              "descricao_marco": "Exercita mediação e negociação para evitar e resolver desentendimentos e conflitos interpessoais, escolares e sociais."
+            }
+          }
+        }
+      ],
+      "referencia_pedagogica": "Instituto Reúna, Instituto Ayrton Senna e Fundação Lemann (Dimensões e Desenvolvimento das Competências Gerais da BNCC)"
     },
     "10": {
       "numero": 10,
@@ -238,7 +1431,164 @@
         "participação social",
         "direitos e deveres",
         "bem comum"
-      ]
+      ],
+      "dimensoes_reuna": [
+        {
+          "dimensao": "RESPONSABILIDADE",
+          "subdimensao": "Incorporação de direitos e responsabilidades",
+          "marcos": {
+            "ate_3_ef": {
+              "etapa_label": "Até 3º Ensino Fundamental",
+              "descricao_marco": "Vivencia e identifica seus direitos e responsabilidades, bem como os de seus colegas, mostrando-se confiável."
+            },
+            "ate_6_ef": {
+              "etapa_label": "Até 6º Ensino Fundamental",
+              "descricao_marco": "Interage de forma coerente e confiável quanto a direitos e responsabilidades em situações presenciais e em redes sociais."
+            },
+            "ate_9_ef": {
+              "etapa_label": "Até 9º Ensino Fundamental",
+              "descricao_marco": "Posiciona-se em relação a direitos e responsabilidades, indo além de seus interesses individuais e considerando o bem comum."
+            },
+            "ate_3_em": {
+              "etapa_label": "Até 3º Ensino Médio",
+              "descricao_marco": "Valoriza pontos de vista divergentes e posiciona- se em relação a direitos e responsabilidades conflitantes em contextos locais e globais."
+            }
+          }
+        },
+        {
+          "dimensao": "RESPONSABILIDADE",
+          "subdimensao": "Tomada de decisões",
+          "marcos": {
+            "ate_3_ef": {
+              "etapa_label": "Até 3º Ensino Fundamental",
+              "descricao_marco": "Participa da tomada de decisões, analisando como as pessoas decidem e por que o fazem de forma diferente."
+            },
+            "ate_6_ef": {
+              "etapa_label": "Até 6º Ensino Fundamental",
+              "descricao_marco": "Identifica diversas posições éticas, considerando-as ao tomar decisões em situações pessoais e coletivas."
+            },
+            "ate_9_ef": {
+              "etapa_label": "Até 9º Ensino Fundamental",
+              "descricao_marco": "Possui consciência sobre o impacto que suas decisões têm nos grupos e na sociedade, responsabilizando-se por suas próprias ações, planeja e decide coletivamente sobre questões que afetam a todos."
+            },
+            "ate_3_em": {
+              "etapa_label": "Até 3º Ensino Médio",
+              "descricao_marco": "Decide de forma colaborativa e consciente, agindo concretamente para o bem-estar individual e social e para a justiça social."
+            }
+          }
+        },
+        {
+          "dimensao": "RESPONSABILIDADE",
+          "subdimensao": "Ponderação sobre consequências",
+          "marcos": {
+            "ate_3_ef": {
+              "etapa_label": "Até 3º Ensino Fundamental",
+              "descricao_marco": "Descreve os efeitos que os sentimentos e temperamentos pessoais exercem sobre a forma como as pessoas agem."
+            },
+            "ate_6_ef": {
+              "etapa_label": "Até 6º Ensino Fundamental",
+              "descricao_marco": "Avalia as consequências de suas ações e de outros em situações cotidianas e hipotéticas, revendo-as a partir de acertos e erros."
+            },
+            "ate_9_ef": {
+              "etapa_label": "Até 9º Ensino Fundamental",
+              "descricao_marco": "Reflete sobre situações concretas em que gatilhos emocionais, frustrações e ações das pessoas impactam nas demais e no contexto, buscando formas de aprimoramento."
+            },
+            "ate_3_em": {
+              "etapa_label": "Até 3º Ensino Médio",
+              "descricao_marco": "Considera fatores objetivos e subjetivos por trás das tomadas de decisões quando há diversas consequências possíveis, sem se prender a posicionamentos rígidos diante de incertezas e ambiguidades."
+            }
+          }
+        },
+        {
+          "dimensao": "VALORES",
+          "subdimensao": "Análise e incorporação de valores próprios",
+          "marcos": {
+            "ate_3_ef": {
+              "etapa_label": "Até 3º Ensino Fundamental",
+              "descricao_marco": "Reflete sobre suas crenças fundamentais, vivencia e identifica valores importantes para si próprio e aqueles que tem em comum com outras pessoas com as quais convive no cotidiano."
+            },
+            "ate_6_ef": {
+              "etapa_label": "Até 6º Ensino Fundamental",
+              "descricao_marco": "Reconhece valores importantes para si e para os demais em situações multiculturais."
+            },
+            "ate_9_ef": {
+              "etapa_label": "Até 9º Ensino Fundamental",
+              "descricao_marco": "Vivencia e identifica valores importantes para si e para o coletivo."
+            },
+            "ate_3_em": {
+              "etapa_label": "Até 3º Ensino Médio",
+              "descricao_marco": "Vivencia, identifica e promove valores importantes para si e para o coletivo."
+            }
+          }
+        },
+        {
+          "dimensao": "VALORES",
+          "subdimensao": "Postura ética",
+          "marcos": {
+            "ate_3_ef": {
+              "etapa_label": "Até 3º Ensino Fundamental",
+              "descricao_marco": "Desenvolve senso pessoal do que é certo e errado, começa a criar um conjunto de ideais, compreende que determinadas situações podem influenciar a forma como as pessoas agem, reconhece problemas morais."
+            },
+            "ate_6_ef": {
+              "etapa_label": "Até 6º Ensino Fundamental",
+              "descricao_marco": "Reconhece questões éticas básicas e compreende as suas interrelações, compara situações mais positivas ou negativas do ponto de vista ético, compreende como elas podem ser geradas e articula uma variedade de respostas éticas para diversos contextos."
+            },
+            "ate_9_ef": {
+              "etapa_label": "Até 9º Ensino Fundamental",
+              "descricao_marco": "Reconhece um dilema ético, analisa suas crenças fundamentais e de onde elas vêm, justifica seus próprios princípios, analisa percepções sobre acontecimentos e possíveis respostas éticas em cenários desafiadores."
+            },
+            "ate_3_em": {
+              "etapa_label": "Até 3º Ensino Médio",
+              "descricao_marco": "Reconhece e administra valores conflitantes e dilemas éticos para tomar decisões com base em princípios sólidos, avalia percepções diversas e o fundamento ético das ações em contextos complexos."
+            }
+          }
+        },
+        {
+          "dimensao": "CIDADANIA",
+          "subdimensao": "Participação social e liderança",
+          "marcos": {
+            "ate_3_ef": {
+              "etapa_label": "Até 3º Ensino Fundamental",
+              "descricao_marco": "Reconhece sua importância no grupo e na solução dos problemas que afetam o bem estar de todos."
+            },
+            "ate_6_ef": {
+              "etapa_label": "Até 6º Ensino Fundamental",
+              "descricao_marco": "Colabora ativamente para ações e projetos voltados ao bem comum, contribui com as normas e a cultura escolar."
+            },
+            "ate_9_ef": {
+              "etapa_label": "Até 9º Ensino Fundamental",
+              "descricao_marco": "Realiza projetos escolares e comunitários, mobilizando pessoas e recursos."
+            },
+            "ate_3_em": {
+              "etapa_label": "Até 3º Ensino Médio",
+              "descricao_marco": "Propõe, implementa e avalia soluções locais, regionais, nacionais e globais, tornando-se agente de mudanças."
+            }
+          }
+        },
+        {
+          "dimensao": "CIDADANIA",
+          "subdimensao": "Solução de problemas ambíguos e complexos",
+          "marcos": {
+            "ate_3_ef": {
+              "etapa_label": "Até 3º Ensino Fundamental",
+              "descricao_marco": "Começa a se sentir confortável com desafios do mundo real que não possuem uma resposta definida, ainda necessitando da orientação de adultos para lidar com problemas e ambiguidades."
+            },
+            "ate_6_ef": {
+              "etapa_label": "Até 6º Ensino Fundamental",
+              "descricao_marco": "Desenvolve um nível moderado de conforto com desafios do mundo real que não possuem uma resposta definida, necessitando apenas de alguns parâmetros amplos para resolver problemas e lidar com a ambiguidade."
+            },
+            "ate_9_ef": {
+              "etapa_label": "Até 9º Ensino Fundamental",
+              "descricao_marco": "Fica confortável e sente interesse por lidar com desafios do mundo real locais ou globais, mesmo quando há alto nível de ambiguidade sem uma solução pré-determinada."
+            },
+            "ate_3_em": {
+              "etapa_label": "Até 3º Ensino Médio",
+              "descricao_marco": "Demonstra um alto nível de conforto e interesse em lidar com problemas do mundo real que não possuem uma resposta certa e não são estruturados, nos quais é preciso criar uma nova perspectiva ou forma de encarar a questão."
+            }
+          }
+        }
+      ],
+      "referencia_pedagogica": "Instituto Reúna, Instituto Ayrton Senna e Fundação Lemann (Dimensões e Desenvolvimento das Competências Gerais da BNCC)"
     }
   },
   "competencias_especificas": {
@@ -814,5 +2164,15 @@
         "descricao": "Participar do debate público de forma fundamentada e ética, respeitando princípios democráticos, a Constituição e a soberania popular."
       }
     ]
+  },
+  "creditos_institucionais": {
+    "fonte_primaria": "Base Nacional Comum Curricular (BNCC / MEC)",
+    "referencia_progressao": "Instituto Reúna (institutoreuna.org.br)",
+    "obras_adaptadas": [
+      "Dimensões e Desenvolvimento das Competências Gerais da BNCC (Instituto Reúna, Instituto Ayrton Senna e Fundação Lemann)",
+      "Mapas de Foco da BNCC (Instituto Reúna, Fundação Lemann e Itaú Social)",
+      "BNCC Comentada para o Ensino Médio (Instituto Reúna)"
+    ],
+    "nota_atribuicao": "Material adaptado a partir das produções técnicas e metodologias de referência do Instituto Reúna sob autorização institucional para fins educacionais abertos."
   }
 }

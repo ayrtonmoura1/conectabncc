@@ -348,6 +348,12 @@
                         </svg>
                         Documentação
                     </a>
+                    <button type="button" class="header-credits-link" onclick="window.abrirModalCreditosReuna()" title="Ver autorização, fontes e créditos do Instituto Reúna e MEC">
+                        <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"></path>
+                        </svg>
+                        Créditos & Fontes (Reúna)
+                    </button>
                 </div>
                 <p class="compact-subtitle">
                     Pesquise habilidades curriculares por intenção pedagógica e explore relações de progressão no grafo.
@@ -774,6 +780,68 @@
         </div>
     </div>
 
+    <!-- Modal de Créditos Institucionais & Parceria Pedagógica (Instituto Reúna & MEC) -->
+    <div class="reuna-credits-modal-backdrop" id="creditosReunaModalBackdrop" style="display: none;" onclick="window.fecharModalCreditosReuna(event)">
+        <div class="reuna-credits-modal" onclick="event.stopPropagation()">
+            <div class="reuna-credits-header">
+                <div class="reuna-credits-title-row">
+                    <span class="reuna-credits-icon">🏛️</span>
+                    <div>
+                        <h3 class="reuna-credits-title">Créditos Institucionais & Fontes Oficiais</h3>
+                        <p class="reuna-credits-subtitle">Instituto Reúna, Base Nacional Comum Curricular (MEC) e Parceiros</p>
+                    </div>
+                </div>
+                <button type="button" class="reuna-credits-close" onclick="window.fecharModalCreditosReuna()" aria-label="Fechar">&times;</button>
+            </div>
+            <div class="reuna-credits-body">
+                <div class="reuna-notice-box">
+                    <span style="font-size: 1.5rem;">📜</span>
+                    <div class="reuna-notice-text">
+                        <h4>Autorização Institucional e Adaptação Pedagógica</h4>
+                        <p>O <strong>Concecta BNCC</strong> utiliza e adapta as metodologias, matrizes de progressão e publicações de referência do <strong>Instituto Reúna</strong> sob aprovação e autorização institucional para fins educacionais abertos. Os materiais foram transpostos em grafos relacionais interativos e modelos de linguagem locais para apoiar educadores de todo o Brasil.</p>
+                    </div>
+                </div>
+
+                <h4 style="margin: 6px 0 2px 0; font-size: 0.90rem; color: var(--text-primary); font-weight: 800; text-transform: uppercase; letter-spacing: 0.03em;">
+                    Obras e Referenciais de Pesquisa Adaptados:
+                </h4>
+
+                <div class="reuna-source-cards-grid">
+                    <div class="reuna-source-card">
+                        <span class="reuna-source-card-badge ef">Mapas de Foco</span>
+                        <h5>Mapas de Foco da BNCC (Ensino Fundamental)</h5>
+                        <p>Matriz de priorização curricular: Aprendizagens Focais (AF), Aprendizagens Complementares (AC), Habilidades de Apoio e expectativas de fluência para Língua Portuguesa, Matemática, Ciências da Natureza e Ciências Humanas.</p>
+                        <span style="font-size: 0.72rem; color: var(--text-muted);">Realização: Instituto Reúna, Fundação Lemann e Itaú Social.</span>
+                        <a href="https://institutoreuna.org.br/iniciativa/mapas-de-foco-bncc/" target="_blank" rel="noopener noreferrer" class="reuna-source-card-link">Acessar Mapas de Foco ➔</a>
+                    </div>
+
+                    <div class="reuna-source-card">
+                        <span class="reuna-source-card-badge em">Ensino Médio</span>
+                        <h5>BNCC Comentada para o Ensino Médio</h5>
+                        <p>Análise aprofundada das habilidades por grandes áreas do conhecimento, detalhamento de contribuições por componente curricular (Física, Química, Biologia, História, etc.) e possibilidades pedagógicas para o currículo.</p>
+                        <span style="font-size: 0.72rem; color: var(--text-muted);">Realização: Instituto Reúna.</span>
+                        <a href="https://institutoreuna.org.br/iniciativa/bncc-comentada-ensino-medio/" target="_blank" rel="noopener noreferrer" class="reuna-source-card-link">Acessar BNCC Comentada EM ➔</a>
+                    </div>
+
+                    <div class="reuna-source-card">
+                        <span class="reuna-source-card-badge cg">Competências</span>
+                        <h5>Dimensões e Desenvolvimento das Competências Gerais</h5>
+                        <p>Desdobramento das 10 Competências Gerais da Educação Básica em dimensões, subdimensões e marcos de progressão ao longo de 4 etapas: até o 3º EF, até o 6º EF, até o 9º EF e até o 3º Ensino Médio.</p>
+                        <span style="font-size: 0.72rem; color: var(--text-muted);">Realização: Instituto Reúna, Instituto Ayrton Senna e Fundação Lemann.</span>
+                        <a href="https://institutoreuna.org.br/iniciativa/dimensoes-das-competencias-gerais-da-bncc/" target="_blank" rel="noopener noreferrer" class="reuna-source-card-link">Acessar Competências Gerais ➔</a>
+                    </div>
+                </div>
+
+                <div style="background: #f8fafc; border: 1px solid var(--border-color); border-radius: var(--radius-md); padding: 12px 16px;">
+                    <div style="font-size: 0.82rem; font-weight: 700; color: var(--text-primary); margin-bottom: 4px;">Inovação Tecnológica com Inteligência Artificial no Navegador:</div>
+                    <p style="font-size: 0.80rem; color: var(--text-secondary); line-height: 1.5; margin: 0;">
+                        O Concecta BNCC não requer servidores de IA na nuvem nem envio de dados privados. O modelo neural quantizado <code>all-MiniLM-L6-v2</code> (via Transformers.js e WebAssembly) e os grafos vetoriais com física D3.js rodam 100% de forma local, offline e gratuita no navegador de qualquer computador ou celular.
+                    </p>
+                </div>
+            </div>
+        </div>
+    </div>
+
     <!-- Modal do Catálogo Curricular da BNCC (Navegação Direta por Etapa e Componente) -->
     <div class="catalog-modal-backdrop" id="catalogModalBackdrop" style="display: none;" onclick="window.fecharModalCatalogoBNCC(event)">
         <div class="catalog-modal" id="catalogModal" onclick="event.stopPropagation()">
@@ -936,9 +1004,45 @@
         </div>
     </div>
 
-    <!-- Rodapé -->
-    <footer>
-        <p>Concecta BNCC &bull; 100% Frontend no Navegador &bull; Modelo: <code>all-MiniLM-L6-v2</code> via Transformers.js &bull; <a href="./documentacao.html" style="color: var(--accent-primary); text-decoration: underline; font-weight: 600;">📖 Documentação Técnica</a></p>
+    <!-- Rodapé Institucional Expandido -->
+    <footer class="app-footer-reuna">
+        <div class="app-footer-content">
+            <div class="footer-top-row">
+                <div class="footer-brand-wrap">
+                    <h3>⚡ Concecta BNCC</h3>
+                    <p>Inteligência Artificial Vetorial e Mapeamento de Progressão Curricular no Navegador</p>
+                </div>
+                <div class="footer-action-links">
+                    <a href="./documentacao.html" class="footer-btn-link">
+                        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"></path><path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"></path></svg>
+                        Documentação Técnica
+                    </a>
+                    <button type="button" class="footer-btn-link" onclick="window.abrirModalCreditosReuna()">
+                        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"></path></svg>
+                        Créditos & Fontes Oficiais
+                    </button>
+                    <a href="https://institutoreuna.org.br/" target="_blank" rel="noopener noreferrer" class="footer-btn-link">
+                        Portal Instituto Reúna ➔
+                    </a>
+                    <a href="http://basenacionalcomum.mec.gov.br/" target="_blank" rel="noopener noreferrer" class="footer-btn-link">
+                        BNCC Oficial (MEC) ➔
+                    </a>
+                </div>
+            </div>
+
+            <div class="footer-reuna-credit-block">
+                <p class="footer-reuna-credit-text">
+                    <strong>Atribuição Institucional:</strong> Os referenciais de priorização curricular (Mapas de Foco), análises por componentes no Ensino Médio (BNCC Comentada) e a progressão das 10 Competências Gerais são adaptados das publicações técnicas desenvolvidas pelo <strong>Instituto Reúna</strong> em parceria com a <strong>Fundação Lemann</strong>, <strong>Itaú Social</strong> e <strong>Instituto Ayrton Senna</strong>, sob aprovação e autorização de uso para fins educacionais abertos.
+                </p>
+                <a href="https://institutoreuna.org.br/" target="_blank" rel="noopener noreferrer" class="footer-reuna-logo-link">
+                    <span>🏛️ Conhecer Instituto Reúna</span>
+                </a>
+            </div>
+
+            <p class="footer-bottom-copy">
+                Concecta BNCC &bull; 100% Client-Side IA &bull; Modelo ONNX quantizado <code>all-MiniLM-L6-v2</code> &bull; Base Nacional Comum Curricular (MEC)
+            </p>
+        </div>
     </footer>
 
     <!-- Lógica de Inteligência Artificial, Grafo D3 e Aplicação -->
@@ -950,6 +1054,41 @@
         env.allowRemoteModels = true;
         env.localModelPath = './models/';
         env.useBrowserCache = true;
+
+        // Controle do Modal de Créditos Institucionais (Instituto Reúna)
+        window.abrirModalCreditosReuna = function() {
+            const modal = document.getElementById('creditosReunaModalBackdrop');
+            if (modal) {
+                modal.style.display = 'flex';
+                document.body.style.overflow = 'hidden';
+            }
+        };
+
+        window.fecharModalCreditosReuna = function(event) {
+            if (event && event.target && event.target.id !== 'creditosReunaModalBackdrop' && !event.target.classList.contains('reuna-credits-close')) {
+                return;
+            }
+            const modal = document.getElementById('creditosReunaModalBackdrop');
+            if (modal) {
+                modal.style.display = 'none';
+                document.body.style.overflow = '';
+            }
+        };
+
+        let cicloCompetenciaAtivo = 'ate_3_ef';
+        window.mudarCicloCompetencia = function(cicloKey) {
+            cicloCompetenciaAtivo = cicloKey;
+            document.querySelectorAll('.cg-cycle-btn').forEach(btn => {
+                btn.classList.toggle('active', btn.getAttribute('data-cycle') === cicloKey);
+            });
+            document.querySelectorAll('.cg-subdim-marco-desc').forEach(el => {
+                const marcoText = el.getAttribute(`data-marco-${cicloKey}`);
+                if (marcoText) {
+                    el.textContent = marcoText;
+                }
+            });
+        };
+
 
         // Estados globais
         let extratorEmbeddings = null;
@@ -1242,15 +1381,61 @@
                         <h3 class="comp-modal-title" style="margin-top: 6px;">${cg.icone} ${cg.codigo} - ${cg.nome}</h3>
                     </div>
                 `;
+
+                const dimensoesList = cg.dimensoes_reuna || [];
+                let dimensoesHtml = '';
+                if (dimensoesList.length > 0) {
+                    dimensoesHtml = `
+                        <div class="cg-reuna-container">
+                            <div class="cg-reuna-title">
+                                <span>Dimensões & Marcos de Progressão:</span>
+                                <span class="cg-reuna-ref-badge">Referencial: Instituto Reúna / IAS</span>
+                            </div>
+
+                            <div class="cg-cycle-selector">
+                                <button type="button" class="cg-cycle-btn active" data-cycle="ate_3_ef" onclick="window.mudarCicloCompetencia('ate_3_ef')">Até 3º EF</button>
+                                <button type="button" class="cg-cycle-btn" data-cycle="ate_6_ef" onclick="window.mudarCicloCompetencia('ate_6_ef')">Até 6º EF</button>
+                                <button type="button" class="cg-cycle-btn" data-cycle="ate_9_ef" onclick="window.mudarCicloCompetencia('ate_9_ef')">Até 9º EF</button>
+                                <button type="button" class="cg-cycle-btn" data-cycle="ate_3_em" onclick="window.mudarCicloCompetencia('ate_3_em')">Ensino Médio</button>
+                            </div>
+
+                            <div class="cg-subdims-list">
+                                ${dimensoesList.map(item => {
+                                    const m3 = (item.marcos && item.marcos.ate_3_ef) ? item.marcos.ate_3_ef.descricao_marco : 'Em desenvolvimento.';
+                                    const m6 = (item.marcos && item.marcos.ate_6_ef) ? item.marcos.ate_6_ef.descricao_marco : 'Em desenvolvimento.';
+                                    const m9 = (item.marcos && item.marcos.ate_9_ef) ? item.marcos.ate_9_ef.descricao_marco : 'Em desenvolvimento.';
+                                    const mem = (item.marcos && item.marcos.ate_3_em) ? item.marcos.ate_3_em.descricao_marco : 'Em desenvolvimento.';
+                                    return `
+                                        <div class="cg-subdim-card">
+                                            <div class="cg-subdim-header">
+                                                <span class="cg-subdim-name">${item.subdimensao}</span>
+                                                <span class="cg-dim-tag">${item.dimensao}</span>
+                                            </div>
+                                            <p class="cg-subdim-marco-desc" 
+                                               data-marco-ate_3_ef="${m3.replace(/"/g, '&quot;')}"
+                                               data-marco-ate_6_ef="${m6.replace(/"/g, '&quot;')}"
+                                               data-marco-ate_9_ef="${m9.replace(/"/g, '&quot;')}"
+                                               data-marco-ate_3_em="${mem.replace(/"/g, '&quot;')}">
+                                               ${m3}
+                                            </p>
+                                        </div>
+                                    `;
+                                }).join('')}
+                            </div>
+                        </div>
+                    `;
+                }
+
                 body.innerHTML = `
                     <p style="font-weight: 700; color: var(--accent-primary); margin-bottom: 10px;">${cg.titulo}</p>
                     <p style="margin-bottom: 14px; font-size: 0.95rem; line-height: 1.6;">${cg.descricao}</p>
-                    <div style="background: var(--bg-secondary); border: 1px solid var(--border-color); border-radius: 8px; padding: 10px 14px;">
+                    <div style="background: var(--bg-secondary); border: 1px solid var(--border-color); border-radius: 8px; padding: 10px 14px; margin-bottom: 14px;">
                         <span style="font-size: 0.78rem; font-weight: 700; color: var(--text-muted); text-transform: uppercase;">Conceitos e Práticas Mobilizadas:</span>
                         <div style="display: flex; flex-wrap: wrap; gap: 6px; margin-top: 6px;">
                             ${(cg.palavras_chave || []).map(kw => `<span class="term-tag">${kw}</span>`).join('')}
                         </div>
                     </div>
+                    ${dimensoesHtml}
                 `;
             } else {
                 const ce = obterInfoCompetenciaEspecifica(disciplina, num);
@@ -2819,6 +3004,9 @@
                                 </span>
 
                                 ${item.ano_faixa ? `<span class="year-badge">${item.ano_faixa}</span>` : ''}
+                                ${item.classificacao_reuna === 'AF' ? `<span class="badge-reuna-focal" title="Aprendizagem Focal (Mapas de Foco - Instituto Reúna): nó curricular prioritário para a continuidade da trajetória escolar">🎯 Focal (Reúna)</span>` : ''}
+                                ${item.classificacao_reuna === 'AC' ? `<span class="badge-reuna-comp" title="Aprendizagem Complementar (Mapas de Foco - Instituto Reúna): contextualiza e aprofunda as aprendizagens focais">📘 Complementar (Reúna)</span>` : ''}
+                                ${item.componentes_comentam ? `<span class="badge-reuna-em" title="BNCC Comentada Ensino Médio (Instituto Reúna): análise interdisciplinar">🔬 BNCC Comentada EM</span>` : ''}
                             </div>
 
                             ${scoreBoxHtml}
@@ -2889,6 +3077,28 @@
                             <div class="skill-full-label">Texto Integral da Habilidade:</div>
                             <p class="skill-text-full">${item.habilidade}</p>
                         </div>
+
+                        ${item.objetivos_aprendizagem ? `
+                            <div class="reuna-objetivos-box">
+                                <div class="reuna-sec-title">
+                                    <span class="reuna-sec-icon">🎯</span>
+                                    <span>Objetivos de Aprendizagem & Expectativas de Fluência:</span>
+                                    <span class="reuna-source-tag">Mapas de Foco &bull; Instituto Reúna</span>
+                                </div>
+                                <p class="reuna-sec-text">${item.objetivos_aprendizagem}</p>
+                            </div>
+                        ` : ''}
+
+                        ${item.componentes_comentam ? `
+                            <div class="reuna-componentes-box">
+                                <div class="reuna-sec-title">
+                                    <span class="reuna-sec-icon">🔬</span>
+                                    <span>Contribuição dos Componentes Curriculares:</span>
+                                    <span class="reuna-source-tag">BNCC Comentada &bull; Instituto Reúna</span>
+                                </div>
+                                <p class="reuna-sec-text">${item.componentes_comentam}</p>
+                            </div>
+                        ` : ''}
 
                         <!-- Palavras-chave extraídas -->
                         ${(item.palavras_chave && item.palavras_chave.length > 0) ? `
@@ -5149,6 +5359,9 @@
                 </button>
                 <span class="discipline-badge ${discClass}">${item.disciplina || 'Geral'}</span>
                 ${item.ano_faixa ? `<span class="year-badge">${item.ano_faixa}</span>` : ''}
+                ${item.classificacao_reuna === 'AF' ? `<span class="badge-reuna-focal" title="Aprendizagem Focal (Mapas de Foco - Instituto Reúna): nó indispensável para progressão escolar">🎯 Aprendizagem Focal (Reúna)</span>` : ''}
+                ${item.classificacao_reuna === 'AC' ? `<span class="badge-reuna-comp" title="Aprendizagem Complementar (Mapas de Foco - Instituto Reúna)">📘 Complementar (Reúna)</span>` : ''}
+                ${item.componentes_comentam ? `<span class="badge-reuna-em" title="BNCC Comentada Ensino Médio (Instituto Reúna)">🔬 BNCC Comentada EM</span>` : ''}
             `;
 
             // Encontra outras habilidades articuláveis pedagogicamente no conjunto atual
@@ -5501,6 +5714,40 @@
                         <p>${item.possibilidades}</p>
                     </div>
                 ` : ''}
+
+                <!-- Objetivos de Aprendizagem (Mapas de Foco Reúna) -->
+                ${item.objetivos_aprendizagem ? `
+                    <div class="reuna-objetivos-box" style="margin-top: 14px;">
+                        <div class="reuna-sec-title">
+                            <span class="reuna-sec-icon">🎯</span>
+                            <span>Objetivos de Aprendizagem & Expectativas de Fluência:</span>
+                            <span class="reuna-source-tag">Mapas de Foco &bull; Instituto Reúna</span>
+                        </div>
+                        <p class="reuna-sec-text">${item.objetivos_aprendizagem}</p>
+                    </div>
+                ` : ''}
+
+                <!-- Contribuição dos Componentes (BNCC Comentada EM Reúna) -->
+                ${item.componentes_comentam ? `
+                    <div class="reuna-componentes-box" style="margin-top: 14px;">
+                        <div class="reuna-sec-title">
+                            <span class="reuna-sec-icon">🔬</span>
+                            <span>Contribuição dos Componentes Curriculares (Interdisciplinaridade):</span>
+                            <span class="reuna-source-tag">BNCC Comentada &bull; Instituto Reúna</span>
+                        </div>
+                        <p class="reuna-sec-text">${item.componentes_comentam}</p>
+                    </div>
+                ` : ''}
+
+                <!-- Atribuição Institucional do Instituto Reúna -->
+                <div class="drawer-reuna-attribution">
+                    <span class="reuna-attr-icon">🏛️</span>
+                    <div class="reuna-attr-info">
+                        <strong>Referenciais Pedagógicos Adaptados do Instituto Reúna</strong>
+                        <p>Classificações de priorização (AF/AC), objetivos de aprendizagem, expectativas de fluência e análises por componentes adaptados das publicações técnicas oficiais do Instituto Reúna sob prévia aprovação e autorização para fins educacionais.</p>
+                        <a href="https://institutoreuna.org.br/" target="_blank" rel="noopener noreferrer" class="reuna-attr-link">Visitar Instituto Reúna ➔</a>
+                    </div>
+                </div>
             `;
 
             // Abre o drawer sem desfocar o fundo para manter interação livre com o grafo
@@ -6234,6 +6481,8 @@
                                     ${item.disciplina || 'Geral'}
                                 </span>
                                 <span class="cat-ano-badge">${item.ano_faixa || 'BNCC'}</span>
+                                ${item.classificacao_reuna === 'AF' ? `<span class="badge-reuna-focal-mini" title="Aprendizagem Focal (Mapas de Foco do Instituto Reúna)">🎯 Focal</span>` : ''}
+                                ${item.classificacao_reuna === 'AC' ? `<span class="badge-reuna-comp-mini" title="Aprendizagem Complementar (Mapas de Foco do Instituto Reúna)">📘 Complementar</span>` : ''}
                             </div>
                             <span class="cat-bloom-badge" style="background-color: ${bloom.bg}; color: ${bloom.cor};" title="Taxonomia de Bloom: Nível Cognitivo">
                                 ${bloom.nivel}

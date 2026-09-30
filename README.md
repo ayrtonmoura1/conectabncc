@@ -174,14 +174,39 @@ Em poucos instantes seu projeto estará online em:
 
 ---
 
-## 📚 Referências Oficiais
-- **Ministério da Educação (MEC):** [Base Nacional Comum Curricular (BNCC)](http://basenacionalcomum.mec.gov.br/)
-- **Instituto Reúna / Fundação Lemann / Itaú Social:** [Mapas de Foco da BNCC](https://institutoreuna.org.br/)
-- **Hugging Face / Xenova:** [Transformers.js](https://huggingface.co/docs/transformers.js)
-- **Sentence-Transformers:** [all-MiniLM-L6-v2](https://huggingface.co/sentence-transformers/all-MiniLM-L6-v2)
+## 🏛️ Créditos Institucionais, Fontes Oficiais & Parceria Pedagógica
+
+O **Concecta BNCC** foi desenvolvido com base nos documentos normativos oficiais do Ministério da Educação e integra metodologias, análises e progressões de aprendizagem coordenadas pelo **Instituto Reúna** sob prévia aprovação e autorização de uso e adaptação para fins educacionais abertos.
+
+### 📚 Obras e Referenciais Adaptados:
+
+1. **Mapas de Foco da BNCC (Ensino Fundamental — 1º ao 9º Ano)**
+   - *Autoria/Coordenação:* Instituto Reúna, Fundação Lemann e Itaú Social.
+   - *Contribuição no Projeto:* Matriz de priorização curricular oficial, diferenciando **Aprendizagens Focais (AF)**, **Aprendizagens Complementares (AC)** e **Habilidades de Apoio (HA)**, além de mapeamento longitudinal de pré-requisitos essenciais e expectativas de fluência.
+   - *Link:* [institutoreuna.org.br/iniciativa/mapas-de-foco-bncc/](https://institutoreuna.org.br/iniciativa/mapas-de-foco-bncc/)
+
+2. **BNCC Comentada para o Ensino Médio**
+   - *Autoria/Coordenação:* Instituto Reúna.
+   - *Contribuição no Projeto:* Análise analítica profunda das habilidades por grandes áreas do conhecimento, contribuição específica de cada componente curricular (Física, Química, Biologia, História, Geografia, Filosofia, Sociologia etc.), objetos de conhecimento e possibilidades pedagógicas de integração curricular.
+   - *Link:* [institutoreuna.org.br/iniciativa/bncc-comentada-ensino-medio/](https://institutoreuna.org.br/iniciativa/bncc-comentada-ensino-medio/)
+
+3. **Dimensões e Desenvolvimento das Competências Gerais da BNCC**
+   - *Autoria/Coordenação:* Instituto Reúna, Instituto Ayrton Senna e Fundação Lemann.
+   - *Contribuição no Projeto:* Desdobramento operacional das 10 Competências Gerais da Educação Básica em dimensões, subdimensões e marcos de progressão ao longo de 4 ciclos formativos (*Até o 3º ano EF*, *Até o 6º ano EF*, *Até o 9º ano EF* e *Até o Ensino Médio*), integrados ao modal interativo de competências.
+   - *Link:* [institutoreuna.org.br/iniciativa/dimensoes-das-competencias-gerais-da-bncc/](https://institutoreuna.org.br/iniciativa/dimensoes-das-competencias-gerais-da-bncc/)
+
+4. **Base Nacional Comum Curricular (BNCC Oficial)**
+   - *Autoria:* Ministério da Educação (MEC) / Conselho Nacional de Educação (CNE).
+   - *Link:* [basenacionalcomum.mec.gov.br](http://basenacionalcomum.mec.gov.br/)
+
+5. **Engenharia de IA & Bibliotecas Open-Source:**
+   - **Hugging Face / Xenova:** [Transformers.js](https://huggingface.co/docs/transformers.js) (v2.17.2)
+   - **Sentence-Transformers:** Modelo [all-MiniLM-L6-v2](https://huggingface.co/sentence-transformers/all-MiniLM-L6-v2) quantizado em ONNX
+   - **D3.js:** [D3.js v7](https://d3js.org/) (Data-Driven Documents para grafos e física de partículas)
 
 ---
 
 ## 📄 Licença
 
-Distribuído sob a licença MIT. Consulte `LICENSE` para mais informações.
+Distribuído sob a licença MIT. Consulte `LICENSE` para mais informações. Os direitos autorais dos referenciais pedagógicos originais e das metodologias curriculares citadas pertencem ao **Instituto Reúna** e aos seus respectivos parceiros institucionais.
+
