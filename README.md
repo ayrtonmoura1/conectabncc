@@ -1,4 +1,4 @@
-# 🌐 Concecta BNCC
+# 🌐 Conecta BNCC
 
 > **Inteligência Artificial Semântica no Navegador, Grafos Curriculares e Mapeamento de Linhagem Pedagógica da BNCC** &bull; *100% Client-Side via WebAssembly e Transformers.js*
 
@@ -12,7 +12,7 @@
 
 ## 📖 Visão Geral
 
-O **Concecta BNCC** é uma plataforma educacional de alta performance desenvolvida para professores, coordenadores pedagógicos e pesquisadores explorarem as **1.517 habilidades curriculares da Base Nacional Comum Curricular (BNCC)**.
+O **Conecta BNCC** é uma plataforma educacional de alta performance desenvolvida para professores, coordenadores pedagógicos e pesquisadores explorarem as **1.517 habilidades curriculares da Base Nacional Comum Curricular (BNCC)**.
 
 A plataforma permite pesquisar pela **intenção pedagógica, temas de aula ou ideias de atividades** em linguagem natural (ex: *"atividades de reciclagem e preservação da fauna"*, *"consciência fonológica na alfabetização"*, *"jogos de cooperação"*). 
 
@@ -87,7 +87,7 @@ A inteligência artificial roda **100% dentro do navegador do usuário**:
 
 ## 📐 Cálculo das Relações Pedagógicas
 
-O Concecta BNCC não utiliza apenas a similaridade de texto bruta; ele combina a **proximidade vetorial densa** com uma **matriz de compatibilidade curricular**:
+O Conecta BNCC não utiliza apenas a similaridade de texto bruta; ele combina a **proximidade vetorial densa** com uma **matriz de compatibilidade curricular**:
 
 $$\text{CosSim}(\vec{q}, \vec{h}) = \sum_{i=1}^{384} q_i \cdot h_i$$
 
@@ -152,13 +152,13 @@ O projeto é 100% compatível com o GitHub Pages:
    ```bash
    git init
    git add .
-   git commit -m "feat: lancamento do Concecta BNCC com busca semantica e grafos"
+   git commit -m "feat: lancamento do Conecta BNCC com busca semantica e grafos"
    git branch -M main
    ```
 
 2. **Vincule ao seu repositório remoto no GitHub:**
    ```bash
-   git remote add origin https://github.com/SEU_USUARIO/concecta-bncc.git
+   git remote add origin https://github.com/SEU_USUARIO/conecta-bncc.git
    git push -u origin main
    ```
 
@@ -170,13 +170,13 @@ O projeto é 100% compatível com o GitHub Pages:
    - Clique em **Save**.
 
 Em poucos instantes seu projeto estará online em:
-`https://SEU_USUARIO.github.io/concecta-bncc/`
+`https://SEU_USUARIO.github.io/conecta-bncc/`
 
 ---
 
 ## 🏛️ Créditos Institucionais, Fontes Oficiais & Parceria Pedagógica
 
-O **Concecta BNCC** foi desenvolvido com base nos documentos normativos oficiais do Ministério da Educação e integra metodologias, análises e progressões de aprendizagem coordenadas pelo **Instituto Reúna** sob prévia aprovação e autorização de uso e adaptação para fins educacionais abertos.
+O **Conecta BNCC** foi desenvolvido com base nos documentos normativos oficiais do Ministério da Educação e integra metodologias, análises e progressões de aprendizagem coordenadas pelo **Instituto Reúna** sob prévia aprovação e autorização de uso e adaptação para fins educacionais abertos.
 
 ### 📚 Obras e Referenciais Adaptados:
 

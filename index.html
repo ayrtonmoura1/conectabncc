@@ -3,8 +3,8 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Concecta BNCC - Inteligência Artificial no Navegador</title>
-    <meta name="description" content="Concecta BNCC - Aplicação 100% estática para busca semântica nas habilidades da BNCC utilizando Transformers.js e embeddings locais no navegador via WebAssembly.">
+    <title>Conecta BNCC - Inteligência Artificial no Navegador</title>
+    <meta name="description" content="Conecta BNCC - Aplicação 100% estática para busca semântica nas habilidades da BNCC utilizando Transformers.js e embeddings locais no navegador via WebAssembly.">
     
     <!-- Google Fonts: Plus Jakarta Sans & JetBrains Mono -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -19,7 +19,7 @@
 <body>
 
     <!-- Aba Flutuante Vertical para Filtros (Borda Esquerda - aparece quando recolhido) -->
-    <button type="button" id="filtersVerticalTab" class="filters-vertical-tab is-open" onclick="window.toggleFiltersSidebar(true)" aria-label="Abrir filtros curriculares" title="Filtros Curriculares (Etapa, Ano, Disciplina, Top-K)">
+    <button type="button" id="filtersVerticalTab" class="filters-vertical-tab" onclick="window.toggleFiltersSidebar(true)" aria-label="Abrir filtros curriculares" title="Filtros Curriculares (Etapa, Ano, Disciplina, Top-K)">
         <span class="filters-tab-icon">
             <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
                 <line x1="4" y1="21" x2="4" y2="14"></line>
@@ -40,8 +40,8 @@
     <!-- Backdrop do painel lateral de filtros -->
     <div class="filters-sidebar-backdrop" id="filtersBackdrop" onclick="window.toggleFiltersSidebar(false)"></div>
 
-    <!-- Barra Lateral Vertical de Filtros Curriculares (Fixo e Aberto por padrão / Recolhível) -->
-    <aside class="filters-sidebar is-open" id="filtersSidebar" aria-label="Painel de Filtros Curriculares">
+    <!-- Barra Lateral Vertical de Filtros Curriculares (Recolhido por padrão / Expansível) -->
+    <aside class="filters-sidebar" id="filtersSidebar" aria-label="Painel de Filtros Curriculares">
         <div class="filters-sidebar-header">
             <div class="filters-sidebar-title">
                 <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
@@ -336,7 +336,7 @@
         <header class="app-header-compact">
             <div class="header-branding">
                 <div class="header-title-row">
-                    <h1 class="compact-title">Concecta BNCC</h1>
+                    <h1 class="compact-title">Conecta BNCC</h1>
                     <span class="badge-tag-mini">
                         <span class="pulse-dot"></span>
                         100% Client-Side IA &bull; Transformers.js
@@ -413,32 +413,39 @@
             <!-- Barra de Modos Rápidos e Sugestões -->
             <div class="search-extras-bar">
                 <div class="search-extras-actions-row">
-                    <button type="button" id="btnExplorarCatalogo" class="catalog-tab-trigger-btn" onclick="window.abrirModalCatalogoBNCC()" title="Navegar por todas as habilidades organizadas por Etapa e Componente Curricular">
+                    <!-- BOTÃO PRINCIPAL: Catálogo de Habilidades -->
+                    <button type="button" id="btnExplorarCatalogo" class="catalog-tab-trigger-btn primary-hero-btn" onclick="window.abrirModalCatalogoBNCC()" title="Navegar por todas as habilidades organizadas por Etapa e Componente Curricular">
                         <span class="catalog-tab-icon">📖</span>
                         <span class="catalog-tab-text">
-                            <strong>Catálogo de Habilidades</strong>
-                            <small>Selecione por Etapa, Componente e Ano Escolar</small>
+                            <span class="catalog-primary-header">
+                                <strong>Catálogo Geral de Habilidades</strong>
+                                <span class="catalog-primary-tag">Principal</span>
+                            </span>
+                            <small>Navegue e filtre por Etapa, Componente Curricular e Ano Escolar</small>
                         </span>
-                        <span class="catalog-tab-badge">Explorar Lista ➔</span>
+                        <span class="catalog-tab-badge">Explorar Catálogo ➔</span>
                     </button>
 
-                    <button type="button" id="btnRankingRelacoes" class="ranking-tab-trigger-btn" onclick="window.abrirModalRankingRelacoes()" title="Ver ranking completo de habilidades com mais relações na BNCC">
-                        <span class="ranking-tab-icon">🏆</span>
-                        <span class="ranking-tab-text">
-                            <strong>Ranking de Mais Relações</strong>
-                            <small>Habilidades mais articuladas e centrais da BNCC</small>
-                        </span>
-                        <span class="ranking-tab-badge">Ver Ranking ➔</span>
-                    </button>
+                    <!-- GRUPO SECUNDÁRIO À DIREITA: Botões Menores -->
+                    <div class="search-secondary-actions-group">
+                        <button type="button" id="btnRankingRelacoes" class="ranking-tab-trigger-btn secondary-compact-btn" onclick="window.abrirModalRankingRelacoes()" title="Ver ranking completo de habilidades com mais relações na BNCC">
+                            <span class="ranking-tab-icon compact-icon">🏆</span>
+                            <span class="ranking-tab-text compact-text">
+                                <strong>Ranking de Relações</strong>
+                                <small>Habilidades mais articuladas</small>
+                            </span>
+                            <span class="ranking-tab-badge compact-badge">Ver ➔</span>
+                        </button>
 
-                    <button type="button" id="btnHubInterdisciplinar" class="hub-tab-trigger-btn" onclick="window.ativarModoInterdisciplinar(event)" title="Descubra as habilidades com maior diálogo e conexão pedagógica com outros componentes no mesmo ano escolar">
-                        <span class="hub-tab-icon">🌐</span>
-                        <span class="hub-tab-text">
-                            <strong>Habilidades Mais Interdisciplinares</strong>
-                            <small>Mais conexões entre diferentes componentes no mesmo ano/fase</small>
-                        </span>
-                        <span class="hub-tab-badge">Explorar Hub ➔</span>
-                    </button>
+                        <button type="button" id="btnHubInterdisciplinar" class="hub-tab-trigger-btn secondary-compact-btn" onclick="window.ativarModoInterdisciplinar(event)" title="Descubra as habilidades com maior diálogo e conexão pedagógica com outros componentes no mesmo ano escolar">
+                            <span class="hub-tab-icon compact-icon">🌐</span>
+                            <span class="hub-tab-text compact-text">
+                                <strong>Mais Interdisciplinares</strong>
+                                <small>Conexões entre componentes</small>
+                            </span>
+                            <span class="hub-tab-badge compact-badge">Hub ➔</span>
+                        </button>
+                    </div>
                 </div>
 
                 <!-- Sugestões de Busca Rápida -->
@@ -504,7 +511,15 @@
 
                 <div class="graph-controls-group">
                     <div class="graph-layout-toggle" role="group" aria-label="Modo de Visualização do Grafo">
-                        <button type="button" class="layout-toggle-btn active" id="btnLayoutTree" title="Visualização em Organograma / Árvore de Decisão por Anos e Fases">
+                        <button type="button" class="layout-toggle-btn active" id="btnLayoutLineage" title="Visualização da Linhagem Pedagógica e Pré-Requisitos (Mesmo ano, anos anteriores e futuros)">
+                            <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                <circle cx="6" cy="6" r="3"></circle>
+                                <circle cx="18" cy="18" r="3"></circle>
+                                <path d="M6 9v3a3 3 0 0 0 3 3h6a3 3 0 0 1 3 3v3"></path>
+                            </svg>
+                            <span>🧬 Linhagem</span>
+                        </button>
+                        <button type="button" class="layout-toggle-btn" id="btnLayoutTree" title="Visualização em Organograma / Árvore de Decisão por Anos e Fases">
                             <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
                                 <rect x="3" y="3" width="7" height="7"></rect>
                                 <rect x="14" y="3" width="7" height="7"></rect>
@@ -512,14 +527,6 @@
                                 <rect x="3" y="14" width="7" height="7"></rect>
                             </svg>
                             <span>Organograma</span>
-                        </button>
-                        <button type="button" class="layout-toggle-btn" id="btnLayoutLineage" title="Visualização da Linhagem Pedagógica e Pré-Requisitos (Mesmo ano, anos anteriores e futuros)">
-                            <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                                <circle cx="6" cy="6" r="3"></circle>
-                                <circle cx="18" cy="18" r="3"></circle>
-                                <path d="M6 9v3a3 3 0 0 0 3 3h6a3 3 0 0 1 3 3v3"></path>
-                            </svg>
-                            <span>🧬 Linhagem</span>
                         </button>
                         <button type="button" class="layout-toggle-btn" id="btnLayoutNetwork" title="Visualização em Rede de Forças Físicas">
                             <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
@@ -798,7 +805,7 @@
                     <span style="font-size: 1.5rem;">📜</span>
                     <div class="reuna-notice-text">
                         <h4>Autorização Institucional e Adaptação Pedagógica</h4>
-                        <p>O <strong>Concecta BNCC</strong> utiliza e adapta as metodologias, matrizes de progressão e publicações de referência do <strong>Instituto Reúna</strong> sob aprovação e autorização institucional para fins educacionais abertos. Os materiais foram transpostos em grafos relacionais interativos e modelos de linguagem locais para apoiar educadores de todo o Brasil.</p>
+                        <p>O <strong>Conecta BNCC</strong> utiliza e adapta as metodologias, matrizes de progressão e publicações de referência do <strong>Instituto Reúna</strong> sob aprovação e autorização institucional para fins educacionais abertos. Os materiais foram transpostos em grafos relacionais interativos e modelos de linguagem locais para apoiar educadores de todo o Brasil.</p>
                     </div>
                 </div>
 
@@ -835,7 +842,7 @@
                 <div style="background: #f8fafc; border: 1px solid var(--border-color); border-radius: var(--radius-md); padding: 12px 16px;">
                     <div style="font-size: 0.82rem; font-weight: 700; color: var(--text-primary); margin-bottom: 4px;">Inovação Tecnológica com Inteligência Artificial no Navegador:</div>
                     <p style="font-size: 0.80rem; color: var(--text-secondary); line-height: 1.5; margin: 0;">
-                        O Concecta BNCC não requer servidores de IA na nuvem nem envio de dados privados. O modelo neural quantizado <code>all-MiniLM-L6-v2</code> (via Transformers.js e WebAssembly) e os grafos vetoriais com física D3.js rodam 100% de forma local, offline e gratuita no navegador de qualquer computador ou celular.
+                        O Conecta BNCC não requer servidores de IA na nuvem nem envio de dados privados. O modelo neural quantizado <code>all-MiniLM-L6-v2</code> (via Transformers.js e WebAssembly) e os grafos vetoriais com física D3.js rodam 100% de forma local, offline e gratuita no navegador de qualquer computador ou celular.
                     </p>
                 </div>
             </div>
@@ -1009,7 +1016,7 @@
         <div class="app-footer-content">
             <div class="footer-top-row">
                 <div class="footer-brand-wrap">
-                    <h3>⚡ Concecta BNCC</h3>
+                    <h3>⚡ Conecta BNCC</h3>
                     <p>Inteligência Artificial Vetorial e Mapeamento de Progressão Curricular no Navegador</p>
                 </div>
                 <div class="footer-action-links">
@@ -1040,7 +1047,7 @@
             </div>
 
             <p class="footer-bottom-copy">
-                Concecta BNCC &bull; 100% Client-Side IA &bull; Modelo ONNX quantizado <code>all-MiniLM-L6-v2</code> &bull; Base Nacional Comum Curricular (MEC)
+                Conecta BNCC &bull; 100% Client-Side IA &bull; Modelo ONNX quantizado <code>all-MiniLM-L6-v2</code> &bull; Base Nacional Comum Curricular (MEC)
             </p>
         </div>
     </footer>
@@ -1110,7 +1117,7 @@
         let simulacaoD3 = null;
         let zoomBehavior = null;
         let selectedNodeCode = null;
-        let graphLayoutMode = 'tree'; // 'tree' (Organograma por Anos/Fases) | 'lineage' (Linhagem Pedagógica) | 'force' (Rede)
+        let graphLayoutMode = 'lineage'; // 'lineage' (Linhagem Pedagógica padrão) | 'tree' (Organograma por Anos/Fases) | 'force' (Rede)
 
         // Modos de ordenação e agrupamento da lista de resultados
         let sortMode = 'relevance'; // 'relevance' | 'year_asc'
@@ -5897,6 +5904,7 @@
             const isOpen = typeof forceState === 'boolean' ? forceState : !sidebar.classList.contains('is-open');
             
             sidebar.classList.toggle('is-open', isOpen);
+            document.body.classList.toggle('filters-sidebar-open', isOpen);
             if (backdrop) backdrop.classList.toggle('is-open', isOpen);
             if (tabBtn) tabBtn.classList.toggle('is-open', isOpen);
         };
@@ -6091,6 +6099,10 @@
             tabListBtn.classList.remove('active');
             resultsArea.style.display = 'none';
             graphViewSection.style.display = 'flex';
+            if (!graphLayoutMode) graphLayoutMode = 'lineage';
+            if (typeof atualizarBotoesLayoutGrafo === 'function') {
+                atualizarBotoesLayoutGrafo(graphLayoutMode);
+            }
             setTimeout(() => {
                 renderizarGrafo();
             }, 50);
@@ -6922,8 +6934,8 @@
         // Inicia o app
         inicializarApp();
 
-        // Abre os filtros por padrão na lateral conforme solicitado
-        window.toggleFiltersSidebar(true);
+        // Filtros iniciam recolhidos por padrão na lateral com a aba em destaque
+        window.toggleFiltersSidebar(false);
     </script>
 </body>
 </html>
