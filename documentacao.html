@@ -354,6 +354,8 @@
                         <li><a href="#produtividade" class="doc-nav-link">7. Recursos de Interface</a></li>
                         <li><a href="#processo-habilidades" class="doc-nav-link">8. O Processo das Habilidades na BNCC</a></li>
                         <li><a href="#creditos-reuna" class="doc-nav-link" style="color: #4f46e5; font-weight: 700;">9. Créditos & Referenciais Reúna</a></li>
+                        <li><a href="#curadoria-jev" class="doc-nav-link" style="color: #6366f1; font-weight: 700;">10. Curadoria com TypeSafe Jev</a></li>
+                        <li><a href="#mapas-foco-harmonia" class="doc-nav-link" style="color: #d97706; font-weight: 700;">11. Mapas de Foco & Harmonia</a></li>
                     </ul>
                 </nav>
             </aside>
@@ -613,7 +615,7 @@ Texto = [CÓDIGO_HABILIDADE] + [PALAVRAS_CHAVE_TFIDF] + [COMPONENTE_CURRICULAR] 
                     </div>
 
                     <p class="doc-p" style="margin-top: 18px;">
-                        <strong>Controle de Zoom Inteligente:</strong> Para não travar a rolagem vertical de páginas longas em desktops, o zoom do grafo só é disparado quando o usuário segura a tecla <code>Ctrl</code> (Windows/Linux) ou <code>⌘ Cmd</code> (Mac) enquanto usa o scroll do mouse. No celular ou tablet, o gesto de pinça com dois dedos funciona naturalmente.
+                        <strong>Zoom livre, sem trava:</strong> role o mouse diretamente sobre o mapa para aproximar ou afastar, sem precisar segurar teclas. O mapa abre já enquadrando todo o conteúdo e permite ampliar bastante (até <strong>8×</strong>) — útil quando há muitos cartões e conexões. Os botões <strong>Zoom +</strong>, <strong>Zoom −</strong> e <strong>Centralizar</strong> (que reenquadra o mapa) ficam no canto inferior direito. No celular ou tablet, o gesto de pinça com dois dedos funciona naturalmente.
                     </p>
                 </section>
 
@@ -864,6 +866,196 @@ Exemplo: EF07CI12
                                 🇧🇷 Portal MEC: basenacionalcomum.mec.gov.br
                             </a>
                         </div>
+                    </div>
+                </section>
+
+                <!-- 10. Curadoria com TypeSafe Jev (System One AI) & Harmonia Curricular -->
+                <section id="curadoria-jev" class="doc-section" style="border: 2px solid #a5b4fc; background: linear-gradient(180deg, #ffffff 0%, #f8faff 100%);">
+                    <div class="section-header" style="border-bottom-color: #c7d2fe;">
+                        <span class="section-icon">⚡</span>
+                        <div>
+                            <h2 class="section-title" style="color: #3730a3;">10. Curadoria Curricular com TypeSafe Jev (System One AI)</h2>
+                            <span style="font-size: 0.82rem; color: #4f46e5; font-weight: 700; text-transform: uppercase; letter-spacing: 0.04em;">Julgamentos Probabilísticos & Harmonia Relacional</span>
+                        </div>
+                    </div>
+
+                    <p class="doc-p">
+                        Embora a busca vetorial por cosseno (Embeddings) seja extremamente eficaz para localizar conceitos pedagógicos em linguagem natural, ela possui uma fragilidade inerente quando aplicada ao encadeamento curricular: <strong>falsos amigos semânticos</strong>. Habilidades de anos muito distantes (como 1º ano e 9º ano) que compartilham verbos usuais da BNCC (<em>"identificar"</em>, <em>"descrever"</em>, <em>"localizar"</em>) ou termos genéricos frequentemente obtêm altas pontuações matemáticas de similaridade, mesmo sem possuir nenhuma conexão causal ou de pré-requisito formativo.
+                    </p>
+
+                    <p class="doc-p">
+                        Para solucionar esse desafio e garantir <strong>harmonia e rigor pedagógico</strong>, integramos o <strong>TypeSafe Jev</strong> (modelo de <em>System One AI</em> da TypeSafe). Diferente de LLMs genéricos que geram texto livre prolixo, o Jev opera como uma primitiva de programação de senso comum: emite julgamentos estruturados e probabilidades matematicamente calibradas para decisões diretas em código.
+                    </p>
+
+                    <div class="flow-diagram">
++---------------------------------------------------------------------------------------------------+
+| PIPELINE DE CURADORIA COM TYPESAFE JEV (3 ETAPAS DE REFINAMENTO)                                  |
+|                                                                                                   |
+|  [ Conexões Candidatas Vetoriais ] ───▶ [ ETAPA 1: PODA DE RUÍDO & AUDITORIA ]                    |
+|      (Similaridade Cosseno ≥ 35%)            Julgamento Tipado: tem_relacao_pedagogica (True/False)|
+|                                              Critério: Validade de pré-requisito temporal e nexo  |
+|                                              Resultado: 255 conexões espúrias eliminadas (-47%)   |
+|                                                              │                                    |
+|                                                              ▼                                    |
+|                                         [ ETAPA 2: CALIBRAÇÃO PROBABILÍSTICA ]                    |
+|                                              Atribuição de probabilidade calibrada (0.00 a 1.00)  |
+|                                              Tipagem estrita: pre_requisito_essencial,            |
+|                                              suporte_direto, progressao_natural, interdisciplinar |
+|                                                              │                                    |
+|                                                              ▼                                    |
+|                                         [ ETAPA 3: HARMONIA VISUAL & EXPERIÊNCIA ]                |
+|                                              Substituição de índices técnicos repetitivos por     |
+|                                              conexões pedagógicas harmoniosas no grafo e na gaveta|
++---------------------------------------------------------------------------------------------------+
+                    </div>
+
+                    <h3 style="font-size: 1.15rem; color: var(--text-primary); margin: 24px 0 12px 0; font-weight: 800;">
+                        10.1. Benchmark e Resultados da Curadoria
+                    </h3>
+                    <p class="doc-p">
+                        O pipeline automatizado de curadoria (scripts <code>refinar_relacoes_jev.py</code> e <code>mesclar_curadoria_jev.py</code>) auditou as <strong>55 habilidades de maior centralidade da BNCC</strong>, avaliando 543 conexões curriculares geradas originalmente pelo modelo vetorial puro:
+                    </p>
+
+                    <table class="table-doc">
+                        <thead>
+                            <tr>
+                                <th>Métrica da Curadoria</th>
+                                <th>Antes do Jev (Apenas Cosseno)</th>
+                                <th>Depois do Jev (Curadoria Probabilística)</th>
+                                <th>Impacto Pedagógico</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td><strong>Conexões Totais Auditadas</strong></td>
+                                <td>543 conexões potenciais</td>
+                                <td>288 conexões validadas</td>
+                                <td>Eliminação de 255 falsos positivos (<strong>-47% de ruído expurgado</strong>).</td>
+                            </tr>
+                            <tr>
+                                <td><strong>Conexões de Anos Incompatíveis</strong></td>
+                                <td>Frequentes (saltos sem coerência)</td>
+                                <td>0% de saltos espúrios</td>
+                                <td>Preservação estrita da ordem cronológica e do nexo cognitivo.</td>
+                            </tr>
+                            <tr>
+                                <td><strong>Classificação das Arestas</strong></td>
+                                <td>Proximidade numérica bruta (0.0 - 1.0)</td>
+                                <td>Tipagem relacional com probabilidades</td>
+                                <td>Distingue com exatidão pré-requisitos essenciais de apoios secundários.</td>
+                            </tr>
+                            <tr>
+                                <td><strong>Harmonia da Interface</strong></td>
+                                <td>Exibia caixas técnicas de aderência %</td>
+                                <td>Foco no papel curricular e contexto</td>
+                                <td>Interface limpa, pedagógica e sem métricas prolixas repetitivas.</td>
+                            </tr>
+                        </tbody>
+                    </table>
+
+                    <div class="feature-grid">
+                        <div class="feature-card" style="border-left: 4px solid #6366f1;">
+                            <h4>🎯 Primitivas Estruturadas</h4>
+                            <p>Utilização de <code>typesafe.infer()</code> para julgamentos determinísticos de coerência curricular com tipagem rígida em Python.</p>
+                        </div>
+                        <div class="feature-card" style="border-left: 4px solid #10b981;">
+                            <h4>⚖️ Probabilidades Calibradas</h4>
+                            <p>As conexões sobreviventes possuem graus de certeza matemática que orientam a espessura e a física das arestas no D3.js.</p>
+                        </div>
+                        <div class="feature-card" style="border-left: 4px solid #f59e0b;">
+                            <h4>🍃 Limpeza Cognitiva</h4>
+                            <p>Eliminação de caixas de explicação técnica redundantes na gaveta lateral, priorizando o planejamento didático do professor.</p>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- 11. Mapas de Foco do Instituto Reúna & Conexões Agregadas pelo Conecta BNCC -->
+                <section id="mapas-foco-harmonia" class="doc-section" style="border: 2px solid #fed7aa; background: linear-gradient(180deg, #ffffff 0%, #fffbf7 100%);">
+                    <div class="section-header" style="border-bottom-color: #ffedd5;">
+                        <span class="section-icon">🎯</span>
+                        <div>
+                            <h2 class="section-title" style="color: #9a3412;">11. Mapas de Foco do Reúna & As Conexões Agregadas pelo Conecta BNCC</h2>
+                            <span style="font-size: 0.82rem; color: #ea580c; font-weight: 700; text-transform: uppercase; letter-spacing: 0.04em;">Harmonia entre Categorização Estrutural e Dinâmica Relacional</span>
+                        </div>
+                    </div>
+
+                    <p class="doc-p">
+                        Uma das principais contribuições desta versão é a integração orgânica e harmônica entre a <strong>priorização curricular concebida pelo Instituto Reúna</strong> e o <strong>grafo relacional inteligente construído pelo Conecta BNCC com IA Jev</strong>.
+                    </p>
+
+                    <h3 style="font-size: 1.15rem; color: var(--text-primary); margin: 24px 0 12px 0; font-weight: 800;">
+                        11.1. Como o Instituto Reúna Organizou as Aprendizagens
+                    </h3>
+                    <p class="doc-p">
+                        O Instituto Reúna, em parceria com a Fundação Lemann e o Itaú Social, desenvolveu os <em>Mapas de Foco da BNCC</em> para apoiar redes de ensino na garantia do essencial, classificando as habilidades em duas categorias estruturantes fundamentais:
+                    </p>
+
+                    <div class="feature-grid" style="grid-template-columns: 1fr 1fr; gap: 16px; margin: 18px 0;">
+                        <div class="feature-card" style="border-left: 4px solid #f59e0b; background: #fffdf5;">
+                            <h4 style="color: #b45309;">⭐ Aprendizagens Focais (AF)</h4>
+                            <p>
+                                São as habilidades <strong>nucleares e insubstituíveis</strong> de cada ano escolar. Constituem a espinha dorsal do currículo; se um aluno não dominar uma Aprendizagem Focal, enfrentará barreiras acumulativas intransponíveis nos anos seguintes.
+                            </p>
+                        </div>
+                        <div class="feature-card" style="border-left: 4px solid #06b6d4; background: #f0fdfa;">
+                            <h4 style="color: #0e7490;">🌿 Aprendizagens Complementares (AC)</h4>
+                            <p>
+                                Habilidades que <strong>enriquecem, contextualizam e aprofundam</strong> as aprendizagens focais, diversificando os gêneros textuais, ampliando o repertório cultural ou explorando aplicações práticas específicas.
+                            </p>
+                        </div>
+                    </div>
+
+                    <h3 style="font-size: 1.15rem; color: var(--text-primary); margin: 24px 0 12px 0; font-weight: 800;">
+                        11.2. O que o Conecta BNCC + Jev Acrescenta de Conexão e Relação
+                    </h3>
+                    <p class="doc-p">
+                        Enquanto a matriz original do Instituto Reúna ofereceu uma <strong>classificação estática e categorizada por tabelas</strong>, o Conecta BNCC dá vida a essa estrutura introduzindo a <strong>dinâmica relacional causal e interdisciplinar</strong>:
+                    </p>
+
+                    <table class="table-doc">
+                        <thead>
+                            <tr>
+                                <th>Dimensão Curricular</th>
+                                <th>Matriz Original do Instituto Reúna</th>
+                                <th>Acréscimo Relacional do Conecta BNCC (+ IA Jev)</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td><strong>Estrutura de Conteúdo</strong></td>
+                                <td>Classificação em colunas AF (Focal) vs AC (Complementar).</td>
+                                <td>Mapeamento em rede onde cada AF torna-se um nó gravitacional central alimentado por suas ACs e pré-requisitos.</td>
+                            </tr>
+                            <tr>
+                                <td><strong>Encadeamento Temporal</strong></td>
+                                <td>Menção textual de pré-requisitos nos relatórios em PDF.</td>
+                                <td>Arestas vetoriais explícitas auditadas pelo Jev, mostrando o que foi aprendido no ano anterior e o que prepara no ano futuro.</td>
+                            </tr>
+                            <tr>
+                                <td><strong>Articulação Interdisciplinar</strong></td>
+                                <td>Organizado por cadernos disciplinares separados.</td>
+                                <td>Descoberta automática de pontes intercurriculares comprovadas (ex: Língua Portuguesa articulada com Ciências e História no mesmo ano).</td>
+                            </tr>
+                            <tr>
+                                <td><strong>Navegação Interativa</strong></td>
+                                <td>Leitura estática de matrizes tabulares.</td>
+                                <td>Novo <strong>Modal dos Mapas de Foco do Reúna</strong> com alternância de anos (1º ao 9º e EM), busca rápida, badges AF/AC e salto direto para o grafo ou gaveta.</td>
+                            </tr>
+                        </tbody>
+                    </table>
+
+                    <div style="background: #eef2ff; border: 1px solid #c7d2fe; border-radius: var(--radius-sm); padding: 18px; margin-top: 20px;">
+                        <h4 style="margin: 0 0 8px 0; color: #312e81; font-size: 0.98rem; font-weight: 800;">📄 Exportação de Dossiê Pedagógico em PDF (com Imagem da Linhagem)</h4>
+                        <p style="margin: 0 0 10px 0; color: #3730a3; font-size: 0.88rem; line-height: 1.6;">
+                            Para apoiar o trabalho prático de <strong>professores, coordenadores pedagógicos e equipes de currículo</strong>, o Conecta BNCC conta com um sistema de exportação client-side (100% offline via jsPDF). Com um único clique, é gerado um relatório de 2 páginas formatado em padrão A4 institucional contendo:
+                        </p>
+                        <ul style="margin: 0 0 10px 0; padding-left: 20px; color: #3730a3; font-size: 0.85rem; line-height: 1.6;">
+                            <li><strong>Ficha de Identificação Curricular:</strong> Código oficial, componente, ano/faixa, objeto de conhecimento e classificação Reúna (AF/AC);</li>
+                            <li><strong>Diagrama da Linhagem Renderizado:</strong> Imagem gráfica de alta resolução capturada do grafo de forças, evidenciando pré-requisitos, nó central e continuidade;</li>
+                            <li><strong>Matriz de Pré-Requisitos Auditada:</strong> Habilidades dos anos anteriores necessárias com justificativas causais validadas via IA Jev;</li>
+                            <li><strong>Articulações e Competências:</strong> Mapeamento com as 10 Competências Gerais da Educação Básica e Competências Específicas;</li>
+                            <li><strong>Prévia e Impressão Nativa:</strong> Modal responsivo para visualização rápida com suporte a impressão direta via navegador (Ctrl+P / Salvar como PDF).</li>
+                        </ul>
                     </div>
                 </section>
 
