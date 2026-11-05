@@ -11,7 +11,7 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;600&family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
     
-    <link rel="stylesheet" href="./style.css?v=workspace_mobile_panels_v9">
+    <link rel="stylesheet" href="./style.css?v=workspace_selected_skill_curriculum_v24">
     
     <!-- D3.js v7 para renderização de grafos de forças e física vetorial -->
     <script src="https://cdn.jsdelivr.net/npm/d3@7"></script>
@@ -24,7 +24,7 @@
 
     <div class="container">
         <!-- Cabeçalho Clean & Otimizado (Verticalmente Compacto) -->
-        <header class="app-header-compact">
+        <header class="app-header-compact" id="appHeaderCompact">
             <div class="header-left-col">
                 <div class="brand-group">
                     <span class="brand-icon" aria-hidden="true">⚡</span>
@@ -61,7 +61,7 @@
         </header>
 
         <!-- Barra de Busca & Ações Rápidas (Compacto & Clean) -->
-        <section class="search-section">
+        <section class="search-section" id="searchSection">
             <div class="search-toolbar">
                 <form id="searchForm" class="search-bar-wrap" onsubmit="event.preventDefault(); window.executarBusca();">
                     <div class="search-input-container">
@@ -96,13 +96,6 @@
                         <span id="btnText">Buscar</span>
                     </button>
 
-                    <button type="button" id="btnResetScreen" class="btn-reset-screen" onclick="window.resetarTelaTotal()" title="Limpar seleções e restaurar a tela inicial">
-                        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
-                            <path d="M3 12a9 9 0 1 0 9-9 9.75 9.75 0 0 0-6.74 2.74L3 8"/>
-                            <path d="M3 3v5h5"/>
-                        </svg>
-                        <span>Limpar</span>
-                    </button>
                 </form>
 
                 <!-- Botões de Acesso Rápido às Matrizes e Recursos (Chips / Pills) -->
@@ -128,21 +121,41 @@
                         <span class="pill-icon">🌐</span>
                         <span class="pill-title">Interdisciplinar</span>
                     </button>
+
+                    <button type="button" id="btnProgressaoEspiral" class="hero-action-card secondary-card hero-action-spiral quick-action-pill" onclick="window.abrirModalProgressaoEspiral()" data-tooltip="Progressão temática de Matemática do 1º ao 9º ano, com relações sugeridas por IA" title="Progressão temática com IA">
+                        <span class="pill-icon">🌀</span>
+                        <span class="pill-title">Progressão IA</span>
+                        <span class="pill-tag">Matemática</span>
+                    </button>
                 </div>
             </div>
         </section>
         <!-- Workspace Unificado: Lista + Grafo com Resize Handle -->
         <div class="unified-workspace layout-split" id="unifiedWorkspace">
+            <nav class="mobile-panel-tabs" id="mobilePanelTabs" aria-label="Painéis do workspace">
+                <button type="button" class="mobile-panel-tab is-active" data-mobile-panel="list" aria-selected="true">Lista</button>
+                <button type="button" class="mobile-panel-tab" data-mobile-panel="details" aria-selected="false">Detalhes</button>
+                <button type="button" class="mobile-panel-tab" data-mobile-panel="map" aria-selected="false">Mapa</button>
+                <button type="button" class="mobile-search-toggle" id="mobileSearchToggle" aria-expanded="true" aria-controls="appHeaderCompact searchSection">Busca</button>
+            </nav>
             <button type="button" class="panel-rail rail-list" id="railList" onclick="window.restaurarSidebar(event)" title="Expandir lista" aria-label="Expandir lista">
                 <strong>Lista</strong>
                 <small id="railListCount"></small>
             </button>
 
-            <!-- Painel Esquerdo: Lista de Habilidades -->
-            <aside class="workspace-sidebar" id="resultsArea">
-                <div class="panel-rail-bar">
-                    <span>Lista</span>
-                    <button type="button" class="btn-recolher-painel" onclick="window.minimizarSidebar(event)" title="Recolher a lista para a faixa lateral" aria-label="Recolher lista">Recolher</button>
+                <!-- Painel Esquerdo: Lista de Habilidades -->
+                <aside class="workspace-sidebar" id="resultsArea">
+                    <div class="panel-rail-bar">
+                    <span class="panel-title-content">
+                        <svg class="panel-title-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M9 6h11M9 12h11M9 18h11"></path><path d="M4 6h.01M4 12h.01M4 18h.01"></path></svg>
+                        <span>Lista</span>
+                    </span>
+                    <div class="panel-heading-actions">
+                        <button type="button" class="btn-recolher-painel" data-collapse-panel="lista" onclick="window.minimizarSidebar(event)" title="Recolher a lista para a faixa lateral" aria-label="Recolher lista">Recolher</button>
+                        <button type="button" class="btn-expandir-painel" data-expand-panel="lista" aria-pressed="false" onclick="window.expandirPainelWorkspace('lista', event)" title="Expandir a Lista e recolher os outros painéis" aria-label="Expandir Lista e recolher os outros painéis">
+                            <svg viewBox="0 0 24 24" aria-hidden="true"><polyline points="15 3 21 3 21 9"></polyline><polyline points="9 21 3 21 3 15"></polyline><line x1="21" y1="3" x2="14" y2="10"></line><line x1="3" y1="21" x2="10" y2="14"></line></svg>
+                        </button>
+                    </div>
                 </div>
                 <div class="results-header" id="resultsHeader" style="display: none;">
                     <div class="results-header-info">
@@ -244,8 +257,8 @@
                 </div>
             </aside>
 
-            <!-- Divisor só redimensiona. Recolher é a faixa do próprio painel. -->
-            <div class="workspace-resize-handle" id="workspaceResizeHandle" title="Arraste para ajustar a largura • Duplo clique para redefinir">
+            <!-- Divisor Lista ↔ Detalhes. Recolher é a faixa do próprio painel. -->
+            <div class="workspace-resize-handle" id="workspaceResizeHandle" title="Arraste para ajustar a largura entre Lista e Detalhes • Duplo clique para redefinir">
                 <div class="resize-handle-grip" title="Arraste para ajustar a largura">
                     <span></span><span></span><span></span>
                 </div>
@@ -258,8 +271,16 @@
             <!-- Painel Direito: Grafo Interativo em Tempo Real (Canvas Full Height com HUD Integrado) -->
             <section id="graphViewSection" class="workspace-graph graph-section">
                 <div class="panel-rail-bar">
-                    <span>Mapa</span>
-                    <button type="button" class="btn-recolher-painel" onclick="window.minimizarGrafo(event)" title="Recolher o mapa para a faixa lateral" aria-label="Recolher mapa">Recolher</button>
+                    <span class="panel-title-content">
+                        <svg class="panel-title-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m3 6 6-3 6 3 6-3v15l-6 3-6-3-6 3z"></path><path d="M9 3v15M15 6v15"></path></svg>
+                        <span>Mapa</span>
+                    </span>
+                    <div class="panel-heading-actions">
+                        <button type="button" class="btn-recolher-painel" data-collapse-panel="mapa" onclick="window.minimizarGrafo(event)" title="Recolher o mapa para a faixa lateral" aria-label="Recolher mapa">Recolher</button>
+                        <button type="button" class="btn-expandir-painel" data-expand-panel="mapa" aria-pressed="false" onclick="window.expandirPainelWorkspace('mapa', event)" title="Expandir o Mapa e recolher os outros painéis" aria-label="Expandir Mapa e recolher os outros painéis">
+                            <svg viewBox="0 0 24 24" aria-hidden="true"><polyline points="15 3 21 3 21 9"></polyline><polyline points="9 21 3 21 3 15"></polyline><line x1="21" y1="3" x2="14" y2="10"></line><line x1="3" y1="21" x2="10" y2="14"></line></svg>
+                        </button>
+                    </div>
                 </div>
 
                 <div class="graph-canvas-container" id="graphContainer">
@@ -361,11 +382,13 @@
                     <div id="graphTooltip" class="graph-tooltip"></div>
                 </div>
 
-                <div class="graph-legend" id="graphLegend">
+                <div class="graph-legend is-all-collapsed" id="graphLegend">
                     <!-- Legenda de Nós (Disciplinas) -->
-                    <div class="legend-section">
-                        <span class="legend-section-title">Nós (disciplinas):</span>
-                        <div class="legend-items-row">
+                    <div class="legend-section is-collapsed">
+                        <button type="button" class="legend-section-title" aria-expanded="false" aria-controls="legendNodesItems">
+                            <span>Nós (disciplinas):</span><span class="legend-section-chevron" aria-hidden="true">⌄</span>
+                        </button>
+                        <div class="legend-items-row" id="legendNodesItems">
                             <div class="legend-item"><span class="legend-color-dot" style="background: #4f46e5;"></span> Sua Busca</div>
                             <div class="legend-item"><span class="legend-color-dot" style="background: #0284c7;"></span> Língua Portuguesa</div>
                             <div class="legend-item"><span class="legend-color-dot" style="background: #d97706;"></span> Matemática</div>
@@ -378,9 +401,11 @@
                         </div>
                     </div>
                     <!-- Legenda de Linhas (Tipos de Conexão) -->
-                    <div class="legend-section">
-                        <span class="legend-section-title">Linhas (conexões):</span>
-                        <div class="legend-items-row">
+                    <div class="legend-section is-collapsed">
+                        <button type="button" class="legend-section-title" aria-expanded="false" aria-controls="legendConnectionsItems">
+                            <span>Linhas (conexões):</span><span class="legend-section-chevron" aria-hidden="true">⌄</span>
+                        </button>
+                        <div class="legend-items-row" id="legendConnectionsItems">
                             <div class="legend-item">
                                 <svg class="legend-line-icon" width="28" height="8" viewBox="0 0 28 8">
                                     <line x1="0" y1="4" x2="28" y2="4" stroke="#94a3b8" stroke-width="2" stroke-dasharray="4 3"/>
@@ -409,7 +434,7 @@
                     </div>
                 </div>
             </section>
-            <div class="workspace-resize-handle details-resize-handle" id="detailsResizeHandle" title="Arraste para ajustar a largura entre Mapa e Detalhes">
+            <div class="workspace-resize-handle details-resize-handle" id="detailsResizeHandle" title="Arraste para ajustar a largura entre Detalhes e Mapa">
                 <div class="resize-handle-grip" aria-hidden="true">
                     <span></span><span></span><span></span>
                 </div>
@@ -420,27 +445,23 @@
     <!-- Drawer Lateral de Detalhes da Habilidade ao clicar no nó -->
     <div class="drawer-backdrop" id="drawerBackdrop"></div>
     <aside class="skill-drawer active" id="skillDrawer" aria-hidden="false">
+        <div class="panel-rail-bar details-panel-heading">
+            <span class="panel-title-content">
+                <svg class="panel-title-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path><path d="M14 2v6h6M8 13h8M8 17h8"></path></svg>
+                <span>Detalhes</span>
+            </span>
+            <div class="panel-heading-actions">
+                <button type="button" class="btn-recolher-painel" data-collapse-panel="detalhes" onclick="window.minimizarDrawer()" title="Recolher detalhes">Recolher</button>
+                <button type="button" class="btn-expandir-painel" data-expand-panel="detalhes" aria-pressed="false" onclick="window.expandirPainelWorkspace('detalhes', event)" title="Expandir Detalhes e recolher os outros painéis" aria-label="Expandir Detalhes e recolher os outros painéis">
+                    <svg viewBox="0 0 24 24" aria-hidden="true"><polyline points="15 3 21 3 21 9"></polyline><polyline points="9 21 3 21 3 15"></polyline><line x1="21" y1="3" x2="14" y2="10"></line><line x1="3" y1="21" x2="10" y2="14"></line></svg>
+                </button>
+            </div>
+        </div>
         <div class="drawer-header">
             <div id="drawerMetaTags" class="skill-meta-tags">
                 <!-- Badges e código inseridos via JS -->
             </div>
             <div class="drawer-actions-toolbar">
-                <button type="button" class="drawer-action-btn drawer-back-btn" id="drawerBackBtn" onclick="window.voltarNavegacao()" disabled title="Voltar para a habilidade anterior">
-                    <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                        <line x1="19" y1="12" x2="5" y2="12"></line>
-                        <polyline points="12 19 5 12 12 5"></polyline>
-                    </svg>
-                    <span>Voltar</span>
-                </button>
-                <button type="button" class="drawer-action-btn drawer-pdf-btn" id="drawerPdfBtn" onclick="window.exportarDossiePDF(window.habilidadeSelecionada?.codigo)" title="Baixar relatório pedagógico em PDF com o mapa visual de relações">
-                    <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                        <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path>
-                        <polyline points="14 2 14 8 20 8"></polyline>
-                        <line x1="12" y1="18" x2="12" y2="12"></line>
-                        <line x1="9" y1="15" x2="15" y2="15"></line>
-                    </svg>
-                    <span>PDF</span>
-                </button>
                 <button type="button" class="drawer-action-btn" id="drawerPinBtn" onclick="window.togglePinDrawer()" title="Fixar gaveta (permite navegar e clicar no grafo simultaneamente)">
                     <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
                         <line x1="12" y1="17" x2="12" y2="22"></line>
@@ -455,12 +476,6 @@
                         <line x1="21" y1="3" x2="14" y2="10"></line>
                         <line x1="3" y1="21" x2="10" y2="14"></line>
                     </svg>
-                </button>
-                <button type="button" class="drawer-action-btn" id="drawerMinimizeBtn" onclick="window.minimizarDrawer()" title="Recolher detalhes para a faixa da direita">
-                    <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                        <line x1="5" y1="12" x2="19" y2="12"></line>
-                    </svg>
-                    <span class="drawer-rail-label">Recolher</span>
                 </button>
                 <button type="button" class="drawer-close-btn" id="drawerCloseBtn" onclick="window.fecharDrawer()" aria-label="Fechar detalhes" title="Fechar detalhes">
                     <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
@@ -478,6 +493,15 @@
                 <p>Selecione uma habilidade na lista ou no mapa para consultar sua descrição e informações pedagógicas.</p>
             </div>
         </div>
+        <button type="button" class="drawer-action-btn drawer-pdf-btn drawer-pdf-floating" id="drawerPdfBtn" onclick="window.exportarDossiePDF(window.habilidadeSelecionada?.codigo)" title="Baixar relatório pedagógico em PDF com o mapa visual de relações" aria-label="Baixar dossiê pedagógico em PDF">
+            <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path>
+                <polyline points="14 2 14 8 20 8"></polyline>
+                <line x1="12" y1="18" x2="12" y2="12"></line>
+                <line x1="9" y1="15" x2="15" y2="15"></line>
+            </svg>
+            <span>PDF</span>
+        </button>
     </aside>
 
     <!-- Faixa da gaveta recolhida: o mesmo lugar em que ela abre -->
@@ -833,6 +857,53 @@
         </div>
     </div>
 
+    <!-- Modal de progressão temática espiral de Matemática, sugestões Maritaca -->
+    <div class="spiral-modal-backdrop" id="spiralModalBackdrop" style="display: none;" onclick="window.fecharModalProgressaoEspiral(event)">
+        <section class="spiral-modal" id="spiralModal" role="dialog" aria-modal="true" aria-labelledby="spiralModalTitle" onclick="event.stopPropagation()">
+            <header class="spiral-modal-header">
+                <div class="spiral-title-block">
+                    <span class="spiral-title-icon" aria-hidden="true">🌀</span>
+                    <div>
+                        <p class="spiral-eyebrow">MATEMÁTICA • ENSINO FUNDAMENTAL • 1º AO 9º ANO</p>
+                        <h2 id="spiralModalTitle">Progressão temática com IA</h2>
+                    </div>
+                </div>
+                <div class="spiral-header-actions">
+                    <span class="spiral-provider-badge">Maritaca AI</span>
+                    <button type="button" class="spiral-close-btn" onclick="window.fecharModalProgressaoEspiral()" aria-label="Fechar progressão temática" title="Fechar (Esc)">&times;</button>
+                </div>
+            </header>
+
+            <div class="spiral-notice" role="note">
+                <span class="spiral-notice-icon" aria-hidden="true">⚠️</span>
+                <p><strong>Proposta pedagógica, não prescrição oficial.</strong> As relações foram inferidas por IA a partir dos textos da BNCC; não são pré-requisitos formalmente declarados pela Base e devem ser revisadas por educadores. Não foi imposta uma sequência linear.</p>
+            </div>
+
+            <div class="spiral-controls">
+                <div class="spiral-unit-tabs" id="spiralUnitTabs" role="tablist" aria-label="Unidade temática">
+                </div>
+                <div class="spiral-search-wrap">
+                    <svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="11" cy="11" r="8"></circle><path d="m21 21-4.35-4.35"></path></svg>
+                    <input type="search" id="spiralSearchInput" placeholder="Filtrar código, habilidade ou objeto..." oninput="window.filtrarProgressaoEspiral()" aria-label="Filtrar habilidades da progressão">
+                </div>
+                <div class="spiral-year-pills" id="spiralYearPills" aria-label="Filtrar por ano escolar"></div>
+            </div>
+
+            <div class="spiral-legend" aria-label="Tipos de relação">
+                <span class="spiral-legend-item type-direct" title="O conhecimento de origem é necessário para realizar o destino."><i></i> Pré-requisito direto</span>
+                <span class="spiral-legend-item type-spiral" title="O conceito reaparece com ampliação, abstração ou novas representações."><i></i> Retomada / espiral</span>
+                <span class="spiral-legend-item type-support" title="Pode ajudar na aprendizagem, mas não é condição necessária."><i></i> Apoio opcional</span>
+                <span class="spiral-legend-item type-parallel" title="Habilidades relacionadas, sem relação de dependência entre si."><i></i> Paralela, sem dependência</span>
+            </div>
+
+            <div class="spiral-status-row">
+                <div id="spiralStats" aria-live="polite">Carregando sugestões da progressão...</div>
+                <span id="spiralGenerationStatus" class="spiral-generation-status"></span>
+            </div>
+            <div class="spiral-cards-container" id="spiralCardsContainer" aria-live="polite"></div>
+        </section>
+    </div>
+
     <!-- Modal de Visualização e Impressão do Dossiê Pedagógico A4 -->
     <div class="dossie-modal-backdrop" id="dossieModalBackdrop" style="display: none;" onclick="window.fecharModalDossie(event)">
         <div class="dossie-modal" onclick="event.stopPropagation()">
@@ -952,6 +1023,7 @@
         let catalogoRelacoesFinais = {};
         let catalogoHierarquiaReuna = {};
         let catalogoPontesInterdisciplinares = {};
+        let catalogoProgressaoEspiral = { habilidades: [], relacoes: [], meta: null };
         window.baseBNCC = baseBNCC;
         window.catalogoRelacoesFinais = catalogoRelacoesFinais;
         window.getRelacoesFinais = () => catalogoRelacoesFinais;
@@ -973,11 +1045,6 @@
         let zoomBehavior = null;
         let selectedNodeCode = null;
         let drawerCodigoAberto = null; // Código exibido atualmente na gaveta de detalhes (evita toggle errado)
-        // Histórico de navegação entre habilidades (botão "Voltar" da gaveta)
-        let historicoNavegacao = []; // códigos das habilidades, na ordem em que foram inspecionadas
-        let historicoIndice = -1; // posição atual dentro do histórico
-        let navegandoHistorico = false; // impede registrar o destino ao voltar
-        const HISTORICO_LIMITE = 50; // profundidade máxima do histórico
         let graphLayoutMode = 'lineage'; // 'lineage' (Linhagem Pedagógica padrão) | 'tree' (Organograma por Anos/Fases) | 'force' (Rede)
 
         // Modos de ordenação e agrupamento da lista de resultados
@@ -1163,15 +1230,70 @@
         const drawerCloseBtn = document.getElementById('drawerCloseBtn');
         const drawerPinBtn = document.getElementById('drawerPinBtn');
         const drawerExpandBtn = document.getElementById('drawerExpandBtn');
-        const drawerMinimizeBtn = document.getElementById('drawerMinimizeBtn');
         const drawerMinimizedTab = document.getElementById('drawerMinimizedTab');
         const drawerMetaTags = document.getElementById('drawerMetaTags');
         const drawerBody = document.getElementById('drawerBody');
 
-        // Detalhes é o terceiro painel do workspace (Lista + Mapa + Detalhes),
-        // com a mesma faixa de recolher/reabrir dos outros dois painéis.
+        // Ordem fixa dos painéis: Lista → Detalhes → Mapa.
+        // As alças ficam entre Lista/Detalhes e entre Detalhes/Mapa.
         if (unifiedWorkspace && skillDrawer && drawerMinimizedTab) {
-            unifiedWorkspace.append(skillDrawer, drawerMinimizedTab);
+            const railListEl = document.getElementById('railList');
+            const railMapEl = document.getElementById('railMap');
+            const listResizeHandle = document.getElementById('workspaceResizeHandle');
+            const detailsResizeHandle = document.getElementById('detailsResizeHandle');
+            [
+                document.getElementById('mobilePanelTabs'),
+                railListEl,
+                resultsArea,
+                listResizeHandle,
+                skillDrawer,
+                drawerMinimizedTab,
+                detailsResizeHandle,
+                railMapEl,
+                graphViewSection
+            ].filter(Boolean).forEach(el => unifiedWorkspace.appendChild(el));
+        }
+
+        // No mobile, mostre um painel por vez e navegue pelas três abas.
+        const mobilePanelTabs = document.getElementById('mobilePanelTabs');
+        const mobileSearchToggle = document.getElementById('mobileSearchToggle');
+        window.selecionarPainelMobile = function(panel) {
+            if (!unifiedWorkspace || !['list', 'details', 'map'].includes(panel)) return;
+            unifiedWorkspace.dataset.mobilePanel = panel;
+            document.body.classList.add('mobile-controls-collapsed');
+            mobileSearchToggle?.setAttribute('aria-expanded', 'false');
+            if (mobileSearchToggle) mobileSearchToggle.textContent = 'Busca';
+            mobilePanelTabs?.querySelectorAll('.mobile-panel-tab').forEach(button => {
+                const active = button.dataset.mobilePanel === panel;
+                button.classList.toggle('is-active', active);
+                button.setAttribute('aria-selected', String(active));
+            });
+            if (panel === 'details') {
+                unifiedWorkspace.classList.remove('details-hidden');
+                skillDrawer?.classList.add('active');
+                skillDrawer?.setAttribute('aria-hidden', 'false');
+                if (drawerMinimizedTab) drawerMinimizedTab.style.display = 'none';
+            }
+            if (panel === 'map') {
+                unifiedWorkspace.classList.remove('graph-hidden');
+                if (typeof renderizarGrafo === 'function') setTimeout(renderizarGrafo, 60);
+            }
+        };
+        mobilePanelTabs?.querySelectorAll('.mobile-panel-tab').forEach(button => {
+            button.addEventListener('click', () => window.selecionarPainelMobile(button.dataset.mobilePanel));
+        });
+        mobileSearchToggle?.addEventListener('click', () => {
+            const expanded = document.body.classList.toggle('mobile-controls-collapsed') === false;
+            mobileSearchToggle.setAttribute('aria-expanded', String(expanded));
+            mobileSearchToggle.textContent = expanded ? 'Fechar busca' : 'Busca';
+        });
+        if (unifiedWorkspace && !unifiedWorkspace.dataset.mobilePanel) {
+            unifiedWorkspace.dataset.mobilePanel = 'list';
+        }
+        if (window.innerWidth <= 1024) {
+            document.body.classList.add('mobile-controls-collapsed');
+            mobileSearchToggle?.setAttribute('aria-expanded', 'false');
+            if (mobileSearchToggle) mobileSearchToggle.textContent = 'Busca';
         }
 
         // Toast de notificação
@@ -1675,7 +1797,7 @@
                 statusText.innerHTML = '<strong>Carregando dados da BNCC, Competências e Mapa de Relações...</strong>';
                 statusDetails.textContent = 'Lendo vetores, competências e progressão pedagógica...';
                 
-                const [responseVetores, responseComp, responseProg, responseRelFinal, responseHierarquia, responseArticulaveis, responsePontes] = await Promise.all([
+                const [responseVetores, responseComp, responseProg, responseRelFinal, responseHierarquia, responseArticulaveis, responsePontes, responseEspiral] = await Promise.all([
                     fetch('./bncc_vetores.json'),
                     fetch('./competencias_bncc.json'),
                     fetch('./bncc_progressao_pre_requisitos.json'),
@@ -1683,7 +1805,8 @@
                     fetch('./hierarquia_focal_reuna.json'),
                     // Lista branca do Jev (opcional): relações confirmadas pela curadoria.
                     fetch('./articulaveis_jev.json').catch(() => null),
-                    fetch('./pontes_interdisciplinares.json?v=inter_ai_390_v1').catch(() => null)
+                    fetch('./pontes_interdisciplinares.json?v=inter_ai_390_v1').catch(() => null),
+                    fetch('./progressao_espiral_matematica.json?v=' + Date.now(), { cache: 'no-store' }).catch(() => null)
                 ]);
                 if (!responseVetores.ok) {
                     throw new Error(`Não foi possível carregar 'bncc_vetores.json' (HTTP ${responseVetores.status}).`);
@@ -1713,6 +1836,14 @@
                 if (responsePontes && responsePontes.ok) {
                     const dadosPontes = await responsePontes.json();
                     catalogoPontesInterdisciplinares = dadosPontes.pontes || {};
+                }
+                if (responseEspiral && responseEspiral.ok) {
+                    try {
+                        catalogoProgressaoEspiral = await responseEspiral.json();
+                        window.catalogoProgressaoEspiral = catalogoProgressaoEspiral;
+                    } catch (e) {
+                        catalogoProgressaoEspiral = { habilidades: [], relacoes: [], meta: null };
+                    }
                 }
                 // Lista branca do Jev: relações confirmadas pela curadoria (opcional).
                 // Quando presente, a lista "Habilidades Articuláveis" só mostra o que
@@ -2882,7 +3013,6 @@
                                 <span class="ssc-rank-badge ${isRankingRelacoes ? 'is-ranking' : ''}">#${itemRankNum}</span>
                                 <span class="ssc-code-badge">${item.codigo}</span>
                                 <span class="discipline-badge ${discClass}">${item.disciplina || 'Geral'}</span>
-                                ${item.ano_faixa ? `<span class="year-badge">${item.ano_faixa}</span>` : ''}
                                 ${item.classificacao_reuna === 'AF' ? `<span class="badge-reuna-focal" title="Aprendizagem Focal Reúna">🎯 Focal</span>` : ''}
                                 ${item.classificacao_reuna === 'AC' ? `<span class="badge-reuna-comp" title="Aprendizagem Complementar Reúna">📘 Comp.</span>` : ''}
                                 ${item.componentes_comentam ? `<span class="badge-reuna-em" title="BNCC Comentada EM">🔬 EM</span>` : ''}
@@ -2980,7 +3110,6 @@
                                     ${item.disciplina || 'Geral'}
                                 </span>
 
-                                ${item.ano_faixa ? `<span class="year-badge">${item.ano_faixa}</span>` : ''}
                                 ${item.classificacao_reuna === 'AF' ? `<span class="badge-reuna-focal" data-tooltip="Aprendizagem Focal Reúna (Prioritária)" title="Aprendizagem Focal (Mapas de Foco - Instituto Reúna): nó curricular prioritário para a continuidade da trajetória escolar">🎯 Focal</span>` : ''}
                                 ${item.classificacao_reuna === 'AC' ? `<span class="badge-reuna-comp" data-tooltip="Aprendizagem Complementar Reúna" title="Aprendizagem Complementar (Mapas de Foco - Instituto Reúna): contextualiza e aprofunda as aprendizagens focais">📘 Complementar</span>` : ''}
                                 ${item.componentes_comentam ? `<span class="badge-reuna-em" data-tooltip="BNCC Comentada EM (Instituto Reúna)" title="BNCC Comentada Ensino Médio (Instituto Reúna): análise interdisciplinar">🔬 Comentada EM</span>` : ''}
@@ -3250,6 +3379,8 @@
 
             // Mantém a habilidade de referência antes das relacionadas em todos
             // os modos da aba Lista, inclusive quando há agrupamento/ordenação.
+            // No ranking "Mais Relações" não destacamos a primeira habilidade:
+            // ela aparece como um cartão normal, sem o invólucro/label extra.
             const primeiroResultadoLista = resultadosAtuais[0];
             const primeiroEhFocal = primeiroResultadoLista?.relTipo === 'focal';
             const codigoFocalLista = window.isExactSkillQuery && window.exactSkillItem
@@ -3258,21 +3389,20 @@
             const resultadoFocalLista = codigoFocalLista
                 ? resultadosAtuais.find(res => res.item.codigo === codigoFocalLista)
                 : null;
+            const destacarPrimeiroCartao = !!resultadoFocalLista && !window.isModoRankingRelacoesAtivo;
             const rotuloFocalLista = window.isExactSkillQuery
                 ? 'Habilidade pesquisada'
                 : (primeiroEhFocal
                     ? 'Habilidade focal da rede'
-                    : (window.isModoRankingRelacoesAtivo
-                        ? 'Habilidade com mais relações'
-                        : (isModoInterdisciplinarAtivo ? 'Habilidade mais interdisciplinar' : 'Melhor correspondência da busca')));
-            const resultadosRelacionadosLista = resultadoFocalLista
+                    : (isModoInterdisciplinarAtivo ? 'Habilidade mais interdisciplinar' : 'Melhor correspondência da busca'));
+            const resultadosRelacionadosLista = destacarPrimeiroCartao
                 ? resultadosAtuais.filter(res => res.item.codigo !== codigoFocalLista)
                 : resultadosAtuais;
-            const cartaoFocalLista = resultadoFocalLista
+            const cartaoFocalLista = destacarPrimeiroCartao
                 ? `<div class="searched-skill-first"><div class="searched-skill-first-label">${rotuloFocalLista}</div>${renderizarCardHabilidade({ ...resultadoFocalLista, _itemNum: 1 }, 0, cachedQuery)}</div>`
                 : '';
             const renderizarCartaoRelacionadoLista = (res, index) => {
-                const deslocamento = resultadoFocalLista ? 1 : 0;
+                const deslocamento = destacarPrimeiroCartao ? 1 : 0;
                 const numero = res.rankPos || res._itemNum || index + 1 + deslocamento;
                 return renderizarCardHabilidade({ ...res, _itemNum: numero }, index + deslocamento, cachedQuery);
             };
@@ -6204,57 +6334,9 @@
             if (btn) btn.setAttribute('aria-expanded', todosAbertos ? 'false' : 'true');
         };
 
-        // ======================================================================
-        // Histórico de Navegação entre Habilidades (botão "Voltar" da gaveta)
-        // ======================================================================
-        function atualizarBotaoVoltar() {
-            const btn = document.getElementById('drawerBackBtn');
-            if (!btn) return;
-            const podeVoltar = historicoIndice > 0;
-            const anterior = podeVoltar ? historicoNavegacao[historicoIndice - 1] : null;
-            btn.disabled = !podeVoltar;
-            btn.title = podeVoltar
-                ? `Voltar para a habilidade ${anterior}`
-                : 'Nenhuma habilidade anterior no histórico';
-        }
-
-        function registrarHistoricoNavegacao(codigo) {
-            if (!codigo || navegandoHistorico) return;
-            // Reabrir a mesma habilidade (ex.: re-render da gaveta) não cria novo passo
-            if (historicoNavegacao[historicoIndice] === codigo) return;
-            // Navegar a partir de um ponto antigo descarta o caminho adiante (como no navegador)
-            historicoNavegacao = historicoNavegacao.slice(0, historicoIndice + 1);
-            historicoNavegacao.push(codigo);
-            if (historicoNavegacao.length > HISTORICO_LIMITE) {
-                historicoNavegacao.shift();
-            }
-            historicoIndice = historicoNavegacao.length - 1;
-            atualizarBotaoVoltar();
-        }
-
-        window.voltarNavegacao = function() {
-            if (historicoIndice <= 0) {
-                window.showToast('🕘 Não há habilidade anterior no histórico.');
-                return;
-            }
-            const destino = historicoNavegacao[historicoIndice - 1];
-            historicoIndice -= 1;
-            navegandoHistorico = true;
-            try {
-                window.abrirHabilidadePorCodigo(destino);
-            } finally {
-                navegandoHistorico = false;
-            }
-            atualizarBotaoVoltar();
-            if (drawerCodigoAberto === destino) {
-                window.showToast(`↩️ Voltando para ${destino}`);
-            }
-        };
-
         function abrirDrawerDetalhes(item, score) {
             window.habilidadeSelecionada = item;
             drawerCodigoAberto = item.codigo;
-            registrarHistoricoNavegacao(item.codigo);
             const percentual = (score * 100).toFixed(1);
             const discClass = getDisciplinaClass(item.disciplina);
             const explicacao = gerarExplicacaoIA(queryAtual, item, score);
@@ -6262,14 +6344,52 @@
             const prog = catalogoProgressao[item.codigo] || null;
             const pontesIASelecionada = catalogoPontesInterdisciplinares[item.codigo]?.por_componente || {};
             const escaparHTMLDrawer = valor => String(valor ?? '').replace(/[&<>"']/g, c => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c]));
+            const codigosProgressaoEspiral = new Set(catalogoProgressaoEspiral?.habilidades || []);
+            const temProgressaoEspiral = codigosProgressaoEspiral.has(item.codigo);
+            const relacoesEspiralDrawer = temProgressaoEspiral ? obterRelacoesDaHabilidadeEspiral(item.codigo) : [];
+            const relacoesEspiralDrawerHTML = relacoesEspiralDrawer.map(relacao => {
+                const paralela = relacao.tipo === 'paralela';
+                const habilidadeAnterior = !paralela && relacao.destino === item.codigo;
+                const codigoRelacionado = relacao.origem === item.codigo ? relacao.destino : relacao.origem;
+                const relacionada = mapaBNCCPorCodigo.get(codigoRelacionado);
+                const direcao = paralela ? 'Em paralelo, sem dependência' : (habilidadeAnterior ? 'Habilidade relacionada que vem antes' : 'Possível continuidade posterior');
+                const codigoOrigem = escaparHTMLDrawer(relacao.origem);
+                const codigoDestino = escaparHTMLDrawer(relacao.destino);
+                const faixaUnidade = relacionada
+                    ? `${relacionada.ano_faixa || 'Ano não informado'}${relacionada.unidade_tematica ? ` • ${relacionada.unidade_tematica}` : ''}`
+                    : '';
+                return `
+                    <article class="ai-spiral-relation type-${escaparHTMLDrawer(relacao.tipo)}">
+                        <div class="ai-spiral-relation-heading">
+                            <span class="ai-spiral-direction">${direcao}</span>
+                            <span class="ai-spiral-type">${escaparHTMLDrawer(rotuloTipoRelacaoEspiral(relacao.tipo))}</span>
+                            <span class="ai-spiral-confidence confidence-${escaparHTMLDrawer(relacao.confianca || 'media')}">Confiança ${escaparHTMLDrawer(relacao.confianca || 'média')}</span>
+                        </div>
+                        <div class="ai-spiral-edge-codes">${codigoOrigem} ${paralela ? '—' : '→'} ${codigoDestino}</div>
+                        ${relacionada?.disciplina ? `<div class="ai-spiral-related-meta">${escaparHTMLDrawer(faixaUnidade)}</div>` : ''}
+                        ${relacionada?.habilidade ? `<p class="ai-spiral-related-description">${escaparHTMLDrawer(relacionada.habilidade)}</p>` : ''}
+                        <p class="ai-spiral-rationale"><strong>Justificativa:</strong> ${escaparHTMLDrawer(relacao.justificativa || 'Relação pedagógica sugerida pela IA.')}</p>
+                    </article>
+                `;
+            }).join('');
+            const etapaInfoSelecionada = extrairEtapaCurricular(item);
+            const nomesEtapas = {
+                EI: 'Educação Infantil',
+                EF_INICIAIS: 'Ensino Fundamental — Anos Iniciais',
+                EF_FINAIS: 'Ensino Fundamental — Anos Finais',
+                EF_GERAL: 'Ensino Fundamental',
+                EM: 'Ensino Médio'
+            };
+            const etapaSelecionada = nomesEtapas[etapaInfoSelecionada.etapa] || etapaInfoSelecionada.nomeEtapa || 'Não informada';
+            const anoFaseSelecionado = item.ano_faixa || etapaInfoSelecionada.nomeEtapa || 'Não informado';
             const gruposPontesIADrawer = Object.entries(pontesIASelecionada).map(([componente, ponte]) => {
                 const codigos = (ponte.codigos || []).map(codigo => {
                     const parceira = mapaBNCCPorCodigo.get(codigo);
                     const descricao = parceira?.habilidade || '';
-                    return `<div class="ai-bridge-code"><strong>${escaparHTMLDrawer(codigo)}</strong>${descricao ? `<span>${escaparHTMLDrawer(descricao)}</span>` : ''}</div>`;
+                    return `<article class="ai-bridge-code" tabindex="-1" data-bridge-skill-code="${escaparHTMLDrawer(codigo)}" aria-label="${escaparHTMLDrawer(codigo)}${descricao ? ` — ${escaparHTMLDrawer(descricao)}` : ''}"><strong>${escaparHTMLDrawer(codigo)}</strong>${descricao ? `<span>${escaparHTMLDrawer(descricao)}</span>` : ''}</article>`;
                 }).join('');
                 return `
-                    <details class="ai-bridge-component">
+                    <details class="ai-bridge-component" data-bridge-component="${escaparHTMLDrawer(componente)}">
                         <summary>
                             <span class="ai-bridge-component-name">${escaparHTMLDrawer(componente)}</span>
                             <span class="ai-bridge-confidence">${escaparHTMLDrawer(ponte.confianca || 'média')}</span>
@@ -6291,17 +6411,9 @@
                 sideEl.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
             }
 
-            // Cabeçalho do Drawer
-            drawerMetaTags.innerHTML = `
-                <span class="code-badge" aria-label="Código da habilidade">
-                    <span>${item.codigo}</span>
-                </span>
-                <span class="discipline-badge ${discClass}">${item.disciplina || 'Geral'}</span>
-                ${item.ano_faixa ? `<span class="year-badge">${item.ano_faixa}</span>` : ''}
-                ${item.classificacao_reuna === 'AF' ? `<span class="badge-reuna-focal" title="Aprendizagem Focal (Mapas de Foco - Instituto Reúna): nó indispensável para progressão escolar">🎯 Aprendizagem Focal (Reúna)</span>` : ''}
-                ${item.classificacao_reuna === 'AC' ? `<span class="badge-reuna-comp" title="Aprendizagem Complementar (Mapas de Foco - Instituto Reúna)">📘 Complementar (Reúna)</span>` : ''}
-                ${item.componentes_comentam ? `<span class="badge-reuna-em" title="BNCC Comentada Ensino Médio (Instituto Reúna)">🔬 BNCC Comentada EM</span>` : ''}
-            `;
+            // Código, componente e ano já aparecem no cartão selecionado da lista.
+            // Mantemos o topo dos detalhes livre para os controles de navegação.
+            if (drawerMetaTags) drawerMetaTags.replaceChildren();
 
             // Habilidades Articuláveis no Planejamento
             // ------------------------------------------------------------------
@@ -6406,10 +6518,9 @@
 
             // Corpo do Drawer
             drawerBody.innerHTML = `
-                <!-- Cabeçalho fixo: somente a descrição da habilidade -->
+                <!-- Cabeçalho fixo com a habilidade selecionada -->
                 <div class="drawer-sticky-head">
                     <div class="skill-desc-card skill-desc-inline">
-                        <div class="skill-desc-label">Descrição da Habilidade (BNCC):</div>
                         <p class="skill-desc-text">
                             ${(item.habilidade || '').replace(/^\(([A-Za-z0-9]+)\)/, '<strong class="skill-desc-code">($1)</strong>')}
                         </p>
@@ -6467,36 +6578,49 @@
                     `;
                 })() : ''}
 
-                <!-- Unidade Temática, Objeto de Conhecimento e Palavras-Chave -->
-                ${(item.unidade_tematica || item.objeto_conhecimento || (item.palavras_chave && item.palavras_chave.length > 0)) ? `
-                    <div class="skill-meta-card">
-                        ${(item.unidade_tematica || item.objeto_conhecimento) ? `
-                            <div class="skill-meta-inline">
-                                ${item.unidade_tematica ? `
-                                    <div class="skill-meta-inline-item">
-                                        <span class="skill-meta-inline-label">Unidade Temática</span>
-                                        <span class="skill-meta-inline-value">${item.unidade_tematica}</span>
-                                    </div>
-                                ` : ''}
-                                ${item.objeto_conhecimento ? `
-                                    <div class="skill-meta-inline-item">
-                                        <span class="skill-meta-inline-label">Objeto de Conhecimento</span>
-                                        <span class="skill-meta-inline-value">${item.objeto_conhecimento}</span>
-                                    </div>
-                                ` : ''}
-                            </div>
-                        ` : ''}
-
-                        ${(item.palavras_chave && item.palavras_chave.length > 0) ? `
-                            <div class="skill-keywords-inline">
-                                <span class="skill-keywords-inline-label">Palavras-chave:</span>
-                                ${item.palavras_chave.map((kw, i) => `
-                                    <span class="kw-mini ${i === 0 ? 'is-code' : ''}" title="${i === 0 ? 'Código da Habilidade' : 'Palavra-chave'}">${kw}</span>
-                                `).join('')}
-                            </div>
-                        ` : ''}
+                <!-- Identificação curricular da habilidade e seus metadados -->
+                <div class="skill-meta-card">
+                    <div class="skill-meta-curricular-grid" aria-label="Identificação curricular">
+                        <div class="skill-meta-inline-item skill-meta-curricular-item">
+                            <span class="skill-meta-inline-label">Etapa</span>
+                            <span class="skill-meta-inline-value">${escaparHTMLDrawer(etapaSelecionada)}</span>
+                        </div>
+                        <div class="skill-meta-inline-item skill-meta-curricular-item">
+                            <span class="skill-meta-inline-label">Ano/Fase</span>
+                            <span class="skill-meta-inline-value">${escaparHTMLDrawer(anoFaseSelecionado)}</span>
+                        </div>
+                        <div class="skill-meta-inline-item skill-meta-curricular-item">
+                            <span class="skill-meta-inline-label">Componente curricular</span>
+                            <span class="skill-meta-inline-value">${escaparHTMLDrawer(item.disciplina || 'Não informado')}</span>
+                        </div>
                     </div>
-                ` : ''}
+
+                    ${(item.unidade_tematica || item.objeto_conhecimento) ? `
+                        <div class="skill-meta-inline">
+                            ${item.unidade_tematica ? `
+                                <div class="skill-meta-inline-item">
+                                    <span class="skill-meta-inline-label">Unidade Temática</span>
+                                    <span class="skill-meta-inline-value">${item.unidade_tematica}</span>
+                                </div>
+                            ` : ''}
+                            ${item.objeto_conhecimento ? `
+                                <div class="skill-meta-inline-item">
+                                    <span class="skill-meta-inline-label">Objeto de Conhecimento</span>
+                                    <span class="skill-meta-inline-value">${item.objeto_conhecimento}</span>
+                                </div>
+                            ` : ''}
+                        </div>
+                    ` : ''}
+
+                    ${(item.palavras_chave && item.palavras_chave.length > 0) ? `
+                        <div class="skill-keywords-inline">
+                            <span class="skill-keywords-inline-label">Palavras-chave:</span>
+                            ${item.palavras_chave.map((kw, i) => `
+                                <span class="kw-mini ${i === 0 ? 'is-code' : ''}" title="${i === 0 ? 'Código da Habilidade' : 'Palavra-chave'}">${kw}</span>
+                            `).join('')}
+                        </div>
+                    ` : ''}
+                </div>
 
                 <!-- Mapa Visual de Relações e Pré-Requisitos (Progressão Curricular BNCC) -->
                 <details class="drawer-collapsible">
@@ -6671,7 +6795,7 @@
                 </details>
 
                 <!-- Agrupamento de sugestões interdisciplinares geradas por IA -->
-                <details class="drawer-collapsible drawer-ai-bridges">
+                <details class="drawer-collapsible drawer-ai-bridges" id="drawerAiBridgesGroup">
                     <summary>
                         <span class="dc-left">
                             <span style="font-size: 1.05rem;">✨</span>
@@ -6685,6 +6809,27 @@
                         ${gruposPontesIADrawer ? `<div class="ai-bridge-groups">${gruposPontesIADrawer}</div>` : `<p class="ai-bridges-empty">Ainda não há sugestões geradas para esta habilidade.</p>`}
                     </div>
                 </details>
+
+                ${temProgressaoEspiral ? `
+                    <details class="drawer-collapsible drawer-ai-spiral">
+                        <summary>
+                            <span class="dc-left">
+                                <span style="font-size: 1.05rem;">🌀</span>
+                                <span>Progressão Temática Espiral (IA)</span>
+                            </span>
+                            <span class="dc-count">${relacoesEspiralDrawer.length}</span>
+                            <svg class="dc-chevron" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="6 9 12 15 18 9"></polyline></svg>
+                        </summary>
+                        <div class="drawer-collapsible-body">
+                            <div class="ai-spiral-notice">
+                                Sugestões geradas pela Maritaca (${escaparHTMLDrawer((catalogoProgressaoEspiral.meta?.modelos || ['S5-free']).join(', '))}). São inferências pedagógicas, não pré-requisitos oficiais da BNCC; revise-as antes de usar no planejamento.
+                            </div>
+                            ${relacoesEspiralDrawer.length
+                                ? `<div class="ai-spiral-relations">${relacoesEspiralDrawerHTML}</div>`
+                                : `<p class="ai-spiral-empty">A IA não sugeriu relações defensáveis para esta habilidade. Isso não significa que outras relações possíveis não existam.</p>`}
+                        </div>
+                    </details>
+                ` : ''}
 
                 <!-- Competências da BNCC Articuladas (Gerais e Específicas) -->
                 ${((item.competencias_gerais && item.competencias_gerais.length > 0) || (item.competencias_especificas && item.competencias_especificas.length > 0)) ? `
@@ -6838,6 +6983,9 @@
             skillDrawer.classList.add('active');
             unifiedWorkspace.classList.remove('details-hidden');
             skillDrawer.setAttribute('aria-hidden', 'false');
+            if (window.innerWidth <= 1024 && window.selecionarPainelMobile) {
+                window.selecionarPainelMobile('details');
+            }
             document.body.classList.remove('drawer-is-minimized');
             if (drawerMinimizedTab) {
                 drawerMinimizedTab.style.display = 'none';
@@ -6848,6 +6996,7 @@
             // O painel permanece no workspace; fechar/redefinir limpa os dados,
             // enquanto recolherDrawer é a ação explícita para ocultá-lo.
             skillDrawer.classList.add('active');
+            unifiedWorkspace.classList.remove('details-hidden');
             skillDrawer.classList.remove('is-pinned');
             skillDrawer.classList.remove('is-expanded');
             document.body.classList.remove('drawer-is-pinned');
@@ -6901,6 +7050,7 @@
         window.minimizarDrawer = function() {
             skillDrawer.classList.remove('active');
             unifiedWorkspace.classList.add('details-hidden');
+            skillDrawer.setAttribute('aria-hidden', 'true');
             document.body.classList.add('drawer-is-minimized');
             const dmtTitle = document.getElementById('dmtTitle');
             const codigo = (typeof drawerCodigoAberto !== 'undefined' && drawerCodigoAberto) || selectedNodeCode || '';
@@ -6909,6 +7059,7 @@
             if (drawerMinimizedTab) {
                 drawerMinimizedTab.style.display = 'flex';
             }
+            if (window.ajustarLargurasPaineisAbertos) window.ajustarLargurasPaineisAbertos();
         };
 
         window.reabrirDrawer = function() {
@@ -6917,6 +7068,7 @@
             if (drawerMinimizedTab) drawerMinimizedTab.style.display = 'none';
             skillDrawer.classList.add('active');
             skillDrawer.setAttribute('aria-hidden', 'false');
+            if (window.ajustarLargurasPaineisAbertos) window.ajustarLargurasPaineisAbertos();
         };
 
         window.toggleFiltersSidebar = function() {};
@@ -7071,6 +7223,10 @@
             // Se a gaveta não estiver aberta, nada a fazer
             if (!skillDrawer || !skillDrawer.classList.contains('active')) return;
 
+            // No workspace integrado, Detalhes é um painel persistente: clicar
+            // no mapa ou nas alças não deve limpar a habilidade selecionada.
+            if (e.target.closest('#unifiedWorkspace')) return;
+
             // Se a gaveta estiver fixada, NÃO fecha ao clicar fora
             if (skillDrawer.classList.contains('is-pinned')) return;
 
@@ -7177,6 +7333,228 @@
         // ======================================================================
         // CONTROLE DE REDIMENSIONAMENTO E MINIMIZAÇÃO DE PAINÉIS (WORKSPACE SPLIT)
         // ======================================================================
+        function obterParPainelResize(tipoAlca) {
+            const workspace = document.getElementById('unifiedWorkspace');
+            const listaAberta = !workspace.classList.contains('sidebar-hidden');
+            const detalhes = document.getElementById('skillDrawer');
+            const detalhesAberto = detalhes.classList.contains('active')
+                && !workspace.classList.contains('details-hidden');
+            const mapaAberto = !workspace.classList.contains('graph-hidden');
+
+            if (tipoAlca === 'lista') {
+                if (listaAberta && detalhesAberto) return { a: 'lista', b: 'detalhes', direcao: 1 };
+                if (listaAberta && mapaAberto) return { a: 'lista', b: 'mapa', direcao: 1 };
+                if (detalhesAberto && mapaAberto) return { a: 'detalhes', b: 'mapa', direcao: -1 };
+                return null;
+            }
+
+            if (detalhesAberto && mapaAberto) return { a: 'detalhes', b: 'mapa', direcao: 1, mapaFlexivel: true };
+            if (detalhesAberto && listaAberta) return { a: 'detalhes', b: 'lista', direcao: 1 };
+            if (listaAberta && mapaAberto) return { a: 'lista', b: 'mapa', direcao: -1 };
+            return null;
+        }
+
+        function obterElementoPainelResize(tipo) {
+            return document.getElementById(({ lista: 'resultsArea', detalhes: 'skillDrawer', mapa: 'graphViewSection' })[tipo]);
+        }
+
+        function obterLarguraMinimaPainelResize(tipo) {
+            return ({ lista: 220, detalhes: 260, mapa: 280 })[tipo];
+        }
+
+        function aplicarLarguraPainelResize(tipo, largura) {
+            const elemento = obterElementoPainelResize(tipo);
+            if (!elemento) return;
+            const valor = Math.round(largura);
+            // O CSS do workspace fixa a gaveta recolhida com !important.
+            // Aplicar a mesma prioridade é necessário para que o inline vença
+            // essa regra quando Detalhes está aberto.
+            elemento.style.setProperty('flex', `0 0 ${valor}px`, 'important');
+            elemento.style.setProperty('width', `${valor}px`, 'important');
+        }
+
+        function salvarLarguraPainelResize(tipo, largura) {
+            const chave = ({ lista: 'bncc_sidebar_width', detalhes: 'bncc_details_width', mapa: 'bncc_map_width' })[tipo];
+            if (!chave) return;
+            try { localStorage.setItem(chave, Math.round(largura)); } catch (_) {}
+        }
+
+        // Ao recolher qualquer painel, reparte o espaço disponível igualmente
+        // entre os que continuam abertos. As faixas recolhidas mantêm sua largura.
+        function atualizarBotoesRecolherPaineis(workspace) {
+            if (!workspace) return;
+            const listaAberta = !workspace.classList.contains('sidebar-hidden');
+            const detalhes = document.getElementById('skillDrawer');
+            const detalhesAberto = detalhes.classList.contains('active') && !workspace.classList.contains('details-hidden');
+            const mapaAberto = !workspace.classList.contains('graph-hidden');
+            const abertos = { lista: listaAberta, detalhes: detalhesAberto, mapa: mapaAberto };
+            const quantidadeAbertos = Object.values(abertos).filter(Boolean).length;
+
+            document.querySelectorAll('.btn-recolher-painel[data-collapse-panel]').forEach(button => {
+                const ehUltimoAberto = abertos[button.dataset.collapsePanel] && quantidadeAbertos <= 1;
+                button.disabled = Boolean(ehUltimoAberto);
+                if (ehUltimoAberto) button.title = 'Mantenha ao menos um painel aberto';
+            });
+
+            const painelExpandido = quantidadeAbertos === 1
+                ? Object.keys(abertos).find(nome => abertos[nome])
+                : null;
+            document.querySelectorAll('.btn-expandir-painel[data-expand-panel]').forEach(button => {
+                const ativo = button.dataset.expandPanel === painelExpandido;
+                button.classList.toggle('is-active', ativo);
+                button.setAttribute('aria-pressed', String(ativo));
+            });
+        }
+
+        window.ajustarLargurasPaineisAbertos = function() {
+            const workspace = document.getElementById('unifiedWorkspace');
+            if (!workspace) return;
+            atualizarBotoesRecolherPaineis(workspace);
+            if (window.innerWidth <= 1024 || !workspace.classList.contains('layout-split')) return;
+
+            const sidebar = document.getElementById('resultsArea');
+            const details = document.getElementById('skillDrawer');
+            const graph = document.getElementById('graphViewSection');
+            const listHidden = workspace.classList.contains('sidebar-hidden');
+            const detailsHidden = workspace.classList.contains('details-hidden') || !details.classList.contains('active');
+            const graphHidden = workspace.classList.contains('graph-hidden');
+
+            // Larguras de arraste usam estilos inline !important. Remova-as
+            // dos painéis recolhidos para que a faixa e o CSS de recolhimento
+            // ocupem somente o espaço previsto.
+            [
+                [sidebar, listHidden],
+                [details, detailsHidden],
+                [graph, graphHidden]
+            ].forEach(([element, hidden]) => {
+                if (!element || !hidden) return;
+                const transition = element.style.getPropertyValue('transition');
+                const transitionPriority = element.style.getPropertyPriority('transition');
+                element.style.setProperty('transition', 'none', 'important');
+                element.style.removeProperty('flex');
+                element.style.removeProperty('width');
+                element.getBoundingClientRect();
+                if (transition) element.style.setProperty('transition', transition, transitionPriority);
+                else element.style.removeProperty('transition');
+            });
+
+            const openPanels = [
+                { type: 'lista', element: sidebar, open: !listHidden && getComputedStyle(sidebar).display !== 'none' },
+                { type: 'detalhes', element: details, open: !detailsHidden && getComputedStyle(details).display !== 'none' },
+                { type: 'mapa', element: graph, open: !graphHidden && getComputedStyle(graph).display !== 'none' }
+            ].filter(panel => panel.open);
+            if (!openPanels.length) return;
+
+            const style = getComputedStyle(workspace);
+            const gap = parseFloat(style.columnGap || style.gap) || 0;
+            const visibleChildren = [...workspace.children].filter(child => getComputedStyle(child).display !== 'none');
+            const openElements = new Set(openPanels.map(panel => panel.element));
+            const fixedWidth = visibleChildren
+                .filter(element => !openElements.has(element))
+                .reduce((total, element) => {
+                    const childStyle = getComputedStyle(element);
+                    const margins = (parseFloat(childStyle.marginLeft) || 0) + (parseFloat(childStyle.marginRight) || 0);
+                    return total + element.getBoundingClientRect().width + margins;
+                }, 0);
+            const gapsWidth = Math.max(0, visibleChildren.length - 1) * gap;
+            const padding = (parseFloat(style.paddingLeft) || 0) + (parseFloat(style.paddingRight) || 0);
+            const available = workspace.clientWidth - padding - gapsWidth - fixedWidth;
+            const equalWidth = Math.floor(available / openPanels.length);
+            const minWidth = Math.max(...openPanels.map(panel => obterLarguraMinimaPainelResize(panel.type)));
+            if (!Number.isFinite(equalWidth) || equalWidth < minWidth) return;
+
+            openPanels.forEach(({ type }) => {
+                // !important é necessário sobretudo em Detalhes, cujo CSS
+                // base mantém flex/width zerados para o estado recolhido.
+                aplicarLarguraPainelResize(type, equalWidth);
+            });
+
+            openPanels.forEach(({ type }) => salvarLarguraPainelResize(type, equalWidth));
+            if (typeof renderizarGrafo === 'function') setTimeout(renderizarGrafo, 300);
+        };
+
+        // Entra em modo foco: o painel escolhido ocupa o espaço útil e os
+        // demais ficam recolhidos nas respectivas faixas de restauração.
+        window.expandirPainelWorkspace = function(tipo, event) {
+            if (event) {
+                event.preventDefault();
+                event.stopPropagation();
+            }
+            if (!['lista', 'detalhes', 'mapa'].includes(tipo)) return;
+            if (window.innerWidth <= 1024) {
+                const painelMobile = tipo === 'lista' ? 'list' : (tipo === 'mapa' ? 'map' : 'details');
+                if (window.selecionarPainelMobile) window.selecionarPainelMobile(painelMobile);
+                return;
+            }
+
+            const workspace = document.getElementById('unifiedWorkspace');
+            const sidebar = document.getElementById('resultsArea');
+            const details = document.getElementById('skillDrawer');
+            const graph = document.getElementById('graphViewSection');
+            const drawerRail = document.getElementById('drawerMinimizedTab');
+            if (!workspace || !sidebar || !details || !graph || !workspace.classList.contains('layout-split')) return;
+
+            document.body.classList.add('workspace-layout-initializing');
+            void workspace.offsetWidth;
+            [
+                ['lista', sidebar, !workspace.classList.contains('sidebar-hidden')],
+                ['detalhes', details, details.classList.contains('active') && !workspace.classList.contains('details-hidden')],
+                ['mapa', graph, !workspace.classList.contains('graph-hidden')]
+            ].forEach(([nome, elemento, aberto]) => {
+                const largura = elemento.getBoundingClientRect().width;
+                if (aberto && largura >= obterLarguraMinimaPainelResize(nome)) salvarLarguraPainelResize(nome, largura);
+            });
+
+            if (tipo !== 'mapa' && graph.classList.contains('graph-fullscreen') && window.toggleGraphFullscreen) {
+                window.toggleGraphFullscreen();
+            }
+
+            workspace.classList.toggle('sidebar-hidden', tipo !== 'lista');
+            workspace.classList.toggle('details-hidden', tipo !== 'detalhes');
+            workspace.classList.toggle('graph-hidden', tipo !== 'mapa');
+
+            if (tipo === 'detalhes') {
+                details.classList.add('active');
+                details.setAttribute('aria-hidden', 'false');
+                document.body.classList.remove('drawer-is-minimized');
+                if (drawerRail) drawerRail.style.display = 'none';
+            } else {
+                details.classList.remove('active');
+                details.setAttribute('aria-hidden', 'true');
+                document.body.classList.add('drawer-is-minimized');
+                const dmtTitle = document.getElementById('dmtTitle');
+                const codigo = drawerCodigoAberto || selectedNodeCode || '';
+                const item = codigo ? obterItemBaseBNCC(codigo) : null;
+                if (dmtTitle) dmtTitle.textContent = (item && item.codigo) || codigo || 'BNCC';
+                if (drawerRail) drawerRail.style.display = 'flex';
+            }
+
+            if (tipo !== 'lista') {
+                sidebar.style.removeProperty('flex');
+                sidebar.style.removeProperty('width');
+            }
+            if (tipo !== 'detalhes') {
+                details.style.removeProperty('flex');
+                details.style.removeProperty('width');
+            }
+            if (tipo !== 'mapa') {
+                graph.style.removeProperty('flex');
+                graph.style.removeProperty('width');
+            }
+
+            document.querySelectorAll('.btn-expandir-painel[data-expand-panel]').forEach(button => {
+                const ativo = button.dataset.expandPanel === tipo;
+                button.classList.toggle('is-active', ativo);
+                button.setAttribute('aria-pressed', String(ativo));
+            });
+            if (tipo !== 'lista' && window.atualizarContagemRailLista) window.atualizarContagemRailLista();
+
+            void workspace.offsetWidth;
+            if (window.ajustarLargurasPaineisAbertos) window.ajustarLargurasPaineisAbertos();
+            requestAnimationFrame(() => document.body.classList.remove('workspace-layout-initializing'));
+            if (typeof renderizarGrafo === 'function') setTimeout(renderizarGrafo, 100);
+        };
+
         (function inicializarWorkspaceResize() {
             const workspace = document.getElementById('unifiedWorkspace');
             const handle = document.getElementById('workspaceResizeHandle');
@@ -7185,103 +7563,134 @@
 
             let isDragging = false;
             let startX = 0;
-            let startWidth = 0;
+            let parAtivo = null;
+            let largurasIniciais = null;
+            let activePointerId = null;
             const DEFAULT_WIDTH = 320;
             const MIN_SIDEBAR_WIDTH = 220;
 
             // Restaura largura salva no localStorage se disponível
-            try {
-                const savedWidth = localStorage.getItem('bncc_sidebar_width');
-                if (savedWidth && !isNaN(parseInt(savedWidth, 10))) {
-                    const w = parseInt(savedWidth, 10);
-                    if (w >= MIN_SIDEBAR_WIDTH) {
-                        sidebar.style.flex = `0 0 ${w}px`;
-                        sidebar.style.width = `${w}px`;
-                    }
+            const lerLarguraSalva = () => {
+                try {
+                    const savedWidth = parseInt(localStorage.getItem('bncc_sidebar_width'), 10);
+                    if (!isNaN(savedWidth) && savedWidth >= MIN_SIDEBAR_WIDTH) return savedWidth;
+                } catch (err) {
+                    console.warn('Erro ao carregar largura salva da sidebar:', err);
                 }
-            } catch (err) {
-                console.warn('Erro ao carregar largura salva da sidebar:', err);
+                return DEFAULT_WIDTH;
+            };
+
+            // Usa !important para a alça continuar funcionando também quando o
+            // mapa está recolhido (o CSS tenta expandir a lista nesse estado).
+            function aplicarLarguraSidebar(width) {
+                const w = Math.round(width);
+                sidebar.style.setProperty('flex', `0 0 ${w}px`, 'important');
+                sidebar.style.setProperty('width', `${w}px`, 'important');
             }
 
-            function startDrag(clientX) {
-                if (workspace.classList.contains('sidebar-hidden') || workspace.classList.contains('graph-hidden')) return;
-                isDragging = true;
+            function limparLarguraSidebar() {
+                sidebar.style.removeProperty('flex');
+                sidebar.style.removeProperty('width');
+            }
+
+            // A largura salva só vale para desktop; no mobile a lista sempre
+            // ocupa toda a área disponível da aba, sem estilos inline herdados.
+            if (window.innerWidth <= 1024) {
+                limparLarguraSidebar();
+            } else {
+                try {
+                    const savedWidth = localStorage.getItem('bncc_sidebar_width');
+                    if (savedWidth && !isNaN(parseInt(savedWidth, 10))) {
+                        const w = parseInt(savedWidth, 10);
+                        if (w >= MIN_SIDEBAR_WIDTH) aplicarLarguraSidebar(w);
+                    }
+                } catch (err) {
+                    console.warn('Erro ao carregar largura salva da sidebar:', err);
+                }
+            }
+
+            window.addEventListener('resize', () => {
+                if (window.innerWidth <= 1024) {
+                    limparLarguraSidebar();
+                } else if (!sidebar.style.width) {
+                    aplicarLarguraSidebar(lerLarguraSalva());
+                }
+            });
+
+            function iniciarResize(clientX) {
+                if (window.innerWidth <= 1024) return;
+                const par = obterParPainelResize('lista');
+                if (!par) return;
+                parAtivo = par;
                 startX = clientX;
-                startWidth = sidebar.getBoundingClientRect().width;
+                isDragging = true;
                 handle.classList.add('is-dragging');
                 document.body.classList.add('is-resizing');
+                // Mede depois de remover as transições: a alça não salta para
+                // a largura-alvo enquanto o usuário começa a arrastar.
+                void workspace.offsetWidth;
+                largurasIniciais = {
+                    a: obterElementoPainelResize(par.a).getBoundingClientRect().width,
+                    b: obterElementoPainelResize(par.b).getBoundingClientRect().width
+                };
             }
 
-            function onDrag(clientX) {
-                if (!isDragging) return;
-                const delta = clientX - startX;
-                const workspaceWidth = workspace.getBoundingClientRect().width;
-                let newWidth = startWidth + delta;
-
-                const maxSidebarWidth = workspaceWidth - 280;
-                newWidth = Math.max(MIN_SIDEBAR_WIDTH, Math.min(newWidth, maxSidebarWidth));
-
-                sidebar.style.flex = `0 0 ${newWidth}px`;
-                sidebar.style.width = `${newWidth}px`;
+            function moverResize(clientX) {
+                if (!isDragging || !parAtivo || !largurasIniciais) return;
+                const minA = obterLarguraMinimaPainelResize(parAtivo.a);
+                const minB = obterLarguraMinimaPainelResize(parAtivo.b);
+                const pedido = (clientX - startX) * parAtivo.direcao;
+                const delta = Math.max(minA - largurasIniciais.a, Math.min(pedido, largurasIniciais.b - minB));
+                aplicarLarguraPainelResize(parAtivo.a, largurasIniciais.a + delta);
+                aplicarLarguraPainelResize(parAtivo.b, largurasIniciais.b - delta);
             }
 
-            function stopDrag() {
+            function finalizarResize() {
                 if (!isDragging) return;
                 isDragging = false;
                 handle.classList.remove('is-dragging');
                 document.body.classList.remove('is-resizing');
-
-                const currentW = sidebar.getBoundingClientRect().width;
-                if (currentW >= MIN_SIDEBAR_WIDTH) {
-                    try {
-                        localStorage.setItem('bncc_sidebar_width', Math.round(currentW));
-                    } catch (e) {}
+                if (parAtivo) {
+                    [parAtivo.a, parAtivo.b].forEach(tipo => {
+                        salvarLarguraPainelResize(tipo, obterElementoPainelResize(tipo).getBoundingClientRect().width);
+                    });
                 }
-
-                if (typeof renderizarGrafo === 'function') {
-                    setTimeout(renderizarGrafo, 60);
-                }
+                parAtivo = null;
+                largurasIniciais = null;
+                activePointerId = null;
+                if (typeof renderizarGrafo === 'function') setTimeout(renderizarGrafo, 60);
             }
 
-            handle.addEventListener('mousedown', (e) => {
-                if (e.target.closest('.resize-collapse-btn')) return;
-                e.preventDefault();
-                startDrag(e.clientX);
+            handle.addEventListener('pointerdown', event => {
+                if (event.button !== 0 || !event.isPrimary) return;
+                event.preventDefault();
+                iniciarResize(event.clientX);
+                if (!isDragging) return;
+                activePointerId = event.pointerId;
+                try { handle.setPointerCapture(event.pointerId); } catch (_) {}
             });
-
-            window.addEventListener('mousemove', (e) => {
-                if (isDragging) onDrag(e.clientX);
+            window.addEventListener('pointermove', event => {
+                if (isDragging && event.pointerId === activePointerId) moverResize(event.clientX);
             });
-
-            window.addEventListener('mouseup', () => {
-                if (isDragging) stopDrag();
-            });
-
-            handle.addEventListener('touchstart', (e) => {
-                if (e.target.closest('.resize-collapse-btn')) return;
-                if (e.touches && e.touches.length === 1) {
-                    startDrag(e.touches[0].clientX);
-                }
-            }, { passive: true });
-
-            window.addEventListener('touchmove', (e) => {
-                if (isDragging && e.touches && e.touches.length === 1) {
-                    onDrag(e.touches[0].clientX);
-                }
-            }, { passive: true });
-
-            window.addEventListener('touchend', () => {
-                if (isDragging) stopDrag();
-            });
+            const finalizarPointer = event => {
+                if (isDragging && (!event || event.pointerId === activePointerId)) finalizarResize();
+            };
+            window.addEventListener('pointerup', finalizarPointer);
+            window.addEventListener('pointercancel', finalizarPointer);
+            handle.addEventListener('lostpointercapture', finalizarPointer);
 
             // Duplo clique na alça redefine para a largura padrão
             handle.addEventListener('dblclick', (e) => {
                 if (e.target.closest('.resize-collapse-btn')) return;
-                sidebar.style.flex = `0 0 ${DEFAULT_WIDTH}px`;
-                sidebar.style.width = `${DEFAULT_WIDTH}px`;
-                try {
-                    localStorage.setItem('bncc_sidebar_width', DEFAULT_WIDTH);
-                } catch (e) {}
+                const par = obterParPainelResize('lista');
+                if (par) {
+                    const soma = obterElementoPainelResize(par.a).getBoundingClientRect().width
+                        + obterElementoPainelResize(par.b).getBoundingClientRect().width;
+                    const min = Math.max(obterLarguraMinimaPainelResize(par.a), obterLarguraMinimaPainelResize(par.b));
+                    const largura = Math.max(min, Math.floor(soma / 2));
+                    aplicarLarguraPainelResize(par.a, largura);
+                    aplicarLarguraPainelResize(par.b, soma - largura);
+                }
                 if (typeof renderizarGrafo === 'function') setTimeout(renderizarGrafo, 60);
             });
 
@@ -7299,8 +7708,10 @@
                     e.preventDefault();
                 }
                 workspace.classList.remove('graph-hidden');
+                limparLarguraSidebar();
                 workspace.classList.add('sidebar-hidden');
                 window.atualizarContagemRailLista();
+                if (window.ajustarLargurasPaineisAbertos) window.ajustarLargurasPaineisAbertos();
                 if (typeof renderizarGrafo === 'function') {
                     setTimeout(renderizarGrafo, 100);
                 }
@@ -7313,12 +7724,8 @@
                     e.preventDefault();
                 }
                 workspace.classList.remove('sidebar-hidden');
-                let savedW = DEFAULT_WIDTH;
-                try {
-                    savedW = localStorage.getItem('bncc_sidebar_width') || DEFAULT_WIDTH;
-                } catch (err) {}
-                sidebar.style.flex = `0 0 ${savedW}px`;
-                sidebar.style.width = `${savedW}px`;
+                aplicarLarguraSidebar(lerLarguraSalva());
+                if (window.ajustarLargurasPaineisAbertos) window.ajustarLargurasPaineisAbertos();
                 if (typeof renderizarGrafo === 'function') {
                     setTimeout(renderizarGrafo, 100);
                 }
@@ -7335,7 +7742,9 @@
                     window.toggleGraphFullscreen();
                 }
                 workspace.classList.remove('sidebar-hidden');
+                limparLarguraSidebar();
                 workspace.classList.add('graph-hidden');
+                if (window.ajustarLargurasPaineisAbertos) window.ajustarLargurasPaineisAbertos();
             };
 
             // Restaurar Mapa Interativo
@@ -7345,59 +7754,76 @@
                     e.preventDefault();
                 }
                 workspace.classList.remove('graph-hidden');
-                let savedW = DEFAULT_WIDTH;
-                try {
-                    savedW = localStorage.getItem('bncc_sidebar_width') || DEFAULT_WIDTH;
-                } catch (err) {}
-                sidebar.style.flex = `0 0 ${savedW}px`;
-                sidebar.style.width = `${savedW}px`;
+                aplicarLarguraSidebar(lerLarguraSalva());
+                if (window.ajustarLargurasPaineisAbertos) window.ajustarLargurasPaineisAbertos();
                 if (typeof renderizarGrafo === 'function') {
                     setTimeout(renderizarGrafo, 100);
                 }
             };
         })();
 
-        // Segunda alça: ajusta a proporção entre o mapa flexível e o painel Detalhes.
+        // Segunda alça: ajusta a largura entre o painel Detalhes (meio) e o Mapa (direita).
         (function inicializarResizeDetalhes() {
             const workspace = document.getElementById('unifiedWorkspace');
             const handle = document.getElementById('detailsResizeHandle');
             const graph = document.getElementById('graphViewSection');
             const details = document.getElementById('skillDrawer');
-            if (!workspace || !handle || !graph || !details) return;
+            const sidebar = document.getElementById('resultsArea');
+            if (!workspace || !handle || !graph || !details || !sidebar) return;
 
             const MIN_DETAILS_WIDTH = 260;
             const MIN_GRAPH_WIDTH = 280;
-            const DEFAULT_DETAILS_WIDTH = 360;
             let dragging = false;
             let startX = 0;
-            let startWidth = 0;
+            let parAtivo = null;
+            let largurasIniciais = null;
+            let activePointerId = null;
+
+            const aplicarLarguraDetalhes = width => {
+                aplicarLarguraPainelResize('detalhes', width);
+            };
 
             try {
                 const savedWidth = Number(localStorage.getItem('bncc_details_width'));
-                if (savedWidth >= MIN_DETAILS_WIDTH) {
-                    details.style.flex = `0 0 ${savedWidth}px`;
-                    details.style.width = `${savedWidth}px`;
-                }
+                if (savedWidth >= MIN_DETAILS_WIDTH) aplicarLarguraDetalhes(savedWidth);
             } catch (_) {}
 
             const iniciar = clientX => {
-                if (window.innerWidth <= 1024 || !details.classList.contains('active') || workspace.classList.contains('graph-hidden')) return;
-                dragging = true;
+                if (window.innerWidth <= 1024) return;
+                const par = obterParPainelResize('detalhes');
+                if (!par) return;
+                parAtivo = par;
                 startX = clientX;
-                startWidth = details.getBoundingClientRect().width;
+                dragging = true;
                 handle.classList.add('is-dragging');
                 document.body.classList.add('is-resizing');
+                void workspace.offsetWidth;
+                largurasIniciais = {
+                    a: obterElementoPainelResize(par.a).getBoundingClientRect().width,
+                    b: obterElementoPainelResize(par.b).getBoundingClientRect().width
+                };
             };
 
             const mover = clientX => {
-                if (!dragging) return;
-                const delta = clientX - startX;
-                const maxWidth = workspace.clientWidth
-                    - document.getElementById('resultsArea').getBoundingClientRect().width
-                    - MIN_GRAPH_WIDTH - 46;
-                const width = Math.max(MIN_DETAILS_WIDTH, Math.min(startWidth - delta, maxWidth));
-                details.style.flex = `0 0 ${width}px`;
-                details.style.width = `${width}px`;
+                if (!dragging || !parAtivo || !largurasIniciais) return;
+                const minA = obterLarguraMinimaPainelResize(parAtivo.a);
+                const pedido = (clientX - startX) * parAtivo.direcao;
+                if (parAtivo.mapaFlexivel) {
+                    // Detalhes e Mapa redistribuem somente o espaço que já
+                    // ocupavam juntos; a Lista e a borda direita ficam fixas.
+                    const maxWidth = Math.max(minA, largurasIniciais.a + largurasIniciais.b - MIN_GRAPH_WIDTH);
+                    const width = Math.max(minA, Math.min(largurasIniciais.a + pedido, maxWidth));
+                    aplicarLarguraPainelResize('detalhes', width);
+                    // O mapa continua ancorado na borda direita e preenche o
+                    // espaço restante, em vez de redimensionar a partir da direita.
+                    graph.style.flex = '1 1 0px';
+                    graph.style.removeProperty('width');
+                } else {
+                    const minB = obterLarguraMinimaPainelResize(parAtivo.b);
+                    const delta = Math.max(minA - largurasIniciais.a, Math.min(pedido, largurasIniciais.b - minB));
+                    aplicarLarguraPainelResize(parAtivo.a, largurasIniciais.a + delta);
+                    aplicarLarguraPainelResize(parAtivo.b, largurasIniciais.b - delta);
+                }
             };
 
             const finalizar = () => {
@@ -7405,30 +7831,123 @@
                 dragging = false;
                 handle.classList.remove('is-dragging');
                 document.body.classList.remove('is-resizing');
-                try {
-                    localStorage.setItem('bncc_details_width', Math.round(details.getBoundingClientRect().width));
-                } catch (_) {}
+                if (parAtivo) {
+                    [parAtivo.a, parAtivo.b].forEach(tipo => {
+                        salvarLarguraPainelResize(tipo, obterElementoPainelResize(tipo).getBoundingClientRect().width);
+                    });
+                }
+                parAtivo = null;
+                largurasIniciais = null;
+                activePointerId = null;
                 if (typeof renderizarGrafo === 'function') setTimeout(renderizarGrafo, 60);
             };
 
-            handle.addEventListener('mousedown', event => {
+            // Pointer Events unificam mouse, caneta e toque; pointer capture
+            // mantém o arraste mesmo se o cursor sair da faixa estreita.
+            handle.addEventListener('pointerdown', event => {
+                if (event.button !== 0 || !event.isPrimary) return;
                 event.preventDefault();
                 iniciar(event.clientX);
+                if (!dragging) return;
+                activePointerId = event.pointerId;
+                try { handle.setPointerCapture(event.pointerId); } catch (_) {}
             });
-            window.addEventListener('mousemove', event => mover(event.clientX));
-            window.addEventListener('mouseup', finalizar);
-            handle.addEventListener('touchstart', event => {
-                if (event.touches?.length === 1) iniciar(event.touches[0].clientX);
-            }, { passive: true });
-            window.addEventListener('touchmove', event => {
-                if (event.touches?.length === 1) mover(event.touches[0].clientX);
-            }, { passive: true });
-            window.addEventListener('touchend', finalizar);
+            window.addEventListener('pointermove', event => {
+                if (dragging && event.pointerId === activePointerId) mover(event.clientX);
+            });
+            const finalizarPointer = event => {
+                if (!dragging || (event && event.pointerId !== activePointerId)) return;
+                activePointerId = null;
+                finalizar();
+            };
+            window.addEventListener('pointerup', finalizarPointer);
+            window.addEventListener('pointercancel', finalizarPointer);
+            handle.addEventListener('lostpointercapture', finalizarPointer);
             handle.addEventListener('dblclick', () => {
-                details.style.flex = `0 0 ${DEFAULT_DETAILS_WIDTH}px`;
-                details.style.width = `${DEFAULT_DETAILS_WIDTH}px`;
-                try { localStorage.setItem('bncc_details_width', DEFAULT_DETAILS_WIDTH); } catch (_) {}
+                if (window.innerWidth <= 1024) return;
+                const par = obterParPainelResize('detalhes');
+                if (par) {
+                    const soma = obterElementoPainelResize(par.a).getBoundingClientRect().width
+                        + obterElementoPainelResize(par.b).getBoundingClientRect().width;
+                    const min = obterLarguraMinimaPainelResize(par.a);
+                    const largura = Math.max(min, Math.floor(soma / 2));
+                    aplicarLarguraPainelResize(par.a, largura);
+                    if (par.mapaFlexivel) {
+                        graph.style.flex = '1 1 0px';
+                        graph.style.removeProperty('width');
+                    } else {
+                        aplicarLarguraPainelResize(par.b, soma - largura);
+                    }
+                }
                 if (typeof renderizarGrafo === 'function') setTimeout(renderizarGrafo, 60);
+            });
+
+            // A cada abertura, os três painéis iniciam com a mesma largura.
+            // Depois disso, o usuário pode redimensioná-los normalmente.
+            if (window.innerWidth > 1024 && details.classList.contains('active')) {
+                const workspaceStyle = getComputedStyle(workspace);
+                const gap = parseFloat(workspaceStyle.columnGap || workspaceStyle.gap) || 0;
+                const padding = (parseFloat(workspaceStyle.paddingLeft) || 0)
+                    + (parseFloat(workspaceStyle.paddingRight) || 0);
+                const handlesWidth = (handle.getBoundingClientRect().width || 4)
+                    + (document.getElementById('workspaceResizeHandle')?.getBoundingClientRect().width || 4);
+                const available = workspace.clientWidth - padding - handlesWidth - (gap * 4);
+                const equalWidth = Math.max(220, Math.floor(available / 3));
+
+                document.body.classList.add('workspace-layout-initializing');
+                sidebar.style.removeProperty('flex');
+                sidebar.style.removeProperty('width');
+                sidebar.style.flex = `0 0 ${equalWidth}px`;
+                sidebar.style.width = `${equalWidth}px`;
+                aplicarLarguraDetalhes(equalWidth);
+                graph.style.flex = `0 0 ${equalWidth}px`;
+                graph.style.width = `${equalWidth}px`;
+                void workspace.offsetWidth;
+                document.body.classList.remove('workspace-layout-initializing');
+            }
+        })();
+
+        // No desktop, a legenda começa recolhida para liberar altura ao mapa.
+        (function inicializarControlesLegendaGrafo() {
+            const legenda = document.getElementById('graphLegend');
+            if (!legenda) return;
+            const secoes = [...legenda.querySelectorAll('.legend-section')];
+            if (!secoes.length) return;
+
+            let desktop = window.innerWidth > 1024;
+            const definirRecolhimento = (secao, recolhida) => {
+                secao.classList.toggle('is-collapsed', recolhida);
+                const botao = secao.querySelector('.legend-section-title');
+                if (botao) {
+                    botao.setAttribute('aria-expanded', String(!recolhida));
+                    botao.disabled = !desktop;
+                }
+            };
+            const atualizarResumo = () => {
+                legenda.classList.toggle('is-all-collapsed', secoes.every(secao => secao.classList.contains('is-collapsed')));
+            };
+            const redesenharMapa = () => requestAnimationFrame(() => {
+                if (typeof renderizarGrafo === 'function') renderizarGrafo();
+            });
+
+            secoes.forEach(secao => {
+                const botao = secao.querySelector('.legend-section-title');
+                if (!botao) return;
+                botao.addEventListener('click', () => {
+                    definirRecolhimento(secao, !secao.classList.contains('is-collapsed'));
+                    atualizarResumo();
+                    redesenharMapa();
+                });
+                definirRecolhimento(secao, desktop);
+            });
+            atualizarResumo();
+
+            window.addEventListener('resize', () => {
+                const agoraDesktop = window.innerWidth > 1024;
+                if (agoraDesktop === desktop) return;
+                desktop = agoraDesktop;
+                secoes.forEach(secao => definirRecolhimento(secao, desktop));
+                atualizarResumo();
             });
         })();
 
@@ -8368,6 +8887,10 @@
                 if (interModal && interModal.style.display !== 'none') {
                     window.fecharModalInterdisciplinar();
                 }
+                const spiralModal = document.getElementById('spiralModalBackdrop');
+                if (spiralModal && spiralModal.style.display !== 'none') {
+                    window.fecharModalProgressaoEspiral();
+                }
                 const dossieModal = document.getElementById('dossieModalBackdrop');
                 if (dossieModal && dossieModal.style.display !== 'none') {
                     window.fecharModalDossie && window.fecharModalDossie();
@@ -8389,11 +8912,6 @@
             queryAtual = '';
             selectedNodeCode = null;
 
-            // Limpa o histórico de navegação entre habilidades (estado inicial virgem)
-            historicoNavegacao = [];
-            historicoIndice = -1;
-            atualizarBotaoVoltar();
-
             // 2. Fecha drawer / modal lateral e limpa pílula flutuante
             fecharDrawer();
             const pill = document.getElementById('drawerFloatingPill');
@@ -8404,6 +8922,7 @@
             window.fecharModalRankingRelacoes && window.fecharModalRankingRelacoes();
             window.fecharModalMapasFocoReuna && window.fecharModalMapasFocoReuna();
             window.fecharModalInterdisciplinar && window.fecharModalInterdisciplinar();
+            window.fecharModalProgressaoEspiral && window.fecharModalProgressaoEspiral();
             window.fecharModalCreditosReuna && window.fecharModalCreditosReuna();
 
             // 4. Se o modo interdisciplinar estiver ativo, desativa
@@ -8430,6 +8949,254 @@
             window.scrollTo({ top: 0, behavior: 'smooth' });
 
             window.showToast('🧹 Visualização limpa: estado inicial restaurado');
+        };
+
+        // ======================================================================
+        // Modal de Progressão Temática Espiral (Maritaca - Matemática no Ensino Fundamental)
+        // ======================================================================
+        const unidadesProgressaoEspiral = [
+            { nome: 'Números', icone: '🔢' },
+            { nome: 'Álgebra', icone: '𝑥' },
+            { nome: 'Geometria', icone: '📐' },
+            { nome: 'Grandezas e medidas', icone: '📏' },
+            { nome: 'Probabilidade e estatística', icone: '📊' }
+        ];
+        let progressaoEspiralUnidadeAtiva = 'Números';
+        let progressaoEspiralAnoAtivo = 'todos';
+
+        function escaparHTMLProgressao(valor) {
+            return String(valor ?? '').replace(/[&<>"']/g, caractere => ({
+                '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;'
+            }[caractere]));
+        }
+
+        function obterAnosProgressao(item) {
+            const faixa = String(item?.ano_faixa || '');
+            const intervalo = faixa.match(/(?:^|\D)([1-9])\s*º?\s*(?:ao|a|até|[-–])\s*([1-9])\s*º?/i);
+            if (intervalo) {
+                const inicio = Number(intervalo[1]);
+                const fim = Number(intervalo[2]);
+                if (inicio <= fim) return Array.from({ length: fim - inicio + 1 }, (_, i) => inicio + i);
+            }
+            const anosFaixa = Array.from(faixa.matchAll(/(?:^|\D)([1-9])\s*º?/g), match => Number(match[1]));
+            if (anosFaixa.length) return [...new Set(anosFaixa)];
+            const codigo = String(item?.codigo || '').toUpperCase();
+            const codigoAno = codigo.match(/^EF(\d{2})/);
+            if (!codigoAno) return [];
+            const faixaCodigo = Number(codigoAno[1]);
+            if (faixaCodigo === 15) return [1, 2, 3, 4, 5];
+            if (faixaCodigo === 35) return [3, 4, 5];
+            if (faixaCodigo === 12) return [1, 2];
+            return faixaCodigo >= 1 && faixaCodigo <= 9 ? [faixaCodigo] : [];
+        }
+
+        function rotuloTipoRelacaoEspiral(tipo) {
+            return ({
+                pre_requisito_direto: 'Pré-requisito direto',
+                retomada_espiral: 'Retomada / progressão espiral',
+                apoio: 'Apoio não obrigatório',
+                paralela: 'Paralela, sem dependência'
+            })[tipo] || 'Relação sugerida';
+        }
+
+        function obterRelacoesDaHabilidadeEspiral(codigo) {
+            const registros = Array.isArray(catalogoProgressaoEspiral?.relacoes) ? catalogoProgressaoEspiral.relacoes : [];
+            const relacionadas = registros.filter(relacao => relacao.origem === codigo || relacao.destino === codigo);
+            const prioridade = { pre_requisito_direto: 0, retomada_espiral: 1, apoio: 2, paralela: 3 };
+            return relacionadas.sort((a, b) => (prioridade[a.tipo] ?? 9) - (prioridade[b.tipo] ?? 9));
+        }
+
+        function renderizarAbasUnidadeProgressao() {
+            const container = document.getElementById('spiralUnitTabs');
+            if (!container) return;
+            container.innerHTML = unidadesProgressaoEspiral.map(unidade => `
+                <button type="button" class="spiral-unit-tab ${progressaoEspiralUnidadeAtiva === unidade.nome ? 'is-active' : ''}"
+                    data-unit="${escaparHTMLProgressao(unidade.nome)}" role="tab"
+                    aria-selected="${progressaoEspiralUnidadeAtiva === unidade.nome ? 'true' : 'false'}"
+                    onclick="window.setProgressaoEspiralUnidade('${escaparHTMLProgressao(unidade.nome)}')">
+                    <span aria-hidden="true">${unidade.icone}</span> ${escaparHTMLProgressao(unidade.nome)}
+                </button>
+            `).join('');
+        }
+
+        function renderizarPillsAnoProgressao() {
+            const container = document.getElementById('spiralYearPills');
+            if (!container) return;
+            const anos = [
+                { id: 'todos', label: 'Todos os anos' },
+                ...Array.from({ length: 9 }, (_, index) => ({ id: String(index + 1), label: `${index + 1}º ano` }))
+            ];
+            container.innerHTML = anos.map(ano => `
+                <button type="button" class="spiral-year-pill ${progressaoEspiralAnoAtivo === ano.id ? 'is-active' : ''}"
+                    aria-pressed="${progressaoEspiralAnoAtivo === ano.id}"
+                    onclick="window.setProgressaoEspiralAno('${ano.id}')">${ano.label}</button>
+            `).join('');
+        }
+
+        function renderizarCardsProgressaoEspiral() {
+            const container = document.getElementById('spiralCardsContainer');
+            const stats = document.getElementById('spiralStats');
+            const statusGeracao = document.getElementById('spiralGenerationStatus');
+            if (!container || !stats) return;
+
+            const listaCodigos = new Set(Array.isArray(catalogoProgressaoEspiral?.habilidades) ? catalogoProgressaoEspiral.habilidades : []);
+            const itensEscopo = (baseBNCC || []).filter(item =>
+                item.disciplina === 'Matemática' &&
+                item.codigo?.startsWith('EF') &&
+                unidadesProgressaoEspiral.some(unidade => unidade.nome === item.unidade_tematica) &&
+                (!listaCodigos.size || listaCodigos.has(item.codigo))
+            );
+            const busca = (document.getElementById('spiralSearchInput')?.value || '').trim().toLocaleLowerCase('pt-BR');
+            const filtrados = itensEscopo.filter(item => {
+                if (item.unidade_tematica !== progressaoEspiralUnidadeAtiva) return false;
+                const anos = obterAnosProgressao(item);
+                if (progressaoEspiralAnoAtivo !== 'todos' && !anos.includes(Number(progressaoEspiralAnoAtivo))) return false;
+                const texto = `${item.codigo || ''} ${item.habilidade || ''} ${item.objeto_conhecimento || ''}`.toLocaleLowerCase('pt-BR');
+                return !busca || texto.includes(busca);
+            }).sort((a, b) => {
+                const anoA = Math.min(...(obterAnosProgressao(a).length ? obterAnosProgressao(a) : [99]));
+                const anoB = Math.min(...(obterAnosProgressao(b).length ? obterAnosProgressao(b) : [99]));
+                return anoA - anoB || a.codigo.localeCompare(b.codigo);
+            });
+
+            const codigosVisiveis = new Set(filtrados.map(item => item.codigo));
+            const relacoesVisiveis = (catalogoProgressaoEspiral?.relacoes || []).filter(relacao =>
+                codigosVisiveis.has(relacao.origem) || codigosVisiveis.has(relacao.destino)
+            );
+            const meta = catalogoProgressaoEspiral?.meta || {};
+            const rotuloHabilidades = filtrados.length === 1 ? 'habilidade' : 'habilidades';
+            const rotuloRelacoes = relacoesVisiveis.length === 1 ? 'relação sugerida' : 'relações sugeridas';
+            stats.innerHTML = `<strong>${filtrados.length}</strong> ${rotuloHabilidades} nesta visualização <span>•</span> <strong>${relacoesVisiveis.length}</strong> ${rotuloRelacoes}`;
+            if (!itensEscopo.length) {
+                statusGeracao.textContent = 'Aguardando carregamento da BNCC';
+            } else if (!meta.total_habilidades) {
+                statusGeracao.textContent = 'Dados da geração ainda não disponíveis';
+            } else {
+                const modelos = (meta.modelos || []).join(', ') || 'modelo não informado';
+                const lotes = meta.lotes_total ? `${meta.lotes_concluidos || 0}/${meta.lotes_total} lotes` : '';
+                const parcial = meta.lotes_concluidos < meta.lotes_total ? ' • geração em andamento' : '';
+                statusGeracao.textContent = `Maritaca • ${modelos}${lotes ? ` • ${lotes}` : ''}${parcial}`;
+            }
+
+            const tabs = document.querySelectorAll('#spiralUnitTabs .spiral-unit-tab');
+            tabs.forEach(tab => {
+                const ativo = tab.getAttribute('data-unit') === progressaoEspiralUnidadeAtiva;
+                tab.classList.toggle('is-active', ativo);
+                tab.setAttribute('aria-selected', ativo ? 'true' : 'false');
+            });
+
+            if (!filtrados.length) {
+                container.innerHTML = `<div class="spiral-empty-state"><span aria-hidden="true">🔎</span><strong>Nenhuma habilidade encontrada</strong><p>Altere o ano ou o termo de busca para ver outras habilidades da unidade temática.</p></div>`;
+                return;
+            }
+
+            const grupos = new Map();
+            filtrados.forEach(item => {
+                const ano = String(item.ano_faixa || 'Ano não informado').replace(/\s+/g, ' ').trim();
+                if (!grupos.has(ano)) grupos.set(ano, []);
+                grupos.get(ano).push(item);
+            });
+
+            const ordemTipos = ['pre_requisito_direto', 'retomada_espiral', 'apoio', 'paralela'];
+            container.innerHTML = Array.from(grupos.entries()).map(([ano, itens]) => `
+                <section class="spiral-year-group">
+                    <header class="spiral-year-group-header">
+                        <div><span class="spiral-group-kicker">PROGRESSÃO POR ANO / FAIXA</span><h3>${escaparHTMLProgressao(ano)}</h3></div>
+                        <span class="spiral-group-count">${itens.length} ${itens.length === 1 ? 'habilidade' : 'habilidades'}</span>
+                    </header>
+                    <div class="spiral-skill-grid">
+                        ${itens.map(item => {
+                            const relacoes = obterRelacoesDaHabilidadeEspiral(item.codigo);
+                            const contagem = ordemTipos.map(tipo => ({ tipo, total: relacoes.filter(relacao => relacao.tipo === tipo).length })).filter(x => x.total);
+                            const objeto = String(item.objeto_conhecimento || '').replace(/\s+/g, ' ').trim();
+                            const resumo = String(item.habilidade || '').replace(/^\([A-Z0-9]+\)\s*/, '').replace(/\s+/g, ' ').trim();
+                            const relacoesHtml = relacoes.length ? relacoes.map(relacao => {
+                                const paralela = relacao.tipo === 'paralela';
+                                const vemAntes = !paralela && relacao.destino === item.codigo;
+                                const outroCodigo = relacao.origem === item.codigo ? relacao.destino : relacao.origem;
+                                const outra = mapaBNCCPorCodigo.get(outroCodigo);
+                                const direcao = paralela ? 'Em paralelo' : (vemAntes ? 'Vem antes' : 'Prepara para');
+                                const parteTexto = String(outra?.habilidade || '').replace(/^\([A-Z0-9]+\)\s*/, '').replace(/\s+/g, ' ').trim();
+                                const outraUnidade = outra?.unidade_tematica && outra.unidade_tematica !== item.unidade_tematica
+                                    ? `<span class="spiral-cross-unit">${escaparHTMLProgressao(outra.unidade_tematica)}</span>` : '';
+                                return `
+                                    <article class="spiral-relation type-${escaparHTMLProgressao(relacao.tipo)}">
+                                        <div class="spiral-relation-heading">
+                                            <span class="spiral-direction">${direcao}</span>
+                                            <span class="spiral-relation-type">${escaparHTMLProgressao(rotuloTipoRelacaoEspiral(relacao.tipo))}</span>
+                                            ${outraUnidade}
+                                        </div>
+                                        <button type="button" class="spiral-related-skill" onclick="window.abrirFichaProgressaoEspiral('${escaparHTMLProgressao(outroCodigo)}')" title="Abrir a ficha de ${escaparHTMLProgressao(outroCodigo)}">
+                                            <strong>${escaparHTMLProgressao(outroCodigo)}</strong><span>${escaparHTMLProgressao(parteTexto)}</span>
+                                        </button>
+                                        <p class="spiral-rationale">${escaparHTMLProgressao(relacao.justificativa || 'Relação pedagógica sugerida pela IA.')}</p>
+                                        <span class="spiral-confidence confidence-${escaparHTMLProgressao(relacao.confianca || 'media')}">Confiança ${escaparHTMLProgressao(relacao.confianca || 'média')}</span>
+                                    </article>
+                                `;
+                            }).join('') : `<p class="spiral-no-relations">Nenhuma relação foi sugerida para esta habilidade. Isso não significa que não existam outras relações possíveis.</p>`;
+                            return `
+                                <article class="spiral-skill-card" id="spiral-skill-${escaparHTMLProgressao(item.codigo)}">
+                                    <div class="spiral-skill-card-top">
+                                        <span class="spiral-skill-code">${escaparHTMLProgressao(item.codigo)}</span>
+                                        <span class="spiral-skill-year">${escaparHTMLProgressao(item.ano_faixa || 'EF')}</span>
+                                    </div>
+                                    ${objeto ? `<div class="spiral-skill-object">${escaparHTMLProgressao(objeto)}</div>` : ''}
+                                    <p class="spiral-skill-description">${escaparHTMLProgressao(resumo)}</p>
+                                    <div class="spiral-skill-summary-row">
+                                        <span>${relacoes.length ? `${relacoes.length} ${relacoes.length === 1 ? 'relação' : 'relações'} sugeridas` : 'Sem relação mapeada'}</span>
+                                        ${contagem.map(contagemTipo => `<span class="spiral-mini-type type-${contagemTipo.tipo}">${contagemTipo.total} ${escaparHTMLProgressao(rotuloTipoRelacaoEspiral(contagemTipo.tipo))}</span>`).join('')}
+                                    </div>
+                                    <details class="spiral-relations-details" ${relacoes.length ? '' : ''}>
+                                        <summary>${relacoes.length ? 'Ver relações e justificativas' : 'Sobre as relações'} <span>${relacoes.length}</span></summary>
+                                        <div class="spiral-relations-list">${relacoesHtml}</div>
+                                    </details>
+                                    <button type="button" class="spiral-open-skill" onclick="window.abrirFichaProgressaoEspiral('${escaparHTMLProgressao(item.codigo)}')">Abrir ficha da habilidade <span aria-hidden="true">↗</span></button>
+                                </article>
+                            `;
+                        }).join('')}
+                    </div>
+                </section>
+            `).join('');
+        }
+
+        window.setProgressaoEspiralUnidade = function(unidade) {
+            if (!unidadesProgressaoEspiral.some(opcao => opcao.nome === unidade)) return;
+            progressaoEspiralUnidadeAtiva = unidade;
+            progressaoEspiralAnoAtivo = 'todos';
+            renderizarPillsAnoProgressao();
+            renderizarCardsProgressaoEspiral();
+        };
+
+        window.setProgressaoEspiralAno = function(ano) {
+            progressaoEspiralAnoAtivo = String(ano || 'todos');
+            renderizarPillsAnoProgressao();
+            renderizarCardsProgressaoEspiral();
+        };
+
+        window.filtrarProgressaoEspiral = function() {
+            renderizarCardsProgressaoEspiral();
+        };
+
+        window.abrirModalProgressaoEspiral = function() {
+            const backdrop = document.getElementById('spiralModalBackdrop');
+            if (!backdrop) return;
+            backdrop.style.display = 'flex';
+            document.body.style.overflow = 'hidden';
+            renderizarAbasUnidadeProgressao();
+            renderizarPillsAnoProgressao();
+            renderizarCardsProgressaoEspiral();
+        };
+
+        window.fecharModalProgressaoEspiral = function(event) {
+            if (event && event.target && event.target.id !== 'spiralModalBackdrop' && !event.target.closest('.spiral-close-btn')) return;
+            const backdrop = document.getElementById('spiralModalBackdrop');
+            if (backdrop) backdrop.style.display = 'none';
+            document.body.style.overflow = '';
+        };
+
+        window.abrirFichaProgressaoEspiral = function(codigo) {
+            window.fecharModalProgressaoEspiral();
+            window.abrirHabilidadePorCodigo?.(codigo);
         };
 
         // ======================================================================
@@ -8669,8 +9436,53 @@
 
             const visiveis = filtradas.slice(0, reunaFocoLimite);
             let html = '';
+            const gruposEtapa = new Map();
+            const etapaMeta = {
+                EI: { ordem: 0, titulo: 'Educação Infantil' },
+                EF_INICIAIS: { ordem: 1, titulo: 'Ensino Fundamental · Anos Iniciais' },
+                EF_FINAIS: { ordem: 2, titulo: 'Ensino Fundamental · Anos Finais' },
+                EF_GERAL: { ordem: 3, titulo: 'Ensino Fundamental' },
+                EM: { ordem: 4, titulo: 'Ensino Médio' }
+            };
+            const escaparTextoGrupo = valor => String(valor ?? '').replace(/[&<>"']/g, c => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c]));
+            const rotuloContagemGrupo = total => `${total} ${total === 1 ? 'habilidade exibida' : 'habilidades exibidas'}`;
 
             visiveis.forEach(item => {
+                const infoGrupo = extrairEtapaCurricular(item);
+                const etapaKey = etapaMeta[infoGrupo.etapa] ? infoGrupo.etapa : 'EF_GERAL';
+                const etapaDetalhe = etapaMeta[etapaKey];
+                const anoLabelOriginal = (item.ano_faixa || infoGrupo.nomeEtapa || 'Ano/Fase não informado').trim();
+                const anoNumerico = anoLabelOriginal.match(/^(\d+)\s*[º°]?$/);
+                const anoLabel = anoNumerico
+                    ? `${anoNumerico[1]}º ${etapaKey === 'EM' ? 'Ano do Ensino Médio' : 'Ano'}`
+                    : anoLabelOriginal;
+                const anoKey = anoLabel.toLocaleLowerCase('pt-BR').replace(/\s+/g, ' ');
+                const codigoEtapa = (item.codigo || '').toUpperCase();
+                const ordemAno = etapaKey === 'EI'
+                    ? Number(codigoEtapa.match(/^EI0?(\d)/)?.[1] || 99)
+                    : (infoGrupo.anos?.[0] ?? 99);
+                const componenteLabel = (item.disciplina || 'Geral').trim();
+                const componenteKey = componenteLabel.toLocaleLowerCase('pt-BR');
+
+                let grupoEtapa = gruposEtapa.get(etapaKey);
+                if (!grupoEtapa) {
+                    grupoEtapa = { chave: etapaKey, titulo: etapaDetalhe.titulo, ordem: etapaDetalhe.ordem, total: 0, anos: new Map() };
+                    gruposEtapa.set(etapaKey, grupoEtapa);
+                }
+                let grupoAno = grupoEtapa.anos.get(anoKey);
+                if (!grupoAno) {
+                    grupoAno = { titulo: anoLabel, ordem: ordemAno, total: 0, componentes: new Map() };
+                    grupoEtapa.anos.set(anoKey, grupoAno);
+                }
+                let grupoComponente = grupoAno.componentes.get(componenteKey);
+                if (!grupoComponente) {
+                    grupoComponente = { titulo: componenteLabel, total: 0, cardsHtml: '' };
+                    grupoAno.componentes.set(componenteKey, grupoComponente);
+                }
+                grupoEtapa.total++;
+                grupoAno.total++;
+                grupoComponente.total++;
+
                 const discCor = getDisciplinaCor(item.disciplina);
                 const rel = catalogoRelacoesFinais[item.codigo] || null;
                 const reqList = (rel && rel.requisitos) ? rel.requisitos : [];
@@ -8796,7 +9608,7 @@
                     `;
                 }
 
-                html += `
+                grupoComponente.cardsHtml += `
                     <div class="rf-card ${tagClass}" onclick="window.selecionarHabilidadeDoReuna('${item.codigo}')" style="--rf-accent: ${discCor};">
                         <div class="rf-card-header">
                             <div class="rf-header-left">
@@ -8842,10 +9654,57 @@
                 `;
             });
 
+            html = Array.from(gruposEtapa.values())
+                .sort((a, b) => a.ordem - b.ordem || a.titulo.localeCompare(b.titulo, 'pt-BR'))
+                .map(grupoEtapa => {
+                    const gruposAnoHtml = Array.from(grupoEtapa.anos.values())
+                        .sort((a, b) => a.ordem - b.ordem || a.titulo.localeCompare(b.titulo, 'pt-BR'))
+                        .map(grupoAno => {
+                            const gruposComponenteHtml = Array.from(grupoAno.componentes.values())
+                                .sort((a, b) => a.titulo.localeCompare(b.titulo, 'pt-BR'))
+                                .map(grupoComponente => {
+                                    const corComponente = getDisciplinaCor(grupoComponente.titulo);
+                                    return `
+                                        <section class="rf-component-group" style="--rf-accent:${corComponente};">
+                                            <header class="rf-component-group-header">
+                                                <span class="rf-component-group-dot" aria-hidden="true"></span>
+                                                <h5>${escaparTextoGrupo(grupoComponente.titulo)}</h5>
+                                                <span class="rf-group-count">${rotuloContagemGrupo(grupoComponente.total)}</span>
+                                            </header>
+                                            <div class="rf-component-cards">${grupoComponente.cardsHtml}</div>
+                                        </section>
+                                    `;
+                                }).join('');
+
+                            return `
+                                <section class="rf-year-group">
+                                    <header class="rf-year-group-header">
+                                        <h4><span class="rf-group-kicker">ANO / FASE</span>${escaparTextoGrupo(grupoAno.titulo)}</h4>
+                                        <span class="rf-group-count">${rotuloContagemGrupo(grupoAno.total)}</span>
+                                    </header>
+                                    <div class="rf-year-components">${gruposComponenteHtml}</div>
+                                </section>
+                            `;
+                        }).join('');
+
+                    return `
+                        <section class="rf-stage-group" data-stage="${escaparTextoGrupo(grupoEtapa.chave)}">
+                            <header class="rf-stage-group-header">
+                                <div>
+                                    <span class="rf-group-kicker">ETAPA / FASE</span>
+                                    <h3>${escaparTextoGrupo(grupoEtapa.titulo)}</h3>
+                                </div>
+                                <span class="rf-group-count">${rotuloContagemGrupo(grupoEtapa.total)}</span>
+                            </header>
+                            <div class="rf-stage-years">${gruposAnoHtml}</div>
+                        </section>
+                    `;
+                }).join('');
+
             if (filtradas.length > reunaFocoLimite) {
                 const restam = filtradas.length - reunaFocoLimite;
                 html += `
-                    <div style="grid-column: 1 / -1; text-align: center; padding: 18px 0;">
+                    <div class="rf-load-more-row" style="grid-column: 1 / -1; text-align: center; padding: 18px 0;">
                         <button type="button" class="btn-cat-load-more" onclick="window.carregarMaisReunaFoco()">
                             Carregar mais ${Math.min(100, restam)} habilidades do Reúna (restam ${restam}) ➔
                         </button>
@@ -9027,7 +9886,6 @@
 
             fatiadas.forEach((item, idx) => {
                 const discClass = getDisciplinaClass(item.disciplina);
-                const parceiras = item._disciplinasConectadas || [];
                 const pontes = item._conexoesInterdisciplinares || [];
                 const totalPontes = item._totalConexoesInter || 0;
                 const numDisc = item._numDisciplinasInter || 0;
@@ -9035,19 +9893,24 @@
                 const componentesIA = Object.keys(pontesIA);
                 const totalComponentes = numDisc + componentesIA.filter(c => !item._disciplinasConectadas.includes(c)).length;
                 const escaparHTML = valor => String(valor ?? '').replace(/[&<>"']/g, c => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c]));
-                const detalhesPontesIA = componentesIA.map(componente => {
+                const detalhesPontesIA = componentesIA.flatMap(componente => {
                     const ponte = pontesIA[componente] || {};
-                    const codigos = (ponte.codigos || []).map(codigo => `<span class="inter-partner-chip" title="Código candidato validado">${escaparHTML(codigo)}</span>`).join(' ');
-                    return `
-                        <details class="inter-ai-bridge-detail" onclick="event.stopPropagation()">
-                            <summary>✨ ${escaparHTML(componente)} <span class="inter-ai-confidence">${escaparHTML(ponte.confianca || 'media')}</span></summary>
-                            <div class="inter-ai-bridge-body">
-                                <div class="inter-ai-bridge-codes">Habilidades parceiras: ${codigos}</div>
-                                <p><strong>Por que conecta:</strong> ${escaparHTML(ponte.justificativa || '')}</p>
-                                <p><strong>Sugestão de atividade:</strong> ${escaparHTML(ponte.atividade || '')}</p>
-                                <small>✨ Sugestão gerada por IA; não é relação oficial da BNCC.</small>
-                            </div>
-                        </details>`;
+                    const classeComponente = getDisciplinaClass(componente);
+                    const corComponente = getDisciplinaCor(componente);
+                    const codigosPonte = Array.isArray(ponte.codigos) ? ponte.codigos : [];
+                    if (!codigosPonte.length) {
+                        return [`<div class="inter-ai-bridge-detail ${classeComponente} is-unlinked" style="--ai-component-color:${corComponente};"><span class="inter-ai-component-dot" aria-hidden="true"></span><span class="inter-ai-component-name">${escaparHTML(componente)}</span><span class="inter-ai-skill-code inter-ai-skill-missing">Sem código vinculado</span></div>`];
+                    }
+                    return codigosPonte.map(codigoPonte => `
+                        <button type="button" class="inter-ai-bridge-detail ${classeComponente}" style="--ai-component-color:${corComponente};"
+                            aria-label="Abrir detalhes de ${escaparHTML(componente)}, habilidade ${escaparHTML(codigoPonte)}"
+                            title="Abrir esta sugestão no painel de detalhes"
+                            onclick="event.stopPropagation(); window.abrirSugestaoInterdisciplinarNoDrawer('${escaparHTML(item.codigo)}','${escaparHTML(componente)}','${escaparHTML(codigoPonte)}')">
+                            <span class="inter-ai-component-dot" aria-hidden="true"></span>
+                            <span class="inter-ai-component-name">${escaparHTML(componente)}</span>
+                            <strong class="inter-ai-skill-code">${escaparHTML(codigoPonte)}</strong>
+                        </button>
+                    `);
                 }).join('');
 
                 html += `
@@ -9067,14 +9930,6 @@
                             <div class="inter-card-metric-badge" data-tooltip="${totalPontes} relações homologadas e sugestões de IA em ${componentesIA.length} componentes" title="Articulações homologadas e sugestões pedagógicas">
                                 🌐 ${totalComponentes} componentes &bull; ${totalPontes} homologadas${componentesIA.length ? ` &bull; ✨ ${componentesIA.length} sugestões` : ''}
                             </div>
-                        </div>
-
-                        <div class="inter-partners-row">
-                            <span class="inter-partners-label">Articula com:</span>
-                            ${parceiras.slice(0, 3).map(p => `<span class="inter-partner-chip">${p}</span>`).join('')}
-                            ${parceiras.length > 3 ? `<span class="inter-partner-chip more">+${parceiras.length - 3}</span>` : ''}
-                            ${componentesIA.slice(0, 3).map(p => `<span class="inter-partner-chip" title="Sugestão pedagógica de IA, não oficial">✨ ${p}</span>`).join('')}
-                            ${componentesIA.length > 3 ? `<span class="inter-partner-chip more" title="Mais componentes sugeridos pela IA">+${componentesIA.length - 3} IA</span>` : ''}
                         </div>
 
                         <p class="cat-card-desc">${(item.habilidade || '').replace(/^\([A-Za-z0-9]+\)\s*/, '')}</p>
@@ -9160,6 +10015,54 @@
             } else {
                 window.calcularHabilidadesMaisInterdisciplinares();
             }
+        };
+
+        window.abrirSugestaoInterdisciplinarNoDrawer = function(codigoCentral, componente, codigoRelacionado) {
+            const codigo = String(codigoCentral || '').toUpperCase().trim();
+            if (!codigo) return;
+            const backdrop = document.getElementById('interdisciplinarModalBackdrop');
+            if (backdrop) backdrop.style.display = 'none';
+            document.body.style.overflow = '';
+            searchInput.value = codigo;
+            clearBtn.style.display = 'flex';
+            if (customAutocomplete) customAutocomplete.style.display = 'none';
+
+            const focarSugestao = () => {
+                const grupo = document.getElementById('drawerAiBridgesGroup');
+                if (!grupo) return;
+                grupo.open = true;
+                const componenteAlvo = [...grupo.querySelectorAll('.ai-bridge-component')]
+                    .find(elemento => elemento.dataset.bridgeComponent === componente);
+                if (!componenteAlvo) return;
+                componenteAlvo.open = true;
+                grupo.querySelectorAll('.ai-bridge-code.is-bridge-focused').forEach(elemento => elemento.classList.remove('is-bridge-focused'));
+                const habilidadeAlvo = [...componenteAlvo.querySelectorAll('.ai-bridge-code')]
+                    .find(elemento => elemento.dataset.bridgeSkillCode === codigoRelacionado);
+                if (!habilidadeAlvo) return;
+                habilidadeAlvo.classList.add('is-bridge-focused');
+                habilidadeAlvo.focus({ preventScroll: true });
+                const painelRolavel = document.getElementById('drawerBody');
+                if (painelRolavel) {
+                    const alvoRect = habilidadeAlvo.getBoundingClientRect();
+                    const painelRect = painelRolavel.getBoundingClientRect();
+                    const deslocamento = alvoRect.top - painelRect.top - (painelRolavel.clientHeight - alvoRect.height) / 2;
+                    painelRolavel.scrollTop = Math.max(0, painelRolavel.scrollTop + deslocamento);
+                } else {
+                    habilidadeAlvo.scrollIntoView({ behavior: 'smooth', block: 'center' });
+                }
+            };
+
+            const drawerJaMostraAlvo = skillDrawer?.classList.contains('active') && drawerCodigoAberto === codigo;
+            if (drawerJaMostraAlvo) {
+                focarSugestao();
+                return;
+            }
+
+            window.listarRelacoesDaHabilidade(codigo);
+            setTimeout(() => {
+                window.abrirHabilidadePorCodigo(codigo);
+                setTimeout(focarSugestao, 140);
+            }, 120);
         };
 
         // Chips de busca rápida
@@ -9650,6 +10553,8 @@
 
             const relFinal = catalogoRelacoesFinais[codigo] || null;
             const prog = catalogoProgressao[codigo] || null;
+            const temProgressaoEspiralPDF = (catalogoProgressaoEspiral?.habilidades || []).includes(codigo);
+            const relacoesEspiralPDF = temProgressaoEspiralPDF ? obterRelacoesDaHabilidadeEspiral(codigo) : [];
 
             // 1. Captura a imagem do mapa visual de relações em alta resolução
             const imgInfo = await window.capturarImagemSvgGrafo(codigo);
@@ -9678,13 +10583,23 @@
                     codeColor: '#111827',
                     strongTitle: '#111827',
                     sectionBg: null, sectionBorder: '#94a3b8', sectionText: '#111827',
-                    prereqBorder: '#9ca3af', prereqText: '#78350f', prereqStrong: '#7c2d12',
-                    prepBorder: '#9ca3af', prepText: '#14532d', prepStrong: '#14532d',
+                    prereqBg: null, prereqBorder: '#9ca3af', prereqText: '#78350f', prereqStrong: '#7c2d12',
+                    prepBg: null, prepBorder: '#9ca3af', prepText: '#14532d', prepStrong: '#14532d',
                     metaColor: '#374151',
                     bodyText: '#111827',
                     muted: '#4b5563',
                     footerText: '#6b7280',
                     imgBorder: '#9ca3af',
+                    curriculumFill: null,
+                    curriculumBorder: '#9ca3af',
+                    curriculumAccent: '#374151',
+                    aiFill: null,
+                    aiBorder: '#6b7280',
+                    aiAccent: '#374151',
+                    aiMuted: '#4b5563',
+                    interFill: null,
+                    interBorder: '#9ca3af',
+                    interAccent: '#374151',
                     pageBgWhite: true
                 } : {
                     // Digital: colorido
@@ -9694,13 +10609,23 @@
                     codeColor: '#1e1b4b',
                     strongTitle: '#1e1b4b',
                     sectionBg: [241, 245, 249], sectionBorder: '#e2e8f0', sectionText: '#1e1b4b',
-                    prereqBorder: '#fde68a', prereqText: '#92400e', prereqStrong: '#b45309',
-                    prepBorder: '#bbf7d0', prepText: '#166534', prepStrong: '#15803d',
+                    prereqBg: [255, 251, 235], prereqBorder: '#fde68a', prereqText: '#92400e', prereqStrong: '#b45309',
+                    prepBg: [240, 253, 244], prepBorder: '#bbf7d0', prepText: '#166534', prepStrong: '#15803d',
                     metaColor: '#64748b',
                     bodyText: '#1e293b',
                     muted: '#64748b',
                     footerText: '#94a3b8',
                     imgBorder: '#cbd5e1',
+                    curriculumFill: [248, 250, 252],
+                    curriculumBorder: [199, 210, 254],
+                    curriculumAccent: [67, 56, 202],
+                    aiFill: [250, 245, 255],
+                    aiBorder: [221, 214, 254],
+                    aiAccent: [109, 40, 217],
+                    aiMuted: [91, 33, 182],
+                    interFill: [240, 253, 244],
+                    interBorder: [187, 247, 208],
+                    interAccent: [22, 101, 52],
                     pageBgWhite: false
                 };
 
@@ -9770,19 +10695,13 @@
                     y = 32;
                 }
 
-                // -------- Ficha da habilidade central (altura dinâmica) --------
-                // Calcula a altura do box com base no conteúdo (código/meta/tag/objeto)
-                let boxContentH = 12; // código + componente/ano
-                const partesMeta = [];
-                if (item.objeto_conhecimento) partesMeta.push(`Objeto: ${item.objeto_conhecimento}`);
-                if (item.unidade_tematica) partesMeta.push(`Unidade: ${item.unidade_tematica}`);
-                const metaLinhas = partesMeta.length ? pdfDoc.splitTextToSize(partesMeta.join('  •  '), contentWidth - 14) : [];
+                // -------- Identificação da habilidade (sem repetir a estrutura curricular) --------
+                let boxContentH = 12;
                 pdfDoc.setFont('helvetica', 'normal');
                 pdfDoc.setFontSize(FS.small);
                 const componenteLinhas = pdfDoc.splitTextToSize(`Componente: ${item.disciplina || 'Geral'}`, 69);
                 const anoLinhas = pdfDoc.splitTextToSize(`Ano/Fase: ${item.ano_faixa || 'BNCC'}`, contentWidth - 124);
-                const temTag = (item.classificacao_reuna === 'AF' || item.classificacao_reuna === 'AC');
-                boxContentH += (Math.max(componenteLinhas.length, anoLinhas.length, 1) - 1) * 4.5 + (temTag ? 6 : 0) + metaLinhas.length * 4.8;
+                boxContentH += (Math.max(componenteLinhas.length, anoLinhas.length, 1) - 1) * 4.5;
                 const boxH = Math.max(24, Math.min(72, boxContentH + 4));
 
                 setFill(T.boxBg);
@@ -9805,26 +10724,77 @@
                 componenteLinhas.forEach((linha, i) => pdfDoc.text(linha, margin + 42, y + 7.5 + i * 4.5));
                 anoLinhas.forEach((linha, i) => pdfDoc.text(linha, margin + 124, y + 7.5 + i * 4.5));
 
-                let metaY = y + 12;
-                if (temTag) {
-                    const hie = window.obterHierarquiaReuna ? window.obterHierarquiaReuna(item.codigo) : null;
-                    const focalText = item.classificacao_reuna === 'AF'
-                        ? ((hie && hie.tipo === 'AF') ? `HABILIDADE FOCAL ${hie.posicao} DE ${hie.total_grupo} (${(hie.componente || '').toUpperCase()})` : 'APRENDIZAGEM FOCAL (INSTITUTO REÚNA)')
-                        : 'APRENDIZAGEM COMPLEMENTAR (REÚNA)';
-                    pdfDoc.setFont('helvetica', 'bold');
-                    pdfDoc.setFontSize(FS.tiny);
-                    setText(T.prereqText);
-                    pdfDoc.text(focalText, margin + 7, metaY + 2);
-                    metaY += 6;
-                }
-                if (metaLinhas.length) {
-                    pdfDoc.setFont('helvetica', 'normal');
-                    pdfDoc.setFontSize(FS.tiny);
-                    setText(T.muted);
-                    metaLinhas.forEach(l => { pdfDoc.text(l, margin + 7, metaY + 2); metaY += 4.8; });
-                }
-
                 y += boxH + 6;
+
+                // -------- Estrutura curricular: abertura do conteúdo do dossiê --------
+                const hierarquiaInicial = window.obterHierarquiaReuna ? window.obterHierarquiaReuna(item.codigo) : null;
+                const classificacaoReuna = item.classificacao_reuna
+                    ? `${item.classificacao_reuna === 'AF' ? 'Aprendizagem Focal (AF) — conhecimento estruturante e prioritário para a progressão contínua.' : 'Aprendizagem Complementar (AC) — habilidade de apoio e contextualização.'}${hierarquiaInicial?.tipo === 'AF' ? ` Posição na matriz: ${hierarquiaInicial.posicao} de ${hierarquiaInicial.total_grupo} (${hierarquiaInicial.componente || item.disciplina}, ${hierarquiaInicial.ano_faixa || item.ano_faixa}).` : ''}`
+                    : '';
+                const normalizarCampoCurricularPDF = valor => String(valor ?? '').normalize('NFD').replace(/[\u0300-\u036f]/g, '').toLowerCase().trim();
+                const objetoConhecimentoPDF = normalizarCampoCurricularPDF(item.objeto_conhecimento);
+                const objetosAssociadosPDF = (relFinal?.objetos_conhecimento || []).filter(objeto => normalizarCampoCurricularPDF(objeto) !== objetoConhecimentoPDF);
+                const palavrasChavePDF = (item.palavras_chave || []).map(palavra => String(palavra || '').trim()).filter(palavra => {
+                    const termo = normalizarCampoCurricularPDF(palavra);
+                    if (!termo || termo === normalizarCampoCurricularPDF(item.codigo) || termo === normalizarCampoCurricularPDF(item.unidade_tematica)) return false;
+                    return !(termo.length > 24 && objetoConhecimentoPDF.includes(termo));
+                });
+                const camposEstrutura = [
+                    { label: 'Unidade temática', value: item.unidade_tematica || '' },
+                    { label: 'Objeto de conhecimento', value: item.objeto_conhecimento || '' },
+                    { label: 'Objetos associados nas relações BNCC', value: objetosAssociadosPDF.join('; ') },
+                    { label: 'Palavras-chave', value: palavrasChavePDF.join('  |  ') },
+                    { label: 'Referencial Instituto Reúna', value: classificacaoReuna },
+                    { label: 'Validação curricular', value: relFinal?.validado_jev ? 'Relações homologadas pela curadoria pedagógica do Jev.' : '' }
+                ].filter(campo => String(campo.value || '').trim());
+
+                if (camposEstrutura.length) {
+                    ensurePageRoom(48);
+                    y = window._pdfDrawSectionTitle(pdfDoc, 'ESTRUTURA CURRICULAR E PALAVRAS-CHAVE', margin, y, contentWidth, T, FS, modoImpressao);
+                    y += 2;
+                    const measureCurriculumField = (field, width) => {
+                        pdfDoc.setFont('helvetica', 'bold');
+                        pdfDoc.setFontSize(FS.tiny);
+                        const labelLines = pdfDoc.splitTextToSize(field.label.toUpperCase(), width - 10);
+                        pdfDoc.setFont('helvetica', 'normal');
+                        pdfDoc.setFontSize(FS.small);
+                        const valueLines = pdfDoc.splitTextToSize(String(field.value), width - 10);
+                        return { field, width, labelLines, valueLines, height: 8 + labelLines.length * 3.8 + valueLines.length * 4.4 };
+                    };
+                    const drawCurriculumRow = (fields, halfWidth = false) => {
+                        const gap = halfWidth && fields.length > 1 ? 4 : 0;
+                        const fieldWidth = (contentWidth - gap * (fields.length - 1)) / fields.length;
+                        const measured = fields.map(field => measureCurriculumField(field, fieldWidth));
+                        const rowHeight = Math.max(...measured.map(field => field.height));
+                        ensurePageRoom(rowHeight + 3);
+                        measured.forEach((field, index) => {
+                            const x = margin + index * (fieldWidth + gap);
+                            setFill(T.curriculumFill);
+                            setDraw(T.curriculumBorder);
+                            pdfDoc.setLineWidth(0.35);
+                            pdfDoc.roundedRect(x, y, fieldWidth, rowHeight, 1.5, 1.5, modoImpressao ? 'D' : 'FD');
+                            setFill(T.curriculumAccent);
+                            pdfDoc.rect(x, y, 1.4, rowHeight, 'F');
+                            pdfDoc.setFont('helvetica', 'bold');
+                            pdfDoc.setFontSize(FS.tiny);
+                            setText(T.curriculumAccent);
+                            let fieldY = y + 4.5;
+                            field.labelLines.forEach(line => { pdfDoc.text(line, x + 4, fieldY); fieldY += 3.8; });
+                            pdfDoc.setFont('helvetica', 'normal');
+                            pdfDoc.setFontSize(FS.small);
+                            setText(T.bodyText);
+                            fieldY += 1.4;
+                            field.valueLines.forEach(line => { pdfDoc.text(line, x + 4, fieldY); fieldY += 4.4; });
+                        });
+                        y += rowHeight + 3;
+                    };
+                    const unidade = camposEstrutura.find(campo => campo.label === 'Unidade temática');
+                    const objeto = camposEstrutura.find(campo => campo.label === 'Objeto de conhecimento');
+                    if (unidade && objeto) drawCurriculumRow([unidade, objeto], true);
+                    else if (unidade || objeto) drawCurriculumRow([unidade || objeto]);
+                    camposEstrutura.filter(campo => ![unidade, objeto].includes(campo)).forEach(campo => drawCurriculumRow([campo]));
+                    y += 3;
+                }
 
                 // -------- Descrição da habilidade (corpo 12pt, com quebra de página) --------
                 pdfDoc.setFont('helvetica', 'bold');
@@ -9907,7 +10877,7 @@
                         y += lines.length * 4.2 + 4;
                         return;
                     }
-                    for (const rel of arr.slice(0, 6)) {
+                    for (const rel of arr) {
                         const related = obterItemBaseBNCC(rel.codigo);
                         const title = `${rel.codigo}${related ? ` • ${related.disciplina || ''} (${related.ano_faixa || ''})` : ''}`;
                         const description = related ? (related.habilidade || '').replace(/^\([A-Za-z0-9]+\)\s*/, '') : '';
@@ -9916,17 +10886,14 @@
                         const titleLines = pdfDoc.splitTextToSize(title, contentWidth - 10);
                         pdfDoc.setFont('helvetica', 'normal');
                         pdfDoc.setFontSize(FS.tiny);
-                        const descLines = pdfDoc.splitTextToSize(description, contentWidth - 10).slice(0, 4);
+                        const descLines = pdfDoc.splitTextToSize(description, contentWidth - 10);
                         pdfDoc.setFont('helvetica', 'italic');
-                        // A justificativa oficial pode ser extensa. Limita-se a um
-                        // resumo legível no cartão, sem cortar uma palavra no meio.
-                        const justificativaCurta = rel.justificativa
-                            ? `${String(rel.justificativa).trim().slice(0, 190).replace(/\s+\S*$/, '')}...`
-                            : '';
-                        const justLines = justificativaCurta ? pdfDoc.splitTextToSize(justificativaCurta, contentWidth - 10).slice(0, 2) : [];
+                        const justificativaCompleta = rel.justificativa ? String(rel.justificativa).trim() : '';
+                        const justLines = justificativaCompleta ? pdfDoc.splitTextToSize(justificativaCompleta, contentWidth - 10) : [];
                         const cardH = 8 + titleLines.length * 4.5 + descLines.length * 4.4 + justLines.length * 4.4;
                         ensurePageRoom(cardH + 3);
 
+                        setFill(tipo === 'pre' ? T.prereqBg : T.prepBg);
                         setDraw(tipo === 'pre' ? T.prereqBorder : T.prepBorder);
                         pdfDoc.setLineWidth(0.4);
                         pdfDoc.roundedRect(margin, y, contentWidth, cardH, 1.5, 1.5, modoImpressao ? 'D' : 'FD');
@@ -9967,7 +10934,7 @@
                     y = window._pdfDrawSectionTitle(pdfDoc, `ARTICULAÇÕES INTERDISCIPLINARES NO CICLO (${interdisc.length})`, margin, y, contentWidth, T, FS, modoImpressao);
                     y += 3;
                     pdfDoc.setFontSize(FS.tiny);
-                    interdisc.slice(0, 8).forEach(a => {
+                    interdisc.forEach(a => {
                         const ait = obterItemBaseBNCC(a.codigo);
                         setText(T.prepStrong);
                         pdfDoc.setFont('helvetica', 'bold');
@@ -9977,8 +10944,14 @@
                         codigoLines.forEach(line => { pdfDoc.text(line, margin + 2, y); y += 4.2; });
                         pdfDoc.setFont('helvetica', 'normal');
                         setText(T.bodyText);
-                        const dl = pdfDoc.splitTextToSize(ait ? (ait.habilidade || '').replace(/^\([A-Za-z0-9]+\)\s*/, '') : '', contentWidth - 6).slice(0, 3);
+                        const dl = pdfDoc.splitTextToSize(ait ? (ait.habilidade || '').replace(/^\([A-Za-z0-9]+\)\s*/, '') : '', contentWidth - 6);
                         dl.forEach(line => { ensurePageRoom(5); pdfDoc.text(line, margin + 4, y); y += 4.4; });
+                        if (a.justificativa) {
+                            pdfDoc.setFont('helvetica', 'italic');
+                            setText(T.muted);
+                            const justLines = pdfDoc.splitTextToSize(`Justificativa: ${a.justificativa}`, contentWidth - 8);
+                            justLines.forEach(line => { ensurePageRoom(5); pdfDoc.text(line, margin + 4, y); y += 4.4; });
+                        }
                         y += 1.5;
                     });
                 }
@@ -10000,7 +10973,7 @@
                         pdfDoc.setFont('helvetica', 'normal');
                         pdfDoc.setFontSize(FS.tiny);
                         setText(T.muted);
-                        const dl = pdfDoc.splitTextToSize(desc || '', contentWidth - 6).slice(0, 3);
+                        const dl = pdfDoc.splitTextToSize(desc || '', contentWidth - 6);
                         dl.forEach(line => { ensurePageRoom(5); pdfDoc.text(line, margin + 5, y); y += 4.4; });
                         y += 2;
                     };
@@ -10020,6 +10993,192 @@
                     const pl = pdfDoc.splitTextToSize(txtPedag, contentWidth - 4);
                     pl.forEach(line => { ensurePageRoom(6); pdfDoc.text(line, margin + 2, y); y += 5; });
                 }
+
+                // -------- Informações complementares do painel de Detalhes --------
+                const iniciarSecaoDetalhes = titulo => {
+                    ensurePageRoom(18);
+                    y = window._pdfDrawSectionTitle(pdfDoc, titulo, margin, y, contentWidth, T, FS, modoImpressao);
+                    y += 2;
+                };
+                const desenharTextoDetalhe = (texto, tamanho = FS.small, cor = T.bodyText) => {
+                    const valor = String(texto || '').trim();
+                    if (!valor) return;
+                    pdfDoc.setFont('helvetica', 'normal');
+                    pdfDoc.setFontSize(tamanho);
+                    setText(cor);
+                    const linhas = pdfDoc.splitTextToSize(valor, contentWidth - 8);
+                    linhas.forEach(linha => {
+                        ensurePageRoom(5.2);
+                        pdfDoc.text(linha, margin + 4, y);
+                        y += 4.8;
+                    });
+                    y += 2;
+                };
+
+                iniciarSecaoDetalhes('OUTRAS INFORMAÇÕES DO PAINEL DE DETALHES');
+
+                const desenharGrupoProgressao = (titulo, registros, vazio) => {
+                    const lista = Array.isArray(registros) ? registros : [];
+                    pdfDoc.setFont('helvetica', 'bold');
+                    pdfDoc.setFontSize(FS.small);
+                    setText(T.strongTitle);
+                    ensurePageRoom(8);
+                    pdfDoc.text(`${titulo} (${lista.length})`, margin + 2, y);
+                    y += 5.5;
+                    if (!lista.length) {
+                        desenharTextoDetalhe(vazio, FS.tiny, T.muted);
+                        return;
+                    }
+                    lista.forEach(registro => {
+                        const relacao = typeof registro === 'string' ? { codigo: registro } : (registro || {});
+                        const codigoRel = relacao.codigo || relacao.cod || '';
+                        const relacionado = codigoRel ? obterItemBaseBNCC(codigoRel) : null;
+                        desenharTextoDetalhe(
+                            `${codigoRel}${relacionado ? ` | ${relacionado.disciplina || 'Geral'} | ${relacionado.ano_faixa || ''}` : ''}`,
+                            FS.tiny,
+                            T.accent
+                        );
+                        if (relacionado && relacionado.habilidade) desenharTextoDetalhe(relacionado.habilidade.replace(/^\([A-Za-z0-9]+\)\s*/, ''), FS.tiny);
+                        if (relacao.justificativa) desenharTextoDetalhe(`Justificativa: ${relacao.justificativa}`, FS.tiny, T.muted);
+                    });
+                };
+
+                if (prog) {
+                    iniciarSecaoDetalhes('PROGRESSÃO PEDAGÓGICA COMPLETA');
+                    desenharGrupoProgressao('Pré-requisitos no mesmo ano/componente', prog.pre_mesmo, 'Nenhum pré-requisito registrado neste grupo.');
+                    desenharGrupoProgressao('Pré-requisitos de anos anteriores', prog.pre_ant, 'Nenhum pré-requisito anterior registrado.');
+                    desenharGrupoProgressao('Continuidade no mesmo ano/componente', prog.post_mesmo, 'Nenhum desdobramento registrado neste grupo.');
+                    desenharGrupoProgressao('Continuidade em anos seguintes', prog.post_seg, 'Nenhuma continuidade posterior registrada.');
+                    desenharGrupoProgressao('Articulações de apoio', prog.apoio, 'Nenhuma articulação de apoio registrada.');
+                    if (prog.comentario) desenharTextoDetalhe(`Orientações didáticas e lógica de progressão: ${prog.comentario}`, FS.small);
+                }
+
+                const desenharCartaoEstruturadoPDF = (titulo, blocos, paleta, reservaPosterior = 0) => {
+                    const preparados = [{ tipo: 'titulo', texto: titulo, estilo: 'bold', tamanho: FS.small, entrelinha: 4.8 }];
+                    (blocos || []).forEach(bloco => {
+                        if (!String(bloco.texto || '').trim()) return;
+                        if (bloco.rotulo) preparados.push({ tipo: 'rotulo', texto: bloco.rotulo, estilo: 'bold', tamanho: FS.tiny, entrelinha: 3.8 });
+                        preparados.push({
+                            tipo: 'texto', texto: String(bloco.texto), estilo: bloco.estilo || 'normal',
+                            tamanho: bloco.tamanho || FS.tiny, entrelinha: bloco.entrelinha || 4.2,
+                            cor: bloco.cor || T.bodyText, mono: Boolean(bloco.mono)
+                        });
+                    });
+                    const larguraTexto = contentWidth - 12;
+                    preparados.forEach(bloco => {
+                        pdfDoc.setFont(bloco.mono ? 'courier' : 'helvetica', bloco.estilo);
+                        pdfDoc.setFontSize(bloco.tamanho);
+                        bloco.linhas = pdfDoc.splitTextToSize(bloco.texto, larguraTexto);
+                    });
+                    const altura = 6 + preparados.reduce((total, bloco) => total + bloco.linhas.length * bloco.entrelinha + 1.2, 0) + 2;
+                    ensurePageRoom(altura + reservaPosterior + 2);
+                    setFill(paleta.fill);
+                    setDraw(paleta.border);
+                    pdfDoc.setLineWidth(0.4);
+                    pdfDoc.roundedRect(margin, y, contentWidth, altura, 1.8, 1.8, modoImpressao ? 'D' : 'FD');
+                    setFill(paleta.accent);
+                    pdfDoc.rect(margin, y, 2, altura, 'F');
+                    let cardY = y + 5;
+                    preparados.forEach(bloco => {
+                        pdfDoc.setFont(bloco.mono ? 'courier' : 'helvetica', bloco.estilo);
+                        pdfDoc.setFontSize(bloco.tamanho);
+                        setText(bloco.tipo === 'titulo' || bloco.tipo === 'rotulo' ? paleta.accent : (bloco.cor || T.bodyText));
+                        bloco.linhas.forEach(linha => {
+                            pdfDoc.text(linha, margin + 5, cardY);
+                            cardY += bloco.entrelinha;
+                        });
+                        cardY += 1.2;
+                    });
+                    y += altura + 2.5;
+                };
+
+                if (temProgressaoEspiralPDF) {
+                    ensurePageRoom(105);
+                    iniciarSecaoDetalhes(`INFERÊNCIAS DA IA: PROGRESSÃO TEMÁTICA ESPIRAL (${relacoesEspiralPDF.length})`);
+                    const modelosEspiral = (catalogoProgressaoEspiral.meta?.modelos || ['S5-free']).join(', ');
+                    desenharCartaoEstruturadoPDF('COMO LER ESTAS SUGESTÕES', [{
+                        rotulo: `Origem: Maritaca AI (${modelosEspiral})`,
+                        texto: 'Inferências pedagógicas revisáveis, não pré-requisitos oficiais da BNCC. Confira a justificativa e o tipo de relação antes de usar no planejamento.'
+                    }], { fill: T.aiFill, border: T.aiBorder, accent: T.aiAccent });
+                    if (!relacoesEspiralPDF.length) {
+                        desenharCartaoEstruturadoPDF('SEM RELAÇÕES SUGERIDAS', [{ texto: 'A IA não sugeriu relações defensáveis para esta habilidade. Isso não indica que outras relações possíveis não existam.' }], { fill: T.aiFill, border: T.aiBorder, accent: T.aiAccent });
+                    }
+                    relacoesEspiralPDF.forEach(relacao => {
+                        const paralela = relacao.tipo === 'paralela';
+                        const entrada = relacao.destino === codigo;
+                        const codigoRelacionado = relacao.origem === codigo ? relacao.destino : relacao.origem;
+                        const relacionada = obterItemBaseBNCC(codigoRelacionado);
+                        const direcao = paralela
+                            ? 'Habilidades articuladas sem dependência sequencial.'
+                            : relacao.tipo === 'pre_requisito_direto'
+                                ? (entrada ? 'A origem é sugerida como possível pré-requisito da habilidade central.' : 'A habilidade central é sugerida como possível pré-requisito do destino.')
+                                : relacao.tipo === 'apoio'
+                                    ? (entrada ? 'A origem pode apoiar a habilidade central, sem ser condição obrigatória.' : 'A habilidade central pode apoiar o destino, sem ser condição obrigatória.')
+                                    : entrada
+                                        ? 'A habilidade central retoma ou amplia aprendizagens relacionadas à origem.'
+                                        : 'O destino retoma ou amplia aprendizagens mobilizadas pela habilidade central.';
+                        const paletas = {
+                            pre_requisito_direto: modoImpressao ? { fill: null, border: '#9ca3af', accent: '#374151' } : { fill: [254, 242, 242], border: [254, 202, 202], accent: [185, 28, 28] },
+                            retomada_espiral: modoImpressao ? { fill: null, border: '#9ca3af', accent: '#374151' } : { fill: [250, 245, 255], border: [221, 214, 254], accent: [109, 40, 217] },
+                            apoio: modoImpressao ? { fill: null, border: '#9ca3af', accent: '#374151' } : { fill: [255, 251, 235], border: [253, 230, 138], accent: [180, 83, 9] },
+                            paralela: modoImpressao ? { fill: null, border: '#9ca3af', accent: '#374151' } : { fill: [236, 254, 255], border: [165, 243, 252], accent: [14, 116, 144] }
+                        };
+                        const metaRelacionada = relacionada
+                            ? `${codigoRelacionado} | ${relacionada.disciplina || 'Geral'} | ${relacionada.ano_faixa || 'Ano não informado'} | ${relacionada.unidade_tematica || 'Unidade não informada'}`
+                            : codigoRelacionado;
+                        const blocos = [
+                            { rotulo: 'Sentido da relação', texto: direcao },
+                            { rotulo: 'Origem -> destino', texto: `${relacao.origem} -> ${relacao.destino}`, estilo: 'bold', tamanho: FS.small, mono: true },
+                            { rotulo: 'Habilidade relacionada', texto: `${metaRelacionada}${relacionada?.habilidade ? `\n${relacionada.habilidade.replace(/^\([A-Za-z0-9]+\)\s*/, '')}` : ''}` },
+                            { rotulo: 'Justificativa da IA', texto: relacao.justificativa || 'Relação pedagógica sugerida pela IA.', estilo: 'italic', cor: T.muted }
+                        ];
+                        desenharCartaoEstruturadoPDF(`${rotuloTipoRelacaoEspiral(relacao.tipo).toUpperCase()} | CONFIANÇA ${String(relacao.confianca || 'média').toUpperCase()}`, blocos, paletas[relacao.tipo] || { fill: T.aiFill, border: T.aiBorder, accent: T.aiAccent });
+                    });
+                }
+
+                const secoesTextoDetalhes = [
+                    ['Objetivos de aprendizagem e fluência (Instituto Reúna)', item.objetivos_aprendizagem],
+                    ['Comentário pedagógico', item.comentario],
+                    ['Possibilidades para o currículo', item.possibilidades],
+                    ['Contribuição dos componentes curriculares (BNCC Comentada)', item.componentes_comentam]
+                ];
+                const secoesTextoPresentes = secoesTextoDetalhes.filter(([, texto]) => String(texto || '').trim());
+                if (secoesTextoPresentes.length) {
+                    iniciarSecaoDetalhes('ORIENTAÇÕES E REFERENCIAIS PEDAGÓGICOS');
+                    secoesTextoPresentes.forEach(([titulo, texto]) => {
+                        pdfDoc.setFont('helvetica', 'bold');
+                        pdfDoc.setFontSize(FS.small);
+                        setText(T.strongTitle);
+                        ensurePageRoom(8);
+                        pdfDoc.text(titulo, margin + 2, y);
+                        y += 5.5;
+                        desenharTextoDetalhe(texto, FS.small);
+                    });
+                }
+
+                const pontesPorComponente = catalogoPontesInterdisciplinares[codigo]?.por_componente || {};
+                const componentesComPonte = Object.entries(pontesPorComponente);
+                ensurePageRoom(56);
+                iniciarSecaoDetalhes(`SUGESTÕES INTERDISCIPLINARES DA IA (${componentesComPonte.length} componentes)`);
+                if (!componentesComPonte.length) {
+                    desenharCartaoEstruturadoPDF('SEM SUGESTÕES DISPONÍVEIS', [{ texto: 'Ainda não há sugestões interdisciplinares geradas para esta habilidade.' }], { fill: T.interFill, border: T.interBorder, accent: T.interAccent });
+                }
+                componentesComPonte.forEach(([componente, ponte]) => {
+                    const codigosPonte = Array.isArray(ponte.codigos) ? ponte.codigos : [];
+                    desenharCartaoEstruturadoPDF(componente.toUpperCase(), [
+                        { rotulo: 'Confiança da sugestão', texto: ponte.confianca || 'Não informada' },
+                        { rotulo: 'Por que conecta', texto: ponte.justificativa || 'Justificativa não informada.' },
+                        { rotulo: 'Possibilidade de atividade', texto: ponte.atividade || 'Não foi incluída uma atividade sugerida.' }
+                    ], { fill: T.interFill, border: T.interBorder, accent: T.interAccent }, codigosPonte.length ? 30 : 0);
+                    codigosPonte.forEach(codigoPonte => {
+                        const habilidadePonte = obterItemBaseBNCC(codigoPonte);
+                        desenharCartaoEstruturadoPDF(
+                            `${codigoPonte} | ${habilidadePonte?.disciplina || componente} | ${habilidadePonte?.ano_faixa || 'Ano não informado'}`,
+                            [{ rotulo: 'Habilidade BNCC', texto: habilidadePonte?.habilidade?.replace(/^\([A-Za-z0-9]+\)\s*/, '') || 'Descrição não localizada na base curricular.' }],
+                            { fill: T.interFill, border: T.interBorder, accent: T.interAccent }
+                        );
+                    });
+                });
 
                 // -------- Rodapés em todas as páginas --------
                 const totalPages = pdfDoc.getNumberOfPages();
@@ -10091,6 +11250,84 @@
             const dataHoje = new Date().toLocaleDateString('pt-BR');
             const requisitos = (relFinal && relFinal.requisitos) ? relFinal.requisitos : [];
             const prepara = (relFinal && relFinal.prepara_para) ? relFinal.prepara_para : [];
+            const pontesDetalhes = catalogoPontesInterdisciplinares[item.codigo]?.por_componente || {};
+            const hierarquiaDetalhes = window.obterHierarquiaReuna ? window.obterHierarquiaReuna(item.codigo) : null;
+            const temProgressaoEspiral = (catalogoProgressaoEspiral?.habilidades || []).includes(item.codigo);
+            const relacoesEspiralDetalhes = temProgressaoEspiral ? obterRelacoesDaHabilidadeEspiral(item.codigo) : [];
+            const modelosProgressaoEspiral = (catalogoProgressaoEspiral?.meta?.modelos || ['S5-free']).join(', ');
+            const escaparHTMLDossie = valor => String(valor ?? '').replace(/[&<>"']/g, caractere => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[caractere]));
+            const normalizarCampoCurricularDossie = valor => String(valor ?? '').normalize('NFD').replace(/[\u0300-\u036f]/g, '').toLowerCase().trim();
+            const classificacaoReunaDossie = item.classificacao_reuna
+                ? `${item.classificacao_reuna === 'AF' ? 'Aprendizagem Focal (AF) — conhecimento estruturante e prioritário para a progressão contínua.' : 'Aprendizagem Complementar (AC) — habilidade de apoio e contextualização.'}${hierarquiaDetalhes?.tipo === 'AF' ? ` Posição na matriz: ${hierarquiaDetalhes.posicao} de ${hierarquiaDetalhes.total_grupo} em ${hierarquiaDetalhes.componente || item.disciplina} (${hierarquiaDetalhes.ano_faixa || item.ano_faixa}).` : ''}`
+                : '';
+            const objetoConhecimentoDossie = normalizarCampoCurricularDossie(item.objeto_conhecimento);
+            const objetosAssociadosDossie = (relFinal?.objetos_conhecimento || []).filter(objeto => normalizarCampoCurricularDossie(objeto) !== objetoConhecimentoDossie);
+            const palavrasChaveDossie = (item.palavras_chave || []).map(palavra => String(palavra || '').trim()).filter(palavra => {
+                const termo = normalizarCampoCurricularDossie(palavra);
+                if (!termo || termo === normalizarCampoCurricularDossie(item.codigo) || termo === normalizarCampoCurricularDossie(item.unidade_tematica)) return false;
+                return !(termo.length > 24 && objetoConhecimentoDossie.includes(termo));
+            });
+            const camposEstruturaDossie = [
+                { titulo: 'Unidade temática', valor: item.unidade_tematica || '' },
+                { titulo: 'Objeto de conhecimento', valor: item.objeto_conhecimento || '' },
+                { titulo: 'Objetos associados nas relações BNCC', valor: objetosAssociadosDossie.join('; '), amplo: true },
+                { titulo: 'Referencial curricular Instituto Reúna', valor: classificacaoReunaDossie, amplo: true },
+                { titulo: 'Palavras-chave', valor: palavrasChaveDossie.join(' • '), amplo: true }
+            ].filter(campo => String(campo.valor || '').trim());
+            const pontesInterdisciplinaresDossie = Object.entries(pontesDetalhes).map(([componente, ponte]) => {
+                const codigos = Array.isArray(ponte.codigos) ? ponte.codigos : [];
+                return `
+                    <article class="dossie-ai-bridge-card">
+                        <header class="dossie-ai-bridge-header">
+                            <div><span class="dossie-ai-field-label">COMPONENTE ARTICULADO</span><h5>${escaparHTMLDossie(componente)}</h5></div>
+                            <span class="dossie-ai-confidence">Confiança ${escaparHTMLDossie(ponte.confianca || 'não informada')}</span>
+                        </header>
+                        <div class="dossie-ai-bridge-reasons">
+                            <div class="dossie-ai-labeled-block"><strong>Por que conecta</strong><p>${escaparHTMLDossie(ponte.justificativa || 'Justificativa não informada.')}</p></div>
+                            <div class="dossie-ai-labeled-block"><strong>Possibilidade de atividade</strong><p>${escaparHTMLDossie(ponte.atividade || 'Não foi incluída uma atividade sugerida.')}</p></div>
+                        </div>
+                        <div class="dossie-ai-bridge-skills">
+                            <div class="dossie-ai-field-label">HABILIDADES BNCC RELACIONADAS (${codigos.length})</div>
+                            ${codigos.length ? codigos.map(codigoPonte => {
+                                const parceira = obterItemBaseBNCC(codigoPonte);
+                                return `
+                                    <div class="dossie-ai-bridge-skill">
+                                        <div class="dossie-ai-code-meta"><strong>${escaparHTMLDossie(codigoPonte)}</strong><span>${escaparHTMLDossie(parceira?.disciplina || componente)}${parceira?.ano_faixa ? ` • ${escaparHTMLDossie(parceira.ano_faixa)}` : ''}</span></div>
+                                        <p>${escaparHTMLDossie(parceira?.habilidade || 'Descrição não localizada na base curricular.')}</p>
+                                    </div>
+                                `;
+                            }).join('') : '<p class="dossie-ai-empty">Nenhum código de habilidade vinculado.</p>'}
+                        </div>
+                    </article>
+                `;
+            }).join('');
+            const renderizarGrupoDetalhesHTML = (titulo, registros, vazio) => {
+                const lista = Array.isArray(registros) ? registros : [];
+                return `
+                    <section style="margin: 0 0 16px; break-inside: avoid;">
+                        <h4 style="margin: 0 0 7px; color: #1e1b4b; font-size: 0.98rem;">${titulo} (${lista.length})</h4>
+                        ${lista.length ? lista.map(registro => {
+                            const relacao = typeof registro === 'string' ? { codigo: registro } : (registro || {});
+                            const codigoRel = relacao.codigo || relacao.cod || '';
+                            const habilidadeRel = codigoRel ? obterItemBaseBNCC(codigoRel) : null;
+                            return `
+                                <article style="border: 1px solid #e2e8f0; border-left: 3px solid #6366f1; border-radius: 6px; padding: 8px 10px; margin: 0 0 7px; break-inside: avoid;">
+                                    <strong style="font-family: var(--font-mono); color: #3730a3;">${codigoRel}</strong>
+                                    <span style="color: #64748b;">${habilidadeRel ? ` | ${habilidadeRel.disciplina || 'Geral'} | ${habilidadeRel.ano_faixa || ''}` : ''}</span>
+                                    ${habilidadeRel?.habilidade ? `<p style="margin: 4px 0 0; line-height: 1.45;">${habilidadeRel.habilidade}</p>` : ''}
+                                    ${relacao.justificativa ? `<p style="margin: 4px 0 0; color: #475569; line-height: 1.45;"><em>Justificativa: ${relacao.justificativa}</em></p>` : ''}
+                                </article>
+                            `;
+                        }).join('') : `<p style="margin: 0; color: #64748b;">${vazio}</p>`}
+                    </section>
+                `;
+            };
+            const renderizarCampoDetalhesHTML = (titulo, texto) => texto ? `
+                <section style="margin: 0 0 14px; break-inside: avoid;">
+                    <h4 style="margin: 0 0 4px; color: #1e1b4b; font-size: 0.94rem;">${titulo}</h4>
+                    <p style="margin: 0; color: #334155; line-height: 1.5; white-space: pre-wrap;">${texto}</p>
+                </section>
+            ` : '';
 
             content.innerHTML = `
                 <div class="dossie-sheet">
@@ -10115,22 +11352,29 @@
                                 <span style="font-size: 0.82rem; font-weight: 700; color: ${discMeta.cor || '#4338ca'}; background: #ffffff; padding: 3px 10px; border-radius: 6px; border: 1px solid #cbd5e1;">${item.disciplina || 'Geral'}</span>
                                 <span style="font-size: 0.82rem; font-weight: 600; color: #475569; background: #ffffff; padding: 3px 10px; border-radius: 6px; border: 1px solid #cbd5e1;">${item.ano_faixa || 'BNCC'}</span>
                             </div>
-                            <div>
-                                ${item.classificacao_reuna === 'AF' ? `<span style="background: #fef3c7; color: #92400e; font-weight: 800; font-size: 0.78rem; padding: 3px 10px; border-radius: 9999px; border: 1px solid #fde68a;">🎯 Aprendizagem Focal (Reúna)</span>` : ''}
-                                ${item.classificacao_reuna === 'AC' ? `<span style="background: #e0f2fe; color: #075985; font-weight: 700; font-size: 0.78rem; padding: 3px 10px; border-radius: 9999px; border: 1px solid #bae6fd;">📘 Aprendizagem Complementar</span>` : ''}
-                            </div>
                         </div>
 
-                        ${item.objeto_conhecimento ? `
-                            <div style="font-size: 0.95rem; color: #475569; margin-bottom: 8px;">
-                                <strong>Objeto de Conhecimento:</strong> ${item.objeto_conhecimento} ${item.unidade_tematica ? `&bull; <strong>Unidade:</strong> ${item.unidade_tematica}` : ''}
-                            </div>
-                        ` : ''}
-
-                        <p style="font-size: 1.1rem; color: #1e293b; line-height: 1.5; margin: 0; font-weight: 500;">
-                            ${item.habilidade}
-                        </p>
                     </div>
+
+                    <!-- Estrutura curricular completa no início, sem repetir os metadados da ficha -->
+                    <section class="dossie-opening-curriculum">
+                        <header class="dossie-opening-curriculum-header">
+                            <div><span class="dossie-ai-field-label">CONTEXTO CURRICULAR</span><h3>Estrutura Curricular e Palavras-chave</h3></div>
+                        </header>
+                        <div class="dossie-opening-curriculum-grid">
+                            ${camposEstruturaDossie.length ? camposEstruturaDossie.map(campo => `
+                                <article class="dossie-curriculum-field ${campo.amplo ? 'is-wide' : ''}">
+                                    <span>${escaparHTMLDossie(campo.titulo)}</span>
+                                    <p>${escaparHTMLDossie(campo.valor)}</p>
+                                </article>
+                            `).join('') : '<p class="dossie-ai-empty">Não há outros metadados curriculares cadastrados para esta habilidade.</p>'}
+                        </div>
+                    </section>
+
+                    <section class="dossie-opening-description">
+                        <span class="dossie-ai-field-label">DESCRIÇÃO DA HABILIDADE · BNCC</span>
+                        <p>${escaparHTMLDossie(item.habilidade || 'Descrição não disponível na base curricular.')}</p>
+                    </section>
 
                     <!-- Diagrama do Mapa Visual de Relações (Imagem Renderizada) -->
                     <div style="margin-bottom: 26px;">
@@ -10168,7 +11412,7 @@
                                             <strong style="color: #b45309; font-family: var(--font-mono);">${r.codigo}</strong>
                                             <span style="color: #78350f;">${rit ? rit.ano_faixa : ''}</span>
                                         </div>
-                                        <p style="font-size: 0.9rem; color: #334155; margin: 4px 0 0 0; line-height: 1.4;">${rit ? (rit.habilidade.substring(0, 110) + '...') : ''}</p>
+                                        <p style="font-size: 0.9rem; color: #334155; margin: 4px 0 0 0; line-height: 1.4;">${rit ? rit.habilidade : ''}</p>
                                         ${r.justificativa ? `<div style="font-size: 0.85rem; color: #92400e; margin-top: 4px;"><em>💡 ${r.justificativa}</em></div>` : ''}
                                     </div>
                                 `;
@@ -10188,7 +11432,7 @@
                                             <strong style="color: #15803d; font-family: var(--font-mono);">${p.codigo}</strong>
                                             <span style="color: #166534;">${pit ? pit.ano_faixa : ''}</span>
                                         </div>
-                                        <p style="font-size: 0.9rem; color: #334155; margin: 4px 0 0 0; line-height: 1.4;">${pit ? (pit.habilidade.substring(0, 110) + '...') : ''}</p>
+                                        <p style="font-size: 0.9rem; color: #334155; margin: 4px 0 0 0; line-height: 1.4;">${pit ? pit.habilidade : ''}</p>
                                         ${p.justificativa ? `<div style="font-size: 0.85rem; color: #166534; margin-top: 4px;"><em>➔ ${p.justificativa}</em></div>` : ''}
                                     </div>
                                 `;
@@ -10205,24 +11449,6 @@
                             <p style="font-size: 0.95rem; color: #475569; line-height: 1.5; margin: 0;">
                                 ${item.objetivos_aprendizagem || item.comentario}
                             </p>
-                        </div>
-                    ` : ''}
-
-                    <!-- Estrutura Curricular (Unidade / Objeto) -->
-                    ${(item.unidade_tematica || item.objeto_conhecimento) ? `
-                        <div style="display: grid; grid-template-columns: ${item.unidade_tematica && item.objeto_conhecimento ? '1fr 1fr' : '1fr'}; gap: 14px; margin-bottom: 22px;">
-                            ${item.unidade_tematica ? `
-                                <div style="background: #f8fafc; border: 1px solid #e2e8f0; border-radius: 8px; padding: 12px 14px;">
-                                    <div style="font-size: 0.78rem; font-weight: 800; text-transform: uppercase; letter-spacing: 0.04em; color: #94a3b8; margin-bottom: 4px;">Unidade Temática</div>
-                                    <div style="font-size: 1rem; color: #1e293b; font-weight: 600; line-height: 1.4;">${item.unidade_tematica}</div>
-                                </div>
-                            ` : ''}
-                            ${item.objeto_conhecimento ? `
-                                <div style="background: #f8fafc; border: 1px solid #e2e8f0; border-radius: 8px; padding: 12px 14px;">
-                                    <div style="font-size: 0.78rem; font-weight: 800; text-transform: uppercase; letter-spacing: 0.04em; color: #94a3b8; margin-bottom: 4px;">Objeto de Conhecimento</div>
-                                    <div style="font-size: 1rem; color: #1e293b; font-weight: 600; line-height: 1.4;">${item.objeto_conhecimento}</div>
-                                </div>
-                            ` : ''}
                         </div>
                     ` : ''}
 
@@ -10245,16 +11471,6 @@
                                     </div>
                                 `;
                             }).join('')}
-                        </div>
-                    ` : ''}
-
-                    <!-- Palavras-Chave -->
-                    ${(item.palavras_chave && item.palavras_chave.length > 0) ? `
-                        <div style="margin-bottom: 22px;">
-                            <div style="font-size: 0.82rem; font-weight: 800; text-transform: uppercase; letter-spacing: 0.04em; color: #94a3b8; margin-bottom: 6px;">Palavras-Chave Estruturadas</div>
-                            <div style="display: flex; flex-wrap: wrap; gap: 6px;">
-                                ${item.palavras_chave.map((kw, i) => `<span style="font-size: 0.85rem; font-weight: 600; color: ${i === 0 ? '#4338ca' : '#475569'}; background: ${i === 0 ? '#eef2ff' : '#f1f5f9'}; border: 1px solid ${i === 0 ? '#c7d2fe' : '#e2e8f0'}; border-radius: 9999px; padding: 3px 10px;">${kw}</span>`).join('')}
-                            </div>
                         </div>
                     ` : ''}
 
@@ -10285,6 +11501,76 @@
                         </div>
                     ` : ''}
 
+                    <!-- Informações complementares do painel Detalhes -->
+                    <div style="margin: 0 0 24px; padding: 16px; border: 1px solid #cbd5e1; border-radius: 9px; background: #ffffff;">
+                        <h3 style="margin: 0 0 12px; padding-bottom: 7px; border-bottom: 1px solid #cbd5e1; color: #1e1b4b; font-size: 1.12rem;">Informações complementares dos Detalhes</h3>
+
+                        ${prog ? `
+                            <h4 style="margin: 10px 0 8px; color: #1e1b4b; font-size: 0.98rem;">Progressão pedagógica expandida</h4>
+                            ${renderizarGrupoDetalhesHTML('Pré-requisitos no mesmo ano/componente', prog.pre_mesmo, 'Nenhum pré-requisito registrado neste grupo.')}
+                            ${renderizarGrupoDetalhesHTML('Pré-requisitos de anos anteriores', prog.pre_ant, 'Nenhum pré-requisito anterior registrado.')}
+                            ${renderizarGrupoDetalhesHTML('Continuidade no mesmo ano/componente', prog.post_mesmo, 'Nenhum desdobramento registrado neste grupo.')}
+                            ${renderizarGrupoDetalhesHTML('Continuidade em anos seguintes', prog.post_seg, 'Nenhuma continuidade posterior registrada.')}
+                            ${renderizarGrupoDetalhesHTML('Articulações de apoio', prog.apoio, 'Nenhuma articulação de apoio registrada.')}
+                            ${renderizarCampoDetalhesHTML('Orientações didáticas e lógica de progressão', prog.comentario)}
+                        ` : ''}
+
+                        ${temProgressaoEspiral ? `
+                            <section class="dossie-ai-spiral-section">
+                                <header class="dossie-ai-section-header spiral">
+                                    <div><span class="dossie-ai-field-label">INFERÊNCIAS DA IA</span><h4>Progressão temática espiral</h4></div>
+                                    <span class="dossie-ai-section-count">${relacoesEspiralDetalhes.length} ${relacoesEspiralDetalhes.length === 1 ? 'relação' : 'relações'}</span>
+                                </header>
+                                <div class="dossie-ai-spiral-notice"><strong>Maritaca (${escaparHTMLDossie(modelosProgressaoEspiral)}).</strong> Inferências pedagógicas revisáveis; não são pré-requisitos oficiais da BNCC. Use o tipo, o sentido e a justificativa como apoio à análise docente.</div>
+                                ${relacoesEspiralDetalhes.length ? `<div class="dossie-ai-spiral-list">${relacoesEspiralDetalhes.map(relacao => {
+                                    const paralela = relacao.tipo === 'paralela';
+                                    const entrada = !paralela && relacao.destino === item.codigo;
+                                    const codigoRelacionado = relacao.origem === item.codigo ? relacao.destino : relacao.origem;
+                                    const relacionada = obterItemBaseBNCC(codigoRelacionado);
+                                    const direcao = paralela
+                                        ? 'Habilidades articuladas sem dependência sequencial.'
+                                        : relacao.tipo === 'pre_requisito_direto'
+                                            ? (entrada ? 'A origem é sugerida como possível pré-requisito da habilidade atual.' : 'A habilidade atual é sugerida como possível pré-requisito do destino.')
+                                            : relacao.tipo === 'apoio'
+                                                ? (entrada ? 'A origem pode apoiar a habilidade atual, sem ser condição obrigatória.' : 'A habilidade atual pode apoiar o destino, sem ser condição obrigatória.')
+                                                : entrada
+                                                    ? 'A habilidade atual retoma ou amplia aprendizagens relacionadas à origem.'
+                                                    : 'O destino retoma ou amplia aprendizagens mobilizadas pela habilidade atual.';
+                                    return `
+                                        <article class="dossie-ai-spiral-card type-${escaparHTMLDossie(relacao.tipo)}">
+                                            <header class="dossie-ai-relation-header">
+                                                <span class="dossie-ai-type-badge">${escaparHTMLDossie(rotuloTipoRelacaoEspiral(relacao.tipo))}</span>
+                                                <span class="dossie-ai-confidence">Confiança ${escaparHTMLDossie(relacao.confianca || 'média')}</span>
+                                            </header>
+                                            <p class="dossie-ai-direction"><strong>Sentido:</strong> ${escaparHTMLDossie(direcao)}</p>
+                                            <div class="dossie-ai-route"><span>ORIGEM → DESTINO</span><strong>${escaparHTMLDossie(relacao.origem)} ${paralela ? '—' : '→'} ${escaparHTMLDossie(relacao.destino)}</strong></div>
+                                            <div class="dossie-ai-related-skill">
+                                                <span class="dossie-ai-field-label">HABILIDADE RELACIONADA</span>
+                                                <div class="dossie-ai-code-meta"><strong>${escaparHTMLDossie(codigoRelacionado)}</strong><span>${escaparHTMLDossie(relacionada?.disciplina || '')}${relacionada?.ano_faixa ? ` • ${escaparHTMLDossie(relacionada.ano_faixa)}` : ''}${relacionada?.unidade_tematica ? ` • ${escaparHTMLDossie(relacionada.unidade_tematica)}` : ''}</span></div>
+                                                ${relacionada?.habilidade ? `<p>${escaparHTMLDossie(relacionada.habilidade)}</p>` : '<p>Descrição não localizada na base curricular.</p>'}
+                                            </div>
+                                            <div class="dossie-ai-rationale"><strong>Justificativa da IA</strong><p>${escaparHTMLDossie(relacao.justificativa || 'Relação pedagógica sugerida pela IA.')}</p></div>
+                                        </article>
+                                    `;
+                                }).join('')}</div>` : '<p class="dossie-ai-empty">A IA não sugeriu relações defensáveis para esta habilidade. Isso não indica que outras relações possíveis não existam.</p>'}
+                            </section>
+                        ` : ''}
+
+                        ${renderizarCampoDetalhesHTML('Objetivos de aprendizagem e fluência (Instituto Reúna)', item.objetivos_aprendizagem)}
+                        ${renderizarCampoDetalhesHTML('Comentário pedagógico', item.comentario)}
+                        ${renderizarCampoDetalhesHTML('Possibilidades para o currículo', item.possibilidades)}
+                        ${renderizarCampoDetalhesHTML('Contribuição dos componentes curriculares (BNCC Comentada)', item.componentes_comentam)}
+
+                        <section class="dossie-ai-bridges">
+                            <header class="dossie-ai-section-header interdisciplinary">
+                                <div><span class="dossie-ai-field-label">ARTICULAÇÕES ENTRE COMPONENTES</span><h4>Sugestões interdisciplinares da IA</h4></div>
+                                <span class="dossie-ai-section-count">${Object.keys(pontesDetalhes).length} ${Object.keys(pontesDetalhes).length === 1 ? 'componente' : 'componentes'}</span>
+                            </header>
+                            <p class="dossie-ai-bridge-intro">Cada sugestão identifica o componente, a justificativa pedagógica, uma possibilidade de atividade e as habilidades BNCC relacionadas.</p>
+                            ${pontesInterdisciplinaresDossie || '<p class="dossie-ai-empty">Ainda não há sugestões interdisciplinares geradas para esta habilidade.</p>'}
+                        </section>
+                    </div>
+
                     <!-- Rodapé Oficial A4 -->
                     <div style="border-top: 1px solid #e2e8f0; padding-top: 12px; margin-top: 24px; display: flex; justify-content: space-between; font-size: 0.85rem; color: #64748b;">
                         <span>Conecta BNCC &bull; Base Nacional Comum Curricular (MEC) &bull; Mapas de Foco (Instituto Reúna)</span>
@@ -10292,6 +11578,7 @@
                     </div>
                 </div>
             `;
+            content.scrollTop = 0;
 
             if (deveAbrirModal) {
                 modal.style.display = 'flex';
