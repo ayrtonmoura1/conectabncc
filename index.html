@@ -868,19 +868,34 @@
                         <h2 id="spiralModalTitle">Progressão temática com IA</h2>
                     </div>
                 </div>
+                <div class="spiral-notice" role="note">
+                    <span class="spiral-notice-icon" aria-hidden="true">⚠️</span>
+                    <p><strong>Proposta pedagógica, não prescrição oficial.</strong> As relações foram inferidas por IA a partir dos textos da BNCC; não são pré-requisitos formalmente declarados pela Base e devem ser revisadas por educadores. Não foi imposta uma sequência linear.</p>
+                </div>
                 <div class="spiral-header-actions">
                     <span class="spiral-provider-badge">Maritaca AI</span>
                     <button type="button" class="spiral-close-btn" onclick="window.fecharModalProgressaoEspiral()" aria-label="Fechar progressão temática" title="Fechar (Esc)">&times;</button>
                 </div>
             </header>
 
-            <div class="spiral-notice" role="note">
-                <span class="spiral-notice-icon" aria-hidden="true">⚠️</span>
-                <p><strong>Proposta pedagógica, não prescrição oficial.</strong> As relações foram inferidas por IA a partir dos textos da BNCC; não são pré-requisitos formalmente declarados pela Base e devem ser revisadas por educadores. Não foi imposta uma sequência linear.</p>
-            </div>
-
             <div class="spiral-controls">
-                <div class="spiral-unit-tabs" id="spiralUnitTabs" role="tablist" aria-label="Unidade temática">
+                <div class="spiral-unit-select-wrap" id="spiralUnitSelectWrap">
+                    <label class="spiral-unit-select-label" for="spiralUnitSelectInput">Unidade temática</label>
+                    <div class="spiral-unit-combobox">
+                        <input type="search" id="spiralUnitSelectInput" role="combobox" aria-autocomplete="list"
+                            aria-expanded="false" aria-haspopup="listbox" aria-controls="spiralUnitOptions" aria-label="Buscar unidade temática"
+                            placeholder="Buscar unidade temática..." autocomplete="off"
+                            onfocus="window.abrirListaUnidadesProgressao()"
+                            oninput="window.filtrarListaUnidadesProgressao()"
+                            onkeydown="window.navegarListaUnidadesProgressao(event)"
+                            onblur="window.fecharListaUnidadesProgressaoAoPerderFoco(event)">
+                        <button type="button" class="spiral-unit-toggle" aria-label="Mostrar unidades temáticas"
+                            aria-controls="spiralUnitOptions" aria-expanded="false"
+                            onmousedown="event.preventDefault()" onclick="window.alternarListaUnidadesProgressao()">
+                            <svg viewBox="0 0 20 20" aria-hidden="true"><path d="m5 7.5 5 5 5-5"></path></svg>
+                        </button>
+                        <div class="spiral-unit-options" id="spiralUnitOptions" role="listbox" aria-label="Unidades temáticas" hidden></div>
+                    </div>
                 </div>
                 <div class="spiral-search-wrap">
                     <svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="11" cy="11" r="8"></circle><path d="m21 21-4.35-4.35"></path></svg>
@@ -8954,15 +8969,41 @@
         // ======================================================================
         // Modal de Progressão Temática Espiral (Maritaca - Matemática no Ensino Fundamental)
         // ======================================================================
-        const unidadesProgressaoEspiral = [
-            { nome: 'Números', icone: '🔢' },
-            { nome: 'Álgebra', icone: '𝑥' },
-            { nome: 'Geometria', icone: '📐' },
-            { nome: 'Grandezas e medidas', icone: '📏' },
-            { nome: 'Probabilidade e estatística', icone: '📊' }
-        ];
         let progressaoEspiralUnidadeAtiva = 'Números';
         let progressaoEspiralAnoAtivo = 'todos';
+        let progressaoEspiralListaUnidadesAberta = false;
+        let progressaoEspiralUnidadesFiltradas = [];
+        let progressaoEspiralIndiceUnidadeAtiva = -1;
+
+        const iconesUnidadesProgressaoEspiral = new Map([
+            ['numeros', '🔢'], ['algebra', '𝑥'], ['geometria', '📐'],
+            ['grandezas e medidas', '📏'], ['probabilidade e estatistica', '📊']
+        ]);
+
+        function normalizarTextoUnidadeProgressao(valor) {
+            return String(valor ?? '').normalize('NFD').replace(/[\u0300-\u036f]/g, '').toLocaleLowerCase('pt-BR').trim();
+        }
+
+        function obterUnidadesProgressaoEspiral() {
+            const catalogo = catalogoProgressaoEspiral || {};
+            const codigos = new Set(Array.isArray(catalogo.habilidades) ? catalogo.habilidades : []);
+            const itensMatematicos = (baseBNCC || []).filter(item =>
+                item.disciplina === 'Matemática' && item.codigo?.startsWith('EF') &&
+                (!codigos.size || codigos.has(item.codigo)) && String(item.unidade_tematica || '').trim()
+            );
+            const nomesBase = itensMatematicos.map(item => String(item.unidade_tematica).trim());
+            const nomesMetadados = Array.isArray(catalogo.meta?.unidades_tematicas) ? catalogo.meta.unidades_tematicas : [];
+            const unidadesComHabilidades = new Set(nomesBase.map(normalizarTextoUnidadeProgressao));
+            const nomesUnicos = [...new Map([...nomesMetadados, ...nomesBase]
+                .map(nome => String(nome || '').trim())
+                .filter(nome => nome && (!codigos.size || unidadesComHabilidades.has(normalizarTextoUnidadeProgressao(nome))))
+                .map(nome => [normalizarTextoUnidadeProgressao(nome), nome])).values()];
+
+            return nomesUnicos.map(nome => ({
+                nome,
+                icone: iconesUnidadesProgressaoEspiral.get(normalizarTextoUnidadeProgressao(nome)) || '📘'
+            }));
+        }
 
         function escaparHTMLProgressao(valor) {
             return String(valor ?? '').replace(/[&<>"']/g, caractere => ({
@@ -9006,18 +9047,138 @@
             return relacionadas.sort((a, b) => (prioridade[a.tipo] ?? 9) - (prioridade[b.tipo] ?? 9));
         }
 
-        function renderizarAbasUnidadeProgressao() {
-            const container = document.getElementById('spiralUnitTabs');
-            if (!container) return;
-            container.innerHTML = unidadesProgressaoEspiral.map(unidade => `
-                <button type="button" class="spiral-unit-tab ${progressaoEspiralUnidadeAtiva === unidade.nome ? 'is-active' : ''}"
-                    data-unit="${escaparHTMLProgressao(unidade.nome)}" role="tab"
-                    aria-selected="${progressaoEspiralUnidadeAtiva === unidade.nome ? 'true' : 'false'}"
-                    onclick="window.setProgressaoEspiralUnidade('${escaparHTMLProgressao(unidade.nome)}')">
-                    <span aria-hidden="true">${unidade.icone}</span> ${escaparHTMLProgressao(unidade.nome)}
-                </button>
-            `).join('');
+        function renderizarSeletorUnidadeProgressao() {
+            const input = document.getElementById('spiralUnitSelectInput');
+            if (!input) return;
+            const unidades = obterUnidadesProgressaoEspiral();
+            if (!unidades.some(unidade => unidade.nome === progressaoEspiralUnidadeAtiva)) {
+                progressaoEspiralUnidadeAtiva = unidades[0]?.nome || '';
+            }
+            input.value = progressaoEspiralUnidadeAtiva;
+            renderizarOpcoesListaUnidadesProgressao(false);
         }
+
+        function renderizarOpcoesListaUnidadesProgressao(preservarIndice = false) {
+            const input = document.getElementById('spiralUnitSelectInput');
+            const lista = document.getElementById('spiralUnitOptions');
+            const wrapper = document.getElementById('spiralUnitSelectWrap');
+            const toggle = wrapper?.querySelector('.spiral-unit-toggle');
+            if (!input || !lista || !wrapper) return;
+
+            const filtro = normalizarTextoUnidadeProgressao(input.value);
+            progressaoEspiralUnidadesFiltradas = obterUnidadesProgressaoEspiral().filter(unidade =>
+                !filtro || normalizarTextoUnidadeProgressao(unidade.nome).includes(filtro)
+            );
+            if (!preservarIndice || progressaoEspiralIndiceUnidadeAtiva < 0 || progressaoEspiralIndiceUnidadeAtiva >= progressaoEspiralUnidadesFiltradas.length) {
+                const selecionada = progressaoEspiralUnidadesFiltradas.findIndex(unidade => unidade.nome === progressaoEspiralUnidadeAtiva);
+                progressaoEspiralIndiceUnidadeAtiva = selecionada >= 0 ? selecionada : (progressaoEspiralUnidadesFiltradas.length ? 0 : -1);
+            }
+
+            const aberta = progressaoEspiralListaUnidadesAberta;
+            lista.hidden = !aberta;
+            wrapper.classList.toggle('is-open', aberta);
+            input.setAttribute('aria-expanded', aberta ? 'true' : 'false');
+            toggle?.setAttribute('aria-expanded', aberta ? 'true' : 'false');
+            input.removeAttribute('aria-activedescendant');
+
+            if (!progressaoEspiralUnidadesFiltradas.length) {
+                lista.innerHTML = '<div class="spiral-unit-empty">Nenhuma unidade encontrada.</div>';
+                return;
+            }
+
+            lista.innerHTML = progressaoEspiralUnidadesFiltradas.map((unidade, indice) => `
+                <div id="spiral-unit-option-${indice}" class="spiral-unit-option ${indice === progressaoEspiralIndiceUnidadeAtiva ? 'is-active' : ''} ${unidade.nome === progressaoEspiralUnidadeAtiva ? 'is-selected' : ''}"
+                    role="option" aria-selected="${unidade.nome === progressaoEspiralUnidadeAtiva ? 'true' : 'false'}" data-unit-index="${indice}"
+                    onmousedown="event.preventDefault()">
+                    <span class="spiral-unit-option-icon" aria-hidden="true">${unidade.icone}</span>
+                    <span>${escaparHTMLProgressao(unidade.nome)}</span>
+                    ${unidade.nome === progressaoEspiralUnidadeAtiva ? '<span class="spiral-unit-option-check" aria-hidden="true">✓</span>' : ''}
+                </div>
+            `).join('');
+            lista.onclick = event => {
+                const opcao = event.target.closest('[data-unit-index]');
+                if (!opcao) return;
+                const unidade = progressaoEspiralUnidadesFiltradas[Number(opcao.dataset.unitIndex)];
+                if (unidade) window.selecionarUnidadeProgressao(unidade.nome);
+            };
+
+            if (aberta && progressaoEspiralIndiceUnidadeAtiva >= 0) {
+                input.setAttribute('aria-activedescendant', `spiral-unit-option-${progressaoEspiralIndiceUnidadeAtiva}`);
+            }
+        }
+
+        window.abrirListaUnidadesProgressao = function() {
+            const input = document.getElementById('spiralUnitSelectInput');
+            if (!input) return;
+            if (input.value === progressaoEspiralUnidadeAtiva) input.value = '';
+            progressaoEspiralListaUnidadesAberta = true;
+            progressaoEspiralIndiceUnidadeAtiva = -1;
+            renderizarOpcoesListaUnidadesProgressao();
+        };
+
+        window.filtrarListaUnidadesProgressao = function() {
+            progressaoEspiralListaUnidadesAberta = true;
+            progressaoEspiralIndiceUnidadeAtiva = 0;
+            renderizarOpcoesListaUnidadesProgressao();
+        };
+
+        window.alternarListaUnidadesProgressao = function() {
+            if (progressaoEspiralListaUnidadesAberta) {
+                window.fecharListaUnidadesProgressao(true);
+                return;
+            }
+            const input = document.getElementById('spiralUnitSelectInput');
+            input?.focus();
+            if (input && input.value === progressaoEspiralUnidadeAtiva) input.value = '';
+            progressaoEspiralListaUnidadesAberta = true;
+            renderizarOpcoesListaUnidadesProgressao();
+        };
+
+        window.fecharListaUnidadesProgressao = function(restaurarSelecao = false) {
+            progressaoEspiralListaUnidadesAberta = false;
+            const input = document.getElementById('spiralUnitSelectInput');
+            if (restaurarSelecao && input) input.value = progressaoEspiralUnidadeAtiva;
+            renderizarOpcoesListaUnidadesProgressao();
+        };
+
+        window.fecharListaUnidadesProgressaoAoPerderFoco = function(event) {
+            const wrapper = document.getElementById('spiralUnitSelectWrap');
+            if (event?.relatedTarget && wrapper?.contains(event.relatedTarget)) return;
+            window.setTimeout(() => {
+                if (progressaoEspiralListaUnidadesAberta && !wrapper?.contains(document.activeElement)) {
+                    window.fecharListaUnidadesProgressao(true);
+                }
+            }, 120);
+        };
+
+        window.selecionarUnidadeProgressao = function(unidade) {
+            window.setProgressaoEspiralUnidade(unidade);
+            window.fecharListaUnidadesProgressao(true);
+        };
+
+        window.navegarListaUnidadesProgressao = function(event) {
+            if (event.key === 'Escape') {
+                if (progressaoEspiralListaUnidadesAberta) {
+                    event.preventDefault();
+                    window.fecharListaUnidadesProgressao(true);
+                }
+                return;
+            }
+            if (event.key === 'Enter' && progressaoEspiralListaUnidadesAberta) {
+                event.preventDefault();
+                const unidade = progressaoEspiralUnidadesFiltradas[progressaoEspiralIndiceUnidadeAtiva];
+                if (unidade) window.selecionarUnidadeProgressao(unidade.nome);
+                return;
+            }
+            if (event.key !== 'ArrowDown' && event.key !== 'ArrowUp') return;
+            event.preventDefault();
+            if (!progressaoEspiralListaUnidadesAberta) window.abrirListaUnidadesProgressao();
+            if (!progressaoEspiralUnidadesFiltradas.length) return;
+            const delta = event.key === 'ArrowDown' ? 1 : -1;
+            const total = progressaoEspiralUnidadesFiltradas.length;
+            progressaoEspiralIndiceUnidadeAtiva = (progressaoEspiralIndiceUnidadeAtiva + delta + total) % total;
+            renderizarOpcoesListaUnidadesProgressao(true);
+        };
 
         function renderizarPillsAnoProgressao() {
             const container = document.getElementById('spiralYearPills');
@@ -9040,10 +9201,15 @@
             if (!container || !stats) return;
 
             const listaCodigos = new Set(Array.isArray(catalogoProgressaoEspiral?.habilidades) ? catalogoProgressaoEspiral.habilidades : []);
+            const unidadesDisponiveis = obterUnidadesProgressaoEspiral();
+            const nomesUnidadesDisponiveis = new Set(unidadesDisponiveis.map(unidade => unidade.nome));
+            if (!nomesUnidadesDisponiveis.has(progressaoEspiralUnidadeAtiva)) {
+                progressaoEspiralUnidadeAtiva = unidadesDisponiveis[0]?.nome || '';
+            }
             const itensEscopo = (baseBNCC || []).filter(item =>
                 item.disciplina === 'Matemática' &&
                 item.codigo?.startsWith('EF') &&
-                unidadesProgressaoEspiral.some(unidade => unidade.nome === item.unidade_tematica) &&
+                nomesUnidadesDisponiveis.has(item.unidade_tematica) &&
                 (!listaCodigos.size || listaCodigos.has(item.codigo))
             );
             const busca = (document.getElementById('spiralSearchInput')?.value || '').trim().toLocaleLowerCase('pt-BR');
@@ -9077,13 +9243,6 @@
                 const parcial = meta.lotes_concluidos < meta.lotes_total ? ' • geração em andamento' : '';
                 statusGeracao.textContent = `Maritaca • ${modelos}${lotes ? ` • ${lotes}` : ''}${parcial}`;
             }
-
-            const tabs = document.querySelectorAll('#spiralUnitTabs .spiral-unit-tab');
-            tabs.forEach(tab => {
-                const ativo = tab.getAttribute('data-unit') === progressaoEspiralUnidadeAtiva;
-                tab.classList.toggle('is-active', ativo);
-                tab.setAttribute('aria-selected', ativo ? 'true' : 'false');
-            });
 
             if (!filtrados.length) {
                 container.innerHTML = `<div class="spiral-empty-state"><span aria-hidden="true">🔎</span><strong>Nenhuma habilidade encontrada</strong><p>Altere o ano ou o termo de busca para ver outras habilidades da unidade temática.</p></div>`;
@@ -9160,9 +9319,11 @@
         }
 
         window.setProgressaoEspiralUnidade = function(unidade) {
-            if (!unidadesProgressaoEspiral.some(opcao => opcao.nome === unidade)) return;
+            if (!obterUnidadesProgressaoEspiral().some(opcao => opcao.nome === unidade)) return;
             progressaoEspiralUnidadeAtiva = unidade;
             progressaoEspiralAnoAtivo = 'todos';
+            const inputUnidade = document.getElementById('spiralUnitSelectInput');
+            if (inputUnidade) inputUnidade.value = unidade;
             renderizarPillsAnoProgressao();
             renderizarCardsProgressaoEspiral();
         };
@@ -9182,7 +9343,7 @@
             if (!backdrop) return;
             backdrop.style.display = 'flex';
             document.body.style.overflow = 'hidden';
-            renderizarAbasUnidadeProgressao();
+            renderizarSeletorUnidadeProgressao();
             renderizarPillsAnoProgressao();
             renderizarCardsProgressaoEspiral();
         };
