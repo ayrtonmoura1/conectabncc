@@ -6,3 +6,6 @@ __pycache__/
 pontes/_quota.json
 pontes/_checkpoint.json
 pontes/_respostas_brutas.jsonl
+progressao_espiral/_checkpoint.json
+desktop.ini
+Thumbs.db
