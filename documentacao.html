@@ -14,6 +14,19 @@
     <link rel="stylesheet" href="./style.css">
     
     <style>
+        /* A base do app trava a viewport (100vh + overflow hidden) para o
+           workspace. A documentação é uma página de leitura longa: libera a
+           rolagem natural do documento e mantém o sumário lateral sticky. */
+        html, body {
+            height: auto !important;
+            min-height: 100%;
+            overflow: visible !important;
+        }
+
+        body {
+            display: block !important;
+        }
+
         /* Estilos específicos da página de documentação */
         .doc-page {
             max-width: 1140px;
@@ -161,6 +174,12 @@
             display: flex;
             flex-direction: column;
             gap: 40px;
+            min-width: 0;
+        }
+
+        /* Tabelas e diagramas largos rolam dentro da seção, sem esticar a página */
+        .doc-section {
+            overflow-x: auto;
         }
 
         .doc-section {
