@@ -1,0 +1,8 @@
+.env
+.env.*
+!.env.example
+__pycache__/
+*.py[cod]
+pontes/_quota.json
+pontes/_checkpoint.json
+pontes/_respostas_brutas.jsonl

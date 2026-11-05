@@ -11,7 +11,7 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;600&family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
     
-    <link rel="stylesheet" href="./style.css?v=modals_compact7">
+    <link rel="stylesheet" href="./style.css?v=workspace_mobile_panels_v9">
     
     <!-- D3.js v7 para renderização de grafos de forças e física vetorial -->
     <script src="https://cdn.jsdelivr.net/npm/d3@7"></script>
@@ -133,23 +133,23 @@
         </section>
         <!-- Workspace Unificado: Lista + Grafo com Resize Handle -->
         <div class="unified-workspace layout-split" id="unifiedWorkspace">
+            <button type="button" class="panel-rail rail-list" id="railList" onclick="window.restaurarSidebar(event)" title="Expandir lista" aria-label="Expandir lista">
+                <strong>Lista</strong>
+                <small id="railListCount"></small>
+            </button>
+
             <!-- Painel Esquerdo: Lista de Habilidades -->
             <aside class="workspace-sidebar" id="resultsArea">
+                <div class="panel-rail-bar">
+                    <span>Lista</span>
+                    <button type="button" class="btn-recolher-painel" onclick="window.minimizarSidebar(event)" title="Recolher a lista para a faixa lateral" aria-label="Recolher lista">Recolher</button>
+                </div>
                 <div class="results-header" id="resultsHeader" style="display: none;">
                     <div class="results-header-info">
                         <div class="results-count" id="resultsCount">Resultados encontrados</div>
                         <div class="execution-time" id="executionTime"></div>
                     </div>
-                    <button type="button" class="btn-sidebar-collapse-header" onclick="window.minimizarSidebar(event)" title="Minimizar Lista de Habilidades (Maximizar Mapa)" aria-label="Minimizar lista">
-                        <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="15 18 9 12 15 6"></polyline></svg>
-                    </button>
                 </div>
-
-                <!-- Botão Flutuante para Restaurar Grafo (quando o grafo estiver minimizado) -->
-                <button type="button" class="floating-panel-restore restore-right" id="btnRestoreGraph" onclick="window.restaurarGrafo()" title="Expandir Mapa Interativo" aria-label="Expandir mapa">
-                    <span>Mapa</span>
-                    <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="9 18 15 12 9 6"></polyline></svg>
-                </button>
 
                 <!-- Barra de Ferramentas e Filtros em Linha Única (Sticky ao Rolar) -->
                 <div class="results-tools-bar" id="resultsToolsBar" style="display: none;">
@@ -244,26 +244,23 @@
                 </div>
             </aside>
 
-            <!-- Divisor Arrastável para Redimensionar com Botões de Minimização -->
-            <div class="workspace-resize-handle" id="workspaceResizeHandle" title="Arraste para redimensionar • Duplo clique para redefinir">
-                <button type="button" class="resize-collapse-btn collapse-left" id="btnMinimizeSidebar" onclick="window.minimizarSidebar(event)" title="Minimizar Lista de Habilidades (Maximizar Mapa)" aria-label="Minimizar lista">
-                    <svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><polyline points="15 18 9 12 15 6"></polyline></svg>
-                </button>
+            <!-- Divisor só redimensiona. Recolher é a faixa do próprio painel. -->
+            <div class="workspace-resize-handle" id="workspaceResizeHandle" title="Arraste para ajustar a largura • Duplo clique para redefinir">
                 <div class="resize-handle-grip" title="Arraste para ajustar a largura">
                     <span></span><span></span><span></span>
                 </div>
-                <button type="button" class="resize-collapse-btn collapse-right" id="btnMinimizeGraph" onclick="window.minimizarGrafo(event)" title="Minimizar Mapa Interativo (Maximizar Lista)" aria-label="Minimizar mapa">
-                    <svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><polyline points="9 18 15 12 9 6"></polyline></svg>
-                </button>
             </div>
+
+            <button type="button" class="panel-rail rail-map" id="railMap" onclick="window.restaurarGrafo(event)" title="Expandir mapa" aria-label="Expandir mapa">
+                <strong>Mapa</strong>
+            </button>
 
             <!-- Painel Direito: Grafo Interativo em Tempo Real (Canvas Full Height com HUD Integrado) -->
             <section id="graphViewSection" class="workspace-graph graph-section">
-                <!-- Botão Flutuante para Restaurar Lista de Habilidades (quando a lista estiver minimizada) -->
-                <button type="button" class="floating-panel-restore restore-left" id="btnRestoreSidebar" onclick="window.restaurarSidebar()" title="Expandir Lista de Habilidades" aria-label="Expandir lista">
-                    <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="15 18 9 12 15 6"></polyline></svg>
-                    <span>Lista</span>
-                </button>
+                <div class="panel-rail-bar">
+                    <span>Mapa</span>
+                    <button type="button" class="btn-recolher-painel" onclick="window.minimizarGrafo(event)" title="Recolher o mapa para a faixa lateral" aria-label="Recolher mapa">Recolher</button>
+                </div>
 
                 <div class="graph-canvas-container" id="graphContainer">
                     <svg id="graphSvg"></svg>
@@ -412,12 +409,17 @@
                     </div>
                 </div>
             </section>
+            <div class="workspace-resize-handle details-resize-handle" id="detailsResizeHandle" title="Arraste para ajustar a largura entre Mapa e Detalhes">
+                <div class="resize-handle-grip" aria-hidden="true">
+                    <span></span><span></span><span></span>
+                </div>
+            </div>
         </div>
     </div>
 
     <!-- Drawer Lateral de Detalhes da Habilidade ao clicar no nó -->
     <div class="drawer-backdrop" id="drawerBackdrop"></div>
-    <aside class="skill-drawer" id="skillDrawer" aria-hidden="true">
+    <aside class="skill-drawer active" id="skillDrawer" aria-hidden="false">
         <div class="drawer-header">
             <div id="drawerMetaTags" class="skill-meta-tags">
                 <!-- Badges e código inseridos via JS -->
@@ -454,30 +456,35 @@
                         <line x1="3" y1="21" x2="10" y2="14"></line>
                     </svg>
                 </button>
-                <button type="button" class="drawer-action-btn" id="drawerMinimizeBtn" onclick="window.minimizarDrawer()" title="Recolher gaveta para aba rápida">
+                <button type="button" class="drawer-action-btn" id="drawerMinimizeBtn" onclick="window.minimizarDrawer()" title="Recolher detalhes para a faixa da direita">
                     <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
                         <line x1="5" y1="12" x2="19" y2="12"></line>
                     </svg>
+                    <span class="drawer-rail-label">Recolher</span>
                 </button>
-                <button type="button" class="drawer-close-btn" id="drawerCloseBtn" onclick="window.fecharDrawer()" aria-label="Fechar detalhes" title="Fechar">
+                <button type="button" class="drawer-close-btn" id="drawerCloseBtn" onclick="window.fecharDrawer()" aria-label="Fechar detalhes" title="Fechar detalhes">
                     <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
                         <line x1="18" y1="6" x2="6" y2="18"></line>
                         <line x1="6" y1="6" x2="18" y2="18"></line>
                     </svg>
+                    <span class="drawer-rail-label">Fechar</span>
                 </button>
             </div>
         </div>
         <div class="drawer-body" id="drawerBody">
-            <!-- Conteúdo detalhado inserido via JS -->
+            <div class="drawer-empty-state">
+                <span aria-hidden="true">📘</span>
+                <strong>Detalhes da habilidade</strong>
+                <p>Selecione uma habilidade na lista ou no mapa para consultar sua descrição e informações pedagógicas.</p>
+            </div>
         </div>
     </aside>
 
-    <!-- Aba Minimizada da Gaveta (Flutuante no canto inferior direito) -->
-    <div id="drawerMinimizedTab" class="drawer-minimized-tab" onclick="window.reabrirDrawer()" style="display: none;" title="Clique para reabrir os detalhes da habilidade">
-        <span class="dmt-icon">📋</span>
-        <span id="dmtTitle" class="dmt-title">Detalhes da Habilidade</span>
-        <span class="dmt-expand">Reabrir &uarr;</span>
-    </div>
+    <!-- Faixa da gaveta recolhida: o mesmo lugar em que ela abre -->
+    <button type="button" id="drawerMinimizedTab" class="drawer-rail" onclick="window.reabrirDrawer()" style="display: none;" title="Expandir detalhes" aria-label="Expandir detalhes">
+        <strong>Detalhes</strong>
+        <span id="dmtTitle" class="dmt-title">EF00</span>
+    </button>
 
     <!-- Toast Notification -->
     <div id="toast" class="toast" role="status" aria-live="polite">Código e descrição copiados!</div>
@@ -944,6 +951,7 @@
         let catalogoProgressao = {};
         let catalogoRelacoesFinais = {};
         let catalogoHierarquiaReuna = {};
+        let catalogoPontesInterdisciplinares = {};
         window.baseBNCC = baseBNCC;
         window.catalogoRelacoesFinais = catalogoRelacoesFinais;
         window.getRelacoesFinais = () => catalogoRelacoesFinais;
@@ -1159,6 +1167,12 @@
         const drawerMinimizedTab = document.getElementById('drawerMinimizedTab');
         const drawerMetaTags = document.getElementById('drawerMetaTags');
         const drawerBody = document.getElementById('drawerBody');
+
+        // Detalhes é o terceiro painel do workspace (Lista + Mapa + Detalhes),
+        // com a mesma faixa de recolher/reabrir dos outros dois painéis.
+        if (unifiedWorkspace && skillDrawer && drawerMinimizedTab) {
+            unifiedWorkspace.append(skillDrawer, drawerMinimizedTab);
+        }
 
         // Toast de notificação
         window.showToast = function(msg) {
@@ -1661,14 +1675,15 @@
                 statusText.innerHTML = '<strong>Carregando dados da BNCC, Competências e Mapa de Relações...</strong>';
                 statusDetails.textContent = 'Lendo vetores, competências e progressão pedagógica...';
                 
-                const [responseVetores, responseComp, responseProg, responseRelFinal, responseHierarquia, responseArticulaveis] = await Promise.all([
+                const [responseVetores, responseComp, responseProg, responseRelFinal, responseHierarquia, responseArticulaveis, responsePontes] = await Promise.all([
                     fetch('./bncc_vetores.json'),
                     fetch('./competencias_bncc.json'),
                     fetch('./bncc_progressao_pre_requisitos.json'),
                     fetch('./relacoes_bncc_final.json'),
                     fetch('./hierarquia_focal_reuna.json'),
                     // Lista branca do Jev (opcional): relações confirmadas pela curadoria.
-                    fetch('./articulaveis_jev.json').catch(() => null)
+                    fetch('./articulaveis_jev.json').catch(() => null),
+                    fetch('./pontes_interdisciplinares.json?v=inter_ai_390_v1').catch(() => null)
                 ]);
                 if (!responseVetores.ok) {
                     throw new Error(`Não foi possível carregar 'bncc_vetores.json' (HTTP ${responseVetores.status}).`);
@@ -1694,6 +1709,10 @@
                 }
                 if (responseHierarquia && responseHierarquia.ok) {
                     catalogoHierarquiaReuna = await responseHierarquia.json();
+                }
+                if (responsePontes && responsePontes.ok) {
+                    const dadosPontes = await responsePontes.json();
+                    catalogoPontesInterdisciplinares = dadosPontes.pontes || {};
                 }
                 // Lista branca do Jev: relações confirmadas pela curadoria (opcional).
                 // Quando presente, a lista "Habilidades Articuláveis" só mostra o que
@@ -1786,6 +1805,9 @@
                     item._disciplinasConectadas = Array.from(distinctDiscs);
                     item._conexoesInterdisciplinares = conexoesCruzadas;
                     item._totalConexoesInter = conexoesCruzadas.length;
+                    const ponteGerada = catalogoPontesInterdisciplinares[item.codigo] || null;
+                    item._pontesInterdisciplinaresIA = ponteGerada ? (ponteGerada.por_componente || {}) : {};
+                    item._numComponentesSugeridos = Object.keys(item._pontesInterdisciplinaresIA).length;
                     const scoreTotal = conexoesCruzadas.reduce((acc, c) => acc + c.score, 0);
                     item._scoreTotalInter = scoreTotal;
                     item._scoreMedioInter = conexoesCruzadas.length > 0 ? scoreTotal / conexoesCruzadas.length : 0;
@@ -2413,6 +2435,13 @@
                 // 4. Ordena do maior para o menor score
                 pontuados.sort((a, b) => b.score - a.score);
 
+                // Busca exata por código: fixa a habilidade consultada no topo,
+                // seguida das correspondências relacionadas, mesmo com filtros.
+                if (exactSkill) {
+                    const focalResultado = { item: exactSkill, score: 1.0 };
+                    pontuados = [focalResultado, ...pontuados.filter(res => res.item.codigo !== exactSkill.codigo)];
+                }
+
                 // Verificação final antes de aplicar estado e renderizar no DOM
                 if (mySearchSequence !== currentSearchSequence) {
                     return;
@@ -2847,7 +2876,7 @@
                              role="button" 
                              tabindex="0"
                              onkeydown="if(event.key==='Enter'||event.key===' '){event.preventDefault(); this.click();}"
-                             title="Clique para focar esta habilidade no grafo e abrir a gaveta de detalhes pedagógicos">
+                             title="Clique para abrir ou recolher os detalhes nesta lista">
                         <div class="ssc-header">
                             <div class="ssc-badges-row">
                                 <span class="ssc-rank-badge ${isRankingRelacoes ? 'is-ranking' : ''}">#${itemRankNum}</span>
@@ -2864,16 +2893,20 @@
                         <p class="ssc-desc-short">${textoLimpo}</p>
 
                         <div class="ssc-footer">
-                            <div class="ssc-pills">
+                             <div class="ssc-pills">
                                 ${item._countReq > 0 ? `<span class="ssc-pill req" title="${item._countReq} Pré-requisitos formativos">⚡ ${item._countReq}</span>` : ''}
                                 ${item._countPrep > 0 ? `<span class="ssc-pill prep" title="Prepara para ${item._countPrep} habilidades posteriores">➔ ${item._countPrep}</span>` : ''}
                                 ${item._countRel > 0 ? `<span class="ssc-pill rel" title="${item._countRel} Articulações didáticas">🔄 ${item._countRel}</span>` : ''}
-                            </div>
-                            <div class="ssc-action-hint">
-                                <span>Ver detalhes</span>
+                             </div>
+                             <button type="button" class="btn-focus-skill" onclick="event.stopPropagation(); window.focalizarHabilidadeNoMapa('${item.codigo}')" title="Selecionar esta habilidade como principal">
+                                 Selecionar
+                             </button>
+                             <div class="ssc-action-hint">
+                                 <span>Detalhes</span>
                                 <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="9 18 15 12 9 6"></polyline></svg>
                             </div>
                         </div>
+
                     </article>
                 `;
             }
@@ -2986,6 +3019,9 @@
                                     <span>Recolher detalhes</span>
                                 </span>
                             </div>
+                            <button type="button" class="btn-focus-skill" onclick="event.stopPropagation(); window.focalizarHabilidadeNoMapa('${item.codigo}')" title="Selecionar esta habilidade como principal">
+                                Selecionar
+                            </button>
                         </div>
                     </div>
 
@@ -3199,6 +3235,7 @@
                 }
             }
             executionTime.textContent = `${cachedDuracao || 1} ms (${(cachedTotalAnalisados || resultadosAtuais.length).toLocaleString()} hab.)`;
+            if (window.atualizarContagemRailLista) window.atualizarContagemRailLista();
 
             if (resultadosAtuais.length === 0) {
                 if (resultsToolsBar) resultsToolsBar.style.display = 'none';
@@ -3210,6 +3247,35 @@
                 `;
                 return;
             }
+
+            // Mantém a habilidade de referência antes das relacionadas em todos
+            // os modos da aba Lista, inclusive quando há agrupamento/ordenação.
+            const primeiroResultadoLista = resultadosAtuais[0];
+            const primeiroEhFocal = primeiroResultadoLista?.relTipo === 'focal';
+            const codigoFocalLista = window.isExactSkillQuery && window.exactSkillItem
+                ? window.exactSkillItem.codigo
+                : (primeiroResultadoLista?.item?.codigo || null);
+            const resultadoFocalLista = codigoFocalLista
+                ? resultadosAtuais.find(res => res.item.codigo === codigoFocalLista)
+                : null;
+            const rotuloFocalLista = window.isExactSkillQuery
+                ? 'Habilidade pesquisada'
+                : (primeiroEhFocal
+                    ? 'Habilidade focal da rede'
+                    : (window.isModoRankingRelacoesAtivo
+                        ? 'Habilidade com mais relações'
+                        : (isModoInterdisciplinarAtivo ? 'Habilidade mais interdisciplinar' : 'Melhor correspondência da busca')));
+            const resultadosRelacionadosLista = resultadoFocalLista
+                ? resultadosAtuais.filter(res => res.item.codigo !== codigoFocalLista)
+                : resultadosAtuais;
+            const cartaoFocalLista = resultadoFocalLista
+                ? `<div class="searched-skill-first"><div class="searched-skill-first-label">${rotuloFocalLista}</div>${renderizarCardHabilidade({ ...resultadoFocalLista, _itemNum: 1 }, 0, cachedQuery)}</div>`
+                : '';
+            const renderizarCartaoRelacionadoLista = (res, index) => {
+                const deslocamento = resultadoFocalLista ? 1 : 0;
+                const numero = res.rankPos || res._itemNum || index + 1 + deslocamento;
+                return renderizarCardHabilidade({ ...res, _itemNum: numero }, index + deslocamento, cachedQuery);
+            };
 
             // MODO HUB INTERDISCIPLINAR (Exibe Banner rico + Seletor de Anos em Pílulas)
             if (isModoInterdisciplinarAtivo) {
@@ -3293,22 +3359,22 @@
                     `;
                 }
 
-                const ordenados = ordenarLista(resultadosAtuais, sortMode);
-                resultsList.innerHTML = bannerHtml + ordenados.map((res, i) => renderizarCardHabilidade(res, i, cachedQuery)).join('');
+                const ordenados = ordenarLista(resultadosRelacionadosLista, sortMode);
+                resultsList.innerHTML = bannerHtml + cartaoFocalLista + ordenados.map(renderizarCartaoRelacionadoLista).join('');
                 return;
             }
 
             // 1. SEM AGRUPAMENTO (Lista Contínua com Cards Colapsados por Padrão)
             if (groupMode === 'none') {
-                const ordenados = ordenarLista(resultadosAtuais, sortMode);
-                resultsList.innerHTML = ordenados.map((res, i) => renderizarCardHabilidade(res, i, cachedQuery)).join('');
+                const ordenados = ordenarLista(resultadosRelacionadosLista, sortMode);
+                resultsList.innerHTML = cartaoFocalLista + ordenados.map(renderizarCartaoRelacionadoLista).join('');
                 return;
             }
 
             // 2. AGRUPAR POR ANO/FASE (Grupos Colapsados por Padrão)
             if (groupMode === 'ano') {
                 const mapaGrupos = new Map();
-                resultadosAtuais.forEach(res => {
+                resultadosRelacionadosLista.forEach(res => {
                     const rotuloAno = obterRotuloAnoFase(res.item);
                     if (!mapaGrupos.has(rotuloAno)) {
                         const info = extrairEtapaCurricular(res.item);
@@ -3348,20 +3414,20 @@
                                 </div>
                             </div>
                             <div class="result-group-cards">
-                                ${itemsOrdenados.map((res, i) => renderizarCardHabilidade({ ...res, _itemNum: res.rankPos || (i + 1) }, (gIdx * 100) + i, cachedQuery)).join('')}
+                                ${itemsOrdenados.map(renderizarCartaoRelacionadoLista).join('')}
                             </div>
                         </section>
                     `;
                 });
 
-                resultsList.innerHTML = htmlGrupos;
+                resultsList.innerHTML = cartaoFocalLista + htmlGrupos;
                 return;
             }
 
             // 3. AGRUPAR POR DISCIPLINA (Grupos Colapsados por Padrão)
             if (groupMode === 'disciplina') {
                 const mapaDisciplinas = new Map();
-                resultadosAtuais.forEach(res => {
+                resultadosRelacionadosLista.forEach(res => {
                     const disc = res.item.disciplina || 'Outras Áreas';
                     if (!mapaDisciplinas.has(disc)) {
                         mapaDisciplinas.set(disc, {
@@ -3396,13 +3462,13 @@
                                 </div>
                             </div>
                             <div class="result-group-cards">
-                                ${itemsOrdenados.map((res, i) => renderizarCardHabilidade({ ...res, _itemNum: res.rankPos || (i + 1) }, (gIdx * 100) + i, cachedQuery)).join('')}
+                                ${itemsOrdenados.map(renderizarCartaoRelacionadoLista).join('')}
                             </div>
                         </section>
                     `;
                 });
 
-                resultsList.innerHTML = htmlGrupos;
+                resultsList.innerHTML = cartaoFocalLista + htmlGrupos;
                 return;
             }
 
@@ -3410,7 +3476,7 @@
             //    Continuidade e Articulações Interdisciplinares)
             if (groupMode === 'relacao') {
                 const mapaTipos = new Map();
-                resultadosAtuais.forEach(res => {
+                resultadosRelacionadosLista.forEach(res => {
                     const tipo = res.relTipo || 'outros';
                     if (!mapaTipos.has(tipo)) {
                         const info = obterInfoTipoRelacao(tipo);
@@ -3448,20 +3514,20 @@
                                 </div>
                             </div>
                             <div class="result-group-cards">
-                                ${itemsOrdenados.map((res, i) => renderizarCardHabilidade({ ...res, _itemNum: res.rankPos || (i + 1) }, (gIdx * 100) + i, cachedQuery)).join('')}
+                                ${itemsOrdenados.map(renderizarCartaoRelacionadoLista).join('')}
                             </div>
                         </section>
                     `;
                 });
 
-                resultsList.innerHTML = htmlGrupos;
+                resultsList.innerHTML = cartaoFocalLista + htmlGrupos;
                 return;
             }
 
             // 5. AGRUPAR POR AMBOS (Ano/Fase E Disciplinas Colapsados por Padrão)
             if (groupMode === 'ambos') {
                 const mapaAnos = new Map();
-                resultadosAtuais.forEach(res => {
+                resultadosRelacionadosLista.forEach(res => {
                     const rotuloAno = obterRotuloAnoFase(res.item);
                     if (!mapaAnos.has(rotuloAno)) {
                         const info = extrairEtapaCurricular(res.item);
@@ -3511,7 +3577,7 @@
                                     <span class="subgroup-count">${sub.items.length} ${sub.items.length === 1 ? 'habilidade' : 'habilidades'}</span>
                                 </div>
                                 <div class="result-group-cards">
-                                    ${itemsOrdenados.map((res, i) => renderizarCardHabilidade({ ...res, _itemNum: res.rankPos || (i + 1) }, (aIdx * 1000) + (sIdx * 100) + i, cachedQuery)).join('')}
+                                    ${itemsOrdenados.map(renderizarCartaoRelacionadoLista).join('')}
                                 </div>
                             </div>
                         `;
@@ -3541,7 +3607,7 @@
                     `;
                 });
 
-                resultsList.innerHTML = htmlGrupos;
+                resultsList.innerHTML = cartaoFocalLista + htmlGrupos;
             }
         }
 
@@ -3564,6 +3630,13 @@
             } else {
                 renderizarGrafoForcas();
             }
+
+            // Reenquadra após o layout do SVG ser atualizado. A transformação é
+            // calculada sobre os limites reais do conteúdo e a área de viewBox,
+            // não sobre a largura/altura nominal do canvas (que variam no split).
+            requestAnimationFrame(() => {
+                if (window.ajustarZoomMapaCompleto) window.ajustarZoomMapaCompleto();
+            });
         }
 
         // Helper para extrair informações ordenadas do Ano/Fase para o Organograma
@@ -3946,29 +4019,14 @@
                     .text(descCurta);
 
                 cardGroup
-                    .on('mouseenter', (event) => {
+                    .on('mouseenter', () => {
                         relLinkElements
                             .classed('active-highlight', l => l.source === codigo || l.target === codigo)
                             .classed('dimmed', l => l.source !== codigo && l.target !== codigo);
 
-                        const tipHtml = `
-                            <div style="font-weight: 800; font-size: 0.90rem; color: #1e293b; margin-bottom: 2px;">
-                                ${item.codigo} <span style="font-weight: 600; font-size: 0.78rem; color: var(--color-success-text);">(${(score * 100).toFixed(0)}% afinidade)</span>
-                            </div>
-                            <div style="font-size: 0.78rem; color: ${corDisc}; font-weight: 700; margin-bottom: 6px;">
-                                ${item.disciplina || 'Geral'} &bull; ${item.ano_faixa || ''}
-                            </div>
-                            <div style="font-size: 0.80rem; color: #334155; line-height: 1.45;">
-                                ${item.habilidade}
-                            </div>
-                            <div style="margin-top: 8px; font-size: 0.74rem; color: var(--accent-primary); font-weight: 600; border-top: 1px solid var(--border-color); padding-top: 6px;">
-                                Clique para abrir detalhes e manter conexões destacadas
-                            </div>
-                        `;
-                        exibirTooltipGrafo(tipHtml, event);
-                    })
-                    .on('mousemove', (event) => {
-                        atualizarPosicaoTooltip(event);
+                        // No organograma, o próprio cartão já traz o trecho da
+                        // habilidade; a descrição completa abre somente no clique.
+                        ocultarTooltipGrafo();
                     })
                     .on('mouseleave', () => {
                         if (selectedNodeCode) {
@@ -4907,48 +4965,14 @@
                 // ==============================================================
                 // EVENTOS INTERATIVOS: HOVER DESTACA O CAMINHO, CLIQUE ABRE FICHA
                 // ==============================================================
-                card.on('mouseenter', (event) => {
+                card.on('mouseenter', () => {
                     if (!pos.isFocal) {
                         window.highlightLineageLink(pos.codigo, true);
                     }
 
-                    const it = pos.item;
-                    const anoInfo = extrairInfoAnoOrganograma(it);
-                    const just = justificativaMap.get(pos.codigo);
-                    const justHtml = just ? `
-                        <div style="margin-top: 8px; padding: 7px 10px; background: #eef2ff; border-left: 3px solid #6366f1; border-radius: 4px; font-size: 0.78rem; color: #3730a3; line-height: 1.4;">
-                            <strong>💡 Justificativa Pedagógica:</strong> ${just}
-                        </div>
-                    ` : '';
-
-                    // Selo de força para as relações interdisciplinares (0..1 -> %)
-                    const forcaHtml = (typeof pos.forca === 'number') ? `
-                        <div style="margin-top: 6px; display: inline-flex; align-items: center; gap: 6px; font-size: 0.72rem; font-weight: 700; color: #047857; background: #d1fae5; border: 1px solid #a7f3d0; border-radius: 9999px; padding: 2px 9px;">
-                            🤝 Força da ponte: ${(pos.forca * 100).toFixed(0)}%${pos.tipoRelacao ? ` • ${pos.tipoRelacao.replace(/_/g, ' ')}` : ''}
-                        </div>
-                    ` : '';
-
-                    const tipHtml = `
-                        <div class="tooltip-header" style="display: flex; align-items: center; justify-content: space-between; margin-bottom: 4px;">
-                            <span class="tooltip-code" style="font-family: var(--font-mono); font-weight: 800; font-size: 0.92rem; color: #1e293b;">${it.codigo}</span>
-                            <span class="tooltip-badge ${getDisciplinaClass(it.disciplina)}" style="font-size: 0.72rem; font-weight: 700; color: ${discCor};">${it.disciplina || 'Geral'}</span>
-                        </div>
-                        <div class="tooltip-meta" style="font-size: 0.76rem; color: var(--accent-primary); font-weight: 600; margin-bottom: 6px;">
-                            ${anoInfo.label} &bull; ${anoInfo.sub}
-                        </div>
-                        <div class="tooltip-body" style="font-size: 0.82rem; color: #334155; line-height: 1.45;">
-                            ${it.habilidade}
-                        </div>
-                        ${justHtml}
-                        ${forcaHtml}
-                        <div style="margin-top: 8px; font-size: 0.74rem; color: var(--text-muted); border-top: 1px solid var(--border-color); padding-top: 6px;">
-                            Clique para abrir ficha completa &bull; Duplo-clique para centrar o fluxo nesta
-                        </div>
-                    `;
-                    exibirTooltipGrafo(tipHtml, event);
-                })
-                .on('mousemove', (event) => {
-                    atualizarPosicaoTooltip(event);
+                    // Em Relações, não exibe cartão flutuante no hover.
+                    // O cartão já mostra uma descrição curta; o clique abre tudo.
+                    ocultarTooltipGrafo();
                 })
                 .on('mouseleave', () => {
                     if (!pos.isFocal) {
@@ -5676,7 +5700,7 @@
                 `<span class="badge-reuna-focal-mini" style="font-size: 0.68rem; font-weight: 700; color: #b45309; background: #fef3c7; border: 1px solid #fde68a; padding: 1px 6px; border-radius: 4px;" title="${hie.rotulo}">${hie.rotulo_curto}</span>` : '';
 
             return `
-                <div class="lineage-skill-card ${tipo}" onclick="window.abrirHabilidadePorCodigo('${codigo}')" title="Clique para inspecionar ${codigo} (${item.disciplina} • ${item.ano_faixa})">
+                <div class="lineage-skill-card ${tipo}" title="${codigo} • ${item.disciplina} • ${item.ano_faixa}">
                     <div class="lineage-card-top">
                         <div class="lineage-code-tag" style="border-left-color: ${borderAccent};">
                             <strong>${codigo}</strong>
@@ -5690,9 +5714,6 @@
                     </div>
                     <div class="lineage-card-text">${textoCurto}</div>
                     ${justificativa ? `<div class="lineage-justification-callout">💡 <em>${justificativa}</em></div>` : ''}
-                    <div class="lineage-card-action">
-                        <span>Inspecionar habilidade &rarr;</span>
-                    </div>
                 </div>
             `;
         }
@@ -5863,9 +5884,68 @@
             return true;
         };
 
-        // Centraliza a visão no card da habilidade clicada, em zoom de leitura.
-        // Funciona nos três modos de mapa (Linhagem, Organograma e Rede) porque
-        // converte a posição real do card na tela para coordenadas do SVG.
+        // Enquadra todo o conteúdo real do mapa no viewBox, com margem para que
+        // nenhum cartão/conexão fique cortado. Funciona nos três layouts do grafo.
+        window.ajustarZoomMapaCompleto = function(duracao = 360) {
+            if (!graphSvg || !zoomBehavior) return false;
+            const grupo = graphSvg.querySelector('.main-lineage-group, .main-graph-group')
+                || graphSvg.querySelector('g');
+            const ctmRaiz = graphSvg.getScreenCTM();
+            const caixa = graphContainer.getBoundingClientRect();
+            if (!ctmRaiz || !caixa.width || !caixa.height || !grupo) return false;
+
+            let bounds;
+            try {
+                bounds = grupo.getBBox();
+            } catch (_) {
+                return false;
+            }
+            if (!bounds || !bounds.width || !bounds.height) return false;
+
+            // getBBox usa unidades locais do SVG; converte a escala nativa do
+            // viewBox para pixels antes de calcular o zoom D3. Sem isso, o
+            // preserveAspectRatio do SVG era contado duas vezes e o grafo ficava
+            // minúsculo ou cortado, sobretudo quando o painel mudava de tamanho.
+            const escalaRaizPx = Math.min(
+                Math.hypot(ctmRaiz.a, ctmRaiz.b),
+                Math.hypot(ctmRaiz.c, ctmRaiz.d)
+            );
+            if (!Number.isFinite(escalaRaizPx) || escalaRaizPx <= 0) return false;
+
+            const margemPx = Math.max(2, Math.min(20, Math.min(caixa.width, caixa.height) * 0.05));
+            const larguraUtilPx = Math.max(1, caixa.width - margemPx * 2);
+            const alturaUtilPx = Math.max(1, caixa.height - margemPx * 2);
+            const escala = Math.min(
+                larguraUtilPx / (bounds.width * escalaRaizPx),
+                alturaUtilPx / (bounds.height * escalaRaizPx),
+                30
+            );
+            if (!Number.isFinite(escala) || escala <= 0) return false;
+
+            const extentAtual = zoomBehavior.scaleExtent();
+            zoomBehavior.scaleExtent([Math.max(0.001, Math.min(extentAtual[0], escala)), extentAtual[1]]);
+            const inversa = ctmRaiz.inverse();
+            const centroTela = graphSvg.createSVGPoint();
+            centroTela.x = caixa.left + (caixa.width / 2);
+            centroTela.y = caixa.top + (caixa.height / 2);
+            const centroSvg = centroTela.matrixTransform(inversa);
+            const tx = centroSvg.x - ((bounds.x + bounds.width / 2) * escala);
+            const ty = centroSvg.y - ((bounds.y + bounds.height / 2) * escala);
+
+            const svgSelection = d3.select(graphSvg).interrupt();
+            const transform = d3.zoomIdentity.translate(tx, ty).scale(escala);
+            if (duracao <= 0) {
+                svgSelection.call(zoomBehavior.transform, transform);
+            } else {
+                svgSelection.transition()
+                    .duration(duracao)
+                    .call(zoomBehavior.transform, transform);
+            }
+            return true;
+        };
+
+        // Centralizar agora restaura o enquadramento completo do mapa, tal como
+        // o enquadramento automático aplicado ao selecionar uma habilidade.
         window.centralizarNoCardDoMapa = function(codigo) {
             if (!codigo || !zoomBehavior) return false;
             const el = document.getElementById('card-' + codigo)
@@ -5990,29 +6070,10 @@
         // ======================================================================
         window.selecionarHabilidadeSidebar = function(codigo) {
             if (!codigo) return;
-            
-            const isDrawerOpen = skillDrawer && skillDrawer.classList.contains('active');
-            // Se clicou na mesma habilidade e a gaveta está aberta, fecha a gaveta!
-            if (drawerCodigoAberto === codigo && isDrawerOpen) {
-                fecharDrawer();
-                document.querySelectorAll('.sidebar-skill-card').forEach(c => c.classList.remove('is-active-selected'));
-                return;
-            }
 
             const item = window.obterItemBaseBNCC ? window.obterItemBaseBNCC(codigo) : obterItemBaseBNCC(codigo);
             if (!item) return;
 
-            // O clique na lista NÃO assume a habilidade como foco do mapa: o mapa
-            // continua representando a linhagem atual e apenas acende a habilidade
-            // clicada (e suas conexões). Assumir o foco é só com duplo clique no
-            // card do mapa (ver focalizarHabilidadeNoMapa).
-            if (!window.destacarHabilidadeNoMapa(codigo)) {
-                // A habilidade não é um card do mapa atual (comum no modo Relações
-                // quando a lista veio de uma busca por tema).
-                window.showToast(`ℹ️ ${codigo} não está no mapa atual — duplo clique em um card do mapa para assumir o foco.`);
-            }
-
-            // 1. Destaca o card clicado na coluna lateral
             document.querySelectorAll('.sidebar-skill-card').forEach(c => c.classList.remove('is-active-selected'));
             const sideCard = document.getElementById('side-card-' + codigo);
             if (sideCard) {
@@ -6020,15 +6081,9 @@
                 sideCard.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
             }
 
-            // 2. Abre/atualiza a gaveta de detalhes pedagógicos
             const resObj = (resultadosAtuais || []).find(r => r.item && r.item.codigo === codigo);
-            const score = resObj ? resObj.score : 0.85;
-            abrirDrawerDetalhes(item, score);
+            abrirDrawerDetalhes(item, resObj ? resObj.score : 0.85);
             drawerCodigoAberto = codigo;
-
-            // 3. Leva a visão do mapa até o card clicado (zoom de leitura), já
-            //    descontando o espaço ocupado pela gaveta recém-aberta.
-            window.centralizarNoCardDoMapa(codigo);
         };
 
         window.focarHabilidadeNoGrafo = async function(codigo, modo = null) {
@@ -6205,6 +6260,28 @@
             const explicacao = gerarExplicacaoIA(queryAtual, item, score);
             const relFinal = catalogoRelacoesFinais[item.codigo] || null;
             const prog = catalogoProgressao[item.codigo] || null;
+            const pontesIASelecionada = catalogoPontesInterdisciplinares[item.codigo]?.por_componente || {};
+            const escaparHTMLDrawer = valor => String(valor ?? '').replace(/[&<>"']/g, c => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c]));
+            const gruposPontesIADrawer = Object.entries(pontesIASelecionada).map(([componente, ponte]) => {
+                const codigos = (ponte.codigos || []).map(codigo => {
+                    const parceira = mapaBNCCPorCodigo.get(codigo);
+                    const descricao = parceira?.habilidade || '';
+                    return `<div class="ai-bridge-code"><strong>${escaparHTMLDrawer(codigo)}</strong>${descricao ? `<span>${escaparHTMLDrawer(descricao)}</span>` : ''}</div>`;
+                }).join('');
+                return `
+                    <details class="ai-bridge-component">
+                        <summary>
+                            <span class="ai-bridge-component-name">${escaparHTMLDrawer(componente)}</span>
+                            <span class="ai-bridge-confidence">${escaparHTMLDrawer(ponte.confianca || 'média')}</span>
+                            <span class="ai-bridge-count">${(ponte.codigos || []).length}</span>
+                        </summary>
+                        <div class="ai-bridge-component-body">
+                            <div class="ai-bridge-codes">${codigos || '<span class="ai-bridge-empty">Nenhum código de habilidade vinculado.</span>'}</div>
+                            ${ponte.justificativa ? `<p><strong>Por que conecta:</strong> ${escaparHTMLDrawer(ponte.justificativa)}</p>` : ''}
+                            ${ponte.atividade ? `<p><strong>Sugestão de atividade:</strong> ${escaparHTMLDrawer(ponte.atividade)}</p>` : ''}
+                        </div>
+                    </details>`;
+            }).join('');
 
             // Sincroniza destaque e rolagem suave do card na sidebar unificada
             document.querySelectorAll('.sidebar-skill-card').forEach(c => c.classList.remove('is-active-selected'));
@@ -6216,13 +6293,9 @@
 
             // Cabeçalho do Drawer
             drawerMetaTags.innerHTML = `
-                <button type="button" class="code-badge" onclick="copiarCodigo('${item.codigo}')" title="Clique para copiar código e descrição">
+                <span class="code-badge" aria-label="Código da habilidade">
                     <span>${item.codigo}</span>
-                    <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                        <rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect>
-                        <path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path>
-                    </svg>
-                </button>
+                </span>
                 <span class="discipline-badge ${discClass}">${item.disciplina || 'Geral'}</span>
                 ${item.ano_faixa ? `<span class="year-badge">${item.ano_faixa}</span>` : ''}
                 ${item.classificacao_reuna === 'AF' ? `<span class="badge-reuna-focal" title="Aprendizagem Focal (Mapas de Foco - Instituto Reúna): nó indispensável para progressão escolar">🎯 Aprendizagem Focal (Reúna)</span>` : ''}
@@ -6333,18 +6406,13 @@
 
             // Corpo do Drawer
             drawerBody.innerHTML = `
-                <!-- Cabeçalho FIXO (congelado ao rolar): descrição da habilidade + ação discreta -->
+                <!-- Cabeçalho fixo: somente a descrição da habilidade -->
                 <div class="drawer-sticky-head">
                     <div class="skill-desc-card skill-desc-inline">
                         <div class="skill-desc-label">Descrição da Habilidade (BNCC):</div>
                         <p class="skill-desc-text">
                             ${(item.habilidade || '').replace(/^\(([A-Za-z0-9]+)\)/, '<strong class="skill-desc-code">($1)</strong>')}
                         </p>
-                        <!-- Ação discreta: aparece apenas ao passar o mouse sobre o bloco -->
-                        <button type="button" class="drawer-expand-toggle" onclick="window.alternarExpandirTodosDrawer(this)" title="Expandir ou recolher todas as seções de detalhes" aria-expanded="false">
-                            <svg class="dtc-btn-icon" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4"><polyline points="7 13 12 18 17 13"></polyline><polyline points="7 6 12 11 17 6"></polyline></svg>
-                            <span class="btn-expand-all-text">Expandir todas as informações</span>
-                        </button>
                         ${(relFinal && relFinal.relacionadas && relFinal.relacionadas.length) ? `
                         <button type="button" class="drawer-map-btn" onclick="window.abrirMapaRelacoesCompleto('${item.codigo}')" title="Ver TODAS as ${relFinal.relacionadas.length} relações interdisciplinares desta habilidade no mapa, sem o filtro do slider">
                             <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="6" cy="6" r="3"></circle><circle cx="18" cy="18" r="3"></circle><path d="M6 9v3a3 3 0 0 0 3 3h6a3 3 0 0 1 3 3v3"></path></svg>
@@ -6352,6 +6420,13 @@
                         </button>
                         ` : ''}
                     </div>
+                </div>
+
+                <div class="drawer-expand-toggle-row">
+                    <button type="button" class="drawer-expand-toggle" onclick="window.alternarExpandirTodosDrawer(this)" title="Expandir ou recolher todas as seções de detalhes" aria-expanded="false">
+                        <svg class="dtc-btn-icon" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4"><polyline points="7 13 12 18 17 13"></polyline><polyline points="7 6 12 11 17 6"></polyline></svg>
+                        <span class="btn-expand-all-text">Expandir todas as informações</span>
+                    </button>
                 </div>
 
                 <!-- Card Matriz Instituto Reúna & Posição Hierárquica -->
@@ -6416,7 +6491,7 @@
                             <div class="skill-keywords-inline">
                                 <span class="skill-keywords-inline-label">Palavras-chave:</span>
                                 ${item.palavras_chave.map((kw, i) => `
-                                    <span class="kw-mini ${i === 0 ? 'is-code' : ''}" onclick="window.buscarPorTermo('${kw.replace(/'/g, "\\'")}')" title="${i === 0 ? 'Código da Habilidade' : 'Clique para buscar por este termo'}">${kw}</span>
+                                    <span class="kw-mini ${i === 0 ? 'is-code' : ''}" title="${i === 0 ? 'Código da Habilidade' : 'Palavra-chave'}">${kw}</span>
                                 `).join('')}
                             </div>
                         ` : ''}
@@ -6595,62 +6670,21 @@
                     </div>
                 </details>
 
-                <!-- Relações Pedagógicas Articuláveis no Grafo (ancoradas no Jev) -->
-                <details class="drawer-collapsible">
+                <!-- Agrupamento de sugestões interdisciplinares geradas por IA -->
+                <details class="drawer-collapsible drawer-ai-bridges">
                     <summary>
                         <span class="dc-left">
-                            <span style="font-size: 1.05rem;">🔗</span>
-                            <span>Habilidades Articuláveis (validadas pelo Jev)</span>
+                            <span style="font-size: 1.05rem;">✨</span>
+                            <span>Sugestões Interdisciplinares da IA</span>
                         </span>
-                        <span class="dc-count">${conectadas.length}</span>
+                        <span class="dc-count">${Object.keys(pontesIASelecionada).length}</span>
                         <svg class="dc-chevron" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="6 9 12 15 18 9"></polyline></svg>
                     </summary>
                     <div class="drawer-collapsible-body">
-                <div class="connected-skills-box">
-                    <div class="connected-skills-title">
-                        <span>Relações curriculares confirmadas pelo Jev:</span>
-                        <span style="font-size: 0.78rem; color: var(--accent-primary); font-weight: 700;">${conectadas.length} relações</span>
-                    </div>
-
-                    ${conectadas.length > 0 ? `
-                        <div class="connected-skills-list">
-                            ${conectadas.map(c => `
-                                <div class="connected-skill-item" onclick="window.focarHabilidade('${c.outroItem.codigo}')" title="Clique para abrir detalhes desta habilidade">
-                                    <div style="display: flex; flex-direction: column; gap: 3px; min-width: 0;">
-                                        <div style="display: flex; align-items: center; gap: 8px; flex-wrap: wrap;">
-                                            <span class="connected-code">${c.outroItem.codigo}</span>
-                                            <span class="connected-disc">${c.outroItem.disciplina || 'Geral'} &bull; ${c.outroItem.ano_faixa || ''}</span>
-                                            <span class="jev-verified-badge" title="Relação confirmada pela curadoria do Jev">✓ Jev</span>
-                                        </div>
-                                        <span class="connected-pedagogy-badge">${c.compat.rotulo}</span>
-                                        ${c.jevJustificativa ? `<span class="jev-justificativa">${c.jevJustificativa}</span>` : ''}
-                                    </div>
-                                </div>
-                            `).join('')}
-                        </div>
-                    ` : `
-                        <p style="font-size: 0.84rem; color: var(--text-muted); font-style: italic; margin: 4px 0;">
-                            O Jev não confirmou relações curriculares com as habilidades do conjunto atual. Amplie a busca (aumente o número de resultados) para considerar mais candidatas.
-                        </p>
-                    `}
-                </div>
+                        <div class="ai-bridges-notice">Sugestões pedagógicas geradas por IA; não são relações oficiais da BNCC. Revise a adequação ao seu planejamento.</div>
+                        ${gruposPontesIADrawer ? `<div class="ai-bridge-groups">${gruposPontesIADrawer}</div>` : `<p class="ai-bridges-empty">Ainda não há sugestões geradas para esta habilidade.</p>`}
                     </div>
                 </details>
-
-                <!-- Botões para Filtrar Relações Específicas -->
-                <div class="explore-actions" style="margin-top: 20px; margin-bottom: 24px; padding: 14px; background: #f8fafc; border: 1px solid #e2e8f0; border-radius: 8px;">
-                    <div style="font-size: 0.82rem; font-weight: 700; color: #475569; margin-bottom: 10px; text-transform: uppercase;">Aprofundar Buscas a partir desta Habilidade:</div>
-                    <div style="display: flex; gap: 10px; flex-wrap: wrap;">
-                        <button onclick="window.explorarRelacoesEspecificas('${item.codigo}', 'mesmo_ano')" style="flex: 1; padding: 10px; border: none; border-radius: 6px; background: #6366f1; color: white; font-size: 0.85rem; font-weight: 600; cursor: pointer; display: flex; align-items: center; justify-content: center; gap: 6px; transition: background 0.2s;">
-                            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"></circle><line x1="12" y1="8" x2="12" y2="16"></line><line x1="8" y1="12" x2="16" y2="12"></line></svg>
-                            Relações no Mesmo Ano
-                        </button>
-                        <button onclick="window.explorarRelacoesEspecificas('${item.codigo}', 'progressao')" style="flex: 1; padding: 10px; border: none; border-radius: 6px; background: #f59e0b; color: white; font-size: 0.85rem; font-weight: 600; cursor: pointer; display: flex; align-items: center; justify-content: center; gap: 6px; transition: background 0.2s;">
-                            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 5v14"></path><path d="m19 12-7 7-7-7"></path></svg>
-                            Ver Progressões (Outros Anos)
-                        </button>
-                    </div>
-                </div>
 
                 <!-- Competências da BNCC Articuladas (Gerais e Específicas) -->
                 ${((item.competencias_gerais && item.competencias_gerais.length > 0) || (item.competencias_especificas && item.competencias_especificas.length > 0)) ? `
@@ -6802,14 +6836,18 @@
 
             // Abre o drawer sem desfocar o fundo para manter interação livre com o grafo
             skillDrawer.classList.add('active');
+            unifiedWorkspace.classList.remove('details-hidden');
             skillDrawer.setAttribute('aria-hidden', 'false');
+            document.body.classList.remove('drawer-is-minimized');
             if (drawerMinimizedTab) {
                 drawerMinimizedTab.style.display = 'none';
             }
         }
 
         function fecharDrawer() {
-            skillDrawer.classList.remove('active');
+            // O painel permanece no workspace; fechar/redefinir limpa os dados,
+            // enquanto recolherDrawer é a ação explícita para ocultá-lo.
+            skillDrawer.classList.add('active');
             skillDrawer.classList.remove('is-pinned');
             skillDrawer.classList.remove('is-expanded');
             document.body.classList.remove('drawer-is-pinned');
@@ -6821,8 +6859,13 @@
                 if (pinText) pinText.textContent = 'Fixar';
             }
             if (drawerExpandBtn) drawerExpandBtn.classList.remove('active');
+            document.body.classList.remove('drawer-is-minimized');
             if (drawerMinimizedTab) drawerMinimizedTab.style.display = 'none';
-            skillDrawer.setAttribute('aria-hidden', 'true');
+            skillDrawer.setAttribute('aria-hidden', 'false');
+            if (drawerMetaTags) drawerMetaTags.innerHTML = '';
+            if (drawerBody) {
+                drawerBody.innerHTML = `<div class="drawer-empty-state"><span aria-hidden="true">📘</span><strong>Detalhes da habilidade</strong><p>Selecione uma habilidade na lista ou no mapa para consultar sua descrição e informações pedagógicas.</p></div>`;
+            }
             selectedNodeCode = null;
             if (window.aplicarDestaqueOrganograma) window.aplicarDestaqueOrganograma(null);
             if (window.aplicarDestaqueGrafoForcas) window.aplicarDestaqueGrafoForcas(null);
@@ -6857,21 +6900,23 @@
 
         window.minimizarDrawer = function() {
             skillDrawer.classList.remove('active');
-            if (selectedNodeCode) {
-                const item = obterItemBaseBNCC(selectedNodeCode);
-                const dmtTitle = document.getElementById('dmtTitle');
-                if (dmtTitle && item) {
-                    dmtTitle.textContent = `${item.codigo} • ${item.disciplina || 'BNCC'}`;
-                }
-            }
+            unifiedWorkspace.classList.add('details-hidden');
+            document.body.classList.add('drawer-is-minimized');
+            const dmtTitle = document.getElementById('dmtTitle');
+            const codigo = (typeof drawerCodigoAberto !== 'undefined' && drawerCodigoAberto) || selectedNodeCode || '';
+            const item = codigo ? obterItemBaseBNCC(codigo) : null;
+            if (dmtTitle) dmtTitle.textContent = (item && item.codigo) || codigo || 'BNCC';
             if (drawerMinimizedTab) {
                 drawerMinimizedTab.style.display = 'flex';
             }
         };
 
         window.reabrirDrawer = function() {
+            document.body.classList.remove('drawer-is-minimized');
+            unifiedWorkspace.classList.remove('details-hidden');
             if (drawerMinimizedTab) drawerMinimizedTab.style.display = 'none';
             skillDrawer.classList.add('active');
+            skillDrawer.setAttribute('aria-hidden', 'false');
         };
 
         window.toggleFiltersSidebar = function() {};
@@ -7034,6 +7079,7 @@
 
             // Se o clique foi no botão de reabrir gaveta minimizada, não fecha
             if (e.target.closest('#drawerMinimizedTab')) return;
+            if (e.target.closest('.panel-rail') || e.target.closest('.btn-recolher-painel') || e.target.closest('.panel-rail-bar')) return;
 
             // Se o clique foi na barra de controles do próprio mapa (modos de
             // visualização, zoom, tela cheia e filtro de relação), não fecha:
@@ -7084,7 +7130,13 @@
 
             if (mode === 'split') {
                 if (btnSplit) btnSplit.classList.add('active');
-                if (workspace) workspace.className = 'unified-workspace layout-split';
+                if (workspace) {
+                    const listaRecolhida = workspace.classList.contains('sidebar-hidden');
+                    const mapaRecolhido = workspace.classList.contains('graph-hidden');
+                    workspace.className = 'unified-workspace layout-split';
+                    if (listaRecolhida) workspace.classList.add('sidebar-hidden');
+                    if (mapaRecolhido) workspace.classList.add('graph-hidden');
+                }
                 if (rArea) rArea.style.display = 'flex';
                 if (gSection) gSection.style.display = 'flex';
                 if (!graphLayoutMode) graphLayoutMode = 'lineage';
@@ -7166,13 +7218,6 @@
                 const workspaceWidth = workspace.getBoundingClientRect().width;
                 let newWidth = startWidth + delta;
 
-                // Se o usuário arrastar muito para a esquerda (< 130px), minimiza a sidebar
-                if (newWidth < 130) {
-                    window.minimizarSidebar();
-                    stopDrag();
-                    return;
-                }
-
                 const maxSidebarWidth = workspaceWidth - 280;
                 newWidth = Math.max(MIN_SIDEBAR_WIDTH, Math.min(newWidth, maxSidebarWidth));
 
@@ -7241,6 +7286,13 @@
             });
 
             // Minimizar Lista de Habilidades (Maximizar Grafo 100%)
+            window.atualizarContagemRailLista = function() {
+                const el = document.getElementById('railListCount');
+                if (!el) return;
+                const n = (typeof resultadosAtuais !== 'undefined' && Array.isArray(resultadosAtuais)) ? resultadosAtuais.length : 0;
+                el.textContent = n > 0 ? String(n) : '';
+            };
+
             window.minimizarSidebar = function(e) {
                 if (e) {
                     e.stopPropagation();
@@ -7248,6 +7300,7 @@
                 }
                 workspace.classList.remove('graph-hidden');
                 workspace.classList.add('sidebar-hidden');
+                window.atualizarContagemRailLista();
                 if (typeof renderizarGrafo === 'function') {
                     setTimeout(renderizarGrafo, 100);
                 }
@@ -7277,6 +7330,10 @@
                     e.stopPropagation();
                     e.preventDefault();
                 }
+                const graphSection = document.getElementById('graphViewSection');
+                if (graphSection && graphSection.classList.contains('graph-fullscreen') && window.toggleGraphFullscreen) {
+                    window.toggleGraphFullscreen();
+                }
                 workspace.classList.remove('sidebar-hidden');
                 workspace.classList.add('graph-hidden');
             };
@@ -7298,6 +7355,81 @@
                     setTimeout(renderizarGrafo, 100);
                 }
             };
+        })();
+
+        // Segunda alça: ajusta a proporção entre o mapa flexível e o painel Detalhes.
+        (function inicializarResizeDetalhes() {
+            const workspace = document.getElementById('unifiedWorkspace');
+            const handle = document.getElementById('detailsResizeHandle');
+            const graph = document.getElementById('graphViewSection');
+            const details = document.getElementById('skillDrawer');
+            if (!workspace || !handle || !graph || !details) return;
+
+            const MIN_DETAILS_WIDTH = 260;
+            const MIN_GRAPH_WIDTH = 280;
+            const DEFAULT_DETAILS_WIDTH = 360;
+            let dragging = false;
+            let startX = 0;
+            let startWidth = 0;
+
+            try {
+                const savedWidth = Number(localStorage.getItem('bncc_details_width'));
+                if (savedWidth >= MIN_DETAILS_WIDTH) {
+                    details.style.flex = `0 0 ${savedWidth}px`;
+                    details.style.width = `${savedWidth}px`;
+                }
+            } catch (_) {}
+
+            const iniciar = clientX => {
+                if (window.innerWidth <= 1024 || !details.classList.contains('active') || workspace.classList.contains('graph-hidden')) return;
+                dragging = true;
+                startX = clientX;
+                startWidth = details.getBoundingClientRect().width;
+                handle.classList.add('is-dragging');
+                document.body.classList.add('is-resizing');
+            };
+
+            const mover = clientX => {
+                if (!dragging) return;
+                const delta = clientX - startX;
+                const maxWidth = workspace.clientWidth
+                    - document.getElementById('resultsArea').getBoundingClientRect().width
+                    - MIN_GRAPH_WIDTH - 46;
+                const width = Math.max(MIN_DETAILS_WIDTH, Math.min(startWidth - delta, maxWidth));
+                details.style.flex = `0 0 ${width}px`;
+                details.style.width = `${width}px`;
+            };
+
+            const finalizar = () => {
+                if (!dragging) return;
+                dragging = false;
+                handle.classList.remove('is-dragging');
+                document.body.classList.remove('is-resizing');
+                try {
+                    localStorage.setItem('bncc_details_width', Math.round(details.getBoundingClientRect().width));
+                } catch (_) {}
+                if (typeof renderizarGrafo === 'function') setTimeout(renderizarGrafo, 60);
+            };
+
+            handle.addEventListener('mousedown', event => {
+                event.preventDefault();
+                iniciar(event.clientX);
+            });
+            window.addEventListener('mousemove', event => mover(event.clientX));
+            window.addEventListener('mouseup', finalizar);
+            handle.addEventListener('touchstart', event => {
+                if (event.touches?.length === 1) iniciar(event.touches[0].clientX);
+            }, { passive: true });
+            window.addEventListener('touchmove', event => {
+                if (event.touches?.length === 1) mover(event.touches[0].clientX);
+            }, { passive: true });
+            window.addEventListener('touchend', finalizar);
+            handle.addEventListener('dblclick', () => {
+                details.style.flex = `0 0 ${DEFAULT_DETAILS_WIDTH}px`;
+                details.style.width = `${DEFAULT_DETAILS_WIDTH}px`;
+                try { localStorage.setItem('bncc_details_width', DEFAULT_DETAILS_WIDTH); } catch (_) {}
+                if (typeof renderizarGrafo === 'function') setTimeout(renderizarGrafo, 60);
+            });
         })();
 
         // Redimensionamento responsivo do grafo D3
@@ -7397,32 +7529,13 @@
             }
         });
 
-        // Centralizar = colocar o CARD PRINCIPAL (habilidade selecionada) no centro
-        // da tela num zoom de leitura confortável. Antes apenas repetia o enquadramento
-        // geral (mapa inteiro em escala minúscula), o que não "centralizava" nada.
+        // Compatibilidade com o controle antigo de centralização da habilidade focal.
         window.centralizarFocalNoMapa = function() {
-            const fp = window._lineageFocalPos;
-            if (!fp || !zoomBehavior) return false;
-            const w = graphContainer.clientWidth || 980;
-            const h = graphContainer.clientHeight || 620;
-            // Zoom de leitura: o card principal ocupa ~55% da largura visível.
-            const escalaFoco = Math.min(2.0, Math.max(0.85, (w * 0.55) / (fp.w || 336)));
-            const tx = (w / 2) - (fp.centerX * escalaFoco);
-            const ty = (h / 2) - (fp.centerY * escalaFoco);
-            d3.select(graphSvg).transition().duration(420)
-                .call(zoomBehavior.transform, d3.zoomIdentity.translate(tx, ty).scale(escalaFoco));
-            return true;
+            return window.ajustarZoomMapaCompleto(420);
         };
 
         btnResetGraph.addEventListener('click', () => {
-            // No mapa de relações, centraliza no card principal em zoom de leitura.
-            if (graphLayoutMode === 'lineage' && window.centralizarFocalNoMapa()) return;
-            // Nos demais layouts, reenquadra o conteúdo inteiro.
-            if (typeof renderizarGrafo === 'function') {
-                renderizarGrafo();
-            } else if (zoomBehavior) {
-                d3.select(graphSvg).transition().duration(350).call(zoomBehavior.transform, d3.zoomIdentity);
-            }
+            window.ajustarZoomMapaCompleto(420);
         });
 
         // Alternância entre Organograma (Árvore por Anos), Linhagem Pedagógica e Rede
@@ -7554,7 +7667,7 @@
         // Catálogo Curricular BNCC (Navegação Direta por Etapa e Componente)
         // ======================================================================
         let catalogoItensFiltrados = [];
-        let catalogoLimiteExibicao = 40;
+        let catalogoLimiteExibicao = 100;
 
         window.abrirModalCatalogoBNCC = function() {
             const backdrop = document.getElementById('catalogModalBackdrop');
@@ -7746,7 +7859,7 @@
         };
 
         window.carregarMaisCatalogo = function() {
-            catalogoLimiteExibicao += 40;
+            catalogoLimiteExibicao += 100;
             renderizarCardsCatalogo();
         };
 
@@ -7801,7 +7914,7 @@
             itens.sort((a, b) => (a.codigo || '').localeCompare(b.codigo || ''));
 
             catalogoItensFiltrados = itens;
-            catalogoLimiteExibicao = 40; // reset paginação
+            catalogoLimiteExibicao = 100; // primeira página e reset dos filtros
 
             atualizarStatsEFiltrosCatalogo(etapa, ano, comp, term, itens.length);
             renderizarCardsCatalogo();
@@ -7965,7 +8078,7 @@
                 html += `
                     <div class="cat-load-more-wrap">
                         <button type="button" class="btn-cat-load-more" onclick="window.carregarMaisCatalogo()">
-                            Carregar mais ${Math.min(40, restantes)} habilidades (restam ${restantes}) ➔
+                            Carregar mais ${Math.min(100, restantes)} habilidades (restam ${restantes}) ➔
                         </button>
                     </div>
                 `;
@@ -7998,7 +8111,7 @@
         // Modal de Ranking de Habilidades com Mais Relações na BNCC
         // ======================================================================
         let rankingItensFiltrados = [];
-        let rankingLimiteExibicao = 50;
+        let rankingLimiteExibicao = 100;
 
         window.abrirModalRankingRelacoes = function() {
             const backdrop = document.getElementById('rankingModalBackdrop');
@@ -8098,7 +8211,7 @@
             });
 
             rankingItensFiltrados = itens;
-            rankingLimiteExibicao = 50;
+            rankingLimiteExibicao = 100;
             renderizarCardsRanking();
         };
 
@@ -8197,7 +8310,7 @@
                 html += `
                     <div style="text-align: center; padding: 14px 0;">
                         <button type="button" class="btn-cat-load-more" onclick="window.carregarMaisRanking()">
-                            Carregar mais ${Math.min(50, restam)} habilidades do ranking (restam ${restam}) ➔
+                            Carregar mais ${Math.min(100, restam)} habilidades do ranking (restam ${restam}) ➔
                         </button>
                     </div>
                 `;
@@ -8207,7 +8320,7 @@
         }
 
         window.carregarMaisRanking = function() {
-            rankingLimiteExibicao += 50;
+            rankingLimiteExibicao += 100;
             renderizarCardsRanking();
         };
 
@@ -8324,7 +8437,7 @@
         // ======================================================================
         let reunaFocoFaseAtiva = 'todas';
         let reunaFocoAnoAtivo = 'todos';
-        let reunaFocoLimite = 40;
+        let reunaFocoLimite = 100;
 
         window.renderizarPillsAnosReuna = function() {
             const container = document.getElementById('rfYearPills');
@@ -8394,7 +8507,7 @@
                 btn.setAttribute('aria-selected', isCurrent ? 'true' : 'false');
             });
             window.renderizarPillsAnosReuna();
-            reunaFocoLimite = 40;
+            reunaFocoLimite = 100;
             window.filtrarMapasFocoReuna();
         };
 
@@ -8422,7 +8535,7 @@
             window.renderizarPillsAnosReuna();
             backdrop.style.display = 'flex';
             document.body.style.overflow = 'hidden';
-            reunaFocoLimite = 40;
+            reunaFocoLimite = 100;
             window.filtrarMapasFocoReuna();
         };
 
@@ -8440,14 +8553,15 @@
             document.querySelectorAll('#rfYearPills .rf-pill-btn').forEach(b => {
                 b.classList.toggle('active', b.getAttribute('data-ano') === ano);
             });
-            reunaFocoLimite = 40;
+            reunaFocoLimite = 100;
             window.filtrarMapasFocoReuna();
         };
 
-        window.filtrarMapasFocoReuna = function() {
+        window.filtrarMapasFocoReuna = function(preservarLimite = false) {
             const grid = document.getElementById('rfCardsGrid');
             const statsEl = document.getElementById('rfStatsCount');
             if (!grid) return;
+            if (!preservarLimite) reunaFocoLimite = 100;
 
             const classif = document.getElementById('rfFilterClassificacao')?.value || 'todas';
             const comp = document.getElementById('rfFilterComponente')?.value || 'todos';
@@ -8733,7 +8847,7 @@
                 html += `
                     <div style="grid-column: 1 / -1; text-align: center; padding: 18px 0;">
                         <button type="button" class="btn-cat-load-more" onclick="window.carregarMaisReunaFoco()">
-                            Carregar mais ${Math.min(40, restam)} habilidades do Reúna (restam ${restam}) ➔
+                            Carregar mais ${Math.min(100, restam)} habilidades do Reúna (restam ${restam}) ➔
                         </button>
                     </div>
                 `;
@@ -8743,8 +8857,8 @@
         };
 
         window.carregarMaisReunaFoco = function() {
-            reunaFocoLimite += 40;
-            window.filtrarMapasFocoReuna();
+            reunaFocoLimite += 100;
+            window.filtrarMapasFocoReuna(true);
         };
 
         window.selecionarHabilidadeDoReuna = function(codigo) {
@@ -8766,7 +8880,7 @@
         // Modal de Habilidades Mais Interdisciplinares (Pontes entre Componentes)
         // ======================================================================
         let interAnoAtivo = 'todos';
-        let interLimiteExibicao = 40;
+        let interLimiteExibicao = 100;
 
         window.abrirModalInterdisciplinar = function(event) {
             if (event) {
@@ -8798,7 +8912,7 @@
             backdrop.style.display = 'flex';
             document.body.style.overflow = 'hidden';
 
-            interLimiteExibicao = 40;
+            interLimiteExibicao = 100;
             window.filtrarModalInterdisciplinar();
         };
 
@@ -8816,18 +8930,19 @@
             document.querySelectorAll('#interYearPills .inter-pill-btn').forEach(btn => {
                 btn.classList.toggle('active', btn.getAttribute('data-ano') === ano);
             });
-            interLimiteExibicao = 40;
+            interLimiteExibicao = 100;
             window.filtrarModalInterdisciplinar();
         };
 
-        window.filtrarModalInterdisciplinar = function() {
+        window.filtrarModalInterdisciplinar = function(preservarLimite = false) {
             if (!baseBNCC || baseBNCC.length === 0) return;
+            if (!preservarLimite) interLimiteExibicao = 100;
 
             const selComp = document.getElementById('interFilterComponente')?.value || 'todos';
             const selOrd = document.getElementById('interFilterOrdenacao')?.value || 'disciplinas';
             const termoBusca = (document.getElementById('interSearchInput')?.value || '').toLowerCase().trim();
 
-            let lista = baseBNCC.filter(item => (item._numDisciplinasInter || 0) > 0);
+                let lista = baseBNCC.filter(item => (item._numDisciplinasInter || 0) > 0 || (item._numComponentesSugeridos || 0) > 0);
 
             // Filtro por Ano
             if (interAnoAtivo !== 'todos') {
@@ -8844,9 +8959,9 @@
                 }
             }
 
-            // Filtro por Componente
+            // Filtro por componente-fonte ou componente sugerido
             if (selComp !== 'todos') {
-                lista = lista.filter(item => item.disciplina === selComp);
+                lista = lista.filter(item => item.disciplina === selComp || Object.prototype.hasOwnProperty.call(item._pontesInterdisciplinaresIA || {}, selComp));
             }
 
             // Filtro por Texto / Código
@@ -8855,7 +8970,11 @@
                     const cod = (item.codigo || '').toLowerCase();
                     const hab = (item.habilidade || '').toLowerCase();
                     const disc = (item.disciplina || '').toLowerCase();
-                    const partners = (item._disciplinasConectadas || []).join(' ').toLowerCase();
+                    const partners = [
+                        ...(item._disciplinasConectadas || []),
+                        ...Object.keys(item._pontesInterdisciplinaresIA || {}),
+                        ...Object.values(item._pontesInterdisciplinaresIA || {}).flatMap(p => p.codigos || [])
+                    ].join(' ').toLowerCase();
                     return cod.includes(termoBusca) || hab.includes(termoBusca) || disc.includes(termoBusca) || partners.includes(termoBusca);
                 });
             }
@@ -8863,15 +8982,17 @@
             // Ordenação
             lista.sort((a, b) => {
                 if (selOrd === 'disciplinas') {
-                    if ((b._numDisciplinasInter || 0) !== (a._numDisciplinasInter || 0)) {
-                        return (b._numDisciplinasInter || 0) - (a._numDisciplinasInter || 0);
+                    const totalA = (a._numDisciplinasInter || 0) + (a._numComponentesSugeridos || 0);
+                    const totalB = (b._numDisciplinasInter || 0) + (b._numComponentesSugeridos || 0);
+                    if (totalB !== totalA) {
+                        return totalB - totalA;
                     }
                     return (b._totalConexoesInter || 0) - (a._totalConexoesInter || 0);
                 } else {
                     if ((b._totalConexoesInter || 0) !== (a._totalConexoesInter || 0)) {
                         return (b._totalConexoesInter || 0) - (a._totalConexoesInter || 0);
                     }
-                    return (b._numDisciplinasInter || 0) - (a._numDisciplinasInter || 0);
+                    return ((b._numDisciplinasInter || 0) + (b._numComponentesSugeridos || 0)) - ((a._numDisciplinasInter || 0) + (a._numComponentesSugeridos || 0));
                 }
             });
 
@@ -8879,7 +9000,8 @@
             const stats = document.getElementById('interStatsCount');
             if (stats) {
                 const totalMapeadas = lista.length;
-                stats.innerHTML = `<strong>${totalMapeadas.toLocaleString()}</strong> habilidades estruturantes com pontes interdisciplinares ativas`;
+                const totalSugeridas = lista.filter(item => (item._numComponentesSugeridos || 0) > 0).length;
+                stats.innerHTML = `<strong>${totalMapeadas.toLocaleString()}</strong> habilidades com pontes &bull; <span>✨ ${totalSugeridas.toLocaleString()} com sugestões de IA (não oficiais)</span>`;
             }
 
             window.renderizarCardsModalInterdisciplinar(lista);
@@ -8909,6 +9031,24 @@
                 const pontes = item._conexoesInterdisciplinares || [];
                 const totalPontes = item._totalConexoesInter || 0;
                 const numDisc = item._numDisciplinasInter || 0;
+                const pontesIA = item._pontesInterdisciplinaresIA || {};
+                const componentesIA = Object.keys(pontesIA);
+                const totalComponentes = numDisc + componentesIA.filter(c => !item._disciplinasConectadas.includes(c)).length;
+                const escaparHTML = valor => String(valor ?? '').replace(/[&<>"']/g, c => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c]));
+                const detalhesPontesIA = componentesIA.map(componente => {
+                    const ponte = pontesIA[componente] || {};
+                    const codigos = (ponte.codigos || []).map(codigo => `<span class="inter-partner-chip" title="Código candidato validado">${escaparHTML(codigo)}</span>`).join(' ');
+                    return `
+                        <details class="inter-ai-bridge-detail" onclick="event.stopPropagation()">
+                            <summary>✨ ${escaparHTML(componente)} <span class="inter-ai-confidence">${escaparHTML(ponte.confianca || 'media')}</span></summary>
+                            <div class="inter-ai-bridge-body">
+                                <div class="inter-ai-bridge-codes">Habilidades parceiras: ${codigos}</div>
+                                <p><strong>Por que conecta:</strong> ${escaparHTML(ponte.justificativa || '')}</p>
+                                <p><strong>Sugestão de atividade:</strong> ${escaparHTML(ponte.atividade || '')}</p>
+                                <small>✨ Sugestão gerada por IA; não é relação oficial da BNCC.</small>
+                            </div>
+                        </details>`;
+                }).join('');
 
                 html += `
                     <article class="inter-card" onclick="window.explorarInterdisciplinarNaLista('${item.codigo}')" role="button" tabindex="0" onkeydown="if(event.key==='Enter'||event.key===' '){event.preventDefault(); this.click();}" title="Clique para selecionar ${item.codigo} e abrir no mapa e na gaveta">
@@ -8924,8 +9064,8 @@
                                     📄 PDF
                                 </button>
                             </div>
-                            <div class="inter-card-metric-badge" data-tooltip="${totalPontes} conexões pedagógicas com ${numDisc} componentes" title="Articulação Interdisciplinar">
-                                🌐 ${numDisc} componentes &bull; ${totalPontes} pontes
+                            <div class="inter-card-metric-badge" data-tooltip="${totalPontes} relações homologadas e sugestões de IA em ${componentesIA.length} componentes" title="Articulações homologadas e sugestões pedagógicas">
+                                🌐 ${totalComponentes} componentes &bull; ${totalPontes} homologadas${componentesIA.length ? ` &bull; ✨ ${componentesIA.length} sugestões` : ''}
                             </div>
                         </div>
 
@@ -8933,14 +9073,19 @@
                             <span class="inter-partners-label">Articula com:</span>
                             ${parceiras.slice(0, 3).map(p => `<span class="inter-partner-chip">${p}</span>`).join('')}
                             ${parceiras.length > 3 ? `<span class="inter-partner-chip more">+${parceiras.length - 3}</span>` : ''}
+                            ${componentesIA.slice(0, 3).map(p => `<span class="inter-partner-chip" title="Sugestão pedagógica de IA, não oficial">✨ ${p}</span>`).join('')}
+                            ${componentesIA.length > 3 ? `<span class="inter-partner-chip more" title="Mais componentes sugeridos pela IA">+${componentesIA.length - 3} IA</span>` : ''}
                         </div>
 
                         <p class="cat-card-desc">${(item.habilidade || '').replace(/^\([A-Za-z0-9]+\)\s*/, '')}</p>
+
+                        ${detalhesPontesIA ? `<div class="inter-ai-bridges"><div class="inter-ai-bridges-title">Sugestões interdisciplinares (IA) · não oficiais</div>${detalhesPontesIA}</div>` : ''}
 
                         <div class="cat-card-footer">
                             <div class="cat-card-relations">
                                 <span class="cat-rel-pill rel" title="${totalPontes} conexões interdisciplinares">🌐 ${totalPontes} pontes</span>
                                 ${pontes.length > 0 ? `<span class="cat-rel-chip-sub" title="${pontes[0].disciplina}: ${pontes[0].rotuloPedagogico}">↔ ${pontes[0].codigo}</span>` : ''}
+                                ${componentesIA.length ? `<span class="cat-rel-chip-sub" title="Sugestões pedagógicas geradas por IA; não são relações oficiais da BNCC">✨ ${componentesIA.length} sugestões IA</span>` : ''}
                             </div>
                             <div class="cat-card-actions-row">
                                 <button type="button" class="btn-card-icon-action pdf" onclick="event.stopPropagation(); window.exportarDossiePDF('${item.codigo}')" data-tooltip="Baixar Relatório em PDF" title="Baixar relatório pedagógico em PDF">
@@ -8963,7 +9108,7 @@
                 html += `
                     <div style="grid-column: 1 / -1; text-align: center; padding: 18px 0;">
                         <button type="button" class="btn-cat-load-more" onclick="window.carregarMaisInterdisciplinar()">
-                            Carregar mais ${Math.min(40, restam)} habilidades interdisciplinares (restam ${restam}) ➔
+                            Carregar mais ${Math.min(100, restam)} habilidades interdisciplinares (restam ${restam}) ➔
                         </button>
                     </div>
                 `;
@@ -8973,8 +9118,8 @@
         };
 
         window.carregarMaisInterdisciplinar = function() {
-            interLimiteExibicao += 40;
-            window.filtrarModalInterdisciplinar();
+            interLimiteExibicao += 100;
+            window.filtrarModalInterdisciplinar(true);
         };
 
         window.explorarInterdisciplinarNoGrafo = function(codigo) {
@@ -9522,6 +9667,7 @@
                 const margin = 15;
                 const contentWidth = pageWidth - margin * 2;
                 const footerY = pageHeight - 12;
+                const contentBottomY = footerY - 5;
 
                 // ------- Tema (cores por versão) -------
                 const T = modoImpressao ? {
@@ -9561,11 +9707,36 @@
                 const setFill = (c) => { if (Array.isArray(c)) pdfDoc.setFillColor(c[0], c[1], c[2]); else if (c) pdfDoc.setFillColor(c); };
                 const setDraw = (c) => { if (Array.isArray(c)) pdfDoc.setDrawColor(c[0], c[1], c[2]); else if (c) pdfDoc.setDrawColor(c); };
                 const setText = (c) => { if (Array.isArray(c)) pdfDoc.setTextColor(c[0], c[1], c[2]); else if (c) pdfDoc.setTextColor(c); };
+                // As fontes base do jsPDF não cobrem todos os glifos Unicode da BNCC
+                // (setas, aspas curvas e alguns separadores). Um único glifo ausente
+                // pode forçar UTF-16, quebrar a medição e deixar a linha fora da folha.
+                const normalizarTextoPDF = valor => String(valor ?? '')
+                    .normalize('NFC')
+                    .replace(/[→➔➡]/g, '->')
+                    .replace(/[“”]/g, '"')
+                    .replace(/[‘’]/g, "'")
+                    .replace(/[—–]/g, '-')
+                    .replace(/[•·]/g, '|')
+                    .replace(/\u00a0/g, ' ')
+                    .replace(/[^\x00-\xFF]/g, '?');
+                const splitTextOriginal = pdfDoc.splitTextToSize.bind(pdfDoc);
+                pdfDoc.splitTextToSize = (texto, largura, opcoes) => splitTextOriginal(normalizarTextoPDF(texto), largura, opcoes);
+                const textOriginal = pdfDoc.text.bind(pdfDoc);
+                pdfDoc.text = (texto, x, yTexto, opcoes, ...resto) => {
+                    const seguro = Array.isArray(texto) ? texto.map(normalizarTextoPDF) : normalizarTextoPDF(texto);
+                    return textOriginal(seguro, x, yTexto, opcoes, ...resto);
+                };
 
                 // Fontes ABNT: corpo 12pt
                 const FS = { body: 12, small: 11, h1: 16, h2: 13, sectionTitle: 12, tiny: 9.5, footer: 9 };
 
                 let y = 0;
+                const ensurePageRoom = (needed = 12) => {
+                    if (y + needed <= contentBottomY) return false;
+                    pdfDoc.addPage();
+                    y = margin + 4;
+                    return true;
+                };
 
                 // -------- Cabeçalho --------
                 if (modoImpressao) {
@@ -9606,9 +9777,13 @@
                 if (item.objeto_conhecimento) partesMeta.push(`Objeto: ${item.objeto_conhecimento}`);
                 if (item.unidade_tematica) partesMeta.push(`Unidade: ${item.unidade_tematica}`);
                 const metaLinhas = partesMeta.length ? pdfDoc.splitTextToSize(partesMeta.join('  •  '), contentWidth - 14) : [];
+                pdfDoc.setFont('helvetica', 'normal');
+                pdfDoc.setFontSize(FS.small);
+                const componenteLinhas = pdfDoc.splitTextToSize(`Componente: ${item.disciplina || 'Geral'}`, 69);
+                const anoLinhas = pdfDoc.splitTextToSize(`Ano/Fase: ${item.ano_faixa || 'BNCC'}`, contentWidth - 124);
                 const temTag = (item.classificacao_reuna === 'AF' || item.classificacao_reuna === 'AC');
-                boxContentH += (temTag ? 6 : 0) + metaLinhas.length * 4.8;
-                const boxH = Math.max(24, Math.min(60, boxContentH + 4));
+                boxContentH += (Math.max(componenteLinhas.length, anoLinhas.length, 1) - 1) * 4.5 + (temTag ? 6 : 0) + metaLinhas.length * 4.8;
+                const boxH = Math.max(24, Math.min(72, boxContentH + 4));
 
                 setFill(T.boxBg);
                 setDraw(T.boxBorder);
@@ -9627,8 +9802,8 @@
                 pdfDoc.setFont('helvetica', 'normal');
                 pdfDoc.setFontSize(FS.small);
                 setText(T.metaColor);
-                pdfDoc.text(`Componente: ${item.disciplina || 'Geral'}`, margin + 42, y + 7.5);
-                pdfDoc.text(`Ano/Fase: ${item.ano_faixa || 'BNCC'}`, margin + 112, y + 7.5);
+                componenteLinhas.forEach((linha, i) => pdfDoc.text(linha, margin + 42, y + 7.5 + i * 4.5));
+                anoLinhas.forEach((linha, i) => pdfDoc.text(linha, margin + 124, y + 7.5 + i * 4.5));
 
                 let metaY = y + 12;
                 if (temTag) {
@@ -9671,6 +9846,7 @@
                 y += 6;
 
                 // -------- Seção: Mapa visual de relações --------
+                ensurePageRoom(140);
                 y = window._pdfDrawSectionTitle(pdfDoc, 'MAPA VISUAL DE RELAÇÕES E ARTICULAÇÃO CURRICULAR', margin, y, contentWidth, T, FS, modoImpressao);
                 y += 2;
 
@@ -9704,75 +9880,90 @@
                 // -------- Pré-requisitos e Continuidade (fluxo, 2 colunas) --------
                 const requisitos = (relFinal && relFinal.requisitos) ? relFinal.requisitos : [];
                 const prepara = (relFinal && relFinal.prepara_para) ? relFinal.prepara_para : [];
-                const colW = (contentWidth - 6) / 2;
 
+                // Reserva espaço para o cabeçalho e o primeiro cartão juntos.
+                ensurePageRoom(requisitos.length ? 110 : 48);
                 y = window._pdfDrawSectionTitle(pdfDoc, 'RELAÇÕES PEDAGÓGICAS DIRETAS', margin, y, contentWidth, T, FS, modoImpressao);
                 y += 3;
 
-                // Cabeçalhos das duas colunas
+                // Cabeçalhos e cartões em uma coluna: evita que relações longas
+                // invadam a coluna vizinha ou ultrapassem a margem inferior.
                 pdfDoc.setFont('helvetica', 'bold');
                 pdfDoc.setFontSize(FS.small);
                 setText(T.prereqText);
                 pdfDoc.text(`Pré-requisitos (${requisitos.length})`, margin, y);
                 setText(T.prepText);
-                pdfDoc.text(`Continuidade (${prepara.length})`, margin + colW + 6, y);
                 y += 5;
 
-                const drawCol = (arr, xCol, tipo) => {
-                    let yc = y;
-                    const maxItens = Math.max(arr.length, 1);
-                    for (let i = 0; i < Math.min(arr.length, 6); i++) {
-                        const rel = arr[i];
-                        const rit = obterItemBaseBNCC(rel.codigo);
-                        const titulo = `${rel.codigo}${rit ? ' • ' + (rit.disciplina || '') + ' (' + (rit.ano_faixa || '') + ')' : ''}`;
-                        const desc = rit ? (rit.habilidade || '').replace(/^\([A-Za-z0-9]+\)\s*/, '') : '';
-                        const descLinhas = pdfDoc.splitTextToSize(desc, colW - 6).slice(0, 3);
-                        const cardH = 7 + descLinhas.length * 4.6 + (rel.justificativa ? 4.6 : 0) + 3;
-
-                        setFill(modoImpressao ? null : (tipo === 'pre' ? [254, 252, 232] : [240, 253, 244]));
-                        setDraw(tipo === 'pre' ? T.prereqBorder : T.prepBorder);
-                        pdfDoc.setLineWidth(0.4);
-                        pdfDoc.roundedRect(xCol, yc, colW, cardH, 1.5, 1.5, modoImpressao ? 'D' : 'FD');
-                        // Faixa lateral fina
-                        setFill(tipo === 'pre' ? T.prereqStrong : T.prepStrong);
-                        pdfDoc.rect(xCol, yc, 1.6, cardH, 'F');
-
-                        pdfDoc.setFont('helvetica', 'bold');
-                        pdfDoc.setFontSize(FS.tiny + 0.5);
-                        setText(tipo === 'pre' ? T.prereqStrong : T.prepStrong);
-                        pdfDoc.text(titulo, xCol + 4, yc + 4.6);
-
-                        pdfDoc.setFont('helvetica', 'normal');
-                        pdfDoc.setFontSize(FS.tiny);
-                        setText(T.bodyText);
-                        let ty = yc + 8.4;
-                        descLinhas.forEach(l => { pdfDoc.text(l, xCol + 4, ty); ty += 4.6; });
-                        if (rel.justificativa) {
-                            pdfDoc.setFont('helvetica', 'italic');
-                            setText(T.muted);
-                            const jl = pdfDoc.splitTextToSize(rel.justificativa, colW - 6).slice(0, 1);
-                            pdfDoc.text(jl, xCol + 4, ty);
-                        }
-                        yc += cardH + 2.5;
-                    }
-                    if (arr.length === 0) {
+                const drawRelationCards = (arr, tipo) => {
+                    if (!arr.length) {
                         pdfDoc.setFont('helvetica', 'italic');
                         pdfDoc.setFontSize(FS.tiny);
                         setText(T.muted);
-                        pdfDoc.text(tipo === 'pre' ? 'Nó introdutório sem dependências anteriores.' : 'Culminância formativa do ciclo.', xCol + 2, yc + 4);
-                        yc += 8;
+                        const empty = tipo === 'pre' ? 'Nó introdutório sem dependências anteriores.' : 'Culminância formativa do ciclo.';
+                        const lines = pdfDoc.splitTextToSize(empty, contentWidth - 8);
+                        ensurePageRoom(lines.length * 4.2 + 4);
+                        pdfDoc.text(lines, margin + 2, y);
+                        y += lines.length * 4.2 + 4;
+                        return;
                     }
-                    return yc;
+                    for (const rel of arr.slice(0, 6)) {
+                        const related = obterItemBaseBNCC(rel.codigo);
+                        const title = `${rel.codigo}${related ? ` • ${related.disciplina || ''} (${related.ano_faixa || ''})` : ''}`;
+                        const description = related ? (related.habilidade || '').replace(/^\([A-Za-z0-9]+\)\s*/, '') : '';
+                        pdfDoc.setFont('helvetica', 'bold');
+                        pdfDoc.setFontSize(FS.tiny + 0.5);
+                        const titleLines = pdfDoc.splitTextToSize(title, contentWidth - 10);
+                        pdfDoc.setFont('helvetica', 'normal');
+                        pdfDoc.setFontSize(FS.tiny);
+                        const descLines = pdfDoc.splitTextToSize(description, contentWidth - 10).slice(0, 4);
+                        pdfDoc.setFont('helvetica', 'italic');
+                        // A justificativa oficial pode ser extensa. Limita-se a um
+                        // resumo legível no cartão, sem cortar uma palavra no meio.
+                        const justificativaCurta = rel.justificativa
+                            ? `${String(rel.justificativa).trim().slice(0, 190).replace(/\s+\S*$/, '')}...`
+                            : '';
+                        const justLines = justificativaCurta ? pdfDoc.splitTextToSize(justificativaCurta, contentWidth - 10).slice(0, 2) : [];
+                        const cardH = 8 + titleLines.length * 4.5 + descLines.length * 4.4 + justLines.length * 4.4;
+                        ensurePageRoom(cardH + 3);
+
+                        setDraw(tipo === 'pre' ? T.prereqBorder : T.prepBorder);
+                        pdfDoc.setLineWidth(0.4);
+                        pdfDoc.roundedRect(margin, y, contentWidth, cardH, 1.5, 1.5, modoImpressao ? 'D' : 'FD');
+                        setFill(tipo === 'pre' ? T.prereqStrong : T.prepStrong);
+                        pdfDoc.rect(margin, y, 1.6, cardH, 'F');
+                        let textY = y + 5;
+                        pdfDoc.setFont('helvetica', 'bold');
+                        pdfDoc.setFontSize(FS.tiny + 0.5);
+                        setText(tipo === 'pre' ? T.prereqStrong : T.prepStrong);
+                        titleLines.forEach(line => { pdfDoc.text(line, margin + 4, textY); textY += 4.5; });
+                        pdfDoc.setFont('helvetica', 'normal');
+                        pdfDoc.setFontSize(FS.tiny);
+                        setText(T.bodyText);
+                        descLines.forEach(line => { pdfDoc.text(line, margin + 4, textY); textY += 4.4; });
+                        if (justLines.length) {
+                            pdfDoc.setFont('helvetica', 'italic');
+                            setText(T.muted);
+                            justLines.forEach(line => { pdfDoc.text(line, margin + 4, textY); textY += 4.4; });
+                        }
+                        y += cardH + 2.5;
+                    }
                 };
 
-                const yPre = drawCol(requisitos, margin, 'pre');
-                const yPrep = drawCol(prepara, margin + colW + 6, 'prep');
-                y = Math.max(yPre, yPrep) + 3;
+                drawRelationCards(requisitos, 'pre');
+                ensurePageRoom(prepara.length ? 110 : 18);
+                pdfDoc.setFont('helvetica', 'bold');
+                pdfDoc.setFontSize(FS.small);
+                setText(T.prepText);
+                pdfDoc.text(`Continuidade (${prepara.length})`, margin, y);
+                y += 5;
+                drawRelationCards(prepara, 'prep');
+                y += 3;
 
                 // -------- Interdisciplinares --------
                 const interdisc = (relFinal && relFinal.relacionadas) ? relFinal.relacionadas : [];
                 if (interdisc.length > 0) {
-                    if (y > footerY - 30) { pdfDoc.addPage(); y = margin + 4; }
+                    ensurePageRoom(24);
                     y = window._pdfDrawSectionTitle(pdfDoc, `ARTICULAÇÕES INTERDISCIPLINARES NO CICLO (${interdisc.length})`, margin, y, contentWidth, T, FS, modoImpressao);
                     y += 3;
                     pdfDoc.setFontSize(FS.tiny);
@@ -9781,13 +9972,13 @@
                         setText(T.prepStrong);
                         pdfDoc.setFont('helvetica', 'bold');
                         const linhaCod = `${a.codigo}${ait ? ' • ' + (ait.disciplina || '') + ' (' + (ait.ano_faixa || '') + ')' : ''}`;
-                        if (y > footerY - 12) { pdfDoc.addPage(); y = margin + 4; }
-                        pdfDoc.text(linhaCod, margin + 2, y);
-                        y += 4.4;
+                        const codigoLines = pdfDoc.splitTextToSize(linhaCod, contentWidth - 4);
+                        ensurePageRoom(codigoLines.length * 4.2 + 10);
+                        codigoLines.forEach(line => { pdfDoc.text(line, margin + 2, y); y += 4.2; });
                         pdfDoc.setFont('helvetica', 'normal');
                         setText(T.bodyText);
-                        const dl = pdfDoc.splitTextToSize(ait ? (ait.habilidade || '').replace(/^\([A-Za-z0-9]+\)\s*/, '') : '', contentWidth - 6).slice(0, 2);
-                        dl.forEach(l => { if (y > footerY - 8) { pdfDoc.addPage(); y = margin + 4; } pdfDoc.text(l, margin + 4, y); y += 4.4; });
+                        const dl = pdfDoc.splitTextToSize(ait ? (ait.habilidade || '').replace(/^\([A-Za-z0-9]+\)\s*/, '') : '', contentWidth - 6).slice(0, 3);
+                        dl.forEach(line => { ensurePageRoom(5); pdfDoc.text(line, margin + 4, y); y += 4.4; });
                         y += 1.5;
                     });
                 }
@@ -9800,17 +9991,17 @@
                     y = window._pdfDrawSectionTitle(pdfDoc, 'COMPETÊNCIAS ARTICULADAS DA BNCC', margin, y, contentWidth, T, FS, modoImpressao);
                     y += 3;
                     const desenhaComp = (codigo, nome, desc, cor) => {
-                        if (y > footerY - 14) { pdfDoc.addPage(); y = margin + 4; }
                         pdfDoc.setFont('helvetica', 'bold');
                         pdfDoc.setFontSize(FS.small - 0.5);
+                        const headingLines = pdfDoc.splitTextToSize(`${codigo} — ${nome}`, contentWidth - 4);
+                        ensurePageRoom(headingLines.length * 4.6 + 12);
                         setText(cor);
-                        pdfDoc.text(`${codigo} — ${nome}`, margin + 2, y);
-                        y += 4.6;
+                        headingLines.forEach(line => { pdfDoc.text(line, margin + 2, y); y += 4.6; });
                         pdfDoc.setFont('helvetica', 'normal');
                         pdfDoc.setFontSize(FS.tiny);
                         setText(T.muted);
                         const dl = pdfDoc.splitTextToSize(desc || '', contentWidth - 6).slice(0, 3);
-                        dl.forEach(l => { if (y > footerY - 8) { pdfDoc.addPage(); y = margin + 4; } pdfDoc.text(l, margin + 5, y); y += 4.4; });
+                        dl.forEach(line => { ensurePageRoom(5); pdfDoc.text(line, margin + 5, y); y += 4.4; });
                         y += 2;
                     };
                     compGerais.forEach(id => { const cg = obterInfoCompetenciaGeral(id); if (cg) desenhaComp(cg.codigo, cg.titulo || cg.nome, cg.descricao, T.accent); });
@@ -9827,7 +10018,7 @@
                     pdfDoc.setFontSize(FS.body - 1);
                     setText(T.bodyText);
                     const pl = pdfDoc.splitTextToSize(txtPedag, contentWidth - 4);
-                    pl.forEach(l => { if (y > footerY - 8) { pdfDoc.addPage(); y = margin + 4; } pdfDoc.text(l, margin + 2, y); y += 5; });
+                    pl.forEach(line => { ensurePageRoom(6); pdfDoc.text(line, margin + 2, y); y += 5; });
                 }
 
                 // -------- Rodapés em todas as páginas --------

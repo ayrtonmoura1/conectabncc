@@ -878,8 +878,9 @@ body::before {
 }
 
 .unified-workspace.graph-hidden .workspace-sidebar {
-    flex: 1 1 100% !important;
-    max-width: 100% !important;
+    flex: 1 1 auto !important;
+    width: auto !important;
+    max-width: none !important;
 }
 
 /* =============================================
@@ -1004,12 +1005,108 @@ body::before {
     right: 14px !important;
 }
 
-.unified-workspace.sidebar-hidden #btnRestoreSidebar {
-    display: inline-flex !important;
+.unified-workspace.sidebar-hidden #btnRestoreSidebar,
+.unified-workspace.graph-hidden #btnRestoreGraph,
+.floating-panel-restore {
+    display: none !important;
 }
 
-.unified-workspace.graph-hidden #btnRestoreGraph {
-    display: inline-flex !important;
+/* Faixa persistente: o painel recolhido continua no mesmo lugar */
+.panel-rail {
+    display: none;
+    flex: 0 0 46px;
+    width: 46px;
+    align-self: stretch;
+    border: 0;
+    background: #ffffff;
+    color: #4338ca;
+    cursor: pointer;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+    padding: 12px 0;
+    z-index: 6;
+}
+
+.panel-rail strong {
+    writing-mode: vertical-rl;
+    transform: rotate(180deg);
+    font-size: 12px;
+    font-weight: 800;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+}
+
+.panel-rail small {
+    font-family: var(--font-mono);
+    font-size: 10px;
+    font-weight: 700;
+    background: #4f46e5;
+    color: #ffffff;
+    border-radius: 999px;
+    padding: 4px 3px;
+    writing-mode: vertical-rl;
+    transform: rotate(180deg);
+}
+
+.panel-rail small:empty {
+    display: none;
+}
+
+.panel-rail:hover {
+    background: #eef2ff;
+}
+
+.rail-list {
+    border-right: 1px solid var(--border-color);
+}
+
+.rail-map {
+    border-left: 1px solid var(--border-color);
+}
+
+.unified-workspace.sidebar-hidden .rail-list,
+.unified-workspace.graph-hidden .rail-map {
+    display: flex;
+}
+
+.panel-rail-bar {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 8px;
+    height: 36px;
+    padding: 0 10px;
+    background: #ffffff;
+    border-bottom: 1px solid var(--border-color);
+    flex-shrink: 0;
+}
+
+.panel-rail-bar > span {
+    font-size: 12px;
+    font-weight: 800;
+    letter-spacing: -0.02em;
+    color: #0f172a;
+}
+
+.btn-recolher-painel {
+    height: 26px;
+    padding: 0 8px;
+    border-radius: 8px;
+    border: 1px solid var(--border-color);
+    background: #ffffff;
+    font-family: var(--font-sans);
+    font-size: 11px;
+    font-weight: 700;
+    color: #0f172a;
+    cursor: pointer;
+}
+
+.btn-recolher-painel:hover {
+    border-color: #a5b4fc;
+    color: #4338ca;
+    background: #eef2ff;
 }
 
 .btn-sidebar-collapse-header {
@@ -1423,22 +1520,52 @@ body.is-resizing iframe {
     .unified-workspace.layout-split {
         flex-direction: column;
     }
+    .panel-rail {
+        flex-direction: row;
+        width: 100%;
+        height: 40px;
+        flex: 0 0 40px;
+        gap: 8px;
+        border-right: 0;
+        border-left: 0;
+        border-bottom: 1px solid var(--border-color);
+    }
+    .panel-rail strong,
+    .panel-rail small {
+        writing-mode: horizontal-tb;
+        transform: none;
+    }
+    .unified-workspace.sidebar-hidden .workspace-sidebar,
+    .unified-workspace.graph-hidden .workspace-graph {
+        flex: 0 0 0 !important;
+        height: 0 !important;
+        max-height: 0 !important;
+    }
     .unified-workspace.layout-split .workspace-sidebar {
-        flex: 1 1 100%;
-        max-width: 100%;
-        min-width: 0;
+        flex: 1 1 0 !important;
+        max-width: 100% !important;
+        min-width: 0 !important;
+        min-height: 0 !important;
     }
     .unified-workspace.layout-split .workspace-graph {
         position: static;
-        max-height: none;
+        flex: 1 1 0 !important;
+        width: 100% !important;
+        min-width: 0 !important;
+        min-height: 0 !important;
+        height: auto !important;
+        max-height: none !important;
     }
     .unified-workspace.layout-split #resultsList {
-        max-height: 380px;
-        min-height: 240px;
+        flex: 1 1 0 !important;
+        min-height: 0 !important;
+        max-height: none !important;
     }
     .unified-workspace.layout-split .graph-canvas-container {
-        height: 480px;
-        min-height: 380px;
+        flex: 1 1 0 !important;
+        height: auto !important;
+        min-height: 0 !important;
+        min-width: 0 !important;
     }
     .btn-graph-fullscreen {
         display: none !important;
@@ -3280,6 +3407,29 @@ body.dark-theme .btn-card-export-pdf {
     background: #ffffff;
 }
 
+/* Cabeçalho/controles da gaveta seguem o padrão dos painéis Lista e Mapa. */
+#skillDrawer .drawer-header {
+    min-height: 46px;
+    padding: 8px 12px;
+    background: #ffffff;
+    border-bottom: 1px solid var(--border-color);
+}
+
+#skillDrawer #drawerMinimizeBtn {
+    height: 28px;
+    padding: 0 9px;
+    border-radius: 8px;
+    background: #ffffff;
+    color: #334155;
+    border-color: var(--border-color);
+}
+
+#skillDrawer #drawerMinimizeBtn:hover {
+    background: #eef2ff;
+    color: #4338ca;
+    border-color: #c7d2fe;
+}
+
 /* Toolbar de Ações do Drawer (Fixar, Expandir, Minimizar, Fechar) */
 .drawer-actions-toolbar {
     display: flex;
@@ -3333,14 +3483,17 @@ body.dark-theme .btn-card-export-pdf {
     background: var(--bg-secondary);
     border: 1px solid var(--border-color);
     color: var(--text-secondary);
-    width: 30px;
     height: 30px;
-    border-radius: 50%;
-    display: flex;
+    padding: 0 8px;
+    border-radius: var(--radius-sm);
+    display: inline-flex;
     align-items: center;
     justify-content: center;
+    gap: 4px;
     cursor: pointer;
     transition: var(--transition);
+    font-size: 0.74rem;
+    font-weight: 700;
 }
 
 .drawer-close-btn:hover {
@@ -3372,28 +3525,60 @@ body.drawer-is-pinned .drawer-backdrop {
     body.drawer-is-pinned.drawer-expanded .container {
         margin-right: min(820px, 96vw);
     }
+    body.drawer-is-minimized.drawer-is-pinned .container,
+    body.drawer-is-minimized.drawer-is-pinned.drawer-expanded .container {
+        margin-right: 46px;
+    }
 }
 
-/* Aba Minimizada da Gaveta (Flutuante no Canto Inferior Direito) */
+/* Faixa da gaveta recolhida: mesma borda em que ela abre */
+.drawer-rail,
 .drawer-minimized-tab {
     position: fixed;
-    bottom: 22px;
-    right: 24px;
-    z-index: 950;
+    top: 0;
+    right: 0;
+    z-index: 1001;
+    width: 46px;
+    height: 100vh;
+    height: 100dvh;
+    margin: 0;
+    padding: 12px 0;
+    border: 0;
+    border-left: 1px solid #a5b4fc;
     background: #ffffff;
-    border: 1px solid var(--accent-border);
-    box-shadow: 0 10px 25px -5px rgba(79, 70, 229, 0.25), 0 0 0 1px rgba(79, 70, 229, 0.1);
-    border-radius: var(--radius-full);
-    padding: 8px 16px;
-    display: flex;
+    color: #4338ca;
+    box-shadow: -8px 0 24px rgba(79, 70, 229, 0.12);
+    display: none;
+    flex-direction: column;
     align-items: center;
-    gap: 10px;
+    justify-content: center;
+    gap: 12px;
     cursor: pointer;
-    font-size: 0.82rem;
-    font-weight: 600;
-    color: var(--text-primary);
-    transition: transform 0.2s cubic-bezier(0.16, 1, 0.3, 1), box-shadow 0.2s ease;
-    animation: slideUpTab 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+    font-family: var(--font-sans);
+}
+
+.drawer-rail strong {
+    writing-mode: vertical-rl;
+    transform: rotate(180deg);
+    font-size: 12px;
+    font-weight: 800;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+}
+
+.drawer-rail:hover {
+    background: #eef2ff;
+}
+
+#drawerMinimizedTab.drawer-rail {
+    border-left: 1px solid var(--border-color);
+    background: #ffffff;
+    color: #4338ca;
+    box-shadow: none;
+}
+
+#drawerMinimizedTab.drawer-rail:hover {
+    background: #eef2ff;
 }
 
 .drawer-minimized-tab:hover {
@@ -3405,13 +3590,22 @@ body.drawer-is-pinned .drawer-backdrop {
     font-size: 1rem;
 }
 
+.drawer-rail .dmt-title,
 .drawer-minimized-tab .dmt-title {
-    max-width: 240px;
+    max-width: none;
+    max-height: 160px;
     white-space: nowrap;
     overflow: hidden;
     text-overflow: ellipsis;
+    font-family: var(--font-mono);
+    font-size: 10px;
     font-weight: 700;
-    color: var(--accent-primary);
+    color: #ffffff;
+    background: #4f46e5;
+    border-radius: 999px;
+    padding: 6px 3px;
+    writing-mode: vertical-rl;
+    transform: rotate(180deg);
 }
 
 .drawer-minimized-tab .dmt-expand {
@@ -3676,11 +3870,14 @@ details.lineage-subgroup > .lineage-subgroup-body {
     flex-shrink: 0;
 }
 
-/* Ação discreta de expandir/recolher: aparece só ao passar o mouse no bloco */
+/* Controle de expandir/recolher no fluxo, logo abaixo da descrição da habilidade. */
+.drawer-expand-toggle-row {
+    display: flex;
+    justify-content: flex-end;
+    margin: 8px 0 14px;
+}
+
 .drawer-expand-toggle {
-    position: absolute;
-    right: 12px;
-    bottom: 8px;
     display: inline-flex;
     align-items: center;
     gap: 4px;
@@ -3688,24 +3885,13 @@ details.lineage-subgroup > .lineage-subgroup-body {
     font-size: 0.70rem;
     font-weight: 700;
     color: #4338ca;
-    background: rgba(255, 255, 255, 0.92);
+    background: #ffffff;
     border: 1px solid #c7d2fe;
     border-radius: 9999px;
-    padding: 2px 9px;
+    padding: 6px 11px;
     cursor: pointer;
     white-space: nowrap;
-    opacity: 0;
-    visibility: hidden;
-    transform: translateY(3px);
-    transition: opacity 0.16s ease, transform 0.16s ease, visibility 0.16s ease, background 0.16s ease;
-}
-
-.skill-desc-inline:hover .drawer-expand-toggle,
-.drawer-expand-toggle:focus-visible,
-.drawer-expand-toggle[aria-expanded="true"] {
-    opacity: 1;
-    visibility: visible;
-    transform: translateY(0);
+    transition: background 0.16s ease, border-color 0.16s ease;
 }
 
 .drawer-expand-toggle:hover {
@@ -8719,26 +8905,35 @@ footer {
     .skill-desc-inline {
         padding: 12px 16px 16px 16px !important;
     }
-    /* Em toque não há hover: manter a ação sempre visível no mobile */
-    .drawer-expand-toggle {
-        opacity: 1 !important;
-        visibility: visible !important;
-        transform: none !important;
-    }
-
+    .drawer-rail,
     .drawer-minimized-tab {
-        position: fixed !important;
-        bottom: calc(16px + env(safe-area-inset-bottom, 0px)) !important;
-        left: 14px !important;
-        right: auto !important;
-        max-width: calc(100% - 130px) !important;
-        padding: 8px 12px !important;
-        z-index: 980 !important;
+        top: auto !important;
+        right: 0 !important;
+        left: 0 !important;
+        bottom: 0 !important;
+        width: 100% !important;
+        height: 52px !important;
+        max-width: none !important;
+        flex-direction: row !important;
+        border-left: 0 !important;
+        border-top: 1px solid #a5b4fc !important;
+        padding: 0 16px !important;
+        z-index: 1250 !important;
+        padding-bottom: env(safe-area-inset-bottom, 0px) !important;
     }
 
+    .drawer-rail strong,
+    .drawer-rail .dmt-title,
     .drawer-minimized-tab .dmt-title {
-        max-width: 140px !important;
+        writing-mode: horizontal-tb !important;
+        transform: none !important;
+        max-width: 180px !important;
+        max-height: none !important;
         font-size: 0.78rem !important;
+    }
+
+    .drawer-rail-label {
+        display: none !important;
     }
 
     /* 12. Toolbar e Canvas do Grafo no Mobile */
@@ -10033,6 +10228,11 @@ body.dark-theme .btn-card-mini-pdf:hover {
 
 /* ESTILOS DE IMPRESSÃO (CTRL+P / NATIVE PRINT ENGINE) */
 @media print {
+    @page {
+        size: A4 portrait;
+        margin: 12mm;
+    }
+
     body * {
         visibility: hidden;
     }
@@ -10041,14 +10241,22 @@ body.dark-theme .btn-card-mini-pdf:hover {
     }
     .dossie-modal-backdrop {
         position: static;
+        display: block !important;
+        inset: auto;
+        width: auto;
+        height: auto;
         background: transparent;
         padding: 0;
+        overflow: visible;
+        backdrop-filter: none;
     }
     .dossie-modal {
+        display: block;
         box-shadow: none;
         max-width: 100%;
         max-height: none;
         border-radius: 0;
+        overflow: visible;
     }
     .dossie-modal-header {
         display: none !important;
@@ -10056,14 +10264,44 @@ body.dark-theme .btn-card-mini-pdf:hover {
     .dossie-modal-body {
         padding: 0;
         background: transparent;
+        overflow: visible;
     }
     .dossie-sheet {
         box-shadow: none;
-        max-width: 100%;
+        width: 100%;
+        max-width: none;
+        margin: 0;
         padding: 0;
+        overflow: visible;
+        border: 0;
     }
 
-    /* Impressão: fundo branco em tudo, mantendo só bordas/pesos/acentos */
+    /* Evita texto e grids ultrapassarem os limites imprimíveis. */
+    .dossie-sheet,
+    .dossie-sheet * {
+        box-sizing: border-box !important;
+        max-width: 100% !important;
+        overflow-wrap: anywhere !important;
+        word-break: normal !important;
+    }
+
+    .dossie-sheet {
+        font-size: 10pt;
+        line-height: 1.35;
+    }
+
+    .dossie-sheet img,
+    .dossie-sheet svg,
+    .dossie-sheet canvas {
+        max-width: 100% !important;
+        height: auto !important;
+    }
+
+    .dossie-sheet [style*="grid-template-columns"] {
+        grid-template-columns: minmax(0, 1fr) minmax(0, 1fr) !important;
+    }
+
+    /* Impressão: fundo branco em tudo, mantendo só bordas/pesos/acentos. */
     .dossie-sheet,
     .dossie-sheet * {
         background: #ffffff !important;
@@ -10074,26 +10312,34 @@ body.dark-theme .btn-card-mini-pdf:hover {
         print-color-adjust: exact;
     }
 
-    /* Corpo em 12pt para leitura confortável */
-    .dossie-sheet {
-        font-size: 12pt;
-    }
     .dossie-sheet p,
     .dossie-sheet .dossie-body-text {
-        font-size: 12pt !important;
-        line-height: 1.5 !important;
+        font-size: 10pt !important;
+        line-height: 1.4 !important;
     }
     .dossie-sheet h2 { font-size: 18pt !important; }
     .dossie-sheet h3 { font-size: 15pt !important; }
     .dossie-sheet h4 { font-size: 13pt !important; }
 
-    /* Evita cortar blocos ao meio entre páginas */
-    .dossie-sheet > div,
-    .dossie-sheet .dossie-block {
-        break-inside: avoid;
+    /* Quebra entre registros/cards, sem manter seções inteiras fora da página. */
+    .dossie-sheet .connected-skill-item,
+    .dossie-sheet .lineage-skill-card,
+    .dossie-sheet .dossie-card {
+        break-inside: avoid-page;
         page-break-inside: avoid;
     }
-}
+
+    .dossie-sheet h2,
+    .dossie-sheet h3,
+    .dossie-sheet h4,
+    .dossie-sheet strong {
+        overflow-wrap: anywhere !important;
+    }
+
+    .dossie-sheet > div {
+        width: 100% !important;
+        min-width: 0 !important;
+    }
 }
 
 /* ======================================================================
@@ -10987,6 +11233,95 @@ body.dark-theme .btn-card-mini-pdf:hover {
     border-color: #fca5a5 !important;
 }
 
+/* Pontes: impedir que conteúdo longo force largura ou sobreponha as tags. */
+#interdisciplinarModal,
+#interdisciplinarModal * {
+    box-sizing: border-box;
+}
+
+#interCardsGrid {
+    min-width: 0;
+    grid-template-columns: repeat(auto-fit, minmax(min(100%, 360px), 1fr));
+    align-content: start;
+}
+
+#interCardsGrid .inter-card {
+    min-width: 0;
+    overflow: hidden;
+}
+
+#interCardsGrid .inter-card-header,
+#interCardsGrid .inter-card-tags,
+#interCardsGrid .inter-partners-row,
+#interCardsGrid .inter-card-footer {
+    min-width: 0;
+    flex-wrap: wrap;
+}
+
+#interCardsGrid .inter-partner-chip,
+#interCardsGrid .inter-card-text,
+#interCardsGrid .inter-ai-bridge-detail,
+#interCardsGrid .inter-ai-bridge-body,
+#interCardsGrid .isb-disc,
+#interCardsGrid .isb-rotulo {
+    min-width: 0;
+    overflow-wrap: anywhere;
+    word-break: normal;
+}
+
+#interCardsGrid .inter-partner-chip {
+    max-width: 100%;
+}
+
+#interCardsGrid .inter-card-footer {
+    align-items: flex-start;
+}
+
+#interCardsGrid .inter-card-sample-bridges {
+    min-width: 0;
+    overflow: hidden;
+}
+
+#interCardsGrid .inter-sample-bridge-item {
+    min-width: 0;
+    flex-wrap: wrap;
+}
+
+@media (max-width: 640px) {
+    .inter-modal-backdrop {
+        padding: 8px;
+    }
+
+    #interdisciplinarModal {
+        width: 100% !important;
+        max-width: 100% !important;
+        height: 94dvh !important;
+        max-height: 94dvh !important;
+    }
+
+    #interdisciplinarModal .inter-filter-row,
+    #interdisciplinarModal .modal-filters-row-inline {
+        display: flex !important;
+        flex-direction: column;
+        align-items: stretch;
+    }
+
+    #interdisciplinarModal .inter-control,
+    #interdisciplinarModal .inter-control.inter-search {
+        width: 100%;
+        min-width: 0;
+    }
+
+    #interCardsGrid {
+        padding: 12px;
+        grid-template-columns: minmax(0, 1fr);
+    }
+
+    #interCardsGrid .inter-card-footer {
+        flex-direction: column;
+    }
+}
+
 /* Badges de Cabeçalho dos Modais */
 .catalog-modal-badge,
 .ranking-modal-badge,
@@ -11864,6 +12199,463 @@ summary:focus-visible {
     border-radius: 8px !important;
 }
 
+/*
+   Modais no mobile: um único bottom sheet com área de resultados rolável.
+   Estes overrides ficam no fim do arquivo para prevalecer sobre estilos
+   compactos antigos (incluindo o min-width do ranking).
+*/
+@media (max-width: 680px) {
+    .catalog-modal-backdrop,
+    .ranking-modal-backdrop,
+    .reuna-foco-modal-backdrop,
+    .inter-modal-backdrop {
+        position: fixed !important;
+        inset: 0 !important;
+        width: 100% !important;
+        height: 100% !important;
+        height: 100dvh !important;
+        padding: 0 !important;
+        align-items: stretch !important;
+        justify-content: stretch !important;
+        overflow: hidden !important;
+    }
+
+    .catalog-modal,
+    .ranking-modal,
+    .reuna-foco-modal,
+    .inter-modal {
+        width: 100% !important;
+        max-width: none !important;
+        height: 100% !important;
+        height: 100dvh !important;
+        max-height: 100% !important;
+        margin: 0 !important;
+        border: 0 !important;
+        border-radius: 0 !important;
+        overflow: hidden !important;
+        min-height: 0 !important;
+    }
+
+    .catalog-modal-header,
+    .ranking-modal-header,
+    .reuna-foco-modal-header,
+    .inter-modal-header {
+        flex: 0 0 auto !important;
+        padding: 12px 14px !important;
+    }
+
+    .catalog-filters-bar,
+    .ranking-filters-bar,
+    .reuna-foco-filters-bar,
+    .inter-filters-bar {
+        flex: 0 0 auto !important;
+        min-width: 0 !important;
+        max-width: 100% !important;
+        padding: 8px 12px !important;
+        gap: 6px !important;
+    }
+
+    .catalog-filters-bar,
+    .ranking-filters-bar {
+        grid-template-columns: minmax(0, 1fr) minmax(0, 1fr) !important;
+    }
+
+    .catalog-filters-bar > *,
+    .ranking-filters-bar > *,
+    .reuna-foco-filter-row > *,
+    .inter-filter-row > *,
+    .inter-filter-row-inline > * {
+        min-width: 0 !important;
+        max-width: 100% !important;
+    }
+
+    .catalog-meta-strip,
+    .ranking-status-bar,
+    .reuna-foco-meta-strip,
+    .inter-meta-strip {
+        flex: 0 0 auto !important;
+        min-width: 0 !important;
+        padding: 7px 12px !important;
+        gap: 6px !important;
+        font-size: 0.7rem !important;
+    }
+
+    .catalog-cards-container,
+    .reuna-foco-cards-grid,
+    .inter-cards-grid,
+    .ranking-modal .ranking-list-body,
+    #rankingListBody {
+        flex: 1 1 0 !important;
+        min-height: 0 !important;
+        width: 100% !important;
+        max-width: 100% !important;
+        overflow-x: hidden !important;
+        overflow-y: auto !important;
+        -webkit-overflow-scrolling: touch !important;
+        grid-template-columns: minmax(0, 1fr) !important;
+        grid-auto-rows: max-content !important;
+        align-content: start !important;
+        padding: 10px 12px !important;
+        gap: 9px !important;
+    }
+
+    .catalog-cards-container > *,
+    .reuna-foco-cards-grid > *,
+    .inter-cards-grid > *,
+    #rankingListBody > * {
+        min-width: 0 !important;
+        max-width: 100% !important;
+    }
+
+    .ranking-card .cat-card-header,
+    .ranking-card .cat-card-tags,
+    .ranking-card .cat-card-footer {
+        flex-wrap: wrap !important;
+    }
+
+    .inter-meta-strip {
+        flex-wrap: wrap !important;
+        justify-content: space-between !important;
+    }
+
+    .btn-inter-view-graph {
+        max-width: 100% !important;
+        white-space: nowrap !important;
+    }
+}
+
+@media (max-width: 380px) {
+    .catalog-filters-bar,
+    .ranking-filters-bar {
+        grid-template-columns: minmax(0, 1fr) !important;
+    }
+
+    .catalog-search-control,
+    .ranking-filter-item:nth-child(4) {
+        grid-column: auto !important;
+    }
+
+    .catalog-modal-title,
+    .ranking-modal-title,
+    .reuna-foco-title,
+    .inter-modal-title {
+        font-size: 1rem !important;
+    }
+}
+
+/* Sugestões interdisciplinares de IA: distinguidas das relações homologadas */
+.inter-ai-bridges {
+    display: grid;
+    gap: 6px;
+    margin: 10px 0;
+    padding: 9px 10px;
+    border: 1px solid #c4b5fd;
+    border-radius: 9px;
+    background: linear-gradient(145deg, #faf5ff, #f5f3ff);
+}
+
+.inter-ai-bridges-title {
+    color: #6d28d9;
+    font-size: 0.72rem;
+    font-weight: 800;
+    letter-spacing: 0.02em;
+}
+
+.inter-ai-bridge-detail {
+    border: 1px solid #ddd6fe;
+    border-radius: 7px;
+    background: rgba(255, 255, 255, 0.8);
+}
+
+.inter-ai-bridge-detail > summary {
+    display: flex;
+    align-items: center;
+    gap: 7px;
+    padding: 7px 9px;
+    color: #5b21b6;
+    font-size: 0.78rem;
+    font-weight: 750;
+    cursor: pointer;
+}
+
+.inter-ai-confidence {
+    margin-left: auto;
+    padding: 2px 6px;
+    border-radius: 999px;
+    background: #ede9fe;
+    color: #6d28d9;
+    font-size: 0.62rem;
+    text-transform: uppercase;
+}
+
+.inter-ai-bridge-body {
+    padding: 0 10px 9px;
+    color: #334155;
+    font-size: 0.76rem;
+    line-height: 1.45;
+}
+
+.inter-ai-bridge-body p {
+    margin: 6px 0;
+}
+
+.inter-ai-bridge-body small {
+    color: #7c3aed;
+    font-size: 0.68rem;
+    font-weight: 650;
+}
+
+.inter-ai-bridge-codes {
+    display: flex;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 5px;
+}
+
+/* Agrupamento de pontes de IA no drawer de detalhes da habilidade */
+.drawer-ai-bridges > summary {
+    border-left: 3px solid #8b5cf6;
+    background: #faf7ff;
+}
+
+.drawer-ai-bridges > .drawer-collapsible-body {
+    padding: 12px 14px 14px;
+}
+
+.ai-bridges-notice {
+    margin-bottom: 10px;
+    padding: 9px 11px;
+    border: 1px solid #ddd6fe;
+    border-radius: 8px;
+    background: #f5f3ff;
+    color: #5b21b6;
+    font-size: 0.76rem;
+    line-height: 1.45;
+}
+
+.ai-bridge-groups {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+}
+
+.ai-bridge-component {
+    overflow: hidden;
+    border: 1px solid #e2e8f0;
+    border-radius: 8px;
+    background: #ffffff;
+}
+
+.ai-bridge-component > summary {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    padding: 10px 12px;
+    cursor: pointer;
+    list-style: none;
+}
+
+.ai-bridge-component > summary::-webkit-details-marker {
+    display: none;
+}
+
+.ai-bridge-component > summary::before {
+    content: '＋';
+    color: #7c3aed;
+    font-weight: 800;
+}
+
+.ai-bridge-component[open] > summary::before {
+    content: '−';
+}
+
+.ai-bridge-component-name {
+    flex: 1;
+    color: #334155;
+    font-size: 0.82rem;
+    font-weight: 750;
+}
+
+.ai-bridge-confidence,
+.ai-bridge-count {
+    padding: 2px 7px;
+    border-radius: 999px;
+    background: #ede9fe;
+    color: #6d28d9;
+    font-size: 0.65rem;
+    font-weight: 750;
+    text-transform: uppercase;
+}
+
+.ai-bridge-count {
+    min-width: 22px;
+    text-align: center;
+    background: #f1f5f9;
+    color: #475569;
+}
+
+.ai-bridge-component-body {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    padding: 0 12px 12px;
+    color: #475569;
+    font-size: 0.78rem;
+    line-height: 1.5;
+}
+
+.ai-bridge-component-body p {
+    margin: 0;
+}
+
+.ai-bridge-component-body strong {
+    color: #334155;
+}
+
+.ai-bridge-codes {
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+}
+
+.ai-bridge-code {
+    display: flex;
+    flex-direction: column;
+    gap: 3px;
+    width: 100%;
+    padding: 8px 10px;
+    border: 1px solid #e9d5ff;
+    border-radius: 7px;
+    background: #fcfaff;
+    color: #475569;
+    text-align: left;
+    cursor: pointer;
+}
+
+.ai-bridge-code:hover {
+    border-color: #e9d5ff;
+    background: #fcfaff;
+}
+
+.ai-bridge-code strong {
+    color: #6d28d9;
+    font-family: var(--font-mono);
+    font-size: 0.76rem;
+}
+
+.ai-bridge-code span {
+    font-size: 0.74rem;
+    line-height: 1.4;
+}
+
+.ai-bridge-empty,
+.ai-bridges-empty {
+    color: #64748b;
+    font-size: 0.78rem;
+    font-style: italic;
+}
+
+/* Na gaveta, códigos e cartões de habilidades são conteúdo informativo, não links. */
+#skillDrawer .code-badge,
+#skillDrawer .kw-mini,
+#skillDrawer .connected-skill-item,
+#skillDrawer .lineage-skill-card,
+#skillDrawer .ai-bridge-code {
+    cursor: default;
+}
+
+#skillDrawer .code-badge:hover,
+#skillDrawer .kw-mini:hover,
+#skillDrawer .connected-skill-item:hover,
+#skillDrawer .lineage-skill-card:hover,
+#skillDrawer .ai-bridge-code:hover {
+    border-color: var(--border-color, #e2e8f0);
+    background: #ffffff;
+    color: inherit;
+    transform: none;
+}
+
+#skillDrawer .lineage-card-action {
+    display: none;
+}
+
+.searched-skill-first {
+    margin-bottom: 12px;
+    padding: 10px;
+    border: 1px solid #c7d2fe;
+    border-left: 4px solid #4f46e5;
+    border-radius: 10px;
+    background: #f8faff;
+}
+
+.searched-skill-first-label {
+    margin: 0 0 7px 2px;
+    color: #4338ca;
+    font-size: 0.72rem;
+    font-weight: 800;
+    letter-spacing: 0.04em;
+    text-transform: uppercase;
+}
+
+/* Busca em linha própria, abaixo dos filtros, nos quatro modais curriculares */
+.catalog-modal .catalog-filters-bar,
+.ranking-modal .ranking-filters-bar {
+    grid-template-columns: repeat(3, minmax(0, 1fr)) !important;
+    align-items: stretch !important;
+}
+
+.catalog-modal .cat-search-compact,
+.ranking-modal .ranking-search-compact {
+    grid-column: 1 / -1 !important;
+    width: 100% !important;
+    min-width: 0 !important;
+}
+
+.reuna-foco-modal .reuna-foco-filter-row,
+.inter-modal .inter-filter-row {
+    grid-template-columns: repeat(2, minmax(0, 1fr)) !important;
+    align-items: stretch !important;
+}
+
+.reuna-foco-modal .rf-control.rf-search,
+.inter-modal .inter-control.inter-search {
+    grid-column: 1 / -1 !important;
+    width: 100% !important;
+    min-width: 0 !important;
+}
+
+.catalog-modal .cat-search-input-wrap,
+.ranking-modal .ranking-search-wrap,
+.reuna-foco-modal .rf-search-wrap,
+.inter-modal .inter-search-wrap {
+    width: 100% !important;
+    min-width: 0 !important;
+}
+
+.catalog-modal .cat-search-input,
+.ranking-modal .ranking-search-input,
+.reuna-foco-modal .rf-search-input,
+.inter-modal .inter-search-input {
+    width: 100% !important;
+    min-width: 0 !important;
+}
+
+@media (max-width: 380px) {
+    .catalog-modal .catalog-filters-bar,
+    .ranking-modal .ranking-filters-bar,
+    .reuna-foco-modal .reuna-foco-filter-row,
+    .inter-modal .inter-filter-row {
+        grid-template-columns: minmax(0, 1fr) !important;
+    }
+
+    .catalog-modal .cat-search-compact,
+    .ranking-modal .ranking-search-compact,
+    .reuna-foco-modal .rf-control.rf-search,
+    .inter-modal .inter-control.inter-search {
+        grid-column: 1 !important;
+    }
+}
+
 /* Botão "Ver todas as relações" no cabeçalho fixo da gaveta */
 .drawer-map-btn {
     position: absolute;
@@ -11900,12 +12692,6 @@ summary:focus-visible {
     border-color: #5eead4;
 }
 
-/* Empilha os dois botões discretos no canto (expandir fica mais à esquerda) */
-.skill-desc-inline:has(.drawer-map-btn) .drawer-expand-toggle {
-    right: auto;
-    left: 12px;
-}
-
 @media (max-width: 1024px) {
     .drawer-map-btn {
         opacity: 1;
@@ -11914,9 +12700,9 @@ summary:focus-visible {
         position: static;
         margin-top: 8px;
     }
-    .skill-desc-inline:has(.drawer-map-btn) .drawer-expand-toggle {
-        left: auto;
-        right: 12px;
+    .drawer-expand-toggle-row {
+        justify-content: flex-start;
+        margin: 8px 0 12px;
     }
 }
 
@@ -11996,4 +12782,412 @@ summary:focus-visible {
     0% { filter: drop-shadow(0 0 0 rgba(79, 70, 229, 0)); }
     22% { filter: drop-shadow(0 0 16px rgba(79, 70, 229, 0.95)); }
     100% { filter: drop-shadow(0 0 0 rgba(79, 70, 229, 0)); }
+}
+
+/* Cartões da lista: ação explícita de foco, separada do clique de detalhes. */
+.btn-focus-skill {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    flex: 0 0 auto;
+    gap: 4px;
+    padding: 5px 9px;
+    border: 1px solid #c7d2fe;
+    border-radius: 6px;
+    background: #eef2ff;
+    color: #4338ca;
+    font: inherit;
+    font-size: 0.74rem;
+    font-weight: 700;
+    line-height: 1.2;
+    cursor: pointer;
+}
+
+.btn-focus-skill:hover,
+.btn-focus-skill:focus-visible {
+    background: #4338ca;
+    border-color: #4338ca;
+    color: #fff;
+    outline: none;
+}
+
+.skill-card-toggle-bar .skill-card-toggle-indicator {
+    cursor: pointer;
+}
+
+.sidebar-skill-card .ssc-footer .btn-focus-skill {
+    padding: 4px 7px;
+    font-size: 0.68rem;
+}
+
+.skill-card-toggle-bar {
+    justify-content: space-between;
+    gap: 8px;
+    cursor: default;
+}
+
+/* Corrige badges globais de altura fixa que cortavam texto nos cartões do modal. */
+#interdisciplinarModal .inter-card {
+    min-width: 0;
+    overflow: hidden;
+}
+
+#interdisciplinarModal .inter-card-header {
+    display: flex;
+    flex-direction: column;
+    align-items: stretch;
+    justify-content: flex-start;
+    min-width: 0;
+    gap: 8px;
+}
+
+#interdisciplinarModal .inter-card-tags {
+    display: flex;
+    align-items: flex-start;
+    flex-wrap: wrap;
+    min-width: 0;
+    gap: 6px;
+}
+
+#interdisciplinarModal .inter-card-tags .ranking-pos-badge,
+#interdisciplinarModal .inter-card-tags .code-badge,
+#interdisciplinarModal .inter-card-tags .discipline-badge,
+#interdisciplinarModal .inter-card-tags .year-badge,
+#interdisciplinarModal .inter-card-tags .btn-card-mini-pdf {
+    width: fit-content !important;
+    max-width: 100%;
+    min-width: 0;
+    height: auto !important;
+    min-height: 26px;
+    padding: 4px 8px !important;
+    line-height: 1.25 !important;
+    white-space: normal !important;
+    overflow-wrap: anywhere;
+    text-align: left;
+}
+
+#interdisciplinarModal .inter-card-metric-badge {
+    align-self: flex-start;
+    max-width: 100%;
+    min-width: 0;
+    height: auto;
+    line-height: 1.4;
+    white-space: normal;
+    overflow-wrap: anywhere;
+}
+
+#interdisciplinarModal .inter-partners-row {
+    align-items: flex-start;
+    min-width: 0;
+    flex-wrap: wrap;
+}
+
+#interdisciplinarModal .inter-partner-chip,
+#interdisciplinarModal .cat-card-desc,
+#interdisciplinarModal .inter-ai-bridge-detail,
+#interdisciplinarModal .inter-ai-bridge-body,
+#interdisciplinarModal .inter-ai-bridge-body p {
+    min-width: 0;
+    max-width: 100%;
+    height: auto;
+    white-space: normal;
+    overflow-wrap: anywhere;
+    word-break: normal;
+}
+
+#interdisciplinarModal .inter-partner-chip {
+    line-height: 1.35;
+}
+
+#interdisciplinarModal .cat-card-desc {
+    margin: 0;
+    line-height: 1.5;
+}
+
+#interdisciplinarModal .inter-ai-bridge-detail summary {
+    display: flex;
+    align-items: flex-start;
+    justify-content: space-between;
+    gap: 8px;
+    min-width: 0;
+    white-space: normal;
+    overflow-wrap: anywhere;
+}
+
+@media (max-width: 640px) {
+    #interdisciplinarModal .inter-card-footer {
+        flex-wrap: wrap;
+        align-items: flex-start;
+    }
+}
+
+/* Gaveta integrada ao workspace: terceiro painel, no mesmo trilho de Lista/Mapa. */
+#unifiedWorkspace > #skillDrawer {
+    position: relative !important;
+    inset: auto !important;
+    z-index: 1 !important;
+    transform: none !important;
+    flex: 0 0 0 !important;
+    width: 0 !important;
+    min-width: 0 !important;
+    max-width: none !important;
+    height: 100% !important;
+    min-height: 0 !important;
+    border: 0 !important;
+    border-left: 1px solid transparent !important;
+    border-radius: 0 !important;
+    box-shadow: none !important;
+    transition: flex-basis 0.25s ease, width 0.25s ease !important;
+}
+
+#unifiedWorkspace > #skillDrawer.active {
+    flex: 0 0 30%;
+    width: 30%;
+    min-width: 260px !important;
+    max-width: 460px !important;
+    border-left: 1px solid var(--border-color) !important;
+}
+
+#unifiedWorkspace > #skillDrawer .drawer-header {
+    flex: 0 0 auto;
+    min-width: 0;
+    flex-wrap: wrap;
+}
+
+#unifiedWorkspace > #skillDrawer .drawer-actions-toolbar {
+    flex-wrap: wrap;
+}
+
+#unifiedWorkspace > #skillDrawer #drawerPinBtn,
+#unifiedWorkspace > #skillDrawer #drawerExpandBtn {
+    display: none !important;
+}
+
+#unifiedWorkspace > #drawerMinimizedTab.drawer-rail {
+    position: relative !important;
+    inset: auto !important;
+    z-index: 6 !important;
+    display: none;
+    flex: 0 0 46px;
+    width: 46px;
+    height: 100%;
+    max-width: none;
+    border: 0;
+    border-left: 1px solid var(--border-color);
+    border-radius: 0;
+    box-shadow: none;
+}
+
+#unifiedWorkspace > #drawerMinimizedTab.drawer-rail[style*="display: flex"] {
+    display: flex !important;
+}
+
+@media (max-width: 1024px) {
+    #unifiedWorkspace > #detailsResizeHandle {
+        display: none !important;
+    }
+
+    #unifiedWorkspace > #skillDrawer.active {
+        flex: 1 1 0 !important;
+        width: 100% !important;
+        min-width: 0 !important;
+        max-width: none !important;
+        min-height: 0 !important;
+        border-left: 0 !important;
+        border-top: 1px solid var(--border-color) !important;
+    }
+
+    #unifiedWorkspace > #drawerMinimizedTab.drawer-rail {
+        flex: 0 0 40px !important;
+        width: 100% !important;
+        height: 40px !important;
+        flex-direction: row !important;
+        border-left: 0 !important;
+        border-top: 1px solid var(--border-color) !important;
+        padding: 0 12px !important;
+    }
+
+    #unifiedWorkspace > #drawerMinimizedTab.drawer-rail strong,
+    #unifiedWorkspace > #drawerMinimizedTab.drawer-rail .dmt-title {
+        writing-mode: horizontal-tb !important;
+        transform: none !important;
+        max-width: 180px !important;
+        max-height: none !important;
+    }
+}
+
+@media (max-width: 640px) {
+    #unifiedWorkspace > #skillDrawer.active {
+        flex: 1 1 0 !important;
+    }
+}
+
+/* Acabamento uniforme dos três painéis do workspace. */
+#unifiedWorkspace > #resultsArea,
+#unifiedWorkspace > #graphViewSection,
+#unifiedWorkspace > #skillDrawer.active {
+    border: 1px solid var(--border-color) !important;
+    border-radius: 12px !important;
+    overflow: hidden !important;
+    background-clip: padding-box;
+}
+
+#unifiedWorkspace > #skillDrawer.active {
+    border-left: 1px solid var(--border-color) !important;
+}
+
+#unifiedWorkspace > #skillDrawer #drawerCloseBtn {
+    display: none !important;
+}
+
+#unifiedWorkspace > #skillDrawer .drawer-body {
+    min-width: 0;
+    min-height: 0;
+}
+
+#unifiedWorkspace .drawer-empty-state {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+    min-height: 180px;
+    height: 100%;
+    padding: 24px;
+    color: #64748b;
+    text-align: center;
+}
+
+#unifiedWorkspace .drawer-empty-state > span {
+    font-size: 1.8rem;
+}
+
+#unifiedWorkspace .drawer-empty-state strong {
+    color: #334155;
+    font-size: 0.95rem;
+}
+
+#unifiedWorkspace .drawer-empty-state p {
+    max-width: 34ch;
+    margin: 0;
+    font-size: 0.82rem;
+    line-height: 1.5;
+}
+
+@media (max-width: 1024px) {
+    #unifiedWorkspace > #resultsArea,
+    #unifiedWorkspace > #graphViewSection,
+    #unifiedWorkspace > #skillDrawer.active {
+        border-radius: 12px !important;
+    }
+}
+
+/* Respiro consistente ao redor e entre Lista, Mapa e Detalhes. */
+#unifiedWorkspace {
+    box-sizing: border-box;
+    gap: 3px;
+    padding: 3px;
+    border-radius: 16px;
+}
+
+#unifiedWorkspace > .panel-rail {
+    border-radius: 10px;
+    overflow: hidden;
+}
+
+#unifiedWorkspace > .workspace-resize-handle {
+    flex: 0 0 4px;
+    width: 4px;
+    padding: 0;
+    background: transparent;
+    border: 0;
+    border-radius: 8px;
+}
+
+#unifiedWorkspace > .workspace-resize-handle:hover,
+#unifiedWorkspace > .workspace-resize-handle.is-dragging {
+    background: #eef2ff;
+}
+
+#unifiedWorkspace > #detailsResizeHandle {
+    border-radius: 6px;
+}
+
+#unifiedWorkspace.details-hidden > #detailsResizeHandle {
+    display: none !important;
+}
+
+/* Em telas estreitas, os painéis viram uma coluna rolável, não três fatias
+   iguais do espaço disponível. Cada área mantém altura própria para uso real. */
+@media (max-width: 1024px) {
+    html, body {
+        overflow: hidden !important;
+    }
+
+    .container {
+        min-height: 0;
+    }
+
+    #unifiedWorkspace,
+    #unifiedWorkspace.layout-split {
+        flex: 1 1 0;
+        min-height: 0;
+        height: auto;
+        overflow-x: hidden;
+        overflow-y: auto;
+        flex-direction: column;
+        align-items: stretch;
+        gap: 3px;
+        padding: 3px;
+        scroll-padding: 8px;
+        -webkit-overflow-scrolling: touch;
+    }
+
+    #unifiedWorkspace > #workspaceResizeHandle,
+    #unifiedWorkspace > #detailsResizeHandle {
+        display: none !important;
+    }
+
+    #unifiedWorkspace > #resultsArea,
+    #unifiedWorkspace.layout-split > #resultsArea {
+        flex: 0 0 42dvh !important;
+        width: 100% !important;
+        min-width: 0 !important;
+        min-height: 260px !important;
+        max-height: none !important;
+    }
+
+    #unifiedWorkspace > #graphViewSection,
+    #unifiedWorkspace.layout-split > #graphViewSection {
+        flex: 0 0 48dvh !important;
+        width: 100% !important;
+        min-width: 0 !important;
+        min-height: 300px !important;
+        height: 48dvh !important;
+        max-height: none !important;
+        position: relative;
+    }
+
+    #unifiedWorkspace > #graphViewSection .graph-canvas-container {
+        flex: 1 1 auto !important;
+        width: 100% !important;
+        height: auto !important;
+        min-width: 0 !important;
+        min-height: 180px !important;
+    }
+
+    #unifiedWorkspace > #skillDrawer.active {
+        flex: 0 0 52dvh !important;
+        width: 100% !important;
+        min-width: 0 !important;
+        min-height: 320px !important;
+        height: 52dvh !important;
+        max-height: none !important;
+        border-top: 0 !important;
+    }
+
+    #unifiedWorkspace > #drawerMinimizedTab.drawer-rail {
+        flex: 0 0 40px !important;
+        min-height: 40px !important;
+    }
 }
