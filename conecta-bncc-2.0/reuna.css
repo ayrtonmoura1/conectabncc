@@ -1,0 +1,105 @@
+/* Referência Reúna: blocos organizados por fonte, competência e conexão entre etapas. */
+.reuna-site-link{display:inline-flex;align-items:center;gap:6px;margin-left:auto;align-self:flex-start;padding:7px 11px;border:1px solid var(--line);border-radius:999px;font-size:12px;font-weight:700;color:var(--text);white-space:nowrap}
+.reuna-site-link:hover,.reuna-site-link:focus-visible{border-color:var(--text)}
+.reuna-summary{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1.4fr);gap:12px;margin-top:4px}
+.reuna-summary .reuna-card{padding:16px}
+.reuna-facts{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px;margin:0;padding:16px;border:1px solid var(--line);border-radius:10px;background:var(--surface)}
+.reuna-facts dt{font-size:11px;font-weight:700;color:var(--muted)}
+.reuna-facts dd{margin:4px 0 0;font-size:13px;line-height:1.5;color:var(--text)}
+.reuna-subnav{display:flex;flex-wrap:wrap;gap:8px;margin:20px 0 4px}
+.reuna-subnav a{padding:7px 12px;border:1px solid var(--line);border-radius:999px;font-size:12px;font-weight:700;color:var(--text)}
+.reuna-subnav a:hover,.reuna-subnav a:focus-visible{border-color:var(--text)}
+.reuna-part{margin-top:26px;scroll-margin-top:150px}
+.reuna-part-title{margin:0 0 14px;padding-bottom:10px;border-bottom:1px solid var(--line);font:600 18px Inter,"Segoe UI",Arial,sans-serif;color:var(--text)}
+.reuna-part-head{display:flex;flex-wrap:wrap;align-items:center;gap:8px 12px;margin-bottom:12px}
+.reuna-part-head p{margin:0;font-size:12px;color:var(--muted)}
+.reuna-class{display:inline-flex;align-items:center;padding:5px 11px;border:1px solid;border-radius:999px;font-size:12px;font-weight:700}
+.reuna-class--AF{color:#75d5aa;border-color:#75d5aa80;background:#75d5aa1f}
+.reuna-class--AC{color:#61b8ff;border-color:#61b8ff80;background:#61b8ff1f}
+.reuna-class--EF{color:#ffb86b;border-color:#ffb86b80;background:#ffb86b1f}
+.reuna-class--mix{color:var(--text);border-color:var(--line)}
+.reuna-occurrence{margin-top:12px;padding:18px;border:1px solid var(--line);border-radius:10px;background:var(--surface)}
+.reuna-occ-head{display:flex;flex-wrap:wrap;align-items:baseline;gap:4px 12px;margin-bottom:2px}
+.reuna-occ-head h4{margin:0;font:700 16px Inter,"Segoe UI",Arial,sans-serif;color:var(--text)}
+.reuna-unit{font-size:12px;color:var(--muted)}
+.reuna-block{margin-top:14px}
+.reuna-label{margin:0 0 8px;font-size:11px;font-weight:700;letter-spacing:.02em;color:var(--muted)}
+.reuna-list{margin:0;padding-left:18px;font-size:13px;line-height:1.6;color:var(--text)}
+.reuna-list li+li{margin-top:4px}
+.reuna-codes{display:flex;flex-wrap:wrap;gap:6px}
+.reuna-code{display:inline-flex;align-items:baseline;gap:6px;padding:4px 9px;border:1px solid var(--line);border-radius:6px;font-size:12px;text-decoration:none}
+a.reuna-code:hover,a.reuna-code:focus-visible{border-color:var(--text)}
+.reuna-code.is-current{border-color:var(--text);background:var(--bg);font-weight:700}
+.reuna-note{font-size:10px;font-weight:600;color:var(--muted)}
+.reuna-mark{align-self:center;font-size:10px;font-weight:700;color:var(--muted)}
+.reuna-competencies{display:flex;flex-wrap:wrap;gap:6px}
+.reuna-comp{padding:4px 9px;border-radius:6px;background:var(--bg);font-size:12px;color:var(--text)}
+.reuna-cg{display:inline-flex;padding:4px 9px;border-radius:6px;background:var(--bg);font-size:12px;font-weight:700;color:var(--text)}
+.reuna-comment{margin-top:14px;padding-top:12px;border-top:1px solid var(--line)}
+.reuna-comment summary,.reuna-ce-about summary{cursor:pointer;font-size:13px;font-weight:700;color:var(--text)}
+.reuna-comment p{margin:10px 0 0;font-size:13px;line-height:1.65;color:var(--text)}
+.reuna-totais{font-size:12px;color:var(--muted)}
+.reuna-legend,.reuna-source{margin:12px 0 0;font-size:11px;line-height:1.5;color:var(--muted)}
+.reuna-intro{margin:0 0 14px;font-size:13px;line-height:1.6;color:var(--muted)}
+.reuna-alert{margin:12px 0 0;padding:10px 12px;border-left:3px solid #ffb86b;border-radius:6px;background:#ffb86b1a;font-size:12px;line-height:1.5;color:var(--text)}
+.reuna-ce{margin-top:14px;padding:16px 18px;border:1px solid var(--line);border-radius:10px;background:var(--surface)}
+.reuna-ce-head{cursor:pointer;list-style:none}
+.reuna-ce-head::-webkit-details-marker{display:none}
+.reuna-ce-title{font:700 15px Inter,"Segoe UI",Arial,sans-serif;color:var(--text)}
+.reuna-ce-text{margin:12px 0 0;padding:0 0 0 12px;border-left:3px solid var(--line);font-size:13px;line-height:1.6;color:var(--muted)}
+.reuna-prose p{margin:0 0 8px;font-size:13px;line-height:1.7;color:var(--text)}
+.reuna-grid-2{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:18px}
+.reuna-components{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:10px}
+.reuna-component-card{padding:12px 14px;border:1px solid var(--line);border-radius:8px;background:var(--bg)}
+.reuna-component-card p{margin:8px 0 0;font-size:12px;line-height:1.6;color:var(--text)}
+.reuna-tags{display:flex;flex-wrap:wrap;gap:6px}
+.reuna-tag{padding:3px 8px;border-radius:999px;border:1px solid var(--line);font-size:11px;font-weight:700;color:var(--text)}
+.reuna-tag--geral{color:var(--muted)}
+.reuna-connections{display:grid;gap:14px}
+.reuna-group{padding:14px 16px;border:1px solid var(--line);border-radius:10px;background:var(--surface)}
+.reuna-count{display:inline-block;margin-left:4px;padding:1px 7px;border-radius:999px;background:var(--bg);font-size:10px;color:var(--muted)}
+.reuna-progress{display:grid;gap:12px}
+.reuna-trail{display:grid;gap:10px;padding:16px;border:1px solid var(--line);border-radius:10px;background:var(--surface)}
+.reuna-trail-head{display:flex;flex-wrap:wrap;align-items:center;gap:6px 10px}
+.reuna-trail-head strong{font-size:14px;color:var(--text)}
+.reuna-kind{display:inline-flex;align-items:center;padding:4px 9px;border-radius:6px;background:var(--bg);color:var(--muted);font-size:11px;font-weight:700}
+.reuna-trail-steps{display:grid;gap:8px;margin:0;padding:0;list-style:none}
+.reuna-trail-steps li{display:grid;grid-template-columns:120px minmax(0,1fr);gap:10px;align-items:start}
+.reuna-trail-col{padding-top:6px;font-size:12px;color:var(--muted)}
+.reuna-guide{margin-top:22px;padding:14px 16px;border:1px solid var(--line);border-radius:10px;background:var(--surface)}
+.reuna-guide summary{cursor:pointer;font-size:13px;font-weight:700;color:var(--text)}
+.reuna-guide p{margin:10px 0 0;font-size:13px;line-height:1.65;color:var(--text)}
+.reuna-step{display:block;margin-top:12px;font-size:12px;color:var(--muted)}
+.reuna-footer{margin-top:26px;padding-top:14px;border-top:1px solid var(--line)}
+.reuna-site{margin:6px 0 0;font-size:12px;color:var(--muted)}
+.reuna-site a{color:var(--text);font-weight:700;text-decoration:underline;text-underline-offset:3px}
+body[data-theme="light"] .reuna-class--AF{color:#21704f}
+body[data-theme="light"] .reuna-class--AC{color:#2a6aa0}
+body[data-theme="light"] .reuna-class--EF{color:#9a5a18}
+@media(max-width:900px){.reuna-summary{grid-template-columns:1fr}.reuna-components{grid-template-columns:1fr}}
+@media(max-width:640px){.reuna-facts{grid-template-columns:1fr}.reuna-grid-2{grid-template-columns:1fr}.reuna-trail-steps li{grid-template-columns:1fr;gap:4px}.reuna-trail-col{padding-top:0}.reuna-site-link{margin-left:0;margin-top:8px}.reuna-occurrence{padding:14px}.reuna-ce{padding:14px}}
+.reuna-compdl{display:grid;gap:10px;margin:0}
+.reuna-compitem{padding:12px 14px;border:1px solid var(--line);border-radius:8px;background:var(--bg)}
+.reuna-compitem dt{display:flex;flex-wrap:wrap;align-items:center;gap:8px}
+.reuna-compitem dd{margin:8px 0 0;font-size:13px;line-height:1.6;color:var(--text)}
+.reuna-compname{font-size:12px;font-weight:700;color:var(--muted)}
+.reuna-note{font-size:11px;color:var(--muted)}
+.reuna-alert .reuna-compdl{margin-top:10px}
+.reuna-legenda{margin-top:18px;padding:18px 20px;border:1px solid var(--line);border-radius:12px;background:var(--surface)}
+.reuna-legenda-titulo{margin:0 0 10px;font:600 17px Inter,"Segoe UI",Arial,sans-serif;color:var(--text)}
+.reuna-legenda>p:not(.reuna-label){margin:0 0 8px;font-size:13px;line-height:1.65;color:var(--text)}
+.reuna-legenda-dl{display:grid;grid-template-columns:minmax(150px,230px) minmax(0,1fr);gap:8px 18px;margin:0 0 14px}
+.reuna-legenda-dl>div{display:contents}
+.reuna-legenda-dl dt{font-size:12px;font-weight:700;line-height:1.55;color:var(--text)}
+.reuna-legenda-dl dd{margin:0;font-size:13px;line-height:1.55;color:var(--muted)}
+.reuna-progress-notes{display:grid;gap:6px;padding:12px 14px;border:1px solid var(--line);border-radius:10px;background:var(--bg)}
+.reuna-progress-notes p{margin:0;font-size:12px;line-height:1.55;color:var(--text)}
+.reuna-expand-rel{margin:8px 0 0;font-size:12px;line-height:1.55;color:var(--muted)}
+.reuna-expand-rel strong{color:var(--text)}
+@media(max-width:640px){.reuna-legenda-dl{grid-template-columns:1fr;gap:2px 0}.reuna-legenda-dl>div{display:block;margin-bottom:8px}.reuna-legenda{padding:16px}}
+.reuna-code-btn{appearance:none;-webkit-appearance:none;background:transparent;color:inherit;font:inherit;text-align:inherit;cursor:pointer;user-select:none;-webkit-user-select:none}
+.reuna-code-btn:hover,.reuna-code-btn:focus-visible{border-color:var(--text)}
+.reuna-code-btn[aria-expanded="true"]{border-color:var(--text);background:var(--bg);font-weight:700}
+.reuna-comp.reuna-code-btn{border:1px solid var(--line);background:var(--bg)}
+.reuna-cg.reuna-code-btn{border:1px solid var(--line);background:var(--bg);padding:4px 9px;border-radius:6px;font-size:12px;font-weight:700}
+.reuna-code.reuna-code-btn{border:1px solid var(--line)}

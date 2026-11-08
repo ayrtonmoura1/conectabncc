@@ -1,0 +1,22 @@
+const {test} = require('node:test');
+const assert = require('node:assert/strict');
+const fs = require('node:fs');
+const path = require('node:path');
+const vm = require('node:vm');
+const root = path.join(__dirname, '..');
+const graph = JSON.parse(fs.readFileSync(path.join(root,'dados/bncc-grafo.json'),'utf8'));
+const search = JSON.parse(fs.readFileSync(path.join(root,'dados/bncc-busca.min.json'),'utf8'));
+const context = {window:{}};
+vm.runInNewContext(fs.readFileSync(path.join(root,'bnccGraph.js'),'utf8'), context);
+const {neighborhood} = context.window.BnccGraph;
+const incoming=new Map(), outgoing=new Map(), trails=new Map();
+const add=(map,key,value)=>{if(!map.has(key))map.set(key,[]);map.get(key).push(value);};
+for(const edge of graph.relacoes){add(incoming,edge.d,edge);add(outgoing,edge.o,edge);}
+for(const [id,trail] of Object.entries(graph.trilhas))for(const code of trail.membros)add(trails,code,{id,...trail});
+const state={data:graph,incoming,outgoing,trails};
+const options={back:2,forward:2,strengths:new Set(['oficial','forte','media']),trail:false};
+test('o índice preserva os textos oficiais do grafo',()=>{const byCode=new Map(search.itens.map(x=>[x.c,x.t]));assert.equal(search.itens.length,1721);for(const n of graph.aprendizagens)assert.equal(byCode.get(n.codigo),n.texto,n.codigo);});
+test('EF06MA01 tem as relações diretas e a trilha esperadas',()=>{assert.deepEqual(incoming.get('EF06MA01').map(e=>e.o).sort(),['EF04MA01','EF05MA01','EF05MA02','EF05MA05']);assert.deepEqual(outgoing.get('EF06MA01').map(e=>e.d).sort(),['EF07MA03','EF07MA10','EF07MA12']);assert.ok(trails.get('EF06MA01').some(t=>t.nome==='Matemática · Números'));});
+test('vizinhança aplica o filtro de relações fracas sem alterar as oficiais',()=>{const normal=neighborhood(state,'EI03ET07',options);assert.ok(normal.edges.some(e=>e.o==='EI02ET07'&&e.fonte==='oficial'));assert.ok(!normal.edges.some(e=>e.o==='EI03ET07'&&e.d==='EF01MA01'));const withWeak=neighborhood(state,'EI03ET07',{...options,strengths:new Set([...options.strengths,'fraca'])});assert.ok(withWeak.edges.some(e=>e.o==='EI03ET07'&&e.d==='EF01MA01'));assert.ok(withWeak.edges.some(e=>e.o==='EI03ET07'&&e.d==='EF01MA03'));});
+test('relações de Infantil, Médio e Computação preservam origem e direção',()=>{assert.ok(incoming.get('EI02CG01').concat(outgoing.get('EI02CG01')).every(e=>e.fonte==='oficial'));assert.ok(incoming.get('EM13LP36').some(e=>e.o==='EF89LP01'));assert.equal((outgoing.get('EM13LP36')||[]).length,0);assert.ok(['EI03CO04','EI03CO05'].every(code=>incoming.get('EF15CO02').some(e=>e.o===code)));});
+test('vizinhanças extensas são limitadas, mas a trilha completa é preservada',()=>{const result=neighborhood(state,'EF06MA01',{...options,back:4,forward:4});assert.ok(result.codes.length<=60);const full=neighborhood(state,'EF06MA01',{...options,trail:true});for(const trail of trails.get('EF06MA01'))for(const code of trail.membros)assert.ok(full.codes.includes(code));});

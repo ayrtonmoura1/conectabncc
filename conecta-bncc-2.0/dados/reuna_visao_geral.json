@@ -1,0 +1,4798 @@
+{
+ "fonte": "Mapas de Foco da BNCC · Instituto Reúna · © 2020 · visão geral e progressões",
+ "sobreOMapa": [
+  "Os Mapas de Foco da BNCC são uma seleção cuidadosa das habilidades da BNCC que servem de apoio para as redes, escolas e demais instituições decidirem a flexibilização curricular, a curadoria ou produção de materiais didáticos, a elaboração de avaliações diagnósticas e a formação docente continuada em cenários como pandemia.",
+  "É de suma importância que, antes de se aprofundar nos Mapas em si, seja feita a leitura do texto introdutório. Este texto contém uma breve apresentação dos Mapas de Foco da BNCC e também sobre a área de Ciências Humanas. Nele, você encontra também como o mapa foi organizado, além dos critérios de seleção das habilidades."
+ ],
+ "componentes": {
+  "Língua Portuguesa": {
+   "orientacaoDeLeitura": [
+    "Todo Mapa começa com as colunas unidade temática e conhecimento prévio. Em conhecimento prévio estão elencadas as habilidades que o estudante precisa ter para desenvolver a aprendizagem foco. Essas habilidades podem ser de anos anteriores ou do mesmo ano que a aprendizagem foco",
+    "1º Item",
+    "Nesta coluna, é possível ver o código da BNCC referente à habilidade, que identifica habilidade do ano selecionada para o Mapa.",
+    "2º Item",
+    "Em texto da habilidade, está a descrição da habilidade selecionada para o Mapa, exatamente como ela aparece na BNCC.",
+    "3º Item",
+    "Em classificação, pode-se localizar rapidamente quais habilidades foram classificadas como aprendizagem foco.",
+    "4º Item",
+    "Aqui estão objetivos de aprendizagem e desenvolvimento associados às aprendizagens foco.",
+    "5º Item",
+    "Nesta coluna, é possível ver as competências com as quais a aprendizagem foco se relaciona.",
+    "6º Item",
+    "Aqui estão alguns comentários gerais sobre a classificação, feitos pelos autores, sobre determinada habilidade. Ela foi feita tendo como referência os critérios para classificação e o material suplementar da BNCC em planilha disponível para essa etapa.",
+    "8º Item",
+    "As habilidades relacionadas são aquelas que foram classificadas como aprendizagens complementares (ACs), expectativas de fluência (EFs) ou outras aprendizagens focais (AFs) que complementam ou podem ser desenvolvidas junto à determinada AF, para atender possibilidades de ir além.",
+    "7º Item"
+   ]
+  },
+  "Matemática": {
+   "orientacaoDeLeitura": [
+    "Todo mapa começa com as colunas unidade temática e conhecimento prévio. Em conhecimento prévio estão elencadas as habilidades que o estudante precisa ter para desenvolver a aprendizagem foco. Essas habilidades podem ser de anos anteriores ou do mesmo ano que a aprendizagem foco.",
+    "1º Item",
+    "Nesta coluna, é possível ver o código da BNCC referente à habilidade, que identifica habilidade do ano selecionada para o Mapa.",
+    "2º Item",
+    "Em texto da habilidade, está a descrição da habilidade selecionada para o mapa, exatamente como ela aparece na BNCC.",
+    "3º Item",
+    "Em classificação, pode-se localizar rapidamente quais habilidades foram classificadas como aprendizagem foco ou expectativa de fluência, no caso dos anos iniciais.",
+    "4º Item",
+    "Aqui estão objetivos de aprendizagem e desenvolvimento associados às aprendizagens foco. Os objetivos de aprendizagem em negrito representam Expectativas de Fluência (EF) associados à AF.",
+    "5º Item",
+    "Nesta coluna, é possível ver as competências com as quais a aprendizagem foco se relaciona.",
+    "6º Item",
+    "Aqui estão alguns comentários gerais sobre a classificação, feitos pelos autores, sobre determinada habilidade. Ela foi feita tendo como referência os critérios para classificação e a Base Comentada disponível para essa etapa.",
+    "8º Item",
+    "As habilidades relacionadas são aquelas que foram classificadas como aprendizagens complementares (AC). Elas complementam ou podem ser desenvolvidas junto às AF para atender possibilidades de ir além.",
+    "7º Item"
+   ]
+  },
+  "Ciências da Natureza": {
+   "orientacaoDeLeitura": [
+    "Todo mapa começa com a coluna Conhecimento prévio, onde estão elencados os códigos de todas as habilidades que o estudante precisa ter desenvolvido para poder iniciar o processo de aprendizagem da habilidade foco. Essas habilidades podem ser de anos anteriores ou do mesmo ano.",
+    "Todo Mapa começa com as colunas unidade temática e conhecimento prévio. Em conhecimento prévio estão elencados os códigos de todas as habilidades que o estudante precisa ter desenvolvido para poder iniciar o processo de aprendizagem da habilidade classificada como foco. Elas podem ser de anos anteriores ou do mesmo ano.",
+    "1º Passo",
+    "Nesta coluna, é possível ver o código referente à habilidade, que a localiza no ano e componente, conforme a BNCC.",
+    "2º Passo",
+    "Em texto da habilidade está a descrição da habilidade selecionada para o Mapa, exatamente como ela aparece na BNCC.",
+    "3º Passo",
+    "Em classificação, pode-se localizar rapidamente quais habilidades foram classificadas como aprendizagem foco.",
+    "4º Passo",
+    "Cada uma das habilidades classificadas como aprendizagem foco foi detalhada em objetivos de aprendizagem. Fizemos isso para apoiá-lo no entendimento da habilidade e em como transformá-la em aulas.",
+    "5º Passo",
+    "Nesta coluna, é possível ver as competências com as quais a aprendizagem foco se relaciona.",
+    "6º Passo",
+    "Aqui estão alguns comentários gerais sobre a classificação, feitos pelos autores, sobre determinada habilidade.",
+    "8º Passo",
+    "As habilidades relacionadas são aquelas que foram classificadas como aprendizagens complementares (ACs). Elas complementam ou podem ser desenvolvidas junto às AFs para atender possibilidades de ir além.",
+    "7º Passo"
+   ]
+  },
+  "Ciências Humanas": {
+   "orientacaoDeLeitura": [
+    "Todo mapa começa com a coluna Conhecimento prévio, onde estão elencados os códigos de todas as habilidades que o estudante precisa ter desenvolvido para poder iniciar o processo de aprendizagem da habilidade foco. Essas habilidades podem ser de anos anteriores ou do mesmo ano.",
+    "Todo Mapa começa com as colunas unidade temática e conhecimento prévio. Em conhecimento prévio estão elencados os códigos de todas as habilidades que o estudante precisa ter desenvolvido para poder iniciar o processo de aprendizagem da habilidade classificada como foco. Elas podem ser de anos anteriores ou do mesmo ano.",
+    "1º Passo",
+    "Nesta coluna, é possível ver o código referente à habilidade, que a localiza no ano e componente, conforme a BNCC.",
+    "2º Passo",
+    "Em texto da habilidade está a descrição da habilidade selecionada para o Mapa, exatamente como ela aparece na BNCC.",
+    "3º Passo",
+    "Em classificação, pode-se localizar rapidamente quais habilidades foram classificadas como aprendizagem foco ou como aprendizagem foco/aprendizagem complementar.",
+    "4º Passo",
+    "Cada uma das habilidades classificadas como aprendizagem foco foi detalhada em objetivos de aprendizagem. Fizemos isso para apoiá-lo no entendimento da habilidade e em como transformá-la em aulas.",
+    "5º Passo",
+    "Nesta coluna, é possível ver as competências com as quais a aprendizagem foco se relaciona.",
+    "6º Passo",
+    "Aqui estão alguns comentários gerais sobre a classificação, feitos pelos autores, sobre determinada habilidade.",
+    "8º Passo",
+    "As habilidades relacionadas são aquelas que foram classificadas como aprendizagens complementares (AC) ou focais (AF) e que complementam ou podem ser desenvolvidas junto à AF em questão, para atender possibilidades de ir além.",
+    "7º Passo"
+   ]
+  }
+ },
+ "campos": [
+  {
+   "id": "lp-anos-iniciais-campo-de-atuacao-da-vida-cotidiana",
+   "componente": "Língua Portuguesa",
+   "etapa": "Anos Iniciais",
+   "nome": "Campo de atuação da vida cotidiana",
+   "comentario": "(*) Sobre o Campo da vida cotidiana, é importante esclarecer que os textos em versos (quadras, quadrinhas, cantigas e parlendas) são tratados neste campo no 1º e no 2º ano. Isso porque esses textos estão relacionados às brincadeiras infantis e, portanto, ao cotidiano das crianças. Nos demais anos, os textos versificados passam a integrar o Campo artístico-literário. Outro aspecto relevante é que tirinhas, anedotas e cartuns são contemplados apenas no 5º ano devido à complexidade desses gêneros. É preciso, portanto, que sejam desenvolvidas as habilidades de leitura, sobretudo de inferência e de compreensão global do texto, ao longo de todo o segmento, para que, ao final, os estudantes sejam capazes de compreender esses e outros gêneros textuais que exigem níveis de leitura mais complexos."
+  },
+  {
+   "id": "lp-anos-iniciais-campo-da-vida-publica",
+   "componente": "Língua Portuguesa",
+   "etapa": "Anos Iniciais",
+   "nome": "Campo da vida pública",
+   "comentario": "(*) Sobre o Campo da vida pública, é importante destacar que há um trabalho específico no 1º e no 2º ano com cartazes, folhetos e regulamentos, com o objetivo de inserir os estudantes nos contextos coletivos, de atuação cidadã. Também nesse campo são contemplados os textos da esfera jornalística, como as notícias, as reportagens, as cartas de leitor etc. Nos dois primeiros anos, é fundamental que os professores leiam esses textos para os estudantes a fim de que eles possam se aproximar das especificidades de cada um desses gêneros. Também é possível investir em produções de textos coletivas."
+  },
+  {
+   "id": "lp-anos-iniciais-campo-das-praticas-de-estudo-e-pesquisa",
+   "componente": "Língua Portuguesa",
+   "etapa": "Anos Iniciais",
+   "nome": "Campo das práticas de estudo e pesquisa",
+   "comentario": "(*) Sobre o Campo das práticas de estudo e pesquisa, vale destacar as habilidades relacionadas à oralidade, sobretudo em relação à produção oral em situações mais formais de comunicação, como na exposição de trabalhos, seminários e apresentações de resultados de pesquisas. Essas habilidades serão prioritariamente desenvolvidas do 3º ao 5º ano. Outro aspecto importante é que, nesse campo de atuação, a progressão na complexidade dos gêneros discursivos trabalhados com os estudantes é essencial para que a progressão das habilidades seja garantida. Isso significa que, no 1º e no 2º ano, são trabalhados textos de menor complexidade, como curiosidades, ficha técnica e enunciados de tarefas. Já no 3º, no 4º e no 5º ano, são propostos textos expositivos de divulgação científica mais complexos. Por fim, não somente nesse campo, mas sobretudo com textos científicos nos quais as palavras e expressões podem ser muito específicas e desconhecidas pelos estudantes, é fundamental explorar os sentidos das alavras, as relações de sinonímia e antonímia, pois isso contribuirá para que eles leiam e escrevam com maior autonomia e qualidade esses textos."
+  },
+  {
+   "id": "lp-anos-iniciais-campo-artistico-literario",
+   "componente": "Língua Portuguesa",
+   "etapa": "Anos Iniciais",
+   "nome": "Campo artístico-literário",
+   "comentario": "Sobre o campo artístico-literário, destaca-se o trabalho com o texto dramático, sobretudo no 4º ano, mas sendo possível abordá-lo, também, no 3º e no 5º anos. Além disso, há habilidades importantes de produção oral de textos literários, em versos e em prosa. É importante lembrar que as quadras, as parlendas e as cantigas que, nos dois primeiros anos integram o Campo da vida cotidiana, relacionam-se também às habilidades propostas neste campo. São esses textos versificados que permitirão ao estudante perceber rimas, ritmo, sonoridade, melodia, bem como possibilitarão desenvolver habilidades como recitar e cantar, para que, nos anos posteriores, eles possam, por exemplo, ser capazes de declamar um poema e possam aprofundar a leitura de textos mais complexos, como os poemas visuais. Assim como as leituras em voz alta feita pelo professor constituem-se como modelo de leitura para os estudantes, a escuta desses textos cantados, recitados e declamados permite que eles percebam os recursos sonoros empregados e que aprendam a ler para divertir-se e encantar-se."
+  },
+  {
+   "id": "lp-anos-finais-campo-de-atuacao-jornalistico-midiatico",
+   "componente": "Língua Portuguesa",
+   "etapa": "Anos Finais",
+   "nome": "Campo de atuação jornalístico-midiático",
+   "comentario": "Sobre o Campo de atuação jornalístico-midiático, nos Anos Finais, o foco está no multiletramento midiático, considerando a reconstrução e reflexão sobre as condições de produção e recepção dos textos/gêneros discursivos que circulam por diferentes mídias. Nesse sentido, as aprendizagens focais correspondente a esse campo consideram não apenas o reconhecimento de um dado gênero (notícia, reportagem, fotorreportagem, entrevista, artigo de opinião, entre outros), mas seus usos, funções e sua inserção na cultura digital. É nesse contexto que são inseridas reflexões sobre o desenvolvimento das tecnologias de comunicação e informação, o uso dos hipertextos,hiperlinks e hipermídias, com o surgimento da WEB 2.0. E, consequentemente, a questão da confiabilidade das informações, a disseminação de fake news, manipulação dos fatos, a proliferação de discurso de ódio e os fenômenos da pós-verdade e efeito bolha. Por isso, as propostas didático-pedagógicas devem considerar que, para desenvolver o conjunto de habilidades desse campo, não basta que os estudantes façam atividades isoladas de leitura e produção oral/escrita, uma vez que as habilidades operam de forma articulada. É preciso que aprendam a ler esses textos em seus contextos de produção, recepção e circulação,desenvolvendo estratégias e procedimentos que lhes permitam construir repertório leitor sólido e diversificado; e capacidade crítica sobre aquilo que leem e escrevem."
+  },
+  {
+   "id": "lp-anos-finais-campo-da-vida-publica",
+   "componente": "Língua Portuguesa",
+   "etapa": "Anos Finais",
+   "nome": "Campo da vida pública",
+   "comentario": "Sobre o campo da vida pública, o foco é o letramento político, dando destaque para os gêneros legais e normativos a fim de que os estudantes possam aprender sobre como a convivência em sociedade é regulada, tendo consciência dos direitos e deveres e valorizando os direitos humanos. Além disso, as habilidades desse campo promovem uma formação ética e responsável, permitindo que os estudantes desenvolvam capacidades de explorar canais de reivindicação e proposição para a reflexão e resolução de questões que dizem respeito ao bem-estar coletivo. Debates, cartas de reclamação/ solicitação, petições online, abaixo-assinados são alguns dos gêneros discursivos contemplados nas habilidades do campo da vida pública, devendo ser inseridos no planejamento escolar a partir de seu contexto de produção, recepção e circulação."
+  },
+  {
+   "id": "lp-anos-finais-campo-das-praticas-de-estudo-e-pesquisa",
+   "componente": "Língua Portuguesa",
+   "etapa": "Anos Finais",
+   "nome": "Campo das práticas de estudo e pesquisa",
+   "comentario": "Sobre o campo das práticas de estudo e pesquisa, o foco está no letramento científico e na construção da autonomia para aprender. Nesse sentido, as habilidades destacadas relacionam-se ás práticas da leitura e produção textual oral, escrita e multissemiótica, considerando a diversidade de gêneros textuais que apresentam (tomada de nota; apresentação oral, artigo de divulgação científica, podcast, verbete de enciclopédia, esquemas, resumos etc. Além disso, elas também apresentam foco nos procedimentos de leitura e produção, como a topicalização, mecanismos de paráfrase etc. Vale destacar ainda que o foco no desenvolvimento da capacidade crítica dos estudantes sobre as temáticas, a relevância e a autenticidade das informações encontradas nos textos pesquisados e analisados. É importante, portanto, que as habilidades desse campo de atuação sejam garantidas nos planejamentos escolares de forma articulada a outros campos de atuação social, uma vez que as práticas de estudo e pesquisa promovem a aprendizagem de estratégias e procedimentos que potencializam a capacidade dos estudantes de aprender, saber fazder e construir conhecimentos."
+  },
+  {
+   "id": "lp-anos-finais-campo-artistico-literario",
+   "componente": "Língua Portuguesa",
+   "etapa": "Anos Finais",
+   "nome": "Campo artístico-literário",
+   "comentario": "Sobre o campo artístico-literário, o destaque é a formação do leitor-fruidor, com o letramento literário e o multiletramento com as manifestações artísticas em geral. Por isso, considera-se que as habilidades que promovem a proficiência leitura, repertório e fluência devem ser garantidas durante toda a etapa dos anos finais, sendo chamadas de Expectativa de Fluência. Como aprendizagem foco, foram selecionadas habilidades com destaque para a produção textual de narrativas e poemas, observando o avanço entre as duas primeiras séries (6o e 7o) e as duas últimas (8o e 9o). Por exemplo: para serem capazes de parodiar poemas, como previsto na habilidade EF89LP36, é necessário que, antes, os estudantes possam criar poemas a partir de seu repertório sobre o gênero e seu contexto de produção. Isso porque a paródia não pressupõe uma simples imitação, mas a capacidade de recriar um texto, considerando a intertextualidade e o propósito daquilo que se quer imprimir ao novo texto: uma crítica, uma ironia, uma sátira, humor."
+  }
+ ],
+ "resumosPorAno": [
+  {
+   "componente": "Ciências da Natureza",
+   "etapa": "Anos Iniciais",
+   "ano": "1º ano",
+   "texto": "A quantidade de habilidades em Ciências da Natureza é relativamente menor no 1º ano. A única habilidade do eixo Matéria e Energia foi classificada como aprendizagem foco (AF) porque será essencial para perceber propriedades exploradas em outros anos. Em Vida e Evolução, as três habilidades foram classificadas como AF por tratarem de expectativas de aprendizagem distintas que serão fundamentais nos anos posteriores. Na unidade Terra e Universo, a AF selecionada (EF01CI05) requer observação e relato, essenciais para desenvolver o pensamento científico, enquanto a outra habilidade (EF01CI06) a exemplifica, sendo por isso classificada como complementar.",
+   "totais": "TOTAL: 4 habilidades classificadas como AF e 1 habilidade como AC"
+  },
+  {
+   "componente": "Ciências da Natureza",
+   "etapa": "Anos Iniciais",
+   "ano": "2º ano",
+   "texto": "No 2º ano, grande parte das habilidades são introdutórias. Na unidade temática Matéria e Energia, optou-se por garantir a progressão por meio da exploração das propriedades macroscópicas e visuais da matéria. A habilidade EF02CI02 aborda propriedades exploradas na anterior e foi classificada como complementar. Já a habilidade EF02CI03, é essencial nessa fase do desenvolvimento por promover a saúde e o bem-estar dos estudantes ao estimular a prevenção contra acidentes domésticos. Em Vida e Evolução as três habilidades são alinhadas ao mesmo tema mas desenvolvem aprendizagens focais fundamentais nos Anos Iniciais. No eixo Terra e Universo, a habilidade EF02CI08 foi classificada como complementar por tratar de aprendizagens que poderão ser desenvolvidas posteriormente, sem interferir na progressão dos Anos Iniciais.",
+   "totais": "TOTAL: 5 habilidades classificadas como AF e 1 habilidade como AC"
+  },
+  {
+   "componente": "Ciências da Natureza",
+   "etapa": "Anos Iniciais",
+   "ano": "3º ano",
+   "texto": "O 3º ano apresenta mais aprendizagens complementares que os anos anteriores. Na unidade Matéria e Energia, optou-se por priorizar as relações da luz e do som com a saúde e o bem-estar, uma vez que é fundamental nesta fase o desenvolvimento da percepção do autocuidado, e as propriedades destes objetos de conhecimento serão aprofundadas posteriormente. Em Vida e Evolução, optou-se por garantir o aprendizado de características e desenvolvimento dos animais, conhecimento requerido para a progressão proposta na unidade. O eixo Terra e Universo ganha mais espaço entre as AF por apresentar habilidades bastante distintas e fundamentais para explicar características e processos do mundo natural e das suas representações.",
+   "totais": "TOTAL: 5 habilidades classificadas como AF e 5 habilidades como AC"
+  },
+  {
+   "componente": "Ciências da Natureza",
+   "etapa": "Anos Iniciais",
+   "ano": "4º ano",
+   "texto": "No 4º ano, encontram-se habilidades que desenvolverão também procedimentos essenciais para o desenvolvimento do pensamento científico, como a observação, a testagem e o relato. Em Matéria e Energia, todas as habilidades desenvolvem aprendizagens focais, introdutórias e conectadas com a progressão das propriedades da matéria. Na unidade temática Vida e Evolução, foram escolhidas como AF aquelas que desenvolvem conceitos fundamentais e procedimentos relacionados ao autocuidado e à investigação científica. Em Terra e Universo, as habilidades consideradas focais são essenciais para a progressão do aprendizado sobre como levantar evidências para explicar os movimentos da Terra e do Sol.",
+   "totais": "TOTAL: 6 habilidades classificadas como AF e 5 habilidades como AC"
+  },
+  {
+   "componente": "Ciências da Natureza",
+   "etapa": "Anos Iniciais",
+   "ano": "5º ano",
+   "texto": "No 5º ano são mais frequentes as propostas em que o estudante precisa produzir intervenções e elaborar explicações acerca de fenômenos naturais que fazem parte da vida cotidiana. No eixo Matéria e Energia, foram classificadas como focais as aprendizagens que desenvolvem conhecimentos fundamentais sobre as relações e as transformações da matéria . Em Vida e Evolução, foram selecionadas habilidades que contribuem para o desenvolvimento do autocuidado e do cuidado coletivo, e também aquelas que iniciam a exploração do funcionamento e importância dos sistemas do corpo humano. Em Terra e Universo, as habilidades selecionadas como aprendizagens focais servem como forma de conectar as evidências levantadas nos anos anteriores com conceitos científicos mais concretos, que ajudam o estudante na busca de respostas para os fenômenos que envolvem a Terra, o Sol e a Lua.",
+   "totais": "TOTAL: 6 habilidades classificadas como AF e 7 habilidades como AC"
+  },
+  {
+   "componente": "Ciências da Natureza",
+   "etapa": "Anos Finais",
+   "ano": "6º ano",
+   "texto": "No 6º ano buscou-se manter o equilíbrio entre as unidades temáticas, contemplando três habilidades de cada. Em Matéria e Energia foram classificadas como aprendizagens focais todas as habilidades essenciais para progredir sobre as propriedades e características da matéria construída desde os anos iniciais. Em Vida e Evolução foram priorizadas as aprendizagens sobre o olhar para si e suas relações, dando continuidade ao desenvolvimento do autocuidado. Em Terra e Universo existe um aumento da complexidade dos temas abordados e as habilidades selecionadas como AF são essenciais para garantir o desenvolvimento da observação como forma de coleta de evidências para compreender a dinâmica e as relações entre a Terra e o Universo.",
+   "totais": "TOTAL: 7 habilidades AF e 7 habilidades AC."
+  },
+  {
+   "componente": "Ciências da Natureza",
+   "etapa": "Anos Finais",
+   "ano": "7º ano",
+   "texto": "No 7º ano existe um aumento na complexidade no número de habilidades, porém existem também mais habilidades complementares, que são extensões das AF. Na unidade temática Matéria e Universo as habilidades classificadas como AF são aquelas que tratam dos conceitos fundamentais sobre calor e temperatura. Na unidade temática Vida e Evolução foram selecionadas como AF habilidades que garantem a progressão nas relações entre Ciências e o autocuidado, reforçando o impacto de hábitos individuais para a saúde coletiva. No eixo Terra e Universo foram selecionadas como AF as habilidades que tratam de implicações socioambientais da atividade antrópica na Terra.",
+   "totais": "TOTAL: 8 habilidades AF e 8 habilidades AC"
+  },
+  {
+   "componente": "Ciências da Natureza",
+   "etapa": "Anos Finais",
+   "ano": "8º ano",
+   "texto": "No 8º ano foram selecionadas aprendizagens focais que garantam o desenvolvimento do autocuidado e que promovam espaço para debater os desafios da juventude. Em Matéria e Energia, foram classificadas como AF habilidades que tratam de debates importantes sobre a geração de energia, para o estudante elaborar argumentos. No eixo temático Vida e Evolução, foram classificadas como AF as habilidades que tratam do corpo humano e suas relações com fragilidades da juventude, como a gravidez precoce e a prevenção às ISTs. Na unidade temática Terra e Universo, as AF selecionadas são essenciais para a construção do conceito de clima e também de procedimentos e práticas que constituem a investigação científica.",
+   "totais": "TOTAL: 7 habilidades AF e 9 habilidades AC"
+  },
+  {
+   "componente": "Ciências da Natureza",
+   "etapa": "Anos Finais",
+   "ano": "9º ano",
+   "texto": "No 9º ano foram selecionadas como AF habilidades que funcionam como evolução das progressões construídas desde os anos iniciais. No eixo Matéria e Energia foram selecionadas habilidades que permitem o desenvolvimento de modelos mentais para explicar as propriedades da matéria com base em sua estrutura atômica/molecular. Na unidade temática Vida e Evolução, as AF garantem o debate sobre evolução e biodiversidade, incentivando o desenvolvimento de ações que minimizem impactos socioambientais e melhorem as condições de vid. Em Terra e Universo, temas mais complexos aparecem entre as AF, para promover o levantamento de informações e a argumentação científica sobre o Universo.",
+   "totais": "TOTAL: 7 habilidades AF e 10 habilidades AC"
+  },
+  {
+   "componente": "Ciências Humanas",
+   "etapa": "Anos Iniciais",
+   "ano": "1º ano",
+   "texto": "No 1º ANO, as AFs selecionadas pelos componentes de História e Geografia permitem o desenvolvimento das categorias sujeito, natureza, espaço (lugar e paisagem) e tempo, fundamentais à área de CH, com destaque para os estudos acerca da história individual e coletiva (do sujeito, da família e da comunidade), vivências e de diversos modos de vida (formas de trabalho, transformações e relações com a natureza, estabelecimento de regras comuns) em diferentes tempos e espaços.",
+   "totais": "TOTAL: 8 habilidades AFs (3 do componente de História e 5 do componente de Geografia). As habilidades classificadas como AC somam um total de 26, sendo algumas destas complementares às AFs ou indicando interfaces e articulações interdisciplinares e, por isso, algumas aparecem mais de uma vez na matriz do ano."
+  },
+  {
+   "componente": "Ciências Humanas",
+   "etapa": "Anos Iniciais",
+   "ano": "2º ano",
+   "texto": "No 2º ANO, as AFs selecionadas pelos componentes de História e Geografia permitem o aprofundamento das categorias sujeito, natureza, espaço (lugar e paisagem) e tempo, com destaque para os estudos de: modos de vida em distintas localidades e temporalidades, espaços de sociabilidade (papéis e funções), e também das conexões entre lugares e transformações das paisagens ao longo do tempo.",
+   "totais": "TOTAL: 7 habilidades AFs (3 do componente de História e 4 do componente de Geografia). As habilidades classificadas como AC somam um total de 19, sendo algumas destas complementares às AFs ou indicando interfaces e articulações interdisciplinares e, por isso, algumas aparecem mais de uma vez na matriz do ano."
+  },
+  {
+   "componente": "Ciências Humanas",
+   "etapa": "Anos Iniciais",
+   "ano": "3º ano",
+   "texto": "No 3º ANO, as AFs selecionadas pelos componentes de História e Geografia permitem seguir no aprofundamento das categorias centrais: sujeito, natureza, espaço (lugar e paisagem) e tempo, com foco nos estudos acerca dos registros de memória, dos patrimônios históricos, das relações entre os modos de vida e atividades de trabalho na cidade e campo (espaços onde se verificam transformações decorrentes da inserção de novas tecnologias e os inerentes impactos ambientais deste processo).",
+   "totais": "TOTAL: 8 habilidades AFs (3 do componente de História e 5 do componente de Geografia). As habilidades classificadas como AC somam um total de 29, sendo algumas destas complementares às AFs ou indicando interfaces e articulações interdisciplinares e, por isso, algumas aparecem mais de uma vez na matriz do ano."
+  },
+  {
+   "componente": "Ciências Humanas",
+   "etapa": "Anos Iniciais",
+   "ano": "4º ano",
+   "texto": "No 4º ANO, as AFs selecionadas pelos componentes de História e Geografia permitem mais um passo no aprofundamento das categorias tempo, sujeito e natureza e também a ampliação do conceito de espaço (lugar, paisagem, região e território), favorecendo o trabalho com temas relacionados aos deslocamentos humanos e fluxos populacionais e à organização sociopolítica de diferentes sociedades em diferentes tempos e espaços.",
+   "totais": "TOTAL: 7 habilidades AFs (2 do componente de História e 5 do componente de Geografia). As habilidades classificadas como AC somam um total de 22, sendo algumas destas complementares às AFs ou indicando interfaces e articulações interdisciplinares e, por isso, algumas aparecem mais de uma vez na matriz do ano."
+  },
+  {
+   "componente": "Ciências Humanas",
+   "etapa": "Anos Iniciais",
+   "ano": "5º ano",
+   "texto": "No 5º ANO, as AFs selecionadas pelos componentes de História e Geografia, além de permitir o aprofundamento das categorias de tempo, sujeito e natureza e espaço (lugar, paisagem, região e território), introduzem novos conceitos, como: povo, cultura, cidadania, sustentabilidade, identidade, memória, fonte histórica e patrimônio. Tais conceitos favorecem o desenvolvimento com temas relacionados à diversidade dos povos e à formação de grupos sociais, considerando suas especificidades (organização política, cultura e memória).",
+   "totais": "TOTAL: 8 habilidades AFs (3 do componente História e 5 do componente Geografia). As habilidades ACs somam um total de 25, sendo algumas destas complementares às AFs ou indicando interfaces e articulações interdisciplinares e, por isso, algumas aparecem mais de uma vez na matriz do ano."
+  },
+  {
+   "componente": "Ciências Humanas",
+   "etapa": "Anos Finais",
+   "ano": "6º ano",
+   "texto": "No 6º ANO, as habilidades selecionadas dos componentes de História e Geografia permitem articular conteúdos e recortes temáticos amparados nas categorias sujeito, espaço e tempo – estas centrais à área de Ciências Humanas (CH). Neste ano, evidencia-se a análise de grupos humanos, povos e sociedades em diferentes espaços e tempos, assim como de suas ações e lógicas de intervenção e transformação da natureza e da paisagem. Também destacam-se outros conceitos, tais como cultura e identidade.",
+   "totais": "TOTAL: 11 habilidades AFs (5 do componente de História e 6 do componente de Geografia). As habilidades classificadas como AC somam um total de 40, sendo algumas destas complementares às AFs ou indicando interfaces e articulações interdisciplinares e, por isso, algumas aparecem mais de uma vez na matriz do ano."
+  },
+  {
+   "componente": "Ciências Humanas",
+   "etapa": "Anos Finais",
+   "ano": "7º ano",
+   "texto": "No 7º ANO, as habilidades selecionadas permitem desenvolver conceitos importantes para a área de Ciências Humanas, tais como modernidade, humanismo, dominação, diversidade cultural, natureza, trabalho, produção e tecnologia. O tema central no componente História está relacionado à formação e passagem do Antigo Regime (absolutismo e mercantilismo) até o capitalismo e o tema central no componente Geografia está relacionado à formação territorial do Brasil e suas características naturais e socioeconômicas. Esses temas-focos são trabalhados por meio das categorias cronológicas, ideológicas e conceituais – fundamentais para o conhecimento histórico –, mas, também por meio de análises socioespaciais pelo componente Geografia.",
+   "totais": "TOTAL: 12 habilidades AFs (6 do componente de História e 6 do componente de Geografia). As habilidades classificadas como AC somam um total de 36, sendo algumas dessas complementares às AFs ou indicando interfaces e articulações interdisciplinares e, por isso, algumas aparecem mais de uma vez na matriz do ano."
+  },
+  {
+   "componente": "Ciências Humanas",
+   "etapa": "Anos Finais",
+   "ano": "8º ano",
+   "texto": "No 8º ANO, as habilidades selecionadas permitem desenvolver conceitos importantes para a área de Ciências Humanas, tais como conflito, desenvolvimento técnico-científico, direitos humanos, democracia, autonomia, dominação e Estado-Nacional. O componente de Geografia dá ênfase em questões geopolíticas contemporâneas mundiais e também regionais (América e África) e o componente de História centra atenção na passagem do Antigo Regime à sociedade inaugurada pela Revolução Francesa, que impactou sobremaneira a vida e a dinâmica político-social europeia, tendo como consequência os processos de independência das colônias na América.",
+   "totais": "TOTAL: 15 habilidades AFs (6 do componente de História e 9 do componente de Geografia). As habilidades classificadas como AC somam um total de 40, sendo algumas dessas complementares às habilidades classificadas como AF ou indicando interfaces e articulações interdisciplinares e, por isso, algumas aparecem mais de uma vez na matriz do ano."
+  },
+  {
+   "componente": "Ciências Humanas",
+   "etapa": "Anos Finais",
+   "ano": "9º ano",
+   "texto": "No 9º ANO, as habilidades selecionadas permitem desenvolver conceitos importantes para a área de Ciências Humanas, tais como conflito, crise, direitos humanos, movimentos sociais, ideologia, desigualdade e globalização. O componente Geografia propõe uma análise com foco nas questões geopolíticas, econômicas e socioambientais mundiais, também se apoiando em um recorte regional dos continentes Europa, Ásia e Oceania. Já o componente de História propõe uma análise das dinâmicas e das relações Brasil-mundo no século XX, abrangendo as fases republicanas, articuladas com os conflitos, sobretudo, europeus, tais como as grandes guerras mundiais, assim como os regimes políticos e ideológicos, como os totalitarismos.",
+   "totais": "TOTAL: 14 habilidades AFs (6 do componente de História e 8 do componente de Geografia). As habilidades classificadas como AC somam um total de 36, sendo algumas dessas complementares às habilidades classificadas como AF ou indicando interfaces e articulações interdisciplinares e, por isso, algumas aparecem mais de uma vez na matriz do ano."
+  }
+ ],
+ "notas": [
+  {
+   "componente": "Ciências Humanas",
+   "etapa": "Anos Iniciais",
+   "texto": "*As habilidades de Alfabetização Cartográfica devem ser desenvolvidas conjuntamente com as habilidades de Alfabetização Geográfica"
+  },
+  {
+   "componente": "Ciências Humanas",
+   "etapa": "Anos Iniciais",
+   "texto": "(**) As habilidades EF01HI05 e EF01GE02 referem-se aos mesmos temas e procedimentos e devem ser trabalhadas conjuntamente."
+  },
+  {
+   "componente": "Ciências Humanas",
+   "etapa": "Anos Iniciais",
+   "texto": "ATENÇÃO: A letra P indica uma proposta de progressão dentro do mesmo componente entre os Anos Iniciais. Por exemplo, a habilidade marcada com P1 estará associada com outra trabalhada no(s) ano(s) seguinte(s) com o mesmo código, dentro do mesmo componente."
+  },
+  {
+   "componente": "Ciências Humanas",
+   "etapa": "Anos Finais",
+   "texto": "(*) As habilidades de Alfabetização Cartográfica devem ser desenvolvidas conjuntamente com as habilidades de Alfabetização Geográfica"
+  },
+  {
+   "componente": "Ciências Humanas",
+   "etapa": "Anos Finais",
+   "texto": "ATENÇÃO: A letra P indica uma proposta de progressão dentro do mesmo componente entre os Anos Finais. Por exemplo, a habilidade marcada com P1 estará associada com outra trabalhada no(s) ano(s) seguinte(s) com o mesmo código, dentro do mesmo componente."
+  }
+ ],
+ "trilhas": [
+  {
+   "id": "lp-anos-iniciais-campo-de-atuacao-da-vida-cotidiana-leitura-de-cantigas-parlendas-e-quadrinhas",
+   "componente": "Língua Portuguesa",
+   "etapa": "Anos Iniciais",
+   "tipo": "matriz",
+   "grupo": "Campo de atuação da vida cotidiana",
+   "linha": "Leitura de cantigas, parlendas e quadrinhas",
+   "colunas": [
+    {
+     "coluna": "1º e 2º",
+     "codigos": [
+      "EF12LP07"
+     ]
+    },
+    {
+     "coluna": "1º",
+     "codigos": [
+      "EF01LP16"
+     ]
+    },
+    {
+     "coluna": "2º",
+     "codigos": [
+      "EF02LP12"
+     ]
+    }
+   ]
+  },
+  {
+   "id": "lp-anos-iniciais-campo-de-atuacao-da-vida-cotidiana-producao-oral-de-cantigas-parlendas-e-quadrinhas",
+   "componente": "Língua Portuguesa",
+   "etapa": "Anos Iniciais",
+   "tipo": "matriz",
+   "grupo": "Campo de atuação da vida cotidiana",
+   "linha": "Produção oral de cantigas, parlendas e quadrinhas",
+   "colunas": [
+    {
+     "coluna": "1º",
+     "codigos": [
+      "EF01LP19"
+     ]
+    },
+    {
+     "coluna": "2º",
+     "codigos": [
+      "EF02LP15"
+     ]
+    }
+   ]
+  },
+  {
+   "id": "lp-anos-iniciais-campo-de-atuacao-da-vida-cotidiana-producao-escrita-de-cantigas-parlendas-e-quadrinhas",
+   "componente": "Língua Portuguesa",
+   "etapa": "Anos Iniciais",
+   "tipo": "matriz",
+   "grupo": "Campo de atuação da vida cotidiana",
+   "linha": "Produção escrita de cantigas, parlendas e quadrinhas",
+   "colunas": [
+    {
+     "coluna": "1º e 2º",
+     "codigos": [
+      "EF12LP05"
+     ]
+    },
+    {
+     "coluna": "1º",
+     "codigos": [
+      "EF01LP16"
+     ]
+    },
+    {
+     "coluna": "2º",
+     "codigos": [
+      "EF02LP12"
+     ]
+    }
+   ]
+  },
+  {
+   "id": "lp-anos-iniciais-campo-de-atuacao-da-vida-cotidiana-leitura-de-textos-instrucionais-e-cartas",
+   "componente": "Língua Portuguesa",
+   "etapa": "Anos Iniciais",
+   "tipo": "matriz",
+   "grupo": "Campo de atuação da vida cotidiana",
+   "linha": "Leitura de textos instrucionais e cartas",
+   "colunas": [
+    {
+     "coluna": "1º e 2º",
+     "codigos": [
+      "EF12LP04"
+     ]
+    },
+    {
+     "coluna": "1º",
+     "codigos": [
+      "EF01LP20"
+     ]
+    },
+    {
+     "coluna": "2º",
+     "codigos": [
+      "EF02LP16",
+      "EF02LP17"
+     ]
+    },
+    {
+     "coluna": "3º",
+     "codigos": [
+      "EF03LP11",
+      "EF03LP12"
+     ]
+    },
+    {
+     "coluna": "4º",
+     "codigos": [
+      "EF04LP09",
+      "EF04LP10"
+     ]
+    },
+    {
+     "coluna": "5º",
+     "codigos": [
+      "EF05LP09"
+     ]
+    }
+   ]
+  },
+  {
+   "id": "lp-anos-iniciais-campo-de-atuacao-da-vida-cotidiana-producao-de-textos-instrucionais-cartas-resenhas-digitais",
+   "componente": "Língua Portuguesa",
+   "etapa": "Anos Iniciais",
+   "tipo": "matriz",
+   "grupo": "Campo de atuação da vida cotidiana",
+   "linha": "Produção de textos instrucionais, cartas, resenhas digitais",
+   "colunas": [
+    {
+     "coluna": "1º e 2º",
+     "codigos": [
+      "EF12LP06"
+     ]
+    },
+    {
+     "coluna": "1º",
+     "codigos": [
+      "EF01LP17"
+     ]
+    },
+    {
+     "coluna": "2º",
+     "codigos": [
+      "EF02LP13"
+     ]
+    },
+    {
+     "coluna": "3º",
+     "codigos": [
+      "EF03LP13",
+      "EF03LP14",
+      "EF03LP15"
+     ]
+    },
+    {
+     "coluna": "4º",
+     "codigos": [
+      "EF04LP11",
+      "EF04LP12",
+      "EF04LP13"
+     ]
+    },
+    {
+     "coluna": "5º",
+     "codigos": [
+      "EF05LP12",
+      "EF05LP13",
+      "EF05LP14"
+     ]
+    }
+   ]
+  },
+  {
+   "id": "lp-anos-iniciais-campo-de-atuacao-da-vida-cotidiana-leitura-de-tirinhas-quadrinhos-cartuns-e-anedotas",
+   "componente": "Língua Portuguesa",
+   "etapa": "Anos Iniciais",
+   "tipo": "matriz",
+   "grupo": "Campo de atuação da vida cotidiana",
+   "linha": "Leitura de tirinhas, quadrinhos, cartuns e anedotas",
+   "colunas": [
+    {
+     "coluna": "1º ao 5º",
+     "codigos": [
+      "EF15LP14"
+     ]
+    },
+    {
+     "coluna": "5º",
+     "codigos": [
+      "EF05LP10"
+     ]
+    }
+   ]
+  },
+  {
+   "id": "lp-anos-iniciais-campo-de-atuacao-da-vida-cotidiana-producao-de-tirinhas-quadrinhos-cartuns-e-anedotas",
+   "componente": "Língua Portuguesa",
+   "etapa": "Anos Iniciais",
+   "tipo": "matriz",
+   "grupo": "Campo de atuação da vida cotidiana",
+   "linha": "Produção de tirinhas, quadrinhos, cartuns e anedotas",
+   "colunas": [
+    {
+     "coluna": "5º",
+     "codigos": [
+      "EF05LP11"
+     ]
+    }
+   ]
+  },
+  {
+   "id": "lp-anos-iniciais-campo-da-vida-publica-leitura-de-cartazes-folhetos-regras-e-regulamentos",
+   "componente": "Língua Portuguesa",
+   "etapa": "Anos Iniciais",
+   "tipo": "matriz",
+   "grupo": "Campo da vida pública",
+   "linha": "Leitura de cartazes, folhetos, regras e regulamentos",
+   "colunas": [
+    {
+     "coluna": "1º e 2º",
+     "codigos": [
+      "EF12LP10"
+     ]
+    }
+   ]
+  },
+  {
+   "id": "lp-anos-iniciais-campo-da-vida-publica-producao-de-cartazes-folhetos-regras-e-regulamentos",
+   "componente": "Língua Portuguesa",
+   "etapa": "Anos Iniciais",
+   "tipo": "matriz",
+   "grupo": "Campo da vida pública",
+   "linha": "Produção de cartazes, folhetos, regras e regulamentos",
+   "colunas": [
+    {
+     "coluna": "1º",
+     "codigos": [
+      "EF01LP21"
+     ]
+    }
+   ]
+  },
+  {
+   "id": "lp-anos-iniciais-campo-da-vida-publica-leitura-de-noticias-reportagens-e-textos-jornalisticos",
+   "componente": "Língua Portuguesa",
+   "etapa": "Anos Iniciais",
+   "tipo": "matriz",
+   "grupo": "Campo da vida pública",
+   "linha": "Leitura de notícias, reportagens e textos jornalísticos",
+   "colunas": [
+    {
+     "coluna": "1º e 2º",
+     "codigos": [
+      "EF12LP08"
+     ]
+    },
+    {
+     "coluna": "3º",
+     "codigos": [
+      "EF03LP18"
+     ]
+    },
+    {
+     "coluna": "4º",
+     "codigos": [
+      "EF04LP14"
+     ]
+    },
+    {
+     "coluna": "5º",
+     "codigos": [
+      "EF05LP15"
+     ]
+    }
+   ]
+  },
+  {
+   "id": "lp-anos-iniciais-campo-da-vida-publica-producao-escrita-de-textos-jornalisticos-noticias-reportagens-entre-outros",
+   "componente": "Língua Portuguesa",
+   "etapa": "Anos Iniciais",
+   "tipo": "matriz",
+   "grupo": "Campo da vida pública",
+   "linha": "Produção escrita de textos jornalísticos (notícias, reportagens entre outros)",
+   "colunas": [
+    {
+     "coluna": "1º e 2º",
+     "codigos": [
+      "EF12LP11",
+      "EF12LP14"
+     ]
+    },
+    {
+     "coluna": "2º",
+     "codigos": [
+      "EF02LP19"
+     ]
+    },
+    {
+     "coluna": "3º ao 5º",
+     "codigos": [
+      "EF35LP16"
+     ]
+    },
+    {
+     "coluna": "3º",
+     "codigos": [
+      "EF03LP22"
+     ]
+    },
+    {
+     "coluna": "4º",
+     "codigos": [
+      "EF04LP16",
+      "EF04LP17"
+     ]
+    },
+    {
+     "coluna": "5º",
+     "codigos": [
+      "EF05LP17"
+     ]
+    }
+   ]
+  },
+  {
+   "id": "lp-anos-iniciais-campo-da-vida-publica-leitura-de-textos-argumentativos",
+   "componente": "Língua Portuguesa",
+   "etapa": "Anos Iniciais",
+   "tipo": "matriz",
+   "grupo": "Campo da vida pública",
+   "linha": "Leitura de textos argumentativos",
+   "colunas": [
+    {
+     "coluna": "3º",
+     "codigos": [
+      "EF03LP18"
+     ]
+    },
+    {
+     "coluna": "4º",
+     "codigos": [
+      "EF04LP15"
+     ]
+    },
+    {
+     "coluna": "5º",
+     "codigos": [
+      "EF05LP15",
+      "EF05LP16"
+     ]
+    }
+   ]
+  },
+  {
+   "id": "lp-anos-iniciais-campo-da-vida-publica-producao-escrita-e-multissemiotica-de-textos-argumentativos",
+   "componente": "Língua Portuguesa",
+   "etapa": "Anos Iniciais",
+   "tipo": "matriz",
+   "grupo": "Campo da vida pública",
+   "linha": "Produção escrita e multissemiótica de textos argumentativos",
+   "colunas": [
+    {
+     "coluna": "3º",
+     "codigos": [
+      "EF03LP20"
+     ]
+    }
+   ]
+  },
+  {
+   "id": "lp-anos-iniciais-campo-da-vida-publica-producao-oral-de-textos-argumentativos",
+   "componente": "Língua Portuguesa",
+   "etapa": "Anos Iniciais",
+   "tipo": "matriz",
+   "grupo": "Campo da vida pública",
+   "linha": "Produção oral de textos argumentativos",
+   "colunas": [
+    {
+     "coluna": "5º",
+     "codigos": [
+      "EF05LP19"
+     ]
+    }
+   ]
+  },
+  {
+   "id": "lp-anos-iniciais-campo-da-vida-publica-leitura-de-textos-publicitarios-e-multissemioticos",
+   "componente": "Língua Portuguesa",
+   "etapa": "Anos Iniciais",
+   "tipo": "matriz",
+   "grupo": "Campo da vida pública",
+   "linha": "Leitura de textos publicitários e multissemióticos",
+   "colunas": [
+    {
+     "coluna": "3º",
+     "codigos": [
+      "EF03LP19"
+     ]
+    }
+   ]
+  },
+  {
+   "id": "lp-anos-iniciais-campo-da-vida-publica-producao-escrita-de-textos-publicitarios-e-multissemioticos",
+   "componente": "Língua Portuguesa",
+   "etapa": "Anos Iniciais",
+   "tipo": "matriz",
+   "grupo": "Campo da vida pública",
+   "linha": "Produção escrita de textos publicitários e multissemióticos",
+   "colunas": [
+    {
+     "coluna": "3º",
+     "codigos": [
+      "EF03LP21"
+     ]
+    }
+   ]
+  },
+  {
+   "id": "lp-anos-iniciais-campo-das-praticas-de-estudo-e-pesquisa-leitura-de-textos-do-campo",
+   "componente": "Língua Portuguesa",
+   "etapa": "Anos Iniciais",
+   "tipo": "matriz",
+   "grupo": "Campo das práticas de estudo e pesquisa",
+   "linha": "Leitura de textos do campo",
+   "colunas": [
+    {
+     "coluna": "1º e 2º",
+     "codigos": [
+      "EF12LP17"
+     ]
+    },
+    {
+     "coluna": "1º",
+     "codigos": [
+      "EF01LP24"
+     ]
+    },
+    {
+     "coluna": "2º",
+     "codigos": [
+      "EF02LP25"
+     ]
+    },
+    {
+     "coluna": "3º",
+     "codigos": [
+      "EF03LP24"
+     ]
+    },
+    {
+     "coluna": "4º",
+     "codigos": [
+      "EF04LP19",
+      "EF04LP20"
+     ]
+    },
+    {
+     "coluna": "5º",
+     "codigos": [
+      "EF05LP22"
+     ]
+    }
+   ]
+  },
+  {
+   "id": "lp-anos-iniciais-campo-das-praticas-de-estudo-e-pesquisa-producao-escrita-de-textos-do-campo",
+   "componente": "Língua Portuguesa",
+   "etapa": "Anos Iniciais",
+   "tipo": "matriz",
+   "grupo": "Campo das práticas de estudo e pesquisa",
+   "linha": "Produção escrita de textos do campo",
+   "colunas": [
+    {
+     "coluna": "1º",
+     "codigos": [
+      "EF01LP23"
+     ]
+    },
+    {
+     "coluna": "2º",
+     "codigos": [
+      "EF02LP23",
+      "EF02LP22",
+      "EF02LP24"
+     ]
+    },
+    {
+     "coluna": "3º",
+     "codigos": [
+      "EF03LP25"
+     ]
+    },
+    {
+     "coluna": "4º",
+     "codigos": [
+      "EF04LP21"
+     ]
+    },
+    {
+     "coluna": "5º",
+     "codigos": [
+      "EF05LP24"
+     ]
+    }
+   ]
+  },
+  {
+   "id": "lp-anos-iniciais-campo-das-praticas-de-estudo-e-pesquisa-producao-escrita-de-verbetes",
+   "componente": "Língua Portuguesa",
+   "etapa": "Anos Iniciais",
+   "tipo": "matriz",
+   "grupo": "Campo das práticas de estudo e pesquisa",
+   "linha": "Produção escrita de verbetes",
+   "colunas": [
+    {
+     "coluna": "4º",
+     "codigos": [
+      "EF04LP22"
+     ]
+    },
+    {
+     "coluna": "5º",
+     "codigos": [
+      "EF05LP25"
+     ]
+    }
+   ]
+  },
+  {
+   "id": "lp-anos-iniciais-campo-das-praticas-de-estudo-e-pesquisa-producao-oral-de-apresentacoes-de-trabalho-e-resultados-de-pesquisas-proprios-do-campo",
+   "componente": "Língua Portuguesa",
+   "etapa": "Anos Iniciais",
+   "tipo": "matriz",
+   "grupo": "Campo das práticas de estudo e pesquisa",
+   "linha": "Produção oral de apresentações de trabalho e resultados de pesquisas próprios do campo",
+   "colunas": [
+    {
+     "coluna": "3º ao 5º",
+     "codigos": [
+      "EF35LP19",
+      "EF35LP20"
+     ]
+    }
+   ]
+  },
+  {
+   "id": "lp-anos-iniciais-campo-artistico-literario-leitura-de-textos-narrativos",
+   "componente": "Língua Portuguesa",
+   "etapa": "Anos Iniciais",
+   "tipo": "matriz",
+   "grupo": "Campo artístico-literário",
+   "linha": "Leitura de textos narrativos",
+   "colunas": [
+    {
+     "coluna": "1º ao 5º",
+     "codigos": [
+      "EF15LP16"
+     ]
+    },
+    {
+     "coluna": "1º",
+     "codigos": [
+      "EF01LP15",
+      "EF01LP26"
+     ]
+    },
+    {
+     "coluna": "2º",
+     "codigos": [
+      "EF02LP28"
+     ]
+    },
+    {
+     "coluna": "3º ao 5º",
+     "codigos": [
+      "EF35LP26",
+      "EF35LP29"
+     ]
+    }
+   ]
+  },
+  {
+   "id": "lp-anos-iniciais-campo-artistico-literario-producao-escrita-de-textos-narrativos",
+   "componente": "Língua Portuguesa",
+   "etapa": "Anos Iniciais",
+   "tipo": "matriz",
+   "grupo": "Campo artístico-literário",
+   "linha": "Produção escrita de textos narrativos",
+   "colunas": [
+    {
+     "coluna": "1º e 2º",
+     "codigos": [
+      "EF12LP05"
+     ]
+    },
+    {
+     "coluna": "1º",
+     "codigos": [
+      "EF01LP25"
+     ]
+    },
+    {
+     "coluna": "2º",
+     "codigos": [
+      "EF02LP27"
+     ]
+    },
+    {
+     "coluna": "3º ao 5º",
+     "codigos": [
+      "EF35LP25"
+     ]
+    }
+   ]
+  },
+  {
+   "id": "lp-anos-iniciais-campo-artistico-literario-producao-oral-de-textos-narrativos",
+   "componente": "Língua Portuguesa",
+   "etapa": "Anos Iniciais",
+   "tipo": "matriz",
+   "grupo": "Campo artístico-literário",
+   "linha": "Produção oral de textos narrativos",
+   "colunas": [
+    {
+     "coluna": "1º ao 5º",
+     "codigos": [
+      "EF15LP19"
+     ]
+    }
+   ]
+  },
+  {
+   "id": "lp-anos-iniciais-campo-artistico-literario-leitura-de-textos-poeticos",
+   "componente": "Língua Portuguesa",
+   "etapa": "Anos Iniciais",
+   "tipo": "matriz",
+   "grupo": "Campo artístico-literário",
+   "linha": "Leitura de textos poéticos",
+   "colunas": [
+    {
+     "coluna": "1º ao 5º",
+     "codigos": [
+      "EF15LP17"
+     ]
+    },
+    {
+     "coluna": "1º e 2º",
+     "codigos": [
+      "EF12LP19",
+      "EF12LP07"
+     ]
+    },
+    {
+     "coluna": "1º",
+     "codigos": [
+      "EF01LP16"
+     ]
+    },
+    {
+     "coluna": "2º",
+     "codigos": [
+      "EF12LP12"
+     ]
+    },
+    {
+     "coluna": "3º ao 5º",
+     "codigos": [
+      "EF35LP27",
+      "EF35LP23",
+      "EF35LP31"
+     ]
+    }
+   ]
+  },
+  {
+   "id": "lp-anos-iniciais-campo-artistico-literario-producao-escrita-de-textos-poeticos",
+   "componente": "Língua Portuguesa",
+   "etapa": "Anos Iniciais",
+   "tipo": "matriz",
+   "grupo": "Campo artístico-literário",
+   "linha": "Produção escrita de textos poéticos",
+   "colunas": [
+    {
+     "coluna": "1º e 2º",
+     "codigos": [
+      "EF12LP05"
+     ]
+    },
+    {
+     "coluna": "1º",
+     "codigos": [
+      "EF12LP18"
+     ]
+    }
+   ]
+  },
+  {
+   "id": "lp-anos-iniciais-campo-artistico-literario-producao-oral-de-textos-poeticos",
+   "componente": "Língua Portuguesa",
+   "etapa": "Anos Iniciais",
+   "tipo": "matriz",
+   "grupo": "Campo artístico-literário",
+   "linha": "Produção oral de textos poéticos",
+   "colunas": [
+    {
+     "coluna": "1º",
+     "codigos": [
+      "EF01LP19"
+     ]
+    },
+    {
+     "coluna": "3º ao 5º",
+     "codigos": [
+      "EF35LP28"
+     ]
+    },
+    {
+     "coluna": "3º",
+     "codigos": [
+      "EF03LP27"
+     ]
+    }
+   ]
+  },
+  {
+   "id": "lp-anos-iniciais-campo-artistico-literario-leitura-de-texto-dramatico",
+   "componente": "Língua Portuguesa",
+   "etapa": "Anos Iniciais",
+   "tipo": "matriz",
+   "grupo": "Campo artístico-literário",
+   "linha": "Leitura de texto dramático",
+   "colunas": [
+    {
+     "coluna": "3º ao 5º",
+     "codigos": [
+      "EF35LP24"
+     ]
+    },
+    {
+     "coluna": "4º",
+     "codigos": [
+      "EF04LP27"
+     ]
+    }
+   ]
+  },
+  {
+   "id": "lp-anos-iniciais-campo-artistico-literario-producao-oral-de-textos-dramatico",
+   "componente": "Língua Portuguesa",
+   "etapa": "Anos Iniciais",
+   "tipo": "matriz",
+   "grupo": "Campo artístico-literário",
+   "linha": "Produção oral de textos dramático",
+   "colunas": [
+    {
+     "coluna": "4º",
+     "codigos": [
+      "EF04LP25"
+     ]
+    }
+   ]
+  },
+  {
+   "id": "lp-anos-finais-campo-de-atuacao-jornalistico-midiatico-leitura",
+   "componente": "Língua Portuguesa",
+   "etapa": "Anos Finais",
+   "tipo": "matriz",
+   "grupo": "Campo de atuação jornalístico-midiático",
+   "linha": "Leitura",
+   "colunas": [
+    {
+     "coluna": "6º e 7º",
+     "codigos": [
+      "EF67LP01",
+      "EF67LP08",
+      "EF67LP02",
+      "EF67LP03",
+      "EF67LP04",
+      "EF67LP06"
+     ]
+    },
+    {
+     "coluna": "6º",
+     "codigos": [
+      "EF06LP01",
+      "EF06LP02"
+     ]
+    },
+    {
+     "coluna": "7º",
+     "codigos": [
+      "EF07LP01",
+      "EF07LP02"
+     ]
+    },
+    {
+     "coluna": "8º e 9º",
+     "codigos": [
+      "EF89LP16"
+     ]
+    },
+    {
+     "coluna": "8º",
+     "codigos": [
+      "EF08LP01",
+      "EF08LP02"
+     ]
+    },
+    {
+     "coluna": "9º",
+     "codigos": [
+      "EF09LP01",
+      "EF09LP02"
+     ]
+    }
+   ]
+  },
+  {
+   "id": "lp-anos-finais-campo-de-atuacao-jornalistico-midiatico-leitura-artigo-de-opiniao",
+   "componente": "Língua Portuguesa",
+   "etapa": "Anos Finais",
+   "tipo": "matriz",
+   "grupo": "Campo de atuação jornalístico-midiático",
+   "linha": "Leitura [artigo de opinião]",
+   "colunas": [
+    {
+     "coluna": "6º e 7º",
+     "codigos": [
+      "EF67LP05",
+      "EF67LP07"
+     ]
+    },
+    {
+     "coluna": "8º e 9º",
+     "codigos": [
+      "EF89LP03",
+      "EF89LP04",
+      "EF89LP06",
+      "EF89LP14"
+     ]
+    }
+   ]
+  },
+  {
+   "id": "lp-anos-finais-campo-de-atuacao-jornalistico-midiatico-leitura-textos-publicitarios",
+   "componente": "Língua Portuguesa",
+   "etapa": "Anos Finais",
+   "tipo": "matriz",
+   "grupo": "Campo de atuação jornalístico-midiático",
+   "linha": "Leitura [textos publicitários]",
+   "colunas": [
+    {
+     "coluna": "6º e 7º",
+     "codigos": [
+      "EF67LP08"
+     ]
+    }
+   ]
+  },
+  {
+   "id": "lp-anos-finais-campo-de-atuacao-jornalistico-midiatico-producao-escrita-multissemiotica-noticia-reportagem",
+   "componente": "Língua Portuguesa",
+   "etapa": "Anos Finais",
+   "tipo": "matriz",
+   "grupo": "Campo de atuação jornalístico-midiático",
+   "linha": "Produção escrita/multissemiótica [notícia, reportagem]",
+   "colunas": [
+    {
+     "coluna": "6º e 7º",
+     "codigos": [
+      "EF67LP09",
+      "EF67LP10"
+     ]
+    },
+    {
+     "coluna": "8º e 9º",
+     "codigos": [
+      "EF89LP08",
+      "EF89LP09"
+     ]
+    }
+   ]
+  },
+  {
+   "id": "lp-anos-finais-campo-de-atuacao-jornalistico-midiatico-producao-escrita-multissemiotica-artigo-de-opiniao",
+   "componente": "Língua Portuguesa",
+   "etapa": "Anos Finais",
+   "tipo": "matriz",
+   "grupo": "Campo de atuação jornalístico-midiático",
+   "linha": "Produção escrita/multissemiótica [artigo de opinião]",
+   "colunas": [
+    {
+     "coluna": "8º e 9º",
+     "codigos": [
+      "EF89LP10"
+     ]
+    },
+    {
+     "coluna": "8º",
+     "codigos": [
+      "EF08LP03"
+     ]
+    },
+    {
+     "coluna": "9º",
+     "codigos": [
+      "EF09LP03"
+     ]
+    }
+   ]
+  },
+  {
+   "id": "lp-anos-finais-campo-de-atuacao-jornalistico-midiatico-producao-escrita-multissemiotica-campanha-publicitaria",
+   "componente": "Língua Portuguesa",
+   "etapa": "Anos Finais",
+   "tipo": "matriz",
+   "grupo": "Campo de atuação jornalístico-midiático",
+   "linha": "Produção escrita/multissemiótica [campanha publicitária]",
+   "colunas": [
+    {
+     "coluna": "6º e 7º",
+     "codigos": [
+      "EF67LP13"
+     ]
+    },
+    {
+     "coluna": "8º e 9º",
+     "codigos": [
+      "EF89LP11"
+     ]
+    }
+   ]
+  },
+  {
+   "id": "lp-anos-finais-campo-de-atuacao-jornalistico-midiatico-producao-oral-multissemiotica",
+   "componente": "Língua Portuguesa",
+   "etapa": "Anos Finais",
+   "tipo": "matriz",
+   "grupo": "Campo de atuação jornalístico-midiático",
+   "linha": "Produção oral /multissemiótica",
+   "colunas": [
+    {
+     "coluna": "6º e 7º",
+     "codigos": [
+      "EF67LP11",
+      "EF67LP12"
+     ]
+    },
+    {
+     "coluna": "8º e 9º",
+     "codigos": [
+      "EF89LP12"
+     ]
+    }
+   ]
+  },
+  {
+   "id": "lp-anos-finais-campo-de-atuacao-jornalistico-midiatico-producao-oral-entrevista",
+   "componente": "Língua Portuguesa",
+   "etapa": "Anos Finais",
+   "tipo": "matriz",
+   "grupo": "Campo de atuação jornalístico-midiático",
+   "linha": "Produção oral [entrevista]",
+   "colunas": [
+    {
+     "coluna": "6º e 7º",
+     "codigos": [
+      "EF67LP14"
+     ]
+    },
+    {
+     "coluna": "8º e 9º",
+     "codigos": [
+      "EF89LP13"
+     ]
+    }
+   ]
+  },
+  {
+   "id": "lp-anos-finais-campo-da-vida-publica-leitura",
+   "componente": "Língua Portuguesa",
+   "etapa": "Anos Finais",
+   "tipo": "matriz",
+   "grupo": "Campo da vida pública",
+   "linha": "Leitura",
+   "colunas": [
+    {
+     "coluna": "6º e 7º",
+     "codigos": [
+      "EF67LP15",
+      "EF67LP16",
+      "EF67LP17"
+     ]
+    },
+    {
+     "coluna": "8º e 9º",
+     "codigos": [
+      "EF89LP17",
+      "EF89LP19",
+      "EF89LP20",
+      "EF89LP23"
+     ]
+    }
+   ]
+  },
+  {
+   "id": "lp-anos-finais-campo-da-vida-publica-producao",
+   "componente": "Língua Portuguesa",
+   "etapa": "Anos Finais",
+   "tipo": "matriz",
+   "grupo": "Campo da vida pública",
+   "linha": "Produção",
+   "colunas": [
+    {
+     "coluna": "8º e 9º",
+     "codigos": [
+      "EF89LP21"
+     ]
+    }
+   ]
+  },
+  {
+   "id": "lp-anos-finais-campo-das-praticas-de-estudo-e-pesquisa-leitura",
+   "componente": "Língua Portuguesa",
+   "etapa": "Anos Finais",
+   "tipo": "matriz",
+   "grupo": "Campo das práticas de estudo e pesquisa",
+   "linha": "Leitura",
+   "colunas": [
+    {
+     "coluna": "6º e 7º",
+     "codigos": [
+      "EF67LP20"
+     ]
+    },
+    {
+     "coluna": "8º e 9º",
+     "codigos": [
+      "EF89LP24"
+     ]
+    }
+   ]
+  },
+  {
+   "id": "lp-anos-finais-campo-das-praticas-de-estudo-e-pesquisa-producao-textual-oral-escrita-multissemiotica",
+   "componente": "Língua Portuguesa",
+   "etapa": "Anos Finais",
+   "tipo": "matriz",
+   "grupo": "Campo das práticas de estudo e pesquisa",
+   "linha": "Produção textual (oral, escrita, multissemiótica)",
+   "colunas": [
+    {
+     "coluna": "6º e 7º",
+     "codigos": [
+      "EF67LP21",
+      "EF67LP24",
+      "EF67LP25",
+      "EF67LP22"
+     ]
+    },
+    {
+     "coluna": "8º e 9º",
+     "codigos": [
+      "EF89LP25",
+      "EF89LP26"
+     ]
+    }
+   ]
+  },
+  {
+   "id": "lp-anos-finais-campo-artistico-literario-leitura",
+   "componente": "Língua Portuguesa",
+   "etapa": "Anos Finais",
+   "tipo": "matriz",
+   "grupo": "Campo artístico-literário",
+   "linha": "Leitura",
+   "colunas": [
+    {
+     "coluna": "6º e 7º",
+     "codigos": [
+      "EF67LP27"
+     ]
+    },
+    {
+     "coluna": "8º e 9º",
+     "codigos": [
+      "EF89LP30"
+     ]
+    }
+   ]
+  },
+  {
+   "id": "lp-anos-finais-campo-artistico-literario-producao",
+   "componente": "Língua Portuguesa",
+   "etapa": "Anos Finais",
+   "tipo": "matriz",
+   "grupo": "Campo artístico-literário",
+   "linha": "Produção",
+   "colunas": [
+    {
+     "coluna": "6º e 7º",
+     "codigos": [
+      "EF67LP30",
+      "EF67LP29",
+      "EF67LP31"
+     ]
+    },
+    {
+     "coluna": "8º e 9º",
+     "codigos": [
+      "EF89LP35",
+      "EF89LP36"
+     ]
+    }
+   ]
+  },
+  {
+   "id": "mt-anos-iniciais-numeros-snd",
+   "componente": "Matemática",
+   "etapa": "Anos Iniciais",
+   "tipo": "matriz",
+   "grupo": "Números",
+   "linha": "Números › SND",
+   "colunas": [
+    {
+     "coluna": "1º ano",
+     "codigos": [
+      "EF01MA04",
+      "EF01MA05",
+      "EF01MA07"
+     ]
+    },
+    {
+     "coluna": "2º ano",
+     "codigos": [
+      "EF02MA01",
+      "EF02MA04"
+     ]
+    },
+    {
+     "coluna": "3º ano",
+     "codigos": [
+      "EF03MA01",
+      "EF03MA02"
+     ]
+    },
+    {
+     "coluna": "4º ano",
+     "codigos": [
+      "EF04MA01",
+      "EF04MA02"
+     ]
+    },
+    {
+     "coluna": "5º ano",
+     "codigos": [
+      "EF05MA01"
+     ]
+    }
+   ]
+  },
+  {
+   "id": "mt-anos-iniciais-numeros-numeros-naturais-adicao-subtracao",
+   "componente": "Matemática",
+   "etapa": "Anos Iniciais",
+   "tipo": "matriz",
+   "grupo": "Números",
+   "linha": "Números › Números naturais › Adição/Subtração",
+   "colunas": [
+    {
+     "coluna": "1º ano",
+     "codigos": [
+      "EF01MA08"
+     ]
+    },
+    {
+     "coluna": "2º ano",
+     "codigos": [
+      "EF02MA05",
+      "EF02MA06"
+     ]
+    },
+    {
+     "coluna": "3º ano",
+     "codigos": [
+      "EF03MA05",
+      "EF03MA06"
+     ]
+    },
+    {
+     "coluna": "4º ano",
+     "codigos": [
+      "EF04MA03"
+     ]
+    },
+    {
+     "coluna": "5º ano",
+     "codigos": [
+      "EF05MA07"
+     ]
+    }
+   ]
+  },
+  {
+   "id": "mt-anos-iniciais-numeros-numeros-naturais-multiplicacao-e-divisao",
+   "componente": "Matemática",
+   "etapa": "Anos Iniciais",
+   "tipo": "matriz",
+   "grupo": "Números",
+   "linha": "Números › Números naturais › Multiplicação e Divisão",
+   "colunas": [
+    {
+     "coluna": "3º ano",
+     "codigos": [
+      "EF03MA07"
+     ]
+    },
+    {
+     "coluna": "4º ano",
+     "codigos": [
+      "EF04MA06",
+      "EF04MA07"
+     ]
+    },
+    {
+     "coluna": "5º ano",
+     "codigos": [
+      "EF05MA08"
+     ]
+    }
+   ]
+  },
+  {
+   "id": "mt-anos-iniciais-numeros-numeros-racionais-fracao",
+   "componente": "Matemática",
+   "etapa": "Anos Iniciais",
+   "tipo": "matriz",
+   "grupo": "Números",
+   "linha": "Números › Números racionais › Fração",
+   "colunas": [
+    {
+     "coluna": "4º ano",
+     "codigos": [
+      "EF04MA09"
+     ]
+    },
+    {
+     "coluna": "5º ano",
+     "codigos": [
+      "EF05MA03",
+      "EF05MA04",
+      "EF05MA05"
+     ]
+    }
+   ]
+  },
+  {
+   "id": "mt-anos-iniciais-numeros-numeros-racionais-decimais",
+   "componente": "Matemática",
+   "etapa": "Anos Iniciais",
+   "tipo": "matriz",
+   "grupo": "Números",
+   "linha": "Números › Números racionais › Decimais",
+   "colunas": [
+    {
+     "coluna": "5º ano",
+     "codigos": [
+      "EF05MA02",
+      "EF05MA07"
+     ]
+    }
+   ]
+  },
+  {
+   "id": "mt-anos-iniciais-algebra-padroes-e-regularidades",
+   "componente": "Matemática",
+   "etapa": "Anos Iniciais",
+   "tipo": "matriz",
+   "grupo": "Álgebra",
+   "linha": "Álgebra › Padrões e regularidades",
+   "colunas": [
+    {
+     "coluna": "2º ano",
+     "codigos": [
+      "EF02MA09"
+     ]
+    },
+    {
+     "coluna": "3º ano",
+     "codigos": [
+      "EF03MA10"
+     ]
+    }
+   ]
+  },
+  {
+   "id": "mt-anos-iniciais-algebra-propriedade-das-operacoes",
+   "componente": "Matemática",
+   "etapa": "Anos Iniciais",
+   "tipo": "matriz",
+   "grupo": "Álgebra",
+   "linha": "Álgebra › Propriedade das operações",
+   "colunas": [
+    {
+     "coluna": "4º ano",
+     "codigos": [
+      "EF04MA15"
+     ]
+    },
+    {
+     "coluna": "5º ano",
+     "codigos": [
+      "EF05MA10"
+     ]
+    }
+   ]
+  },
+  {
+   "id": "mt-anos-iniciais-geometria-localizacao-espacial",
+   "componente": "Matemática",
+   "etapa": "Anos Iniciais",
+   "tipo": "matriz",
+   "grupo": "Geometria",
+   "linha": "Geometria › Localização espacial",
+   "colunas": [
+    {
+     "coluna": "1º ano",
+     "codigos": [
+      "EF01MA12"
+     ]
+    },
+    {
+     "coluna": "2º ano",
+     "codigos": [
+      "EF02MA12"
+     ]
+    }
+   ]
+  },
+  {
+   "id": "mt-anos-iniciais-geometria-geometria-plana",
+   "componente": "Matemática",
+   "etapa": "Anos Iniciais",
+   "tipo": "matriz",
+   "grupo": "Geometria",
+   "linha": "Geometria › Geometria plana",
+   "colunas": [
+    {
+     "coluna": "1º ano",
+     "codigos": [
+      "EF01MA14"
+     ]
+    },
+    {
+     "coluna": "2º ano",
+     "codigos": [
+      "EF02MA15"
+     ]
+    },
+    {
+     "coluna": "3º ano",
+     "codigos": [
+      "EF03MA15"
+     ]
+    },
+    {
+     "coluna": "4º ano",
+     "codigos": [
+      "EF04MA18"
+     ]
+    },
+    {
+     "coluna": "5º ano",
+     "codigos": [
+      "EF05MA17"
+     ]
+    }
+   ]
+  },
+  {
+   "id": "mt-anos-iniciais-geometria-geometria-espacial",
+   "componente": "Matemática",
+   "etapa": "Anos Iniciais",
+   "tipo": "matriz",
+   "grupo": "Geometria",
+   "linha": "Geometria › Geometria espacial",
+   "colunas": [
+    {
+     "coluna": "2º ano",
+     "codigos": [
+      "EF02MA14"
+     ]
+    },
+    {
+     "coluna": "3º ano",
+     "codigos": [
+      "EF03MA14"
+     ]
+    },
+    {
+     "coluna": "4º ano",
+     "codigos": [
+      "EF04MA17"
+     ]
+    },
+    {
+     "coluna": "5º ano",
+     "codigos": [
+      "EF05MA16"
+     ]
+    }
+   ]
+  },
+  {
+   "id": "mt-anos-iniciais-grandezas-e-medidas-sistema-monetario",
+   "componente": "Matemática",
+   "etapa": "Anos Iniciais",
+   "tipo": "matriz",
+   "grupo": "Grandezas e Medidas",
+   "linha": "Grandezas e Medidas › Sistema monetário",
+   "colunas": [
+    {
+     "coluna": "2º ano",
+     "codigos": [
+      "EF02MA20"
+     ]
+    },
+    {
+     "coluna": "3º ano",
+     "codigos": [
+      "EF03MA24"
+     ]
+    }
+   ]
+  },
+  {
+   "id": "mt-anos-iniciais-grandezas-e-medidas-tempo",
+   "componente": "Matemática",
+   "etapa": "Anos Iniciais",
+   "tipo": "matriz",
+   "grupo": "Grandezas e Medidas",
+   "linha": "Grandezas e Medidas › Tempo",
+   "colunas": [
+    {
+     "coluna": "1º ano",
+     "codigos": [
+      "EF01MA17"
+     ]
+    },
+    {
+     "coluna": "2º ano",
+     "codigos": [
+      "EF02MA18"
+     ]
+    },
+    {
+     "coluna": "3º ano",
+     "codigos": [
+      "EF03MA23"
+     ]
+    },
+    {
+     "coluna": "4º ano",
+     "codigos": [
+      "EF04MA22"
+     ]
+    }
+   ]
+  },
+  {
+   "id": "mt-anos-iniciais-grandezas-e-medidas-capacidade-comprimento-e-massa",
+   "componente": "Matemática",
+   "etapa": "Anos Iniciais",
+   "tipo": "matriz",
+   "grupo": "Grandezas e Medidas",
+   "linha": "Grandezas e Medidas › Capacidade, comprimento e massa",
+   "colunas": [
+    {
+     "coluna": "1º ano",
+     "codigos": [
+      "EF01MA15"
+     ]
+    },
+    {
+     "coluna": "2º ano",
+     "codigos": [
+      "EF02MA16"
+     ]
+    },
+    {
+     "coluna": "3º ano",
+     "codigos": [
+      "EF03MA19",
+      "EF03MA20"
+     ]
+    },
+    {
+     "coluna": "4º ano",
+     "codigos": [
+      "EF04MA20"
+     ]
+    },
+    {
+     "coluna": "5º ano",
+     "codigos": [
+      "EF05MA19"
+     ]
+    }
+   ]
+  },
+  {
+   "id": "mt-anos-iniciais-probabilidade-e-estatistica-probabilidade",
+   "componente": "Matemática",
+   "etapa": "Anos Iniciais",
+   "tipo": "matriz",
+   "grupo": "Probabilidade e Estatística",
+   "linha": "Probabilidade e Estatística › Probabilidade",
+   "colunas": [
+    {
+     "coluna": "4º ano",
+     "codigos": [
+      "EF04MA26"
+     ]
+    },
+    {
+     "coluna": "5º ano",
+     "codigos": [
+      "EF05MA22"
+     ]
+    }
+   ]
+  },
+  {
+   "id": "mt-anos-iniciais-probabilidade-e-estatistica-estatistica",
+   "componente": "Matemática",
+   "etapa": "Anos Iniciais",
+   "tipo": "matriz",
+   "grupo": "Probabilidade e Estatística",
+   "linha": "Probabilidade e Estatística › Estatística",
+   "colunas": [
+    {
+     "coluna": "1º ano",
+     "codigos": [
+      "EF01MA21"
+     ]
+    },
+    {
+     "coluna": "2º ano",
+     "codigos": [
+      "EF02MA22"
+     ]
+    },
+    {
+     "coluna": "3º ano",
+     "codigos": [
+      "EF03MA27",
+      "EF03MA28"
+     ]
+    },
+    {
+     "coluna": "4º ano",
+     "codigos": [
+      "EF04MA27",
+      "EF04MA28"
+     ]
+    },
+    {
+     "coluna": "5º ano",
+     "codigos": [
+      "EF05MA24"
+     ]
+    }
+   ]
+  },
+  {
+   "id": "mt-anos-finais-numeros-numeros-naturais",
+   "componente": "Matemática",
+   "etapa": "Anos Finais",
+   "tipo": "matriz",
+   "grupo": "Números",
+   "linha": "Números › Números naturais",
+   "colunas": [
+    {
+     "coluna": "5º ano",
+     "codigos": [
+      "EF05MA01",
+      "EF05MA08"
+     ]
+    },
+    {
+     "coluna": "6º ano",
+     "codigos": [
+      "EF06MA01",
+      "EF06MA02",
+      "EF06MA03"
+     ]
+    },
+    {
+     "coluna": "8º ano",
+     "codigos": [
+      "EF08MA03"
+     ]
+    }
+   ]
+  },
+  {
+   "id": "mt-anos-finais-numeros-numeros-raconais",
+   "componente": "Matemática",
+   "etapa": "Anos Finais",
+   "tipo": "matriz",
+   "grupo": "Números",
+   "linha": "Números › Números raconais",
+   "colunas": [
+    {
+     "coluna": "5º ano",
+     "codigos": [
+      "EF05MA03",
+      "EF05MA04",
+      "EF05MA05",
+      "EF05MA02",
+      "EF05MA07"
+     ]
+    },
+    {
+     "coluna": "6º ano",
+     "codigos": [
+      "EF06MA07",
+      "EF06MA08",
+      "EF06MA10",
+      "EF06MA01",
+      "EF06MA11",
+      "EF06MA13"
+     ]
+    },
+    {
+     "coluna": "7º ano",
+     "codigos": [
+      "EF07MA08",
+      "EF07MA10",
+      "EF07MA12",
+      "EF07MA02"
+     ]
+    },
+    {
+     "coluna": "8º ano",
+     "codigos": [
+      "EF08MA01",
+      "EF08MA04"
+     ]
+    }
+   ]
+  },
+  {
+   "id": "mt-anos-finais-numeros-numeros-inteiros",
+   "componente": "Matemática",
+   "etapa": "Anos Finais",
+   "tipo": "matriz",
+   "grupo": "Números",
+   "linha": "Números › Números inteiros",
+   "colunas": [
+    {
+     "coluna": "7º ano",
+     "codigos": [
+      "EF07MA03",
+      "EF07MA04"
+     ]
+    }
+   ]
+  },
+  {
+   "id": "mt-anos-finais-numeros-numeros-reais",
+   "componente": "Matemática",
+   "etapa": "Anos Finais",
+   "tipo": "matriz",
+   "grupo": "Números",
+   "linha": "Números › Números reais",
+   "colunas": [
+    {
+     "coluna": "9º ano",
+     "codigos": [
+      "EF09MA02",
+      "EF09MA04"
+     ]
+    }
+   ]
+  },
+  {
+   "id": "mt-anos-finais-algebra-calculo-algebrico",
+   "componente": "Matemática",
+   "etapa": "Anos Finais",
+   "tipo": "matriz",
+   "grupo": "Álgebra",
+   "linha": "Álgebra › Cálculo algébrico",
+   "colunas": [
+    {
+     "coluna": "5º ano",
+     "codigos": [
+      "EF05MA10"
+     ]
+    },
+    {
+     "coluna": "6º ano",
+     "codigos": [
+      "EF06MA14"
+     ]
+    },
+    {
+     "coluna": "7º ano",
+     "codigos": [
+      "EF07MA13",
+      "EF07MA15"
+     ]
+    },
+    {
+     "coluna": "8º ano",
+     "codigos": [
+      "EF08MA06",
+      "EF08MA07"
+     ]
+    },
+    {
+     "coluna": "9º ano",
+     "codigos": [
+      "EF09MA09"
+     ]
+    }
+   ]
+  },
+  {
+   "id": "mt-anos-finais-algebra-equacoes-e-sistemas",
+   "componente": "Matemática",
+   "etapa": "Anos Finais",
+   "tipo": "matriz",
+   "grupo": "Álgebra",
+   "linha": "Álgebra › Equações e sistemas",
+   "colunas": [
+    {
+     "coluna": "6º ano",
+     "codigos": [
+      "EF06MA14"
+     ]
+    },
+    {
+     "coluna": "7º ano",
+     "codigos": [
+      "EF07MA18"
+     ]
+    },
+    {
+     "coluna": "8º ano",
+     "codigos": [
+      "EF08MA08"
+     ]
+    },
+    {
+     "coluna": "9º ano",
+     "codigos": [
+      "EF09MA09"
+     ]
+    }
+   ]
+  },
+  {
+   "id": "mt-anos-finais-algebra-proporcionalidade",
+   "componente": "Matemática",
+   "etapa": "Anos Finais",
+   "tipo": "matriz",
+   "grupo": "Álgebra",
+   "linha": "Álgebra › Proporcionalidade",
+   "colunas": [
+    {
+     "coluna": "6º ano",
+     "codigos": [
+      "EF06MA13"
+     ]
+    },
+    {
+     "coluna": "7º ano",
+     "codigos": [
+      "EF07MA17"
+     ]
+    },
+    {
+     "coluna": "8º ano",
+     "codigos": [
+      "EF08MA12",
+      "EF08MA13"
+     ]
+    },
+    {
+     "coluna": "9º ano",
+     "codigos": [
+      "EF09MA05",
+      "EF09MA08"
+     ]
+    }
+   ]
+  },
+  {
+   "id": "mt-anos-finais-algebra-funcoes",
+   "componente": "Matemática",
+   "etapa": "Anos Finais",
+   "tipo": "matriz",
+   "grupo": "Álgebra",
+   "linha": "Álgebra › Funções",
+   "colunas": [
+    {
+     "coluna": "9º ano",
+     "codigos": [
+      "EF09MA06"
+     ]
+    }
+   ]
+  },
+  {
+   "id": "mt-anos-finais-geometria-geometria-espacial",
+   "componente": "Matemática",
+   "etapa": "Anos Finais",
+   "tipo": "matriz",
+   "grupo": "Geometria",
+   "linha": "Geometria › Geometria espacial",
+   "colunas": [
+    {
+     "coluna": "5º ano",
+     "codigos": [
+      "EF05MA16"
+     ]
+    },
+    {
+     "coluna": "6º ano",
+     "codigos": [
+      "EF06MA17"
+     ]
+    }
+   ]
+  },
+  {
+   "id": "mt-anos-finais-geometria-geometria-plana-euclidiana",
+   "componente": "Matemática",
+   "etapa": "Anos Finais",
+   "tipo": "matriz",
+   "grupo": "Geometria",
+   "linha": "Geometria › Geometria plana euclidiana",
+   "colunas": [
+    {
+     "coluna": "5º ano",
+     "codigos": [
+      "EF05MA17"
+     ]
+    },
+    {
+     "coluna": "6º ano",
+     "codigos": [
+      "EF06MA18",
+      "EF06MA19",
+      "EF06MA20"
+     ]
+    },
+    {
+     "coluna": "7º ano",
+     "codigos": [
+      "EF07MA24",
+      "EF07MA27"
+     ]
+    },
+    {
+     "coluna": "8º ano",
+     "codigos": [
+      "EF08MA14"
+     ]
+    },
+    {
+     "coluna": "9º ano",
+     "codigos": [
+      "EF09MA10",
+      "EF09MA12",
+      "EF09MA13",
+      "EF09MA14"
+     ]
+    }
+   ]
+  },
+  {
+   "id": "mt-anos-finais-geometria-geometria-das-transformacoes-simetrias-no-plano",
+   "componente": "Matemática",
+   "etapa": "Anos Finais",
+   "tipo": "matriz",
+   "grupo": "Geometria",
+   "linha": "Geometria › Geometria das transformações: simetrias no plano",
+   "colunas": [
+    {
+     "coluna": "8º ano",
+     "codigos": [
+      "EF08MA18"
+     ]
+    }
+   ]
+  },
+  {
+   "id": "mt-anos-finais-grandezas-e-medidas",
+   "componente": "Matemática",
+   "etapa": "Anos Finais",
+   "tipo": "matriz",
+   "grupo": "Grandezas e Medidas",
+   "linha": "Grandezas e Medidas",
+   "colunas": [
+    {
+     "coluna": "5º ano",
+     "codigos": [
+      "EF05MA19"
+     ]
+    },
+    {
+     "coluna": "6º ano",
+     "codigos": [
+      "EF06MA24",
+      "EF06MA25"
+     ]
+    },
+    {
+     "coluna": "7º ano",
+     "codigos": [
+      "EF07MA30",
+      "EF07MA31",
+      "EF07MA32"
+     ]
+    },
+    {
+     "coluna": "8º ano",
+     "codigos": [
+      "EF08MA20",
+      "EF08MA19"
+     ]
+    }
+   ]
+  },
+  {
+   "id": "mt-anos-finais-probabilidade-e-estatistica-probabilidade",
+   "componente": "Matemática",
+   "etapa": "Anos Finais",
+   "tipo": "matriz",
+   "grupo": "Probabilidade e Estatística",
+   "linha": "Probabilidade e Estatística › Probabilidade",
+   "colunas": [
+    {
+     "coluna": "5º ano",
+     "codigos": [
+      "EF05MA22"
+     ]
+    },
+    {
+     "coluna": "6º ano",
+     "codigos": [
+      "EF06MA30"
+     ]
+    },
+    {
+     "coluna": "7º ano",
+     "codigos": [
+      "EF07MA34"
+     ]
+    },
+    {
+     "coluna": "8º ano",
+     "codigos": [
+      "EF08MA22"
+     ]
+    },
+    {
+     "coluna": "9º ano",
+     "codigos": [
+      "EF09MA20"
+     ]
+    }
+   ]
+  },
+  {
+   "id": "mt-anos-finais-probabilidade-e-estatistica-estatistica",
+   "componente": "Matemática",
+   "etapa": "Anos Finais",
+   "tipo": "matriz",
+   "grupo": "Probabilidade e Estatística",
+   "linha": "Probabilidade e Estatística › Estatística",
+   "colunas": [
+    {
+     "coluna": "5º ano",
+     "codigos": [
+      "EF05MA24"
+     ]
+    },
+    {
+     "coluna": "6º ano",
+     "codigos": [
+      "EF06MA32"
+     ]
+    },
+    {
+     "coluna": "7º ano",
+     "codigos": [
+      "EF07MA35",
+      "EF07MA36"
+     ]
+    },
+    {
+     "coluna": "8º ano",
+     "codigos": [
+      "EF08MA25"
+     ]
+    },
+    {
+     "coluna": "9º ano",
+     "codigos": [
+      "EF09MA22"
+     ]
+    }
+   ]
+  },
+  {
+   "id": "ciencias-da-natureza-anos-iniciais-progressao-l41",
+   "componente": "Ciências da Natureza",
+   "etapa": "Anos Iniciais",
+   "tipo": "matriz",
+   "grupo": "Legenda",
+   "linha": "Primeiras habilidades por ano (legenda)",
+   "colunas": [
+    {
+     "coluna": "1º ano",
+     "codigos": [
+      "EF01CI01"
+     ]
+    },
+    {
+     "coluna": "2º ano",
+     "codigos": [
+      "EF02CI01"
+     ]
+    },
+    {
+     "coluna": "3º ano",
+     "codigos": [
+      "EF03CI03"
+     ]
+    },
+    {
+     "coluna": "4º ano",
+     "codigos": [
+      "EF04CI01"
+     ]
+    },
+    {
+     "coluna": "5º ano",
+     "codigos": [
+      "EF05CI01"
+     ]
+    }
+   ]
+  },
+  {
+   "id": "ciencias-da-natureza-anos-iniciais-progressao-l42",
+   "componente": "Ciências da Natureza",
+   "etapa": "Anos Iniciais",
+   "tipo": "matriz",
+   "grupo": "MATÉRIA E ENERGIA",
+   "linha": "MATÉRIA E ENERGIA",
+   "colunas": [
+    {
+     "coluna": "1º ano",
+     "codigos": [
+      "EF01CI01"
+     ]
+    },
+    {
+     "coluna": "2º ano",
+     "codigos": [
+      "EF02CI03"
+     ]
+    },
+    {
+     "coluna": "3º ano",
+     "codigos": [
+      "EF03CI03"
+     ]
+    },
+    {
+     "coluna": "4º ano",
+     "codigos": [
+      "EF04CI02"
+     ]
+    },
+    {
+     "coluna": "5º ano",
+     "codigos": [
+      "EF05CI02"
+     ]
+    }
+   ]
+  },
+  {
+   "id": "ciencias-da-natureza-anos-iniciais-progressao-l43",
+   "componente": "Ciências da Natureza",
+   "etapa": "Anos Iniciais",
+   "tipo": "matriz",
+   "grupo": "VIDA E EVOLUÇÃO",
+   "linha": "VIDA E EVOLUÇÃO",
+   "colunas": [
+    {
+     "coluna": "1º ano",
+     "codigos": [
+      "EF01CI02"
+     ]
+    }
+   ]
+  },
+  {
+   "id": "ciencias-da-natureza-anos-iniciais-progressao-l44",
+   "componente": "Ciências da Natureza",
+   "etapa": "Anos Iniciais",
+   "tipo": "matriz",
+   "grupo": "TERRA E UNIVERSO",
+   "linha": "TERRA E UNIVERSO",
+   "colunas": [
+    {
+     "coluna": "1º ano",
+     "codigos": [
+      "EF01CI03"
+     ]
+    }
+   ]
+  },
+  {
+   "id": "ciencias-da-natureza-anos-iniciais-progressao-l45",
+   "componente": "Ciências da Natureza",
+   "etapa": "Anos Iniciais",
+   "tipo": "matriz",
+   "grupo": "Sem eixo indicado",
+   "linha": "Sequência sem eixo indicado",
+   "colunas": [
+    {
+     "coluna": "3º ano",
+     "codigos": [
+      "EF03CI05"
+     ]
+    },
+    {
+     "coluna": "4º ano",
+     "codigos": [
+      "EF04CI04"
+     ]
+    },
+    {
+     "coluna": "5º ano",
+     "codigos": [
+      "EF05CI06"
+     ]
+    }
+   ]
+  },
+  {
+   "id": "ciencias-da-natureza-anos-iniciais-progressao-l46",
+   "componente": "Ciências da Natureza",
+   "etapa": "Anos Iniciais",
+   "tipo": "matriz",
+   "grupo": "Sem eixo indicado",
+   "linha": "Sequência sem eixo indicado",
+   "colunas": [
+    {
+     "coluna": "3º ano",
+     "codigos": [
+      "EF03CI04"
+     ]
+    },
+    {
+     "coluna": "4º ano",
+     "codigos": [
+      "EF04CI04"
+     ]
+    },
+    {
+     "coluna": "5º ano",
+     "codigos": [
+      "EF05CI08"
+     ]
+    }
+   ]
+  },
+  {
+   "id": "ciencias-da-natureza-anos-iniciais-progressao-l47",
+   "componente": "Ciências da Natureza",
+   "etapa": "Anos Iniciais",
+   "tipo": "matriz",
+   "grupo": "Sem eixo indicado",
+   "linha": "Sequência sem eixo indicado",
+   "colunas": [
+    {
+     "coluna": "2º ano",
+     "codigos": [
+      "EF02CI05"
+     ]
+    },
+    {
+     "coluna": "3º ano",
+     "codigos": [
+      "EF03CI04"
+     ]
+    }
+   ]
+  },
+  {
+   "id": "ciencias-da-natureza-anos-iniciais-progressao-l48",
+   "componente": "Ciências da Natureza",
+   "etapa": "Anos Iniciais",
+   "tipo": "matriz",
+   "grupo": "Sem eixo indicado",
+   "linha": "Sequência sem eixo indicado",
+   "colunas": [
+    {
+     "coluna": "2º ano",
+     "codigos": [
+      "EF02CI06"
+     ]
+    },
+    {
+     "coluna": "3º ano",
+     "codigos": [
+      "EF03CI04"
+     ]
+    }
+   ]
+  },
+  {
+   "id": "ciencias-da-natureza-anos-iniciais-progressao-l49",
+   "componente": "Ciências da Natureza",
+   "etapa": "Anos Iniciais",
+   "tipo": "matriz",
+   "grupo": "Sem eixo indicado",
+   "linha": "Sequência sem eixo indicado",
+   "colunas": [
+    {
+     "coluna": "1º ano",
+     "codigos": [
+      "EF01CI05"
+     ]
+    },
+    {
+     "coluna": "2º ano",
+     "codigos": [
+      "EF02CI07"
+     ]
+    },
+    {
+     "coluna": "4º ano",
+     "codigos": [
+      "EF04CI11"
+     ]
+    }
+   ]
+  },
+  {
+   "id": "ciencias-da-natureza-anos-iniciais-progressao-l50",
+   "componente": "Ciências da Natureza",
+   "etapa": "Anos Iniciais",
+   "tipo": "matriz",
+   "grupo": "Sem eixo indicado",
+   "linha": "Sequência sem eixo indicado",
+   "colunas": [
+    {
+     "coluna": "2º ano",
+     "codigos": [
+      "EF02CI07"
+     ]
+    },
+    {
+     "coluna": "4º ano",
+     "codigos": [
+      "EF04CI09"
+     ]
+    },
+    {
+     "coluna": "5º ano",
+     "codigos": [
+      "EF05CI11"
+     ]
+    }
+   ]
+  },
+  {
+   "id": "ciencias-da-natureza-anos-iniciais-progressao-l51",
+   "componente": "Ciências da Natureza",
+   "etapa": "Anos Iniciais",
+   "tipo": "matriz",
+   "grupo": "Sem eixo indicado",
+   "linha": "Sequência sem eixo indicado",
+   "colunas": [
+    {
+     "coluna": "2º ano",
+     "codigos": [
+      "EF02CI07"
+     ]
+    },
+    {
+     "coluna": "3º ano",
+     "codigos": [
+      "EF03CI07"
+     ]
+    },
+    {
+     "coluna": "4º ano",
+     "codigos": [
+      "EF04CI09"
+     ]
+    },
+    {
+     "coluna": "5º ano",
+     "codigos": [
+      "EF05CI12"
+     ]
+    }
+   ]
+  },
+  {
+   "id": "ciencias-da-natureza-anos-iniciais-progressao-l52",
+   "componente": "Ciências da Natureza",
+   "etapa": "Anos Iniciais",
+   "tipo": "matriz",
+   "grupo": "Sem eixo indicado",
+   "linha": "Sequência sem eixo indicado",
+   "colunas": [
+    {
+     "coluna": "3º ano",
+     "codigos": [
+      "EF03CI08"
+     ]
+    }
+   ]
+  },
+  {
+   "id": "ciencias-da-natureza-anos-finais-progressao-l44",
+   "componente": "Ciências da Natureza",
+   "etapa": "Anos Finais",
+   "tipo": "matriz",
+   "grupo": "MATÉRIA E ENERGIA",
+   "linha": "MATÉRIA E ENERGIA",
+   "colunas": [
+    {
+     "coluna": "5º ano",
+     "codigos": [
+      "EF05CI02"
+     ]
+    },
+    {
+     "coluna": "6º ano",
+     "codigos": [
+      "EF06CI03"
+     ]
+    },
+    {
+     "coluna": "7º ano",
+     "codigos": [
+      "EF07CI12"
+     ]
+    },
+    {
+     "coluna": "9º ano",
+     "codigos": [
+      "EF09CI01"
+     ]
+    }
+   ]
+  },
+  {
+   "id": "ciencias-da-natureza-anos-finais-progressao-l45",
+   "componente": "Ciências da Natureza",
+   "etapa": "Anos Finais",
+   "tipo": "matriz",
+   "grupo": "VIDA E EVOLUÇÃO",
+   "linha": "VIDA E EVOLUÇÃO",
+   "colunas": [
+    {
+     "coluna": "7º ano",
+     "codigos": [
+      "EF07CI03"
+     ]
+    }
+   ]
+  },
+  {
+   "id": "ciencias-da-natureza-anos-finais-progressao-l46",
+   "componente": "Ciências da Natureza",
+   "etapa": "Anos Finais",
+   "tipo": "matriz",
+   "grupo": "TERRA E UNIVERSO",
+   "linha": "TERRA E UNIVERSO",
+   "colunas": [
+    {
+     "coluna": "5º ano",
+     "codigos": [
+      "EF05CI01"
+     ]
+    },
+    {
+     "coluna": "7º ano",
+     "codigos": [
+      "EF07CI06"
+     ]
+    }
+   ]
+  },
+  {
+   "id": "ciencias-da-natureza-anos-finais-progressao-l47",
+   "componente": "Ciências da Natureza",
+   "etapa": "Anos Finais",
+   "tipo": "matriz",
+   "grupo": "Sem eixo indicado",
+   "linha": "Sequência sem eixo indicado",
+   "colunas": [
+    {
+     "coluna": "8º ano",
+     "codigos": [
+      "EF08CI01"
+     ]
+    }
+   ]
+  },
+  {
+   "id": "ciencias-da-natureza-anos-finais-progressao-l48",
+   "componente": "Ciências da Natureza",
+   "etapa": "Anos Finais",
+   "tipo": "matriz",
+   "grupo": "Sem eixo indicado",
+   "linha": "Sequência sem eixo indicado",
+   "colunas": [
+    {
+     "coluna": "8º ano",
+     "codigos": [
+      "EF08CI06"
+     ]
+    }
+   ]
+  },
+  {
+   "id": "ciencias-da-natureza-anos-finais-progressao-l49",
+   "componente": "Ciências da Natureza",
+   "etapa": "Anos Finais",
+   "tipo": "matriz",
+   "grupo": "Sem eixo indicado",
+   "linha": "Sequência sem eixo indicado",
+   "colunas": [
+    {
+     "coluna": "9º ano",
+     "codigos": [
+      "EF09CI07"
+     ]
+    }
+   ]
+  },
+  {
+   "id": "ciencias-da-natureza-anos-finais-progressao-l50",
+   "componente": "Ciências da Natureza",
+   "etapa": "Anos Finais",
+   "tipo": "matriz",
+   "grupo": "Sem eixo indicado",
+   "linha": "Sequência sem eixo indicado",
+   "colunas": [
+    {
+     "coluna": "6º ano",
+     "codigos": [
+      "EF06CI05"
+     ]
+    }
+   ]
+  },
+  {
+   "id": "ciencias-da-natureza-anos-finais-progressao-l51",
+   "componente": "Ciências da Natureza",
+   "etapa": "Anos Finais",
+   "tipo": "matriz",
+   "grupo": "Sem eixo indicado",
+   "linha": "Sequência sem eixo indicado",
+   "colunas": [
+    {
+     "coluna": "6º ano",
+     "codigos": [
+      "EF06CI06"
+     ]
+    },
+    {
+     "coluna": "9º ano",
+     "codigos": [
+      "EF09CI09"
+     ]
+    }
+   ]
+  },
+  {
+   "id": "ciencias-da-natureza-anos-finais-progressao-l52",
+   "componente": "Ciências da Natureza",
+   "etapa": "Anos Finais",
+   "tipo": "matriz",
+   "grupo": "Sem eixo indicado",
+   "linha": "Sequência sem eixo indicado",
+   "colunas": [
+    {
+     "coluna": "6º ano",
+     "codigos": [
+      "EF06CI07"
+     ]
+    },
+    {
+     "coluna": "8º ano",
+     "codigos": [
+      "EF08CI08"
+     ]
+    }
+   ]
+  },
+  {
+   "id": "ciencias-da-natureza-anos-finais-progressao-l53",
+   "componente": "Ciências da Natureza",
+   "etapa": "Anos Finais",
+   "tipo": "matriz",
+   "grupo": "Sem eixo indicado",
+   "linha": "Sequência sem eixo indicado",
+   "colunas": [
+    {
+     "coluna": "7º ano",
+     "codigos": [
+      "EF07CI07"
+     ]
+    }
+   ]
+  },
+  {
+   "id": "ciencias-da-natureza-anos-finais-progressao-l54",
+   "componente": "Ciências da Natureza",
+   "etapa": "Anos Finais",
+   "tipo": "matriz",
+   "grupo": "Sem eixo indicado",
+   "linha": "Sequência sem eixo indicado",
+   "colunas": [
+    {
+     "coluna": "5º ano",
+     "codigos": [
+      "EF05CI08"
+     ]
+    },
+    {
+     "coluna": "7º ano",
+     "codigos": [
+      "EF07CI09"
+     ]
+    }
+   ]
+  },
+  {
+   "id": "ciencias-da-natureza-anos-finais-progressao-l55",
+   "componente": "Ciências da Natureza",
+   "etapa": "Anos Finais",
+   "tipo": "matriz",
+   "grupo": "Sem eixo indicado",
+   "linha": "Sequência sem eixo indicado",
+   "colunas": [
+    {
+     "coluna": "7º ano",
+     "codigos": [
+      "EF07CI10"
+     ]
+    }
+   ]
+  },
+  {
+   "id": "ciencias-da-natureza-anos-finais-progressao-l56",
+   "componente": "Ciências da Natureza",
+   "etapa": "Anos Finais",
+   "tipo": "matriz",
+   "grupo": "Sem eixo indicado",
+   "linha": "Sequência sem eixo indicado",
+   "colunas": [
+    {
+     "coluna": "5º ano",
+     "codigos": [
+      "EF05CI06"
+     ]
+    }
+   ]
+  },
+  {
+   "id": "ciencias-da-natureza-anos-finais-progressao-l57",
+   "componente": "Ciências da Natureza",
+   "etapa": "Anos Finais",
+   "tipo": "matriz",
+   "grupo": "Sem eixo indicado",
+   "linha": "Sequência sem eixo indicado",
+   "colunas": [
+    {
+     "coluna": "8º ano",
+     "codigos": [
+      "EF08CI09"
+     ]
+    }
+   ]
+  },
+  {
+   "id": "ciencias-da-natureza-anos-finais-progressao-l58",
+   "componente": "Ciências da Natureza",
+   "etapa": "Anos Finais",
+   "tipo": "matriz",
+   "grupo": "Sem eixo indicado",
+   "linha": "Sequência sem eixo indicado",
+   "colunas": [
+    {
+     "coluna": "9º ano",
+     "codigos": [
+      "EF09CI13"
+     ]
+    }
+   ]
+  },
+  {
+   "id": "ciencias-da-natureza-anos-finais-progressao-l59",
+   "componente": "Ciências da Natureza",
+   "etapa": "Anos Finais",
+   "tipo": "matriz",
+   "grupo": "Sem eixo indicado",
+   "linha": "Sequência sem eixo indicado",
+   "colunas": [
+    {
+     "coluna": "5º ano",
+     "codigos": [
+      "EF05CI02"
+     ]
+    }
+   ]
+  },
+  {
+   "id": "ciencias-da-natureza-anos-finais-progressao-l60",
+   "componente": "Ciências da Natureza",
+   "etapa": "Anos Finais",
+   "tipo": "matriz",
+   "grupo": "Sem eixo indicado",
+   "linha": "Sequência sem eixo indicado",
+   "colunas": [
+    {
+     "coluna": "5º ano",
+     "codigos": [
+      "EF05CI12"
+     ]
+    }
+   ]
+  },
+  {
+   "id": "ciencias-da-natureza-anos-finais-progressao-l61",
+   "componente": "Ciências da Natureza",
+   "etapa": "Anos Finais",
+   "tipo": "matriz",
+   "grupo": "Sem eixo indicado",
+   "linha": "Sequência sem eixo indicado",
+   "colunas": [
+    {
+     "coluna": "6º ano",
+     "codigos": [
+      "EF06CI11"
+     ]
+    }
+   ]
+  },
+  {
+   "id": "ciencias-da-natureza-anos-finais-progressao-l62",
+   "componente": "Ciências da Natureza",
+   "etapa": "Anos Finais",
+   "tipo": "matriz",
+   "grupo": "Sem eixo indicado",
+   "linha": "Sequência sem eixo indicado",
+   "colunas": [
+    {
+     "coluna": "6º ano",
+     "codigos": [
+      "EF06CI14"
+     ]
+    },
+    {
+     "coluna": "8º ano",
+     "codigos": [
+      "EF08CI13"
+     ]
+    }
+   ]
+  },
+  {
+   "id": "ciencias-da-natureza-anos-finais-progressao-l63",
+   "componente": "Ciências da Natureza",
+   "etapa": "Anos Finais",
+   "tipo": "matriz",
+   "grupo": "Sem eixo indicado",
+   "linha": "Sequência sem eixo indicado",
+   "colunas": [
+    {
+     "coluna": "7º ano",
+     "codigos": [
+      "EF07CI13"
+     ]
+    }
+   ]
+  },
+  {
+   "id": "ciencias-da-natureza-anos-finais-progressao-l64",
+   "componente": "Ciências da Natureza",
+   "etapa": "Anos Finais",
+   "tipo": "matriz",
+   "grupo": "Sem eixo indicado",
+   "linha": "Sequência sem eixo indicado",
+   "colunas": [
+    {
+     "coluna": "7º ano",
+     "codigos": [
+      "EF07CI15"
+     ]
+    }
+   ]
+  },
+  {
+   "id": "ciencias-da-natureza-anos-finais-progressao-l65",
+   "componente": "Ciências da Natureza",
+   "etapa": "Anos Finais",
+   "tipo": "matriz",
+   "grupo": "Sem eixo indicado",
+   "linha": "Sequência sem eixo indicado",
+   "colunas": [
+    {
+     "coluna": "8º ano",
+     "codigos": [
+      "EF08CI12"
+     ]
+    }
+   ]
+  },
+  {
+   "id": "ciencias-da-natureza-anos-finais-progressao-l66",
+   "componente": "Ciências da Natureza",
+   "etapa": "Anos Finais",
+   "tipo": "matriz",
+   "grupo": "Sem eixo indicado",
+   "linha": "Sequência sem eixo indicado",
+   "colunas": [
+    {
+     "coluna": "8º ano",
+     "codigos": [
+      "EF08CI15"
+     ]
+    }
+   ]
+  },
+  {
+   "id": "ciencias-da-natureza-anos-finais-progressao-l67",
+   "componente": "Ciências da Natureza",
+   "etapa": "Anos Finais",
+   "tipo": "matriz",
+   "grupo": "Sem eixo indicado",
+   "linha": "Sequência sem eixo indicado",
+   "colunas": [
+    {
+     "coluna": "9º ano",
+     "codigos": [
+      "EF09CI14"
+     ]
+    }
+   ]
+  },
+  {
+   "id": "ciencias-da-natureza-anos-finais-progressao-l68",
+   "componente": "Ciências da Natureza",
+   "etapa": "Anos Finais",
+   "tipo": "matriz",
+   "grupo": "Sem eixo indicado",
+   "linha": "Sequência sem eixo indicado",
+   "colunas": [
+    {
+     "coluna": "9º ano",
+     "codigos": [
+      "EF09CI15"
+     ]
+    }
+   ]
+  },
+  {
+   "id": "ciencias-da-natureza-anos-finais-progressao-l69",
+   "componente": "Ciências da Natureza",
+   "etapa": "Anos Finais",
+   "tipo": "matriz",
+   "grupo": "Sem eixo indicado",
+   "linha": "Sequência sem eixo indicado",
+   "colunas": [
+    {
+     "coluna": "9º ano",
+     "codigos": [
+      "EF09CI16"
+     ]
+    }
+   ]
+  },
+  {
+   "id": "ciencias-humanas-anos-iniciais-progressao-af",
+   "componente": "Ciências Humanas",
+   "etapa": "Anos Iniciais",
+   "tipo": "matriz",
+   "grupo": "Progressão das AFs",
+   "linha": "Todas as aprendizagens focais do bloco",
+   "colunas": [
+    {
+     "coluna": "1º ano",
+     "codigos": [
+      "EF01HI02",
+      "EF01HI04",
+      "EF01HI05",
+      "EF01GE01",
+      "EF01GE02",
+      "EF01GE05",
+      "EF01GE08",
+      "EF01GE09"
+     ],
+     "marcadores": {
+      "EF01HI02": [
+       "P1"
+      ],
+      "EF01HI04": [
+       "P2"
+      ],
+      "EF01GE01": [
+       "P3"
+      ],
+      "EF01GE05": [
+       "P2"
+      ],
+      "EF01GE09": [
+       "P1"
+      ]
+     }
+    },
+    {
+     "coluna": "2º ano",
+     "codigos": [
+      "EF02HI01",
+      "EF02HI04",
+      "EF02HI06",
+      "EF02GE04",
+      "EF02GE07",
+      "EF02GE08",
+      "EF02GE09"
+     ],
+     "marcadores": {
+      "EF02HI01": [
+       "P2"
+      ],
+      "EF02HI04": [
+       "P1"
+      ],
+      "EF02HI06": [
+       "P1"
+      ],
+      "EF02GE04": [
+       "P3"
+      ],
+      "EF02GE07": [
+       "P4"
+      ],
+      "EF02GE08": [
+       "P1"
+      ],
+      "EF02GE09": [
+       "P1"
+      ]
+     }
+    },
+    {
+     "coluna": "3º ano",
+     "codigos": [
+      "EF03HI05",
+      "EF03HI08",
+      "EF03HI10",
+      "EF03GE02",
+      "EF03GE05",
+      "EF03GE09",
+      "EF03GE06",
+      "EF03GE07"
+     ],
+     "marcadores": {
+      "EF03HI05": [
+       "P1"
+      ],
+      "EF03HI08": [
+       "P2"
+      ],
+      "EF03HI10": [
+       "P2"
+      ],
+      "EF03GE02": [
+       "P5"
+      ],
+      "EF03GE05": [
+       "P4"
+      ],
+      "EF03GE09": [
+       "P2"
+      ],
+      "EF03GE06": [
+       "P1"
+      ],
+      "EF03GE07": [
+       "P1"
+      ]
+     }
+    },
+    {
+     "coluna": "4º ano",
+     "codigos": [
+      "EF04HI01",
+      "EF04HI06",
+      "EF04GE05",
+      "EF04GE11",
+      "EF04GE07",
+      "EF04GE09",
+      "EF04GE10"
+     ],
+     "marcadores": {
+      "EF04HI01": [
+       "P1"
+      ],
+      "EF04GE11": [
+       "P2"
+      ],
+      "EF04GE07": [
+       "P4"
+      ],
+      "EF04GE09": [
+       "P1"
+      ],
+      "EF04GE10": [
+       "P1"
+      ]
+     }
+    },
+    {
+     "coluna": "5º ano",
+     "codigos": [
+      "EF05HI01",
+      "EF05HI04",
+      "EF05HI07",
+      "EF05GE01",
+      "EF05GE03",
+      "EF05GE06",
+      "EF05GE08",
+      "EF05GE09"
+     ],
+     "marcadores": {
+      "EF05HI01": [
+       "P1"
+      ],
+      "EF05HI07": [
+       "P1"
+      ],
+      "EF05GE01": [
+       "P5"
+      ],
+      "EF05GE08": [
+       "P1"
+      ],
+      "EF05GE09": [
+       "P1"
+      ]
+     }
+    }
+   ]
+  },
+  {
+   "id": "ciencias-humanas-anos-iniciais-cadeia-p1",
+   "componente": "Ciências Humanas",
+   "etapa": "Anos Iniciais",
+   "tipo": "cadeia",
+   "grupo": "Proposta de progressão P1",
+   "linha": "P1",
+   "colunas": [
+    {
+     "coluna": "1º ano",
+     "codigos": [
+      "EF01HI02",
+      "EF01GE09"
+     ]
+    },
+    {
+     "coluna": "2º ano",
+     "codigos": [
+      "EF02HI04",
+      "EF02HI06",
+      "EF02GE08",
+      "EF02GE09"
+     ]
+    },
+    {
+     "coluna": "3º ano",
+     "codigos": [
+      "EF03HI05",
+      "EF03GE06",
+      "EF03GE07"
+     ]
+    },
+    {
+     "coluna": "4º ano",
+     "codigos": [
+      "EF04HI01",
+      "EF04GE09",
+      "EF04GE10"
+     ]
+    },
+    {
+     "coluna": "5º ano",
+     "codigos": [
+      "EF05HI01",
+      "EF05HI07",
+      "EF05GE08",
+      "EF05GE09"
+     ]
+    }
+   ]
+  },
+  {
+   "id": "ciencias-humanas-anos-iniciais-cadeia-p2",
+   "componente": "Ciências Humanas",
+   "etapa": "Anos Iniciais",
+   "tipo": "cadeia",
+   "grupo": "Proposta de progressão P2",
+   "linha": "P2",
+   "colunas": [
+    {
+     "coluna": "1º ano",
+     "codigos": [
+      "EF01HI04",
+      "EF01GE05"
+     ]
+    },
+    {
+     "coluna": "2º ano",
+     "codigos": [
+      "EF02HI01"
+     ]
+    },
+    {
+     "coluna": "3º ano",
+     "codigos": [
+      "EF03HI08",
+      "EF03HI10",
+      "EF03GE09"
+     ]
+    },
+    {
+     "coluna": "4º ano",
+     "codigos": [
+      "EF04GE11"
+     ]
+    }
+   ]
+  },
+  {
+   "id": "ciencias-humanas-anos-iniciais-cadeia-p3",
+   "componente": "Ciências Humanas",
+   "etapa": "Anos Iniciais",
+   "tipo": "cadeia",
+   "grupo": "Proposta de progressão P3",
+   "linha": "P3",
+   "colunas": [
+    {
+     "coluna": "1º ano",
+     "codigos": [
+      "EF01GE01"
+     ]
+    },
+    {
+     "coluna": "2º ano",
+     "codigos": [
+      "EF02GE04"
+     ]
+    }
+   ]
+  },
+  {
+   "id": "ciencias-humanas-anos-iniciais-cadeia-p4",
+   "componente": "Ciências Humanas",
+   "etapa": "Anos Iniciais",
+   "tipo": "cadeia",
+   "grupo": "Proposta de progressão P4",
+   "linha": "P4",
+   "colunas": [
+    {
+     "coluna": "2º ano",
+     "codigos": [
+      "EF02GE07"
+     ]
+    },
+    {
+     "coluna": "3º ano",
+     "codigos": [
+      "EF03GE05"
+     ]
+    },
+    {
+     "coluna": "4º ano",
+     "codigos": [
+      "EF04GE07"
+     ]
+    }
+   ]
+  },
+  {
+   "id": "ciencias-humanas-anos-iniciais-cadeia-p5",
+   "componente": "Ciências Humanas",
+   "etapa": "Anos Iniciais",
+   "tipo": "cadeia",
+   "grupo": "Proposta de progressão P5",
+   "linha": "P5",
+   "colunas": [
+    {
+     "coluna": "3º ano",
+     "codigos": [
+      "EF03GE02"
+     ]
+    },
+    {
+     "coluna": "5º ano",
+     "codigos": [
+      "EF05GE01"
+     ]
+    }
+   ]
+  },
+  {
+   "id": "ciencias-humanas-anos-finais-progressao-af",
+   "componente": "Ciências Humanas",
+   "etapa": "Anos Finais",
+   "tipo": "matriz",
+   "grupo": "Progressão das AFs",
+   "linha": "Todas as aprendizagens focais do bloco",
+   "colunas": [
+    {
+     "coluna": "5º ano",
+     "codigos": [
+      "EF05HI01",
+      "EF05HI04",
+      "EF05HI07",
+      "EF05GE01",
+      "EF05GE03",
+      "EF05GE06",
+      "EF05GE08",
+      "EF05GE09"
+     ],
+     "marcadores": {
+      "EF05HI01": [
+       "P1"
+      ],
+      "EF05HI04": [
+       "P2"
+      ],
+      "EF05HI07": [
+       "P3"
+      ],
+      "EF05GE01": [
+       "P5"
+      ],
+      "EF05GE03": [
+       "P6"
+      ],
+      "EF05GE08": [
+       "P1"
+      ],
+      "EF05GE09": [
+       "P1"
+      ]
+     }
+    },
+    {
+     "coluna": "6º ano",
+     "codigos": [
+      "EF06HI01",
+      "EF06HI02",
+      "EF06HI04",
+      "EF06HI09",
+      "EF06HI14",
+      "EF06GE11",
+      "EF06GE12",
+      "EF06GE06",
+      "EF06GE07",
+      "EF06GE08",
+      "EF06GE09"
+     ],
+     "marcadores": {
+      "EF06HI01": [
+       "P3"
+      ],
+      "EF06HI02": [
+       "P3"
+      ],
+      "EF06HI04": [
+       "P1"
+      ],
+      "EF06HI14": [
+       "P1",
+       "P2"
+      ],
+      "EF06GE11": [
+       "P2"
+      ],
+      "EF06GE12": [
+       "P2"
+      ],
+      "EF06GE06": [
+       "P4"
+      ],
+      "EF06GE07": [
+       "P6"
+      ],
+      "EF06GE08": [
+       "P1"
+      ],
+      "EF06GE09": [
+       "P1"
+      ]
+     }
+    },
+    {
+     "coluna": "7º ano",
+     "codigos": [
+      "EF07HI01",
+      "EF07HI02",
+      "EF07HI03",
+      "EF07HI13",
+      "EF07HI15",
+      "EF07HI17",
+      "EF07GE02",
+      "EF07GE04",
+      "EF07GE11",
+      "EF07GE06",
+      "EF07GE09",
+      "EF07GE10"
+     ],
+     "marcadores": {
+      "EF07HI01": [
+       "P1",
+       "P2",
+       "P3"
+      ],
+      "EF07HI02": [
+       "P1",
+       "P2"
+      ],
+      "EF07HI03": [
+       "P1",
+       "P2"
+      ],
+      "EF07HI13": [
+       "P4"
+      ],
+      "EF07HI15": [
+       "P1",
+       "P2"
+      ],
+      "EF07HI17": [
+       "P5"
+      ],
+      "EF07GE02": [
+       "P3",
+       "P5"
+      ],
+      "EF07GE04": [
+       "P5"
+      ],
+      "EF07GE11": [
+       "P2"
+      ],
+      "EF07GE06": [
+       "P4"
+      ],
+      "EF07GE09": [
+       "P1"
+      ],
+      "EF07GE10": [
+       "P1"
+      ]
+     }
+    },
+    {
+     "coluna": "8º ano",
+     "codigos": [
+      "EF08HI01",
+      "EF08HI04",
+      "EF08HI06",
+      "EF08HI12",
+      "EF08HI15",
+      "EF08HI23",
+      "EF08GE05",
+      "EF08GE08",
+      "EF08GE06",
+      "EF08GE23",
+      "EF08GE13",
+      "EF08GE20",
+      "EF08GE21",
+      "EF08GE18",
+      "EF08GE19"
+     ],
+     "marcadores": {
+      "EF08HI01": [
+       "P5"
+      ],
+      "EF08HI06": [
+       "P1",
+       "P2",
+       "P3"
+      ],
+      "EF08HI12": [
+       "P4"
+      ],
+      "EF08HI15": [
+       "P6"
+      ],
+      "EF08HI23": [
+       "P1",
+       "P2",
+       "P3"
+      ],
+      "EF08GE05": [
+       "P3",
+       "P7",
+       "P9"
+      ],
+      "EF08GE08": [
+       "P10"
+      ],
+      "EF08GE06": [
+       "P8"
+      ],
+      "EF08GE23": [
+       "P2"
+      ],
+      "EF08GE13": [
+       "P4"
+      ],
+      "EF08GE20": [
+       "P4",
+       "P5",
+       "P6"
+      ],
+      "EF08GE18": [
+       "P1"
+      ],
+      "EF08GE19": [
+       "P1"
+      ]
+     }
+    },
+    {
+     "coluna": "9º ano",
+     "codigos": [
+      "EF09HI01",
+      "EF09HI06",
+      "EF09HI10",
+      "EF09HI19",
+      "EF09HI14",
+      "EF09HI08",
+      "EF09GE06",
+      "EF09GE05",
+      "EF09GE02",
+      "EF09GE17",
+      "EF09GE09",
+      "EF09GE08",
+      "EF09GE14",
+      "EF09GE15"
+     ],
+     "marcadores": {
+      "EF09HI01": [
+       "P6"
+      ],
+      "EF09HI10": [
+       "P1",
+       "P2",
+       "P3",
+       "P5"
+      ],
+      "EF09HI14": [
+       "P1",
+       "P2",
+       "P3",
+       "P4"
+      ],
+      "EF09GE06": [
+       "P9"
+      ],
+      "EF09GE05": [
+       "P10"
+      ],
+      "EF09GE02": [
+       "P8"
+      ],
+      "EF09GE17": [
+       "P2"
+      ],
+      "EF09GE09": [
+       "P4",
+       "P5"
+      ],
+      "EF09GE08": [
+       "P7"
+      ],
+      "EF09GE14": [
+       "P1"
+      ],
+      "EF09GE15": [
+       "P1"
+      ]
+     }
+    }
+   ]
+  },
+  {
+   "id": "ciencias-humanas-anos-finais-cadeia-p1",
+   "componente": "Ciências Humanas",
+   "etapa": "Anos Finais",
+   "tipo": "cadeia",
+   "grupo": "Proposta de progressão P1",
+   "linha": "P1",
+   "colunas": [
+    {
+     "coluna": "5º ano",
+     "codigos": [
+      "EF05HI01",
+      "EF05GE08",
+      "EF05GE09"
+     ]
+    },
+    {
+     "coluna": "6º ano",
+     "codigos": [
+      "EF06HI04",
+      "EF06HI14",
+      "EF06GE08",
+      "EF06GE09"
+     ]
+    },
+    {
+     "coluna": "7º ano",
+     "codigos": [
+      "EF07HI01",
+      "EF07HI02",
+      "EF07HI03",
+      "EF07HI15",
+      "EF07GE09",
+      "EF07GE10"
+     ]
+    },
+    {
+     "coluna": "8º ano",
+     "codigos": [
+      "EF08HI06",
+      "EF08HI23",
+      "EF08GE18",
+      "EF08GE19"
+     ]
+    },
+    {
+     "coluna": "9º ano",
+     "codigos": [
+      "EF09HI10",
+      "EF09HI14",
+      "EF09GE14",
+      "EF09GE15"
+     ]
+    }
+   ]
+  },
+  {
+   "id": "ciencias-humanas-anos-finais-cadeia-p2",
+   "componente": "Ciências Humanas",
+   "etapa": "Anos Finais",
+   "tipo": "cadeia",
+   "grupo": "Proposta de progressão P2",
+   "linha": "P2",
+   "colunas": [
+    {
+     "coluna": "5º ano",
+     "codigos": [
+      "EF05HI04"
+     ]
+    },
+    {
+     "coluna": "6º ano",
+     "codigos": [
+      "EF06HI14",
+      "EF06GE11",
+      "EF06GE12"
+     ]
+    },
+    {
+     "coluna": "7º ano",
+     "codigos": [
+      "EF07HI01",
+      "EF07HI02",
+      "EF07HI03",
+      "EF07HI15",
+      "EF07GE11"
+     ]
+    },
+    {
+     "coluna": "8º ano",
+     "codigos": [
+      "EF08HI06",
+      "EF08HI23",
+      "EF08GE23"
+     ]
+    },
+    {
+     "coluna": "9º ano",
+     "codigos": [
+      "EF09HI10",
+      "EF09HI14",
+      "EF09GE17"
+     ]
+    }
+   ]
+  },
+  {
+   "id": "ciencias-humanas-anos-finais-cadeia-p3",
+   "componente": "Ciências Humanas",
+   "etapa": "Anos Finais",
+   "tipo": "cadeia",
+   "grupo": "Proposta de progressão P3",
+   "linha": "P3",
+   "colunas": [
+    {
+     "coluna": "5º ano",
+     "codigos": [
+      "EF05HI07"
+     ]
+    },
+    {
+     "coluna": "6º ano",
+     "codigos": [
+      "EF06HI01",
+      "EF06HI02"
+     ]
+    },
+    {
+     "coluna": "7º ano",
+     "codigos": [
+      "EF07HI01",
+      "EF07GE02"
+     ]
+    },
+    {
+     "coluna": "8º ano",
+     "codigos": [
+      "EF08HI06",
+      "EF08HI23",
+      "EF08GE05"
+     ]
+    },
+    {
+     "coluna": "9º ano",
+     "codigos": [
+      "EF09HI10",
+      "EF09HI14"
+     ]
+    }
+   ]
+  },
+  {
+   "id": "ciencias-humanas-anos-finais-cadeia-p4",
+   "componente": "Ciências Humanas",
+   "etapa": "Anos Finais",
+   "tipo": "cadeia",
+   "grupo": "Proposta de progressão P4",
+   "linha": "P4",
+   "colunas": [
+    {
+     "coluna": "6º ano",
+     "codigos": [
+      "EF06GE06"
+     ]
+    },
+    {
+     "coluna": "7º ano",
+     "codigos": [
+      "EF07HI13",
+      "EF07GE06"
+     ]
+    },
+    {
+     "coluna": "8º ano",
+     "codigos": [
+      "EF08HI12",
+      "EF08GE13",
+      "EF08GE20"
+     ]
+    },
+    {
+     "coluna": "9º ano",
+     "codigos": [
+      "EF09HI14",
+      "EF09GE09"
+     ]
+    }
+   ]
+  },
+  {
+   "id": "ciencias-humanas-anos-finais-cadeia-p5",
+   "componente": "Ciências Humanas",
+   "etapa": "Anos Finais",
+   "tipo": "cadeia",
+   "grupo": "Proposta de progressão P5",
+   "linha": "P5",
+   "colunas": [
+    {
+     "coluna": "5º ano",
+     "codigos": [
+      "EF05GE01"
+     ]
+    },
+    {
+     "coluna": "7º ano",
+     "codigos": [
+      "EF07HI17",
+      "EF07GE02",
+      "EF07GE04"
+     ]
+    },
+    {
+     "coluna": "8º ano",
+     "codigos": [
+      "EF08HI01",
+      "EF08GE20"
+     ]
+    },
+    {
+     "coluna": "9º ano",
+     "codigos": [
+      "EF09HI10",
+      "EF09GE09"
+     ]
+    }
+   ]
+  },
+  {
+   "id": "ciencias-humanas-anos-finais-cadeia-p6",
+   "componente": "Ciências Humanas",
+   "etapa": "Anos Finais",
+   "tipo": "cadeia",
+   "grupo": "Proposta de progressão P6",
+   "linha": "P6",
+   "colunas": [
+    {
+     "coluna": "5º ano",
+     "codigos": [
+      "EF05GE03"
+     ]
+    },
+    {
+     "coluna": "6º ano",
+     "codigos": [
+      "EF06GE07"
+     ]
+    },
+    {
+     "coluna": "8º ano",
+     "codigos": [
+      "EF08HI15",
+      "EF08GE20"
+     ]
+    },
+    {
+     "coluna": "9º ano",
+     "codigos": [
+      "EF09HI01"
+     ]
+    }
+   ]
+  },
+  {
+   "id": "ciencias-humanas-anos-finais-cadeia-p7",
+   "componente": "Ciências Humanas",
+   "etapa": "Anos Finais",
+   "tipo": "cadeia",
+   "grupo": "Proposta de progressão P7",
+   "linha": "P7",
+   "colunas": [
+    {
+     "coluna": "8º ano",
+     "codigos": [
+      "EF08GE05"
+     ]
+    },
+    {
+     "coluna": "9º ano",
+     "codigos": [
+      "EF09GE08"
+     ]
+    }
+   ]
+  },
+  {
+   "id": "ciencias-humanas-anos-finais-cadeia-p8",
+   "componente": "Ciências Humanas",
+   "etapa": "Anos Finais",
+   "tipo": "cadeia",
+   "grupo": "Proposta de progressão P8",
+   "linha": "P8",
+   "colunas": [
+    {
+     "coluna": "8º ano",
+     "codigos": [
+      "EF08GE06"
+     ]
+    },
+    {
+     "coluna": "9º ano",
+     "codigos": [
+      "EF09GE02"
+     ]
+    }
+   ]
+  },
+  {
+   "id": "ciencias-humanas-anos-finais-cadeia-p9",
+   "componente": "Ciências Humanas",
+   "etapa": "Anos Finais",
+   "tipo": "cadeia",
+   "grupo": "Proposta de progressão P9",
+   "linha": "P9",
+   "colunas": [
+    {
+     "coluna": "8º ano",
+     "codigos": [
+      "EF08GE05"
+     ]
+    },
+    {
+     "coluna": "9º ano",
+     "codigos": [
+      "EF09GE06"
+     ]
+    }
+   ]
+  },
+  {
+   "id": "ciencias-humanas-anos-finais-cadeia-p10",
+   "componente": "Ciências Humanas",
+   "etapa": "Anos Finais",
+   "tipo": "cadeia",
+   "grupo": "Proposta de progressão P10",
+   "linha": "P10",
+   "colunas": [
+    {
+     "coluna": "8º ano",
+     "codigos": [
+      "EF08GE08"
+     ]
+    },
+    {
+     "coluna": "9º ano",
+     "codigos": [
+      "EF09GE05"
+     ]
+    }
+   ]
+  }
+ ],
+ "competenciasEspecificasEM": [
+  {
+   "id": "em-area-cnt-ce-01",
+   "area": "Ciências da Natureza e suas Tecnologias",
+   "numero": 1,
+   "arquivo": "ciencias-da-natureza-e-suas-tecnologias.xlsx",
+   "texto": "Analisar fenômenos naturais e processos tecnológicos, com base nas interações e relações entre matéria e energia, para propor ações individuais e coletivas que aperfeiçoem processos produtivos, minimizem impactos socioambientais e melhorem as condições de vida em âmbito local, regional e global.",
+   "comentario": [
+    "A competência 1 trata das relações e interações entre matéria e energia, presentes em fenômenos naturais e em processos tecnológicos, visando à compreensão dessas interações e à avaliação, por parte do estudante, dos impactos dessas interações no desenvolvimento de processos e produtos ou em atividades cotidianas. Espera-se que o estudante possa consolidar conhecimentos que permitam refletir sobre as consequências do uso de recursos naturais e das transformações às quais esses materiais estão sujeitos para agir de forma mais responsável em relação à natureza e seus recursos."
+   ],
+   "habilidades": [
+    "EM13CNT101",
+    "EM13CNT102",
+    "EM13CNT103",
+    "EM13CNT104",
+    "EM13CNT105",
+    "EM13CNT106",
+    "EM13CNT107"
+   ]
+  },
+  {
+   "id": "em-area-cnt-ce-02",
+   "area": "Ciências da Natureza e suas Tecnologias",
+   "numero": 2,
+   "arquivo": "ciencias-da-natureza-e-suas-tecnologias.xlsx",
+   "texto": "Analisar e utilizar interpretações sobre a dinâmica da Vida, da Terra e do Cosmos para elaborar argumentos, realizar previsões sobre o funcionamento e a evolução dos seres vivos e do Universo, e fundamentar e defender decisões éticas e responsáveis.",
+   "comentario": [
+    "A competência 2 trata da complexidade dos processos relativos à origem e à evolução da vida, do planeta e do universo, além da dinâmica de suas interações, da diversidade dos seres vivos e sua relação com o ambiente, considerando modelos e teorias que foram construídos, modificados e aceitos em diferentes contextos históricos, sociais e culturais. Espera-se que, com essa competência, o estudante seja capaz de reconhecer que os conhecimentos científicos sofrem transformações ao longo do tempo, identificando a importância da experimentação e da interpretação de resultados com base na probabilidade e incerteza, reconhecendo que os avanços das tecnologias representam parte importante desse processo, além de aplicar seus conhecimentos na construção de argumentos e posicionamentos frente aos diferentes desafios cotidianos, sempre com ética, responsabilidade e valorizando a sustentabilidade."
+   ],
+   "habilidades": [
+    "EM13CNT201",
+    "EM13CNT202",
+    "EM13CNT203",
+    "EM13CNT204",
+    "EM13CNT205",
+    "EM13CNT206",
+    "EM13CNT207",
+    "EM13CNT208",
+    "EM13CNT209"
+   ]
+  },
+  {
+   "id": "em-area-cnt-ce-03",
+   "area": "Ciências da Natureza e suas Tecnologias",
+   "numero": 3,
+   "arquivo": "ciencias-da-natureza-e-suas-tecnologias.xlsx",
+   "texto": "Investigar situações-problema e avaliar aplicações do conhecimento científico e tecnológico e suas implicações no mundo, utilizando procedimentos e linguagens próprios das Ciências da Natureza, para propor soluções que considerem demandas locais, regionais e/ou globais, e comunicar suas descobertas e conclusões a públicos variados, em diversos contextos e por meio de diferentes mídias e tecnologias digitais de informação e comunicação (TDIC).",
+   "comentario": [
+    "A competência 3 trata da mobilização dos conhecimentos científicos na resolução de situações-problema a partir de uma visão interdisciplinar e com a utilização e aplicação de tecnologias digitais ao longo do processo. Pensar sobre a resolução de problemas em um mundo em constante mudança é muito importante, uma vez que as demandas profissionais, sociais e culturais do estudante em um futuro muito próximo provavelmente não serão as mesmas enfrentadas hoje, e ser capaz de resolver problemas cada vez mais complexos, de forma crítica e criativa, é essencial. A partir dessa competência, espera-se do estudante que ele valorize a busca de soluções de maneira colaborativa, mobilizando habilidades que desenvolvam a resiliência, a argumentação, o protagonismo e o uso de tecnologias digitais de informação e comunicação."
+   ],
+   "habilidades": [
+    "EM13CNT301",
+    "EM13CNT302",
+    "EM13CNT303",
+    "EM13CNT304",
+    "EM13CNT305",
+    "EM13CNT306",
+    "EM13CNT307",
+    "EM13CNT308",
+    "EM13CNT309",
+    "EM13CNT310"
+   ]
+  },
+  {
+   "id": "em-area-mat-ce-01",
+   "area": "Matemática e suas Tecnologias",
+   "numero": 1,
+   "arquivo": "matematica-e-suas-tecnologias.xlsx",
+   "texto": "Utilizar estratégias, conceitos e procedimentos matemáticos para interpretar situações em diversos contextos, sejam atividades cotidianas, sejam fatos das Ciências da Natureza e Humanas, das questões socioeconômicas ou tecnológicas, divulgados por diferentes meios, de modo a contribuir para uma formação geral.",
+   "comentario": [
+    "A competência 1 apresenta a Matemática como um corpo de conhecimentos a serviço de outras áreas do conhecimento e, por isso, colabora para a formação integral do estudante. O conhecimento de estratégias, conceitos e procedimentos matemáticos, sempre levando em consideração o contexto em que a situação está inserida, estão associados ao domínio da competência. A compreensão do que se deseja determinar de acordo com cada situação, exige a combinação de vários conhecimentos de modo apropriado para que seja possível colocar esse conjunto de ideias em ação, monitorando estratégias selecionadas em cada situação e analisando sua eficiência; e a leitura e interpretação de textos verbais, desenhos técnicos, gráficos e imagens. É uma competência relacionada à preparação dos jovens para construir e realizar Projetos de Vida. Vale destacar a relação dessa competência com a Competência Geral 2 da BNCC, no que se refere ao exercício da curiosidade intelectual que utiliza o conhecimento para investigar, refletir e criar soluções em diferentes situações."
+   ],
+   "habilidades": [
+    "EM13MAT101",
+    "EM13MAT102",
+    "EM13MAT103",
+    "EM13MAT104",
+    "EM13MAT105",
+    "EM13MAT106"
+   ]
+  },
+  {
+   "id": "em-area-mat-ce-02",
+   "area": "Matemática e suas Tecnologias",
+   "numero": 2,
+   "arquivo": "matematica-e-suas-tecnologias.xlsx",
+   "texto": "Propor ou participar de ações para investigar desafios do mundo contemporâneo e tomar decisões éticas e socialmente responsáveis, com base na análise de problemas sociais, como os voltados a situações de saúde, sustentabilidade, das implicações da tecnologia no mundo do trabalho, entre outros, mobilizando e articulando conceitos, procedimentos e linguagens próprios da Matemática.",
+   "comentario": [
+    "A competência 2 colocando o estudante como personagem atuante em sua comunidade local e no mundo globalizado. As ações de propor e participar fazem referência à capacidade de ser parte de algo, compartilhar saberes com o outro e colaborar conjuntamente para a produção de algo. Destaca-se também o papel da investigação por parte do estudante, o que pressupõe a observação dos desafios presentes em sua comunidade local/global, a elaboração de hipóteses que as descrevam, o tratamento dos dados associados à situação envolvida, a análise dos resultados obtidos e, por fim, a tomada de decisão a partir das conclusões obtidas. Ao desenvolver essa competência, pode-se afirmar que o estudante avança em relação ao entendimento de que os Projetos de Vida não são apenas no âmbito profissional, mas também nas dimensões pessoal e social/cidadã."
+   ],
+   "habilidades": [
+    "EM13MAT201",
+    "EM13MAT202",
+    "EM13MAT203"
+   ]
+  },
+  {
+   "id": "em-area-mat-ce-03",
+   "area": "Matemática e suas Tecnologias",
+   "numero": 3,
+   "arquivo": "matematica-e-suas-tecnologias.xlsx",
+   "texto": "Utilizar estratégias, conceitos, definições e procedimentos matemáticos para interpretar, construir modelos e resolver problemas em diversos contextos, analisando a plausibilidade dos resultados e a adequação das soluções propostas, de modo a construir argumentação consistente.",
+   "comentario": [
+    "A competência 3, em essência, está relacionada ao chamado “fazer matemático”, ou seja, está intimamente ligada à essência da Matemática que é a ação de resolver situações-problemas, a qual é o centro da atividade matemática. Por esse motivo, deixa claro que os conceitos e procedimentos matemáticos somente terão significado caso os estudantes possam utilizá-los para solucionar os desafios com que se deparam. É importante frisar que a referida competência não se restringe apenas à resolução de problemas, mas também trata de sua elaboração. Isso revela uma concepção da resolução de problemas além da mera aplicação de um conjunto de regras. Outro grande destaque refere-se à modelagem matemática como a construção de modelos matemáticos que sirvam para generalizar ideias ou para descrever situações semelhantes. Essa competência tem estreita relação com a Competência Geral 2 da BNCC, no sentido da capacidade de formular e resolver problemas, e com a Competência Geral 4, que reforça a importância de saber utilizar as diferentes linguagens par expressar ideias e informações para a comunicação mútua."
+   ],
+   "habilidades": [
+    "EM13MAT301",
+    "EM13MAT302",
+    "EM13MAT303",
+    "EM13MAT304",
+    "EM13MAT305",
+    "EM13MAT306",
+    "EM13MAT307",
+    "EM13MAT308",
+    "EM13MAT309",
+    "EM13MAT310",
+    "EM13MAT311",
+    "EM13MAT312",
+    "EM13MAT313",
+    "EM13MAT314",
+    "EM13MAT315",
+    "EM13MAT316"
+   ]
+  },
+  {
+   "id": "em-area-mat-ce-04",
+   "area": "Matemática e suas Tecnologias",
+   "numero": 4,
+   "arquivo": "matematica-e-suas-tecnologias.xlsx",
+   "texto": "Compreender e utilizar, com flexibilidade e precisão, diferentes registros de representação matemáticos (algébrico, geométrico, estatístico, computacional etc.), na busca de solução e comunicação de resultados de problemas.",
+   "comentario": [
+    "A competência 4 complementa as demais no sentido de que utilizar, interpretar e resolver situações-problema se faz pela comunicação das ideias dos estudantes por meio da linguagem matemática. Transitar entre os diversos tipos de representações (simbólica, algébrica, gráfica, textual etc.) permite a compreensão mais profunda dos conceitos e ideias da matemática. A representação de uma mesma situação de diferentes formas estabelece conexões que possibilitam resolver problemas matemáticos usando estratégias diversas. Além disso, a capacidade de elaborar modelos matemáticos para expressar situações implica e revela a aprendizagem, além de potencializar o letramento matemático. Essa competência está relacionada ao desenvolvimento das Competências Gerais 4 e 5 da BNCC, uma vez que a linguagem utilizada de modo flexível permite expressar ideias e informações que facilitam o entendimento e ampliar o repertório de formas de expressão, inclusive a digital com espaço para autoria pessoal e criatividade do estudante."
+   ],
+   "habilidades": [
+    "EM13MAT401",
+    "EM13MAT402",
+    "EM13MAT403",
+    "EM13MAT404",
+    "EM13MAT405",
+    "EM13MAT406",
+    "EM13MAT407"
+   ]
+  },
+  {
+   "id": "em-area-mat-ce-05",
+   "area": "Matemática e suas Tecnologias",
+   "numero": 5,
+   "arquivo": "matematica-e-suas-tecnologias.xlsx",
+   "texto": "Investigar e estabelecer conjecturas a respeito de diferentes conceitos e propriedades matemáticas, empregando estratégias e recursos, como observação de padrões, experimentações e diferentes tecnologias, identificando a necessidade, ou não, de uma demonstração cada vez mais formal na validação das referidas conjecturas.",
+   "comentario": [
+    "A competência 5 tem como objetivo principal que os estudantes se apropriem da forma de pensar matemática, como ciência com uma forma específica de validar suas conclusões pelo raciocínio lógico-dedutivo. Não se trata de trazer para o Ensino Médio a Matemática formal dedutiva, mas de permitir que os jovens percebam a diferença entre uma dedução originária da observação empírica e uma dedução formal. É importante também verificar que essa competência e suas habilidades não se desenvolvem em separado das demais; ela é um foco a mais de atenção para o ensino em termos de formação dos estudantes, de modo que identifiquem a Matemática diferenciada das demais Ciências. As habilidades para essa competência demandam que o estudante vivencie a investigação, a formulação de hipóteses e a tentativa de validação de suas hipóteses. De certa forma, a proposta é que o estudante do Ensino Médio possa conhecer parte do processo de construção da Matemática, tal qual aconteceu ao longo da história, fruto do pensamento de muitos em diferentes culturas.",
+    "Um ponto de atenção está no fato de que algumas das habilidades escolhidas pela BNCC (2018) para essa competência remetem a conteúdos muito específicos, de pouca aplicabilidade e de difícil contextualização, mas que, no entanto, favorecem a investigação e a formulação de hipóteses antes de que os estudantes conheçam os conceitos ou a teoria subjacente a esses conteúdos específicos. As habilidades propostas para essa competência possuem níveis diferentes de complexidade cognitiva, desde a identificação de uma propriedade até a investigação completa com dedução de uma regra ou procedimento.",
+    "Essa competência se relaciona com as Competências Gerais 2, 4, 5 e 7 da BNCC, uma vez que há o incentivo ao exercício da curiosidade intelectual na investigação, neste caso, com maior centralidade no conhecimento matemático. A linguagem e os recursos digitais são ferramentas básicas e essenciais para facilitar a observação de regularidades, expressar ideias e construir argumentos com base em fatos."
+   ],
+   "habilidades": [
+    "EM13MAT501",
+    "EM13MAT502",
+    "EM13MAT503",
+    "EM13MAT504",
+    "EM13MAT505",
+    "EM13MAT506",
+    "EM13MAT507",
+    "EM13MAT508",
+    "EM13MAT509",
+    "EM13MAT510",
+    "EM13MAT511"
+   ]
+  },
+  {
+   "id": "em-area-chs-ce-01",
+   "area": "Ciências Humanas e Sociais Aplicadas",
+   "numero": 1,
+   "arquivo": "ciencias-humanas-e-sociais-aplicadas.xlsx",
+   "texto": "Analisar processos políticos, econômicos, sociais, ambientais e culturais nos âmbitos local, regional, nacional e mundial em diferentes tempos, a partir da pluralidade de procedimentos epistemológicos, científicos e tecnológicos, de modo a compreender e posicionar-se criticamente em relação a eles, considerando diferentes pontos de vista e tomando decisões baseadas em argumentos e fontes de natureza científica.",
+   "comentario": [
+    "A competência 1 é da ordem epistêmica da ciência e introduz o estudante no ensino das narrativas que são próprias da Geografia, História, Sociologia e Filosofia. A competência permite discutir a formação de conceitos e sua aplicação. Convida o estudante a compreender temáticas e processos das mais variadas ordens e em distintas escalas e relacioná-las com a atualidade. Leva os estudantes a comparar semelhanças e diferenças da ocorrência de eventos em outros tempos e espaços. O estudo dos conteúdos que estruturam a habilidade permite mobilizar, por meio de instrumentos e procedimentos próprios da área de Ciências Humanas, a capacidade analítica e crítica dos processos políticos, econômicos, socioambientais e culturais em diferentes tempos e escalas de análise."
+   ],
+   "habilidades": [
+    "EM13CHS101",
+    "EM13CHS102",
+    "EM13CHS103",
+    "EM13CHS104",
+    "EM13CHS105",
+    "EM13CHS106"
+   ]
+  },
+  {
+   "id": "em-area-chs-ce-02",
+   "area": "Ciências Humanas e Sociais Aplicadas",
+   "numero": 2,
+   "arquivo": "ciencias-humanas-e-sociais-aplicadas.xlsx",
+   "texto": "Analisar a formação de territórios e fronteiras em diferentes tempos e espaços, mediante a compreensão das relações de poder que determinam as territorialidades e o papel geopolítico dos Estados-nações.",
+   "comentario": [
+    "A competência 2 refere-se à compreensão da estruturação dos territórios e da mobilidade das fronteiras em diferentes tempos e espaços, em decorrência das disputas pelo poder. Ao longo das habilidades, será possível estudar as tensões socioespaciais e as diferentes territorialidades, considerando os fluxos de pessoas e a produção de exclusões e inclusões. Nessa competência, estão incluídos temas referentes à formação de territórios, colônias, reinos e impérios, bem como a conquistas; rotas terrestres, fluviais e marítimas; dinâmicas comerciais; exploração econômica; povoamento; processos migratórios; transformações no meio ambiente; entre outros. Essa competência possibilita ainda as análises, com base em categorias filosóficas e sociológicas, das situações que envolvem desigualdade e igualdade, inclusão e exclusão e o conceito de poder em distintos tempos e lugares."
+   ],
+   "habilidades": [
+    "EM13CHS201",
+    "EM13CHS202",
+    "EM13CHS203",
+    "EM13CHS204",
+    "EM13CHS205",
+    "EM13CHS206"
+   ]
+  },
+  {
+   "id": "em-area-chs-ce-03",
+   "area": "Ciências Humanas e Sociais Aplicadas",
+   "numero": 3,
+   "arquivo": "ciencias-humanas-e-sociais-aplicadas.xlsx",
+   "texto": "Analisar e avaliar criticamente as relações de diferentes grupos, povos e sociedades com a natureza (produção, distribuição e consumo) e seus impactos econômicos e socioambientais, com vistas à proposição de alternativas que respeitem e promovam a consciência, a ética socioambiental e o consumo responsável em âmbito local, regional, nacional e global.",
+   "comentario": [
+    "A competência 3 refere-se à reflexão e compreensão das relações entre sociedades e natureza, das distintas práticas econômicas, culturais e políticas e dos impactos econômicos e socioambientais. É necessário conhecer os processos históricos de uso e ocupação do espaço. Busca-se a formação do entendimento crítico quanto às relações complexas entre as sociedades humanas e ao desenvolvimento de consciência ética e de consumo responsável.",
+    "A competência possibilitam analisar com os estudantes a produção e a circulação de mercadorias e a relação entre consumo e lixo, destacando os resíduos sólidos provenientes de países desenvolvidos que adquirem valor de mercado nos países pobres.",
+    "O conjunto de habilidades que compõe a competência contribui para o desenvolvimento da Competência Geral 3 (Repertório Cultural), 7 (Argumentação) e 10 (Responsabilidade e Cidadania)."
+   ],
+   "habilidades": [
+    "EM13CHS301",
+    "EM13CHS302",
+    "EM13CHS303",
+    "EM13CHS304",
+    "EM13CHS305",
+    "EM13CHS306"
+   ]
+  },
+  {
+   "id": "em-area-chs-ce-04",
+   "area": "Ciências Humanas e Sociais Aplicadas",
+   "numero": 4,
+   "arquivo": "ciencias-humanas-e-sociais-aplicadas.xlsx",
+   "texto": "Analisar as relações de produção, capital e trabalho em diferentes territórios, contextos e culturas, discutindo o papel dessas relações na construção, consolidação e transformação das sociedades.",
+   "comentario": [
+    "A competência 4 refere-se à compreensão dos múltiplos significados do trabalho e das relações que caracterizam o mundo do trabalho no atual período. Para tanto, é fundamental conhecer o significado do trabalho em suas múltiplas dimensões: histórica, geográfica, antropológica, sociológica, política, econômica e filosófica. A competência em questão diz respeito à compreensão da rede de complexas relações que determina a forma da atividade produtiva capitalista nos diversos espaços. Tal compreensão crítica se dirige tanto aos aspectos mais gerais e comuns quanto àqueles mais particulares e próximos da realidade social contemporânea. O conjunto de habilidades que compõe a competência contribui para o desenvolvimento da Competência Geral 6 – Trabalho e Projeto de Vida, uma vez que permite ao estudante compreender o mundo do trabalho para fazer escolhas seguras no futuro e alinhadas com seu Projeto de Vida. O estudo da competência também colabora com a tomada de decisões baseadas em princípios éticos, conforme sugere a Competência Geral 10 – Responsabilidade e Cidadania."
+   ],
+   "habilidades": [
+    "EM13CHS401",
+    "EM13CHS402",
+    "EM13CHS403",
+    "EM13CHS404"
+   ]
+  },
+  {
+   "id": "em-area-chs-ce-05",
+   "area": "Ciências Humanas e Sociais Aplicadas",
+   "numero": 5,
+   "arquivo": "ciencias-humanas-e-sociais-aplicadas.xlsx",
+   "texto": "Identificar e combater as diversas formas de injustiça, preconceito e violência, adotando princípios éticos, democráticos, inclusivos e solidários, e respeitando os Direitos Humanos.",
+   "comentario": [
+    "A competência 5 trata de conceitos que estruturam a compreensão do sentido e da ideia de Direitos Humanos, desenvolvendo as noções de ética, desigualdade, respeito, preconceitos, solidariedade e tolerância às diferenças culturais, religiosas, étnico-raciais, entre outras.",
+    "As situações do cotidiano voltadas para temas geopolíticos e que envolvem cidadania, com vistas a desenvolver a consciência moral, estimulam os jovens a agir com responsabilidade e autonomia no convívio social. Os temas trabalhados pelas habilidades dessa competência fortalecem e contribuem para o desenvolvimento da Competência Geral 9, no que se refere ao desenvolvimento do respeito à diversidade, aos princípios éticos e aos Direitos Humanos do estudante."
+   ],
+   "habilidades": [
+    "EM13CHS501",
+    "EM13CHS502",
+    "EM13CHS503",
+    "EM13CHS504"
+   ]
+  },
+  {
+   "id": "em-area-chs-ce-06",
+   "area": "Ciências Humanas e Sociais Aplicadas",
+   "numero": 6,
+   "arquivo": "ciencias-humanas-e-sociais-aplicadas.xlsx",
+   "texto": "Participar do debate público de forma crítica, respeitando diferentes posições e fazendo escolhas alinhadas ao exercício da cidadania e ao seu projeto de vida, com liberdade, autonomia, consciência crítica e responsabilidade.",
+   "comentario": [
+    "A competência 6 trata do protagonismo do aluno no debate público com autonomia, responsabilidade e consciência crítica, fornecendo-lhe, para isso, um instrumental teórico e conceitual contextualizado que lhe permita compreender, posicionar-se e intervir nas discussões coletivas, de modo democrático, responsável, crítico e autônomo, respeitando a diversidade de opiniões com objetivo de exercer a cidadania e fortalecer seu próprio Projeto de Vida. Os temas trabalhados pelas habilidades dessa competência fortalecem e contribuem para o desenvolvimento da Competência Geral 6 – Trabalho e Projeto de Vida, uma vez que auxilia o estudante a entender o mundo e fazer escolhas alinhadas à cidadania e ao seu Projeto de Vida. Eles também aludem à Competência Geral 10 no desenvolvimento da responsabilidade e cidadania dos estudantes, permitindo o trabalho com resolução de problemas para tomada de decisão de forma consciente, colaborativa e responsável."
+   ],
+   "habilidades": [
+    "EM13CHS601",
+    "EM13CHS602",
+    "EM13CHS603",
+    "EM13CHS604",
+    "EM13CHS605",
+    "EM13CHS606"
+   ]
+  },
+  {
+   "id": "em-area-lgg-ce-01",
+   "area": "Linguagens e suas Tecnologias",
+   "numero": 1,
+   "arquivo": "linguagens-e-suas-tecnologias.xlsx",
+   "texto": "Compreender o funcionamento das diferentes linguagens e práticas culturais (artísticas, corporais e verbais) e mobilizar esses conhecimentos na recepção e produção de discursos nos diferentes campos de atuação social e nas diversas mídias, para ampliar as formas de participação social, o entendimento e as possibilidades de explicação e interpretação crítica da realidade e para continuar aprendendo.",
+   "comentario": [
+    "A competência 1 indica a compreensão das diferentes linguagens em situação de uso, para ampliar a participação em práticas nos campos de atuação, significando e produzindo discursos, também compreendidos como atos das linguagens artísticas, da cultura corporal e verbal. Ela prevê procedimentos de uso, criação, experimentação, análise, investigação, compreensão e novos usos mais reflexivos, em abordagem integrada das linguagens, assim como ocorre nas esferas da vida em sociedade (jornalística, publicitária, científica, esportiva, artística, entre outras), em que diferentes linguagens são usadas para produzir sentidos. Na BNCC, essas esferas estão transpostas como campos de atuação. Destaca-se que os novos meios de produção e circulação de práticas de linguagem, mediados pelas tecnologias digitais, são constitutivos de seus funcionamentos. Assim, procedimentos de edição e tratamento das linguagens (como fotocomposição, mixagem, sampleamento) ou de recontextualização de uma mídia para outra (remidiação) podem integrar, por exemplo, a produção de notícias, os processos de criação artística, registros das práticas da cultura corporal e campanhas publicitárias voltadas a espectadores de esportes."
+   ],
+   "habilidades": [
+    "EM13LGG101",
+    "EM13LGG102",
+    "EM13LGG103",
+    "EM13LGG104",
+    "EM13LGG105",
+    "EM13LP02",
+    "EM13LP03",
+    "EM13LP04",
+    "EM13LP06",
+    "EM13LP07",
+    "EM13LP08",
+    "EM13LP11",
+    "EM13LP12",
+    "EM13LP13",
+    "EM13LP14",
+    "EM13LP15",
+    "EM13LP16",
+    "EM13LP21",
+    "EM13LP23",
+    "EM13LP24",
+    "EM13LP25",
+    "EM13LP26",
+    "EM13LP31",
+    "EM13LP38",
+    "EM13LP44",
+    "EM13LP45",
+    "EM13LP48",
+    "EM13LP49",
+    "EM13LP52",
+    "EM13LP53",
+    "EM13LP54"
+   ]
+  },
+  {
+   "id": "em-area-lgg-ce-02",
+   "area": "Linguagens e suas Tecnologias",
+   "numero": 2,
+   "arquivo": "linguagens-e-suas-tecnologias.xlsx",
+   "texto": "Compreender os processos identitários, conflitos e relações de poder que permeiam as práticas sociais de linguagem, respeitando as diversidades e a pluralidade de ideias e posições, e atuar socialmente com base em princípios e valores assentados na democracia, na igualdade e nos Direitos Humanos, exercitando o autoconhecimento, a empatia, o diálogo, a resolução de conflitos e a cooperação, e combatendo preconceitos de qualquer natureza.",
+   "comentario": [
+    "A competência 2 refere-se à compreensão do papel das práticas de linguagem nos processos identitários marcados pelas relações de poder entre os atores sociais envolvidos. Ela implica compreender que: a negociação de sentidos se dá na interação, com implicações para a compreensão de si na troca com outros; a diversidade é inerente à condição humana; a pluralidade de perspectivas pode gerar disputas e conflitos, a serem problematizados, com foco nos valores éticos e democráticos. Seu desenvolvimento permite promover reflexões sobre projetos de vida do estudante e suas articulações com os contextos social, cultural e identitário. Ela pressupõe apreciação e produção de atos de linguagem, em contextos culturais diversos, com abertura para o autoconhecimento, o novo, o cultivo do respeito mútuo e a colaboração."
+   ],
+   "habilidades": [
+    "EM13LGG201",
+    "EM13LGG202",
+    "EM13LGG203",
+    "EM13LGG204",
+    "EM13LP01",
+    "EM13LP20",
+    "EM13LP25",
+    "EM13LP29",
+    "EM13LP36",
+    "EM13LP37",
+    "EM13LP38",
+    "EM13LP40",
+    "EM13LP42",
+    "EM13LP52"
+   ]
+  },
+  {
+   "id": "em-area-lgg-ce-03",
+   "area": "Linguagens e suas Tecnologias",
+   "numero": 3,
+   "arquivo": "linguagens-e-suas-tecnologias.xlsx",
+   "texto": "Utilizar diferentes linguagens (artísticas, corporais e verbais) para exercer, com autonomia e colaboração, protagonismo e autoria na vida pessoal e coletiva, de forma crítica, criativa, ética e solidária, defendendo pontos de vista que respeitem o outro e promovam os Direitos Humanos, a consciência socioambiental e o consumo responsável, em âmbito local, regional e global.",
+   "comentario": [
+    "A competência 3 refere-se ao engajamento e à participação crítica em práticas sociais por meio do uso autônomo e colaborativo das diversas linguagens. Ela implica: articular repertórios construídos em práticas das diferentes linguagens à produção criativa e autônoma de discursos e atos de linguagem, que permitam expressão de diferentes pontos de vista, debate de opiniões e elaboração de posicionamentos a respeito de temas da vida social – em especial, Direitos Humanos, consumo e meio ambiente. Pressupõe reflexão sobre a relevância desses temas para si e para a comunidade local e global e uma dimensão ética, com atuação consciente e engajada nos diferentes campos da vida social, em favor de processos mais igualitários e sustentáveis. Pelas dimensões de autonomia e colaboração, em práticas autorais com as diversas linguagens, essa competência relaciona-se ao desenvolvimento das competências gerais 4, 5 e 10."
+   ],
+   "habilidades": [
+    "EM13LGG301",
+    "EM13LGG302",
+    "EM13LGG303",
+    "EM13LGG304",
+    "EM13LGG305",
+    "EM13LP05",
+    "EM13LP15",
+    "EM13LP17",
+    "EM13LP19",
+    "EM13LP20",
+    "EM13LP22",
+    "EM13LP25",
+    "EM13LP27",
+    "EM13LP28",
+    "EM13LP29",
+    "EM13LP33",
+    "EM13LP34",
+    "EM13LP45",
+    "EM13LP47",
+    "EM13LP51",
+    "EM13LP53",
+    "EM13LP54"
+   ]
+  },
+  {
+   "id": "em-area-lgg-ce-04",
+   "area": "Linguagens e suas Tecnologias",
+   "numero": 4,
+   "arquivo": "linguagens-e-suas-tecnologias.xlsx",
+   "texto": "Compreender as línguas como fenômeno (geo)político, histórico, cultural, social, variável, heterogêneo e sensível aos contextos de uso, reconhecendo suas variedades e vivenciando-as como formas de expressões identitárias, pessoais e coletivas, bem como agindo no enfrentamento de preconceitos de qualquer natureza.",
+   "comentario": [
+    "A competência 4 refere-se ao reconhecimento da natureza dinâmica das línguas, com compreensão de como são constituídas nas práticas de linguagem, em contextos local e historicamente definidos, com contornos e especificidades advindas dos usos intencionais que os sujeitos fazem delas. Implica reflexão crítica, com análise de: mecanismos de (des)valorização das variedades de uma língua e das condições em que operam (condições sociais, culturais e históricas); relações entre variedades de uma língua e os processos identitários de falantes; preconceitos diversos sobrepostos ao preconceito linguístico. Pressupõe vivência das variedades das línguas, em experimentação de práticas de linguagem, com atitudes científicas, éticas e reflexivas; respeito às pertenças histórico-sócio-culturais de seus falantes e engajamento no combate ao preconceito, aspectos que dialogam com o que está previsto nas competências gerais CG4 e CG9."
+   ],
+   "habilidades": [
+    "EM13LGG401",
+    "EM13LGG402",
+    "EM13LGG403",
+    "EM13LP09",
+    "EM13LP10",
+    "EM13LP16"
+   ]
+  },
+  {
+   "id": "em-area-lgg-ce-05",
+   "area": "Linguagens e suas Tecnologias",
+   "numero": 5,
+   "arquivo": "linguagens-e-suas-tecnologias.xlsx",
+   "texto": "Compreender os processos de produção e negociação de sentidos nas práticas corporais, reconhecendo-as e vivenciando-as como formas de expressão de valores e identidades, em uma perspectiva democrática e de respeito à diversidade.",
+   "comentario": [
+    "A competência 5 refere-se à compreensão, experimentação e utilização das práticas corporais (jogos e brincadeiras, esportes, danças, lutas, ginásticas e práticas corporais de aventura) como produções culturais que revelam valores, processos identitários e pontos de vista. Como processo interativo, esse exercício de construção e reconstrução das práticas corporais requer negociação de sentidos entre os envolvidos, para a reafirmação contínua da democracia e do respeito à diversidade. Envolve reflexão sobre origem, evolução e necessidades de transformação das práticas corporais, tendo em vista valores democráticos, valorativos da diversidade. Está articulada com as Competências Globais 4 e 6, por favorecer o uso da linguagem corporal e por implicar valorização da diversidade, e com as Competências Globais 9 e 10, pela promoção da convivência empática, respeitosa e solidária."
+   ],
+   "habilidades": [
+    "EM13LGG501",
+    "EM13LGG502",
+    "EM13LGG503"
+   ]
+  },
+  {
+   "id": "em-area-lgg-ce-06",
+   "area": "Linguagens e suas Tecnologias",
+   "numero": 6,
+   "arquivo": "linguagens-e-suas-tecnologias.xlsx",
+   "texto": "Apreciar esteticamente as mais diversas produções artísticas e culturais, considerando suas características locais, regionais e globais, e mobilizar seus conhecimentos sobre as linguagens artísticas para dar significado e (re)construir produções autorais individuais e coletivas, exercendo protagonismo de maneira crítica e criativa, com respeito à diversidade de saberes, identidades e culturas.",
+   "comentario": [
+    "A competência 6 refere-se à apreciação de produções artísticas e culturais, representativas da diversidade de contextos e cultuas, e ao protagonismo dos estudantes na construção de poéticas individuais e coletivas. Ela implica habilidades voltadas à análise, ao exercício da contextualização de manifestações artísticas e culturais diversificadas, às relações criativas entre essas referências e às produções e projetos autorais individuais ou colaborativos. Pressupõe valorização de experiências com manifestações artísticas de diferentes culturas e épocas, como modo de ampliação do repertório e do conhecimento de si e do mundo; reconhecimento da dimensão processual do fazer artístico (marcado por tomadas de decisões, tentativas, negociações de sentido, flexibilidade de propósitos nos modos de criar); e (re)avaliação e (re)criação, com valorização de processos. Por valorizar a fruição e participação em diferentes manifestações artístico-culturais, favorece o desenvolvimento da Competência Global 3."
+   ],
+   "habilidades": [
+    "EM13LGG601",
+    "EM13LGG602",
+    "EM13LGG603",
+    "EM13LGG604",
+    "EM13LP21",
+    "EM13LP46",
+    "EM13LP47",
+    "EM13LP48",
+    "EM13LP49",
+    "EM13LP50"
+   ]
+  },
+  {
+   "id": "em-area-lgg-ce-07",
+   "area": "Linguagens e suas Tecnologias",
+   "numero": 7,
+   "arquivo": "linguagens-e-suas-tecnologias.xlsx",
+   "texto": "Mobilizar práticas de linguagem no universo digital, considerando as dimensões técnicas, críticas, criativas, éticas e estéticas, para expandir as formas de produzir sentidos, de engajar-se em práticas autorais e coletivas, e de aprender a aprender nos campos da ciência, cultura, trabalho, informação e vida pessoal e coletiva.",
+   "comentario": [
+    "A competência 7 refere-se à participação crítica em práticas contemporâneas de linguagem, mediadas pelas tecnologias digitais. Envolve apropriar-se de novas formas de produzir (incluindo as que supõem processos colaborativos), configurar, replicar e disponibilizar os discursos na interação pelas redes sociais e outros ambientes da Web, com vistas ao desenvolvimento da autonomia. Implica abordagem integrada das linguagens e mídias que se articulam para produzir sentidos, com uso de procedimentos específicos no processo de criação, experimentação, análise, investigação e compreensão de novas formas híbridas de enunciados, com vistas a usos mais reflexivos e pautados por princípios éticos, considerando práticas dos diferentes campos/esferas da vida em sociedade."
+   ],
+   "habilidades": [
+    "EM13LGG701",
+    "EM13LGG702",
+    "EM13LGG703",
+    "EM13LGG704",
+    "EM13LP12",
+    "EM13LP17",
+    "EM13LP18",
+    "EM13LP23",
+    "EM13LP28",
+    "EM13LP30",
+    "EM13LP32",
+    "EM13LP35",
+    "EM13LP39",
+    "EM13LP40",
+    "EM13LP41",
+    "EM13LP43",
+    "EM13LP44"
+   ]
+  }
+ ],
+ "fonteEM": "BNCC Comentada para o Ensino Médio · Instituto Reúna · © 2020",
+ "guiaDaPagina": {
+  "Língua Portuguesa": {
+   "introducao": [
+    "Os Mapas de Foco da BNCC são uma seleção cuidadosa das habilidades da BNCC que servem de apoio para as redes, escolas e demais instituições decidirem a flexibilização curricular, a curadoria ou produção de materiais didáticos, a elaboração de avaliações diagnósticas e a formação docente continuada em cenários como pandemia.",
+    "Este Mapa é de Língua Portuguesa. Para os textos de apresentação e os materiais do Instituto Reúna, acesse o site do instituto."
+   ],
+   "entradas": [
+    {
+     "termo": "Campo de atuação",
+     "texto": "Organiza as aprendizagens em campos de atuação. O campo aparece no cabeçalho de cada ano."
+    },
+    {
+     "termo": "Conhecimento prévio",
+     "texto": "Códigos das habilidades que o estudante precisa ter desenvolvido para iniciar a aprendizagem focal, de anos anteriores ou do mesmo ano. Clique em um código para ver o texto; dê dois cliques para abrir a página dele."
+    },
+    {
+     "termo": "Objetivos de aprendizagem",
+     "texto": "Desdobramentos da aprendizagem focal em objetivos, para apoiar o planejamento das aulas."
+    },
+    {
+     "termo": "Competências relacionadas",
+     "texto": "Competências gerais (CG), da área (CA) e específicas (CE) com as quais a aprendizagem focal se relaciona. Clique em uma competência para ver o texto."
+    },
+    {
+     "termo": "Habilidades relacionadas",
+     "texto": "Habilidades que complementam a aprendizagem focal ou podem ser desenvolvidas junto com ela para ir além. Estão separadas por tipo: aprendizagem complementar (AC), expectativa de fluência (EF) ou outras aprendizagens focais (AF)."
+    },
+    {
+     "termo": "Comentário pedagógico",
+     "texto": "Comentário dos autores sobre a classificação desta habilidade."
+    },
+    {
+     "termo": "Conexões entre etapas",
+     "texto": "Habilidades de outras etapas ligadas a esta pelo Mapa de Foco ou pela BNCC Comentada do Ensino Médio. Não são o mesmo que 'Relações e conexões', que a página calcula a partir da BNCC."
+    }
+   ],
+   "classificacoes": [
+    {
+     "termo": "Aprendizagem focal (AF)",
+     "texto": "Habilidades classificadas como aprendizagem focal."
+    },
+    {
+     "termo": "Aprendizagem complementar (AC)",
+     "texto": "Habilidades que podem ser desenvolvidas junto às aprendizagens focais para ir além."
+    },
+    {
+     "termo": "Expectativa de fluência (EF)",
+     "texto": "Habilidades de fluência, associadas a uma aprendizagem focal, que devem ser garantidas ao longo da etapa."
+    }
+   ],
+   "progressao": [
+    "Mostra como a aprendizagem focal se desdobra em cada campo de atuação e prática de linguagem, nos grupos de anos. Cada campo tem um comentário dos autores, mostrado dentro da progressão."
+   ]
+  },
+  "Matemática": {
+   "introducao": [
+    "Os Mapas de Foco da BNCC são uma seleção cuidadosa das habilidades da BNCC que servem de apoio para as redes, escolas e demais instituições decidirem a flexibilização curricular, a curadoria ou produção de materiais didáticos, a elaboração de avaliações diagnósticas e a formação docente continuada em cenários como pandemia.",
+    "Este Mapa é de Matemática. Para os textos de apresentação e os materiais do Instituto Reúna, acesse o site do instituto."
+   ],
+   "entradas": [
+    {
+     "termo": "Unidade temática",
+     "texto": "Organiza as aprendizagens por unidade temática. O cabeçalho de cada ano mostra a unidade."
+    },
+    {
+     "termo": "Conhecimento prévio",
+     "texto": "Códigos das habilidades que o estudante precisa ter desenvolvido para iniciar a aprendizagem focal, de anos anteriores ou do mesmo ano. Clique em um código para ver o texto; dê dois cliques para abrir a página dele."
+    },
+    {
+     "termo": "Objetivos de aprendizagem",
+     "texto": "Desdobramentos da aprendizagem focal em objetivos, para apoiar o planejamento das aulas. Os objetivos marcados com (EF) são expectativas de fluência associadas à aprendizagem focal."
+    },
+    {
+     "termo": "Competências relacionadas",
+     "texto": "Competências gerais (CG), da área (CA) e específicas (CE) com as quais a aprendizagem focal se relaciona. Clique em uma competência para ver o texto."
+    },
+    {
+     "termo": "Habilidades relacionadas",
+     "texto": "Habilidades que complementam a aprendizagem focal ou podem ser desenvolvidas junto com ela para ir além. Neste Mapa, são aprendizagens complementares (AC)."
+    },
+    {
+     "termo": "Comentário pedagógico",
+     "texto": "Comentário dos autores sobre a classificação desta habilidade."
+    },
+    {
+     "termo": "Conexões entre etapas",
+     "texto": "Habilidades de outras etapas ligadas a esta pelo Mapa de Foco ou pela BNCC Comentada do Ensino Médio. Não são o mesmo que 'Relações e conexões', que a página calcula a partir da BNCC."
+    }
+   ],
+   "classificacoes": [
+    {
+     "termo": "Aprendizagem focal (AF)",
+     "texto": "Habilidades classificadas como aprendizagem focal."
+    },
+    {
+     "termo": "Expectativa de fluência (EF)",
+     "texto": "Nos anos iniciais, algumas habilidades são classificadas como expectativa de fluência (EF), associadas a uma aprendizagem focal."
+    }
+   ],
+   "progressao": [
+    "Mostra, por unidade temática, subdivisão e objeto, as aprendizagens focais de cada ano."
+   ]
+  },
+  "Ciências da Natureza": {
+   "introducao": [
+    "Os Mapas de Foco da BNCC são uma seleção cuidadosa das habilidades da BNCC que servem de apoio para as redes, escolas e demais instituições decidirem a flexibilização curricular, a curadoria ou produção de materiais didáticos, a elaboração de avaliações diagnósticas e a formação docente continuada em cenários como pandemia.",
+    "Este Mapa é de Ciências da Natureza. Para os textos de apresentação e os materiais do Instituto Reúna, acesse o site do instituto."
+   ],
+   "entradas": [
+    {
+     "termo": "Unidade temática",
+     "texto": "Organiza as aprendizagens por unidade temática (matéria e energia, vida e evolução, terra e universo). O cabeçalho de cada ano mostra a unidade."
+    },
+    {
+     "termo": "Conhecimento prévio",
+     "texto": "Códigos das habilidades que o estudante precisa ter desenvolvido para iniciar a aprendizagem focal, de anos anteriores ou do mesmo ano. Clique em um código para ver o texto; dê dois cliques para abrir a página dele."
+    },
+    {
+     "termo": "Objetivos de aprendizagem",
+     "texto": "Desdobramentos da aprendizagem focal em objetivos, para apoiar o planejamento das aulas."
+    },
+    {
+     "termo": "Competências relacionadas",
+     "texto": "Competências gerais (CG), da área (CA) e específicas (CE) com as quais a aprendizagem focal se relaciona. Clique em uma competência para ver o texto."
+    },
+    {
+     "termo": "Habilidades relacionadas",
+     "texto": "Habilidades que complementam a aprendizagem focal ou podem ser desenvolvidas junto com ela para ir além. Neste Mapa, são aprendizagens complementares (AC)."
+    },
+    {
+     "termo": "Comentário pedagógico",
+     "texto": "Comentário dos autores sobre a classificação desta habilidade."
+    },
+    {
+     "termo": "Resumo do ano",
+     "texto": "Critérios usados para escolher as aprendizagens focais do ano, com o total de AF e AC."
+    },
+    {
+     "termo": "Conexões entre etapas",
+     "texto": "Habilidades de outras etapas ligadas a esta pelo Mapa de Foco ou pela BNCC Comentada do Ensino Médio. Não são o mesmo que 'Relações e conexões', que a página calcula a partir da BNCC."
+    }
+   ],
+   "classificacoes": [
+    {
+     "termo": "Aprendizagem focal (AF)",
+     "texto": "Habilidades classificadas como aprendizagem focal."
+    }
+   ],
+   "progressao": [
+    "Mostra, por eixo, as aprendizagens focais de cada ano, na ordem da progressão."
+   ]
+  },
+  "Ciências Humanas": {
+   "introducao": [
+    "Os Mapas de Foco da BNCC são uma seleção cuidadosa das habilidades da BNCC que servem de apoio para as redes, escolas e demais instituições decidirem a flexibilização curricular, a curadoria ou produção de materiais didáticos, a elaboração de avaliações diagnósticas e a formação docente continuada em cenários como pandemia.",
+    "Este Mapa é de Ciências Humanas. Para os textos de apresentação e os materiais do Instituto Reúna, acesse o site do instituto."
+   ],
+   "entradas": [
+    {
+     "termo": "Unidade temática",
+     "texto": "Organiza as aprendizagens por unidade temática. O cabeçalho de cada ano mostra a unidade."
+    },
+    {
+     "termo": "Conhecimento prévio",
+     "texto": "Códigos das habilidades que o estudante precisa ter desenvolvido para iniciar a aprendizagem focal, de anos anteriores ou do mesmo ano. Clique em um código para ver o texto; dê dois cliques para abrir a página dele."
+    },
+    {
+     "termo": "Objetivos de aprendizagem",
+     "texto": "Desdobramentos da aprendizagem focal em objetivos, para apoiar o planejamento das aulas."
+    },
+    {
+     "termo": "Competências relacionadas",
+     "texto": "Competências gerais (CG), da área (CA) e específicas (CE) com as quais a aprendizagem focal se relaciona. Clique em uma competência para ver o texto."
+    },
+    {
+     "termo": "Habilidades relacionadas",
+     "texto": "Habilidades que complementam a aprendizagem focal ou podem ser desenvolvidas junto com ela para ir além, como aprendizagens complementares (AC) ou outras focais (AF). Ao clicar no código, a explicação mostra como ela se relaciona com a aprendizagem focal."
+    },
+    {
+     "termo": "Comentário pedagógico",
+     "texto": "Comentário dos autores sobre a classificação desta habilidade."
+    },
+    {
+     "termo": "Resumo do ano",
+     "texto": "Critérios usados para escolher as aprendizagens focais do ano, com o total de AF e AC."
+    },
+    {
+     "termo": "Conexões entre etapas",
+     "texto": "Habilidades de outras etapas ligadas a esta pelo Mapa de Foco ou pela BNCC Comentada do Ensino Médio. Não são o mesmo que 'Relações e conexões', que a página calcula a partir da BNCC."
+    }
+   ],
+   "classificacoes": [
+    {
+     "termo": "Aprendizagem focal (AF)",
+     "texto": "Habilidades classificadas como aprendizagem focal."
+    },
+    {
+     "termo": "Foco e complementar (AF/AC)",
+     "texto": "Habilidades classificadas como aprendizagem focal e também como complementar."
+    }
+   ],
+   "progressao": [
+    "Mostra as aprendizagens focais de cada ano. A letra P marca propostas de progressão dentro do mesmo componente: a habilidade marcada com P1 se liga a outra com a mesma marca (P1), trabalhada em um ano seguinte.",
+    "As notas com asterisco (*) indicam habilidades que devem ser trabalhadas em conjunto."
+   ]
+  },
+  "Ensino Médio": {
+   "introducao": [
+    "Os Mapas de Foco da BNCC são uma seleção cuidadosa das habilidades da BNCC que servem de apoio para as redes, escolas e demais instituições decidirem a flexibilização curricular, a curadoria ou produção de materiais didáticos, a elaboração de avaliações diagnósticas e a formação docente continuada em cenários como pandemia.",
+    "Os comentários desta página são da BNCC Comentada para o Ensino Médio, do Instituto Reúna. Para os materiais do instituto, acesse o site do instituto."
+   ],
+   "entradas": [
+    {
+     "termo": "Competência específica",
+     "texto": "Cada cartão corresponde a uma competência específica em que a habilidade é comentada. O texto oficial da competência aparece no topo do cartão."
+    },
+    {
+     "termo": "Sobre a competência",
+     "texto": "Comentário dos autores sobre a competência, recolhido dentro do cartão."
+    },
+    {
+     "termo": "Comentário sobre a habilidade",
+     "texto": "O que a habilidade implica, segundo os autores."
+    },
+    {
+     "termo": "Objetos do conhecimento",
+     "texto": "Conteúdos e temas relacionados à habilidade."
+    },
+    {
+     "termo": "Exemplos de objetivos de aprendizagem",
+     "texto": "Exemplos de objetivos que podem ser planejados com a habilidade."
+    },
+    {
+     "termo": "Possibilidades para o currículo",
+     "texto": "Ideias de integração entre componentes e temas contemporâneos."
+    },
+    {
+     "termo": "Comentários dos componentes",
+     "texto": "Como cada componente da área contribui para desenvolver a habilidade."
+    },
+    {
+     "termo": "Competências gerais citadas",
+     "texto": "Competências gerais da BNCC mencionadas nos comentários. Clique em uma delas para ver o texto."
+    },
+    {
+     "termo": "Conexões entre etapas",
+     "texto": "Habilidades de outras etapas ligadas a esta, pelo Mapa de Foco ou pela BNCC Comentada. Não são o mesmo que 'Relações e conexões', que a página calcula a partir da BNCC."
+    }
+   ],
+   "classificacoes": [],
+   "progressao": []
+  }
+ }
+}

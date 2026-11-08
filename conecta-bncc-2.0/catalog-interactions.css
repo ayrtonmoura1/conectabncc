@@ -1,0 +1,18 @@
+.row-rail{position:relative}
+.row-track{align-items:flex-start;scroll-behavior:smooth}
+.rail-arrow{position:absolute;top:0;bottom:19px;z-index:6;width:48px;border:0;color:#fff;font-size:32px;background:linear-gradient(90deg,#111116ee,#11111600);opacity:0;visibility:hidden;pointer-events:none;transition:opacity .2s,visibility .2s;cursor:pointer}
+.rail-prev{left:0;text-align:left;padding-left:9px}
+.rail-next{right:0;text-align:right;padding-right:9px;background:linear-gradient(270deg,#111116ee,#11111600)}
+.row-rail:hover .rail-arrow,.row-rail:focus-within .rail-arrow{opacity:1;visibility:visible;pointer-events:auto}
+.rail-arrow[hidden]{display:none}
+.rail-arrow:focus-visible{outline:2px solid #e6c6ef;outline-offset:-4px}
+.rail-arrow:hover{color:#eac5f4}
+.skill-card{height:154px;overflow:hidden;transition:height .2s ease,transform .2s ease,box-shadow .2s ease,border-color .2s ease}
+.skill-card:hover,.skill-card:focus-visible{height:auto;min-height:154px;overflow:hidden;transform:scale(1.035)}
+.skill-card:hover .card-text,.skill-card:focus-visible .card-text{display:block;-webkit-line-clamp:unset;overflow:visible}
+.card-text{-webkit-line-clamp:4}
+.card-extra{display:none;position:relative;margin-top:9px;color:#c9b8d2;font-size:9px;line-height:1.45}
+.skill-card:hover .card-extra,.skill-card:focus-visible .card-extra{display:block}
+.skill-card:hover .card-foot,.skill-card:focus-visible .card-foot{position:relative;left:auto;right:auto;bottom:auto;margin-top:11px}
+@media(min-width:641px) and (max-width:760px){.main-nav{display:none}}
+@media(max-width:640px){.rail-arrow{display:none}.skill-card{height:144px}.skill-card:hover,.skill-card:focus-visible{min-height:144px;transform:none}}
