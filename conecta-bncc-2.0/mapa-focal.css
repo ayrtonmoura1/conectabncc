@@ -58,6 +58,6 @@
 .hab-dialog-mapa dt{font-size:11px;font-weight:700;letter-spacing:.04em;text-transform:uppercase;color:var(--muted)}
 .hab-dialog-mapa dd{margin:0;font-size:13px;line-height:1.5;color:var(--text)}
 .hab-dialog-texto{margin:0;font-size:14.5px;line-height:1.6;color:var(--text)}
-.hab-dialog-acoes{display:flex;justify-content:flex-end;margin-top:4px}
+.hab-dialog-acoes{display:flex;justify-content:flex-end;align-items:center;gap:10px;flex-wrap:wrap;margin-top:6px}
 
 @media(max-width:640px){.mf-faixa-colunas{grid-template-columns:1fr}.mf-linha{min-width:120px}.hab-dialog-mapa>div{grid-template-columns:1fr;gap:2px}}

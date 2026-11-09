@@ -7,7 +7,7 @@ const vm = require('node:vm');
 const root=path.join(__dirname,'..');
 const read=file=>JSON.parse(fs.readFileSync(path.join(root,'dados',file),'utf8'));
 const original=fs.readFileSync(path.join(root,'app.js'),'utf8');
-const instrumented=original.replace(/load\(\);\s*\}\)\(\);\s*$/,'globalThis.catalogApi={normalize,S,ROWS,E,componentLabel,periods,rowView,rowPeriodChips,rowComponentChips};})();');
+const instrumented=original.replace(/load\(\);\s*\}\)\(\);\s*$/,'globalThis.catalogApi={normalize,S,ROWS,E,componentLabel,periods,rowView,rowPeriodChips,rowComponentChips,rowItems,card,railMarkup};})();');
 assert.notEqual(instrumented,original,'Não foi possível preparar o catálogo para verificação');
 const sandbox={document:{body:{dataset:{}}},localStorage:{getItem:()=>null},console};
 vm.runInNewContext(instrumented,sandbox,{filename:'app.js'});
@@ -36,7 +36,7 @@ test('a escolha de ano mantém os componentes na ordem dos cartões disponíveis
 });
 
 test('ao escolher uma referência, os anos seguem seus cartões sem remover as outras opções',()=>{
- reset();const r=row('computacao');api.S.rowFilters.set(r.id,'CIEB · Cultura Digital');const view=api.rowView(r),buttons=periodButtons(api.rowPeriodChips(r,view));
+ reset();const r=row('cieb');api.S.rowFilters.set(r.id,'CIEB · Cultura Digital');const view=api.rowView(r),buttons=periodButtons(api.rowPeriodChips(r,view));
  const preferred=periodKeys(view.base.filter(x=>api.componentLabel(x)===view.selected),r.id),all=periodKeys(view.base,r.id);
  assert.deepEqual(buttons.map(p=>p.key),['',...preferred,...all.filter(k=>!preferred.includes(k))]);
  assert.equal(buttons[1].key,'ei-geral');
@@ -57,4 +57,63 @@ test('a ordem acompanha a busca e mantém o filtro selecionado',()=>{
  assert.deepEqual(components(api.rowComponentChips(r,view)),['',...expectedComponents(view)]);
  assert.ok(api.rowComponentChips(r,view).includes('data-component="Matemática" aria-pressed="true"'));
  assert.deepEqual(periodButtons(api.rowPeriodChips(r,view)).map(p=>p.key),['',...periodKeys(view.base,r.id)]);
+});
+
+test('a faixa do CIEB no catálogo inclui o chip de Ensino Médio e filtra as 51 habilidades da etapa',()=>{
+ reset();const r=row('cieb');
+ api.S.yearFilters.set(r.id,'em');
+ const view=api.rowView(r),html=api.rowPeriodChips(r,view),buttons=periodButtons(html);
+ const emButton=buttons.find(b=>b.key==='em');
+ assert.ok(emButton,'a faixa CIEB deve conter o botão de período Ensino Médio');
+ assert.equal(emButton.count,'51','o contador do chip de Ensino Médio do CIEB deve ser 51');
+ assert.equal(view.available.length,51,'devem ser exibidas 51 habilidades ao filtrar Ensino Médio no CIEB');
+ assert.ok(view.available.every(x=>x.kind==='cieb'&&x.raw?.stage==='Ensino Médio'));
+});
+
+test('a faixa do Reúna no catálogo lista apenas as 266 habilidades focais na sequência do Mapa de Foco e os cartões refletem essa condição',()=>{
+ reset();
+ const r = row('reuna');
+ const view = api.rowView(r);
+ assert.equal(view.base.length, 266, 'a faixa do Reúna deve conter exatamente 266 habilidades focais');
+
+ // Todas devem ter tipo AF no Reúna
+ assert.ok(view.base.every(x => api.S.data.reuna?.[x.code]?.tipo === 'AF'), 'todos os itens da faixa do Reúna devem ser habilidades focais (AF)');
+
+ // A ordem deve iniciar pela Educação Infantil e seguir pelos anos do Ensino Fundamental
+ assert.ok(view.base[0].code.startsWith('EI03'), 'primeiro item deve ser da Educação Infantil');
+ const firstEf = view.base.find(x => x.code.startsWith('EF01'));
+ assert.ok(firstEf, 'deve conter habilidades do 1º ano');
+
+ // Teste da renderização dos cartões para o Reúna
+ const focalSkill = api.S.by.get('EF01LP16');
+ const cardHtml = api.card(focalSkill, 0, 'reuna');
+ assert.ok(cardHtml.includes('Focal 1/6'), 'cartão do Reúna deve indicar a posição focal 1/6');
+ assert.ok(!cardHtml.includes('>Habilidade Focal<'), 'cartão do Reúna não deve conter a tag visível Habilidade Focal');
+ assert.ok(cardHtml.includes('Campo da vida cotidiana'), 'cartão do Reúna deve conter a unidade temática ou campo');
+ assert.ok(!cardHtml.includes('card-foot'), 'cartão do catálogo não deve conter a dica card-foot');
+ assert.ok(!cardHtml.includes('Abrir habilidade'), 'cartão do catálogo não deve conter a dica de Abrir habilidade');
+ assert.ok(cardHtml.includes('class="skill-card reuna-card"'), 'cartão do Reúna de 1 linha de campo não deve conter reuna-theme-lines-2');
+
+ const focal2Lines = api.S.by.get('EF01LP22');
+ const card2Lines = api.card(focal2Lines, 0, 'reuna');
+ assert.ok(card2Lines.includes('reuna-theme-lines-2'), 'cartão do Reúna com campo longo deve conter reuna-theme-lines-2');
+
+ const focalMat = api.S.by.get('EF06MA01');
+ const cardMat = api.card(focalMat, 0, 'reuna');
+ assert.ok(cardMat.includes('Unidade: Números'), 'cartão do Reúna de Matemática deve conter Unidade: Números');
+ assert.ok(cardMat.includes('Focal 1/14'), 'cartão de Matemática 6º ano deve indicar posição 1/14');
+
+ const focalPluri = api.S.by.get('EF12LP04');
+ const cardPluri = api.card(focalPluri, 0, 'reuna');
+ assert.ok(cardPluri.includes('Bloco 1º, 2º ano'), 'cartão plurianual do Reúna deve indicar o agrupamento em bloco');
+
+ const carrosselCss = fs.readFileSync(path.join(root, 'carrossel.css'), 'utf8');
+ assert.ok(carrosselCss.includes('.row-track .skill-card.reuna-card .skill-tag--theme'), 'carrossel.css deve estilizar o tema/unidade em até 2 linhas');
+ assert.ok(carrosselCss.includes('.row-track .skill-card.reuna-card.reuna-theme-lines-2 .card-text'), 'carrossel.css deve limitar a descrição a 2 linhas quando o tema ocupa 2 linhas');
+
+ // Teste com filtro de período (ex: 1º ano)
+ api.S.yearFilters.set(r.id, 'ano1');
+ const viewAno1 = api.rowView(r);
+ assert.ok(viewAno1.items.length > 0 && viewAno1.items.length < 266, 'filtro por 1º ano deve retornar apenas as focais do 1º ano');
+ assert.ok(viewAno1.items.every(x => api.periods(x, r.id).some(p => p.key === 'ano1')));
 });

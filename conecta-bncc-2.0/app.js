@@ -25,7 +25,7 @@ function item(code,text,stage,more){return Object.assign({code,text,stage,years:
 function flattenCieb(root){
  const out=[];
  for(const etapa of root.etapas||[])for(const ano of etapa.anos||[])for(const eixo of ano.eixos||[])for(const conceito of eixo.conceitos||[])for(const h of conceito.habilidades||[]){
-   out.push({code:h.codigo,text:h.descricao,stage:etapa.etapa||"",year:ano.ano||"",axis:eixo.eixo||"",concept:conceito.conceito||"",topic:[eixo.eixo,conceito.conceito].filter(Boolean).join(" · "),practices:h.praticas||[],evaluations:h.avaliacoes||[],bnccLinks:(h.habilidades_bncc||[]).filter(link=>link.codigo),generalCompetencies:(h.competencias_gerais_bncc||[]).filter(link=>link.codigo),materials:h.materiais_referencia||[]});
+   out.push({code:h.codigo,text:h.descricao,stage:etapa.etapa||"",year:ano.ano||"",axis:eixo.eixo||"",concept:conceito.conceito||"",topic:[eixo.eixo,conceito.conceito].filter(Boolean).join(" · "),practices:h.praticas||[],evaluations:h.avaliacoes||[],bnccLinks:(h.habilidades_bncc||[]).filter(link=>link.codigo),generalCompetencies:(h.competencias_gerais_bncc||[]).filter(link=>link.codigo),materials:h.materiais_referencia||[],axisCompetencies:h.competencias_do_eixo||h.axisCompetencies||[],workload:h.carga_horaria||"",unitType:h.tipo_unidade_curricular||"",unitName:h.nome_unidade||"",attitudes:h.atitudes||[],resources:h.recursos||[],tematicas:h.tematicas||[],teacherProfile:h.perfil_docente||"",structure:h.estrutura||[]});
  }
  return out;
 }
@@ -38,26 +38,110 @@ function normalize(d){
  d.em.habilidades.forEach(x=>{const area=areas.get(x.area)?.nome||"Ensino Médio";S.all.push(item(x.codigo,x.texto,"EM",{discipline:area,area,group:"Ensino Médio",topic:area,competencyIds:x.competencias_especificas||[],competencyNames:(x.competencias_especificas||[]).map(i=>name(i,bnccCompetencies)),source:x.fonte,raw:x}));});
  const compSkills=[...(d.comp.objetivos_ei||[]).map(x=>({...x,years:[],group:ages[x.grupo_etario]||"Educação Infantil"})),...(d.comp.habilidades_ef||[]),...(d.comp.habilidades_em||[])];
  compSkills.forEach(x=>{const axis=name(x.eixo,axes),obj=x.objetos_conhecimento||[],cids=[...(x.competencias_especificas||[]),...(x.competencia?[x.competencia]:[])];S.all.push(item(x.codigo,x.texto,"Computação",{years:x.anos||[],discipline:"Computação",area:"BNCC Computação",group:x.group||((x.anos||[]).map(n=>n+"º").join(" · ")||"Ensino Médio"),topic:[axis,...obj.map(i=>name(i,objects))].filter(Boolean).join(" · "),axisId:x.eixo,objectIds:obj,competencyIds:cids,competencyNames:cids.map(i=>name(i,compCompetencies)),source:x.fonte,raw:x,kind:"computacao"}));});
+ const areaCodeMap={"Linguagens":"LIN","Matemática":"MAT","Ciências da Natureza":"CNT","Ciências Humanas":"CH","Ensino Religioso":"ER","Linguagens e suas Tecnologias":"LIN","Matemática e suas Tecnologias":"MAT","Ciências da Natureza e suas Tecnologias":"CNT","Ciências Humanas e Sociais Aplicadas":"CH"};
+ const compCodeMap={"Língua Portuguesa":"LP","Arte":"ART","Educação Física":"EF","Língua Inglesa":"LI","História":"HIS","Geografia":"GEO"};
+ (d.structure.competencias_gerais||[]).forEach(c=>{
+  const code="CG"+String(c.numero).padStart(2,"0");
+  const o=item(code,c.texto,"Geral",{discipline:"Competências Gerais",area:"Educação Básica",group:"Competência Geral",topic:"Competências Gerais da Educação Básica",compType:"geral",source:c.fonte,raw:c,kind:"competencia"});
+  o._id=c.id;S.all.push(o);
+ });
+ (d.structure.competencias_especificas||[]).forEach(c=>{
+  const isArea=c.tipo==="especifica_de_area",areaName=areas.get(c.area)?.nome||c.area||"BNCC",compName=comps.get(c.componente)?.nome,stagePrefix=(c.id||"").startsWith("em-")?"EM":"EF",numPad=String(c.numero).padStart(2,"0");
+  const shortCode=isArea?(stagePrefix==="EM"?("EM-"+(areaCodeMap[areaName]||"AREA")+numPad):("CA-"+(areaCodeMap[areaName]||"AREA")+numPad)):("CE-"+(compCodeMap[compName]||"COMP")+numPad);
+  const discipline=compName||areaName,group=isArea?("Área · "+areaName):("Componente · "+discipline);
+  const o=item(shortCode,c.texto,stagePrefix,{discipline,area:areaName,group,topic:isArea?("Competência de Área · "+areaName):("Competência Específica · "+discipline),compType:c.tipo,source:c.fonte,raw:c,kind:"competencia"});
+  o._id=c.id;S.all.push(o);
+ });
+ (d.comp.competencias||[]).forEach(c=>{
+  const isEm=c.tipo==="especifica_em_computacao"||(c.id||"").includes("-em-");
+  const code=isEm?("EM-CO"+String(c.numero).padStart(2,"0")):("CO"+String(c.numero).padStart(2,"0"));
+  const o=item(code,c.texto,isEm?"EM":"Computação",{discipline:"Computação",area:"BNCC Computação",group:isEm?"Competência EM · Computação":"Competência · Computação",topic:"Competências de Computação",compType:c.tipo,source:c.fonte,raw:c,kind:"competencia"});
+  o._id=c.id;S.all.push(o);
+ });
  S.data={ctx,fields,bnccCompetencies,axes,objects,compCompetencies,structure:d.structure,ai:d.ai.pontes||{},reuna:d.reuna,reunaVisao:d.reunaVisao||null,cieb:flattenCieb(d.cieb)};
  S.data.cieb.forEach(x=>{x.words=words(x.text+" "+x.topic+" "+x.concept);const c=item(x.code,x.text,"CIEB",{years:[],discipline:"CIEB · "+(x.axis||"Computação"),area:"CIEB",group:[x.stage,yearLabel(x.year)].filter(Boolean).join(" · "),topic:x.topic,source:{arquivo:"Currículo de Referência em Tecnologia e Computação · CIEB"},raw:x,kind:"cieb"});S.all.push(c);});
  S.rows.clear();S.relationCache.clear();
- S.all.forEach(x=>{x._textWords=words(x.text);x._topicWords=words(x.text+" "+x.topic);x._search=N([x.code,x.text,x.discipline,x.area,x.topic,x.group].join(" "));if(!S.by.has(x.code))S.by.set(x.code,x);});
+ S.all.forEach(x=>{x._textWords=words(x.text);x._topicWords=words(x.text+" "+x.topic);x._search=N([x.code,x.text,x.discipline,x.area,x.topic,x.group].join(" "));if(!S.by.has(x.code))S.by.set(x.code,x);if(x._id&&!S.by.has(x._id))S.by.set(x._id,x);});
 }
-const ROWS=[{id:"ei",title:"Educação Infantil",sub:"93 objetivos · BNCC 2018"},{id:"iniciais",title:"Anos Iniciais",sub:"1º ao 5º ano"},{id:"finais",title:"Anos Finais",sub:"6º ao 9º ano"},{id:"em",title:"Ensino Médio",sub:"habilidades por área"},{id:"computacao",title:"BNCC Computação",sub:"BNCC Computação · + referências complementares CIEB"},{id:"reuna",title:"Reúna",sub:"referências de organização curricular"}];
+const ROWS=[{id:"ei",title:"Educação Infantil",sub:"93 objetivos · BNCC 2018"},{id:"iniciais",title:"Anos Iniciais",sub:"1º ao 5º ano"},{id:"finais",title:"Anos Finais",sub:"6º ao 9º ano"},{id:"em",title:"Ensino Médio",sub:"habilidades por área"},{id:"competencias",title:"Competências",sub:"gerais, específicas e por área · BNCC"},{id:"computacao",title:"BNCC Computação",sub:"complemento de Computação à BNCC"},{id:"cieb",title:"Currículo CIEB",sub:"referências complementares em tecnologia e computação"},{id:"reuna",title:"Reúna",sub:"mapa de foco · 266 habilidades focais"}];
 function rowItems(id){
  if(S.rows.has(id))return S.rows.get(id);
- const bn=S.all.filter(x=>x.kind==="bncc"),co=S.all.filter(x=>x.kind==="computacao");let result=[];
+ const bn=S.all.filter(x=>x.kind==="bncc");let result=[];
  if(id==="ei")result=bn.filter(x=>x.stage==="EI");
  else if(id==="iniciais")result=bn.filter(x=>x.stage==="EF"&&x.years.some(n=>n<=5));
  else if(id==="finais")result=bn.filter(x=>x.stage==="EF"&&x.years.some(n=>n>=6));
  else if(id==="em")result=bn.filter(x=>x.stage==="EM");
- else if(id==="computacao")result=co.concat(S.all.filter(x=>x.kind==="cieb"));
- else if(id==="reuna")result=bn.filter(x=>S.data.reuna?.[x.code]);
+ else if(id==="competencias")result=S.all.filter(x=>x.kind==="competencia");
+ else if(id==="computacao")result=S.all.filter(x=>x.kind==="computacao");
+ else if(id==="cieb")result=S.all.filter(x=>x.kind==="cieb");
+ else if(id==="reuna"){
+  const focalEntries=Object.entries(S.data.reuna||{}).filter(([,v])=>v?.tipo==="AF");
+  function anoOrder(ano){
+   if(!ano)return 99;
+   if(/crian/i.test(ano))return 0;
+   const m=String(ano).match(/\d+/);
+   return m?parseInt(m[0],10):50;
+  }
+  focalEntries.sort((a,b)=>{
+   const oA=anoOrder(a[1].ano_faixa), oB=anoOrder(b[1].ano_faixa);
+   if(oA!==oB)return oA-oB;
+   if(a[1].componente!==b[1].componente)return a[1].componente.localeCompare(b[1].componente);
+   return (a[1].posicao||0)-(b[1].posicao||0);
+  });
+  result=focalEntries.map(([code])=>S.by.get(code)).filter(Boolean);
+ }
  S.rows.set(id,result);return result;
 }
 function rel(a,b){
+ const isAComp=a.kind==="competencia",isBComp=b.kind==="competencia";
+ if(isAComp||isBComp){
+  if(isAComp&&isBComp){
+   if(a.discipline===b.discipline||(a.area&&a.area===b.area&&a.area!=="Educação Básica"))return{type:"Competência correlata",basis:"Mesma área ou componente: "+(a.discipline||a.area),kind:"competency",score:85};
+   if(a.compType===b.compType)return{type:"Competência do mesmo grupo",basis:a.group||"Competências articuladas",kind:"competency",score:75};
+   const terms=sharedSets(a._textWords,b._textWords);
+   if(terms.length>=2)return{type:"Aproximação conceitual",basis:"Temas em comum: "+terms.slice(0,4).join(", "),kind:"suggested",score:30+terms.length};
+   return null;
+  }
+  const comp=isAComp?a:b,skill=isAComp?b:a;
+  if((skill.competencyIds||[]).some(id=>id===comp._id||id===comp.code))return{type:"Competência declarada",basis:"A habilidade declara diretamente esta competência na fonte oficial.",kind:"formal",score:120};
+  if(skill.kind==="cieb"&&(skill.raw?.generalCompetencies||[]).some(g=>g.codigo===comp.code||(comp.code.startsWith("CG")&&parseInt(comp.raw?.numero,10)===parseInt(g.codigo?.replace(/\D/g,""),10))))return{type:"Competência geral indicada pelo CIEB",basis:"O currículo de referência do CIEB articula esta habilidade à competência geral.",kind:"cieb",score:115};
+  const reunaEntry=S.data.reuna?.[skill.code];
+  if(reunaEntry){
+   const bc=reunaEntry.bnccComentada,mf=reunaEntry.mapaDeFoco;
+   const compNum=String(comp.raw?.numero||"");
+   if(bc?.competenciasEspecificasBNCC?.includes(comp._id)||bc?.competenciasGeraisMencionadas?.includes(comp._id))return{type:"Vínculo curricular indicado pelo Reúna",basis:"Articulação documentada na BNCC Comentada do Instituto Reúna.",kind:"formal",score:110};
+   if(mf?.ocorrencias?.some(o=>{
+    const c=o.competencias||{};
+    if(comp.code.startsWith("CG")&&c.CG?.includes(compNum))return true;
+    if(comp.compType==="especifica_de_area"&&c.CA?.includes(compNum))return true;
+    if(comp.compType==="especifica_de_componente"&&c.CE?.includes(compNum))return true;
+    return false;
+   }))return{type:"Vínculo curricular no Mapa de Foco",basis:"Articulação identificada nos Mapas de Foco do Instituto Reúna.",kind:"formal",score:108};
+  }
+  if(skill.kind==="bncc"){
+   if((skill.discipline&&skill.discipline===comp.discipline)||(skill.area&&skill.area===comp.area&&comp.area!=="Educação Básica")){
+    const terms=sharedSets(skill._textWords,comp._textWords);
+    if(terms.length>=2)return{type:"Articulação temática no componente",basis:"Mesmo componente ("+(comp.discipline||comp.area)+") e temas em comum: "+terms.slice(0,4).join(", "),kind:"competency",score:70+terms.length};
+    return{type:"Articulação no componente curricular",basis:"Competência e habilidade vinculadas a "+(comp.discipline||comp.area),kind:"competency",score:50};
+   }
+  }
+  const terms=sharedSets(skill._textWords,comp._textWords);
+  if(terms.length>=2)return{type:"Convergência temática com competência",basis:"Temas em comum: "+terms.slice(0,4).join(", ")+". Sugestão para planejamento interdisciplinar.",kind:"suggested",score:35+terms.length};
+  return null;
+ }
  const cieb=a.kind==="cieb"?a:b.kind==="cieb"?b:null,other=cieb===a?b:a;
  if(cieb&&(cieb.raw?.bnccLinks||[]).some(link=>link.codigo===other.code))return{type:"Vínculo indicado pelo CIEB",basis:"Esta relação consta no currículo de referência do CIEB. Ela é uma indicação do CIEB, não uma relação formal declarada pela BNCC.",kind:"cieb",score:110};
+ if(a.kind==="cieb"&&b.kind==="cieb"){
+  if((a.raw?.axisCompetencies||[]).includes(b.code)||(b.raw?.axisCompetencies||[]).includes(a.code)){
+   return{type:"Competência de eixo associada",basis:"Competência geral do eixo articulada a esta unidade curricular no CIEB Ensino Médio.",kind:"cieb",score:115};
+  }
+  const terms=sharedSets(a._textWords,b._textWords);
+  if(a.discipline===b.discipline){
+   if(terms.length>=2)return{type:"Articulação no mesmo eixo CIEB",basis:"Eixo "+a.discipline+" e temas comuns: "+terms.slice(0,4).join(", ")+".",kind:"cieb",score:45+terms.length};
+   return{type:"Eixo comum no CIEB",basis:"Ambas integram o eixo "+a.discipline+" no referencial CIEB.",kind:"cieb",score:30};
+  }
+  if(terms.length>=2)return{type:"Aproximação temática no CIEB",basis:"Temas em comum entre eixos do CIEB: "+terms.slice(0,4).join(", ")+".",kind:"cieb",score:25+terms.length};
+ }
  const obj=(a.objectIds||[]).filter(x=>(b.objectIds||[]).includes(x));if(obj.length)return{type:"Objeto de conhecimento comum",basis:obj.map(x=>name(x,a.kind==="computacao"?S.data.objects:S.data.ctx)).join(", "),kind:"formal",score:100+obj.length};
  const comps=(a.competencyIds||[]).filter(x=>(b.competencyIds||[]).includes(x));if(comps.length)return{type:"Competência específica comum",basis:comps.map(x=>name(x,S.data.bnccCompetencies.has(x)?S.data.bnccCompetencies:S.data.compCompetencies)).join(", "),kind:"competency",score:90+comps.length};
  if(a.alignment&&a.alignment===b.alignment)return{type:"Alinhamento oficial entre faixas etárias",basis:"A BNCC alinha objetivos do mesmo aspecto na Educação Infantil.",kind:"formal",score:96};
@@ -79,8 +163,10 @@ function matchesStage(x,filter){
  if(filter==="iniciais")return (x.stage==="EF"&&years.some(n=>n<=5))||(x.kind==="computacao"&&years.some(n=>n<=5))||stage.includes("anos iniciais")||(x.kind==="cieb"&&rawYear>0&&rawYear<=5);
  if(filter==="finais")return (x.stage==="EF"&&years.some(n=>n>=6))||(x.kind==="computacao"&&years.some(n=>n>=6&&n<=9))||stage.includes("anos finais")||(x.kind==="cieb"&&rawYear>=6&&rawYear<=9);
  if(filter==="em")return x.stage==="EM"||x.code.startsWith("EM")||stage.includes("ensino medio");
- if(filter==="computacao")return x.kind==="computacao"||x.kind==="cieb";
- if(filter==="reuna")return !!S.data.reuna?.[x.code];
+ if(filter==="competencias")return x.kind==="competencia";
+ if(filter==="computacao")return x.kind==="computacao";
+ if(filter==="cieb")return x.kind==="cieb";
+ if(filter==="reuna")return S.data.reuna?.[x.code]?.tipo==="AF";
  return true;
 }
 function filtered(a){const q=N(S.q.trim()),f=S.filter;return a.filter(x=>(!f||x.discipline===f||x.area===f)&&matchesStage(x,S.stageFilter)&&(!q||x._search.includes(q)));}
@@ -88,19 +174,63 @@ function componentLabel(x){
  if(x.kind==="computacao")return x.axisId?name(x.axisId,S.data.axes):"Competências do Ensino Médio";
  return x.discipline||x.area||"Outros";
 }
-function card(x,railIndex){
- const component=componentLabel(x),co=color(component);
- return '<article class="skill-card" role="button" tabindex="-1" aria-hidden="true" aria-label="Abrir '+E(x.code)+': '+E(x.text)+'" data-code="'+E(x.code)+'" data-rail-index="'+E(railIndex)+'" style="--accent:'+co+'"><div class="card-top"><span class="skill-code">'+E(x.code)+'</span><span class="skill-group">'+E(x.group||x.doc||"BNCC")+'</span></div><div class="card-identity"><span class="skill-tag">'+E(component)+'</span></div><p class="card-text">'+E(x.text)+'</p><div class="card-foot"><span>Abrir habilidade</span><span aria-hidden="true">↗</span></div></article>';
+function reunaCardContext(reunaFocal,x){
+ if(!reunaFocal)return null;
+ const occ=reunaFocal.mapaDeFoco?.ocorrencias?.[0]?.campoOuUnidade;
+ const topicFirst=x?.topic?x.topic.split(' · ')[0].trim():'';
+ const unidade=occ||topicFirst||'';
+ let label=unidade;
+ if(/^campo/i.test(unidade)){
+  label=unidade;
+ }else if(/espaços|escuta|o eu/i.test(unidade)){
+  label='Campo: '+unidade;
+ }else if(unidade){
+  label='Unidade: '+unidade;
+ }
+ const isPluri=reunaFocal.ano_faixa&&reunaFocal.ano_faixa.includes(',');
+ const pluriClean=reunaFocal.ano_faixa==='1º, 2º, 3º, 4º, 5º'?'1º ao 5º ano':(reunaFocal.ano_faixa+' ano');
+ const anoCurto=/crian/i.test(reunaFocal.ano_faixa)?'Crianças pequenas':(/ano/i.test(reunaFocal.ano_faixa)?reunaFocal.ano_faixa:reunaFocal.ano_faixa+' ano');
+ const groupDesc=isPluri?('Bloco '+pluriClean):anoCurto;
+ const rotulo=reunaFocal.rotulo||('Focal '+reunaFocal.posicao+'/'+reunaFocal.total_grupo+' em '+reunaFocal.componente+' ('+groupDesc+')');
+ return {unidade,label,groupDesc,rotulo};
 }
-function shortcuts(){ $("#stageShortcuts").innerHTML=ROWS.filter(x=>document.getElementById("row-"+x.id)).map(x=>'<button class="stage-chip" data-scroll="'+x.id+'">'+E(x.title)+'</button>').join("");}
+function card(x,railIndex,rowId){
+ const component=componentLabel(x),co=color(component);
+ const isReunaRow=rowId==="reuna";
+ const reunaFocal=S.data.reuna?.[x.code]?.tipo==="AF"?S.data.reuna[x.code]:null;
+ const reunaCtx=isReunaRow&&reunaFocal?reunaCardContext(reunaFocal,x):null;
+ const anoCurto=reunaFocal?(/crian/i.test(reunaFocal.ano_faixa)?"Crianças pequenas":(/ano/i.test(reunaFocal.ano_faixa)?reunaFocal.ano_faixa:reunaFocal.ano_faixa+" ano")):"";
+ const groupLabel=isReunaRow&&reunaFocal
+   ? ("Focal "+reunaFocal.posicao+"/"+reunaFocal.total_grupo+" · "+(reunaCtx?.groupDesc||anoCurto))
+   : (x.group||x.doc||"BNCC");
+ const isTwoLines=Boolean(isReunaRow&&reunaCtx?.label&&reunaCtx.label.length>30);
+ const extraBadge=isReunaRow&&reunaFocal
+   ? (reunaCtx?.label?'<span class="skill-tag skill-tag--extra skill-tag--theme" title="Unidade temática / Campo da sequência: '+E(reunaCtx.unidade)+'">'+E(reunaCtx.label)+'</span>':'')
+   : '';
+ const cardTitle=isReunaRow&&reunaCtx?(' title="'+E(reunaCtx.rotulo+(reunaCtx.label?' · '+reunaCtx.label:''))+'"'):'';
+ const cardClasses="skill-card"+(isReunaRow?" reuna-card":"")+(isTwoLines?" reuna-theme-lines-2":"");
+ return '<article class="'+cardClasses+'" role="button" tabindex="-1" aria-hidden="true" aria-label="'+E(x.code)+': '+E(x.text)+'" data-code="'+E(x.code)+'" data-rail-index="'+E(railIndex)+'" style="--accent:'+co+'"'+cardTitle+'>'
+  +'<div class="card-top"><span class="skill-code">'+E(x.code)+'</span><span class="skill-group" title="'+E(reunaCtx?.rotulo||groupLabel)+'">'+E(groupLabel)+'</span></div>'
+  +'<div class="card-identity"><span class="skill-tag">'+E(component)+'</span>'+extraBadge+'</div>'
+  +'<p class="card-text">'+E(x.text)+'</p>'
+  +'</article>';
+}
+function shortcuts(){ $("#stageShortcuts").innerHTML=ROWS.map(x=>'<button class="stage-chip'+(S.stageFilter===x.id?' is-active':'')+'" data-scroll="'+x.id+'">'+E(x.title)+'</button>').join("");}
 function periods(x,rowId){
  const result=[];
+ if(rowId==="competencias"){
+  if(x.compType==="geral"||x.code.startsWith("CG"))result.push({key:"gerais",label:"Gerais",order:1});
+  else if(x.compType==="especifica_de_area")result.push({key:"area",label:"Por Área",order:2});
+  else if(x.compType==="especifica_de_componente")result.push({key:"componente",label:"Por Componente",order:3});
+  else if(x.compType==="computacao"||x.code.startsWith("CO")||x.code.startsWith("EM-CO")||(x.raw?.tipo||"").includes("computacao"))result.push({key:"comp",label:"Computação",order:4});
+  return result;
+ }
  if(x.stage==="EI"||x.code.startsWith("EI")){const m=x.code.match(/^EI(0[123])/);if(m){const labels={"01":"Bebês","02":"Crianças bem pequenas","03":"Crianças pequenas"};result.push({key:"ei"+m[1],label:labels[m[1]],order:Number(m[1])});}}
  else if(x.kind==="cieb"&&/infantil/i.test(x.raw.stage))result.push({key:"ei-geral",label:"Educação Infantil",order:4});
  let years=x.years||[];
  if(x.kind==="cieb"&&x.raw.year){const n=parseInt(x.raw.year,10);if(n)years=[n];}
  years.forEach(n=>{n=Number(n);if(n>=1&&n<=9&&(rowId!=="iniciais"||n<=5)&&(rowId!=="finais"||n>=6))result.push({key:"ano"+n,label:n+"º ano",order:10+n});});
- if(x.stage==="EM"||x.code.startsWith("EM"))result.push({key:"em",label:"Ensino Médio",order:30});
+ if(x.stage==="EM"||x.code.startsWith("EM")||(x.kind==="cieb"&&/médio|medio/i.test(x.raw?.stage)))result.push({key:"em",label:"Ensino Médio",order:30});
  return result;
 }
 function rowView(row){
@@ -119,16 +249,17 @@ function rowComponentChips(row,view){
  const counts=new Map();
  view.available.forEach(x=>{const label=componentLabel(x);counts.set(label,(counts.get(label)||0)+1);});
  if(view.selected&&!counts.has(view.selected))counts.set(view.selected,0);
- const labels={ei:"Campos de experiência",iniciais:"Componentes",finais:"Componentes",em:"Áreas de conhecimento",computacao:"Eixos e referências",reuna:"Componentes e áreas"};
+ const labels={ei:"Campos de experiência",iniciais:"Componentes",finais:"Componentes",em:"Áreas de conhecimento",competencias:"Áreas e componentes",computacao:"Eixos da Computação",cieb:"Eixos do CIEB",reuna:"Componentes e áreas"};
  const label=labels[row.id]||"Componentes";
  const button=(name,count)=>'<button type="button" class="component-chip'+(view.selected===name?' active':'')+'" data-row-component="'+E(row.id)+'" data-component="'+E(name)+'" aria-pressed="'+String(view.selected===name)+'"'+(name?' style="--chip-accent:'+color(name)+'"':'')+'><span class="component-chip-dot" aria-hidden="true"></span><span>'+E(name||"Todos")+'</span><span class="component-chip-count">'+count.toLocaleString("pt-BR")+'</span></button>';
  return '<div class="row-components"><span class="row-components-label">'+E(label)+'</span><div class="component-rail"><button type="button" class="component-arrow component-arrow-prev" data-component-direction="-1" aria-label="Ver componentes anteriores" hidden>‹</button><div class="row-component-list" role="group" aria-label="'+E(label+' em '+row.title)+'">'+button("",view.available.length)+[...counts.entries()].map(([name,count])=>button(name,count)).join("")+'</div><button type="button" class="component-arrow component-arrow-next" data-component-direction="1" aria-label="Ver mais componentes" hidden>›</button></div></div>';
 }
 function railItemIndex(index,count){return count>0?((index%count)+count)%count:-1;}
 function createRailState(items){const loop=items.length>1;return {items,loop,start:loop?-RAIL_BUFFER:0,end:loop?RAIL_BATCH:items.length,initialized:false,track:null,frame:null,animationFrame:null,trimTimer:null,savedPosition:null};}
-function railMarkup(rail,start,end){if(!rail.items.length)return "";let html="";for(let i=start;i<end;i++)html+=card(rail.items[railItemIndex(i,rail.items.length)],i);return html;}
+function railMarkup(rail,start,end){if(!rail.items.length)return "";let html="";for(let i=start;i<end;i++)html+=card(rail.items[railItemIndex(i,rail.items.length)],i,rail.rowId);return html;}
 function makeRow(row,view){
  const sec=document.createElement("section"),list=view.items,rail=createRailState(list);
+ rail.rowId=row.id;
  S.rails.set(row.id,rail);sec.className="catalog-row";sec.id="row-"+row.id;
  const count=list.length.toLocaleString("pt-BR")+(list.length===1?" item":" itens")+(view.selected?" · "+view.available.length.toLocaleString("pt-BR")+" no total":"");
  const empty=view.selected?"Nenhuma habilidade neste componente com os filtros atuais. Selecione Todos para voltar à faixa.":"Nenhum resultado nesta faixa.";
@@ -214,19 +345,108 @@ function syncComponentArrows(scope){
 }
 function fillFilters(){
  const vals=new Map();S.all.forEach(x=>{if(x.discipline)vals.set(x.discipline,x.discipline);if(x.area&&x.area!==x.discipline)vals.set(x.area,x.area);});
-  $("#areaSelect").innerHTML='<option value="">Todas as áreas e componentes curriculares</option>'+[...vals].sort((a,b)=>a[1].localeCompare(b[1],"pt-BR")).map(([v,l])=>'<option value="'+E(v)+'">'+E(l)+'</option>').join("");
+ $("#areaSelect").innerHTML='<option value="">Todas as áreas e componentes curriculares</option>'+[...vals].sort((a,b)=>a[1].localeCompare(b[1],"pt-BR")).map(([v,l])=>'<option value="'+E(v)+'">'+E(l)+'</option>').join("");
+ $("#stageSelect").innerHTML='<option value="">Escolha por etapa</option>'+ROWS.map(r=>'<option value="'+E(r.id)+'"'+(S.stageFilter===r.id?' selected':'')+'>'+E(r.title)+'</option>').join("");
 }
 function open(code){if(!S.by.has(code))return;if(!$("#catalogPage").hidden){S.catalogScroll=window.scrollY;rememberRailPositions();}history.pushState({code},"","?codigo="+encodeURIComponent(code));detail(code);window.scrollTo({top:0,behavior:"instant"});}
-function home(restore=true){SkillGraph.detach();history.pushState({},"",location.pathname);$("#detailPage").hidden=true;$("#detailPage").classList.remove("has-compact-summary");$("#catalogPage").hidden=false;requestAnimationFrame(()=>initializeRails($("#catalogRows")));window.scrollTo({top:restore?(S.catalogScroll||0):0,behavior:"instant"});}
+function home(restore=true){SkillGraph.detach();history.pushState({},"",location.pathname);$("#detailPage").hidden=true;$("#detailPage").classList.remove("has-compact-summary");$("#detailPage").querySelectorAll(".detail-nav a.is-active").forEach(a=>{a.classList.remove("is-active");a.removeAttribute("aria-current");});$("#catalogPage").hidden=false;requestAnimationFrame(()=>initializeRails($("#catalogRows")));window.scrollTo({top:restore?(S.catalogScroll||0):0,behavior:"instant"});}
 function syncDetailStickySummary(){
  const page=$("#detailPage"),summary=page?.querySelector(".detail-sticky-summary"),title=page?.querySelector(".detail-title");
  if(!page||page.hidden||!summary||!title)return;
- const mobile=window.matchMedia("(max-width:640px)").matches,barTop=mobile?0:($(".topbar")?.getBoundingClientRect().bottom||68),visible=title.getBoundingClientRect().bottom<=barTop+4;
+ const mobile=typeof window!=="undefined"&&window.matchMedia?window.matchMedia("(max-width:640px)").matches:false,barTop=mobile?0:($(".topbar")?.getBoundingClientRect().bottom||68),visible=title.getBoundingClientRect().bottom<=barTop+4;
  summary.hidden=!visible;summary.setAttribute("aria-hidden",String(!visible));page.classList.toggle("has-compact-summary",visible);
 }
+function syncDetailNavScrollspy(){
+ const page=$("#detailPage");
+ if(!page||page.hidden)return;
+ const nav=page.querySelector(".detail-nav");
+ if(!nav)return;
+ const links=[...nav.querySelectorAll("a[href^=\"#\"]")];
+ if(!links.length)return;
+ const stickyShell=page.querySelector(".detail-sticky-shell");
+ const threshold=(stickyShell?stickyShell.getBoundingClientRect().bottom:120)+28;
+ const isBottom=typeof window!=="undefined"&&typeof document!=="undefined"&&document.documentElement&&(window.innerHeight+window.scrollY)>=(document.documentElement.scrollHeight-60);
+ if(isBottom){
+  setActiveDetailNavLink(links,links[links.length-1]);
+  return;
+ }
+ let currentLink=null;
+ for(let i=0;i<links.length;i++){
+  const link=links[i];
+  const targetId=link.getAttribute("href").slice(1);
+  const targetEl=document.getElementById(targetId);
+  if(!targetEl)continue;
+  if(targetId==="detalhe-fonte"&&!targetEl.open)continue;
+  const rect=targetEl.getBoundingClientRect?targetEl.getBoundingClientRect():{top:0};
+  if(rect.top<=threshold){
+   currentLink=link;
+  }
+ }
+ if(!currentLink){
+  currentLink=links[0];
+ }
+ setActiveDetailNavLink(links,currentLink);
+}
+function setActiveDetailNavLink(links,activeLink){
+ if(!activeLink)return;
+ let changed=false;
+ for(const link of links){
+  const isMatch=link===activeLink;
+  if(isMatch){
+   if(!link.classList.contains("is-active")){
+    link.classList.add("is-active");
+    link.setAttribute("aria-current","true");
+    changed=true;
+   }
+  }else{
+   if(link.classList.contains("is-active")){
+    link.classList.remove("is-active");
+    link.removeAttribute("aria-current");
+    changed=true;
+   }
+  }
+ }
+ if(changed&&activeLink&&typeof activeLink.offsetLeft==="number"){
+  const nav=activeLink.closest(".detail-nav");
+  if(nav&&nav.scrollWidth>nav.clientWidth&&typeof nav.scrollTo==="function"){
+   const linkLeft=activeLink.offsetLeft,linkWidth=activeLink.offsetWidth;
+   const navLeft=nav.scrollLeft,navWidth=nav.clientWidth;
+   if(linkLeft<navLeft+24){
+    nav.scrollTo({left:Math.max(0,linkLeft-28),behavior:"smooth"});
+   }else if(linkLeft+linkWidth>navLeft+navWidth-24){
+    nav.scrollTo({left:linkLeft+linkWidth-navWidth+28,behavior:"smooth"});
+   }
+  }
+ }
+}
 function detailHeaderHtml(x){
- const raw=x.raw||{},source=x.source||{},sourceTitle=x.kind==="cieb"?"Currículo de Referência em Tecnologia e Computação · CIEB":x.kind==="computacao"?"Complemento de Computação à BNCC · Parecer CNE/CEB nº 2/2022":"Base Nacional Comum Curricular · 2018",sourceSummary=[...new Set([sourceTitle,source.arquivo,source.localizador,source.localizador_pdf,source.proveniencia,x.kind!=="cieb"?VERSION:null].filter(Boolean))].join(" · "),facts=[["Etapa e recorte",x.group||x.stage],["Componente curricular",x.discipline],["Área de conhecimento",x.area&&x.area!==x.discipline?x.area:null],["Seriação",raw.seriacao],["Vigência",raw.vigencia?.status?raw.vigencia.status+(raw.vigencia.desde?" · desde "+raw.vigencia.desde:"")+(raw.vigencia.ate?" · até "+raw.vigencia.ate:""):null],["Documento de origem",sourceSummary]].filter(r=>r[1]);
+ const raw=x.raw||{},source=x.source||{};
+ const isComp=x.kind==="competencia";
+ const compTipoLabel=isComp?(
+  x.compType==="geral"?"Competência Geral da Educação Básica":
+  x.compType==="especifica_de_area"?"Competência Específica de Área":
+  x.compType==="especifica_de_componente"?"Competência Específica de Componente Curricular":
+  (x.stage==="EM"?"Competência do Ensino Médio em Computação":"Competência Geral de Computação")
+ ):null;
+ const sourceTitle=x.kind==="cieb"?"Currículo de Referência em Tecnologia e Computação · CIEB":(x.kind==="computacao"||(isComp&&x.compType==="computacao"))?"Complemento de Computação à BNCC · Parecer CNE/CEB nº 2/2022":"Base Nacional Comum Curricular · 2018";
+ const sourceSummary=[...new Set([sourceTitle,source.arquivo,source.localizador,source.localizador_pdf,source.proveniencia,x.kind!=="cieb"?VERSION:null].filter(Boolean))].join(" · ");
+ const facts=[
+  ["Etapa e recorte",x.group||x.stage],
+  ["Tipo de competência",compTipoLabel],
+  ["Número oficial",raw.numero?"Competência nº "+raw.numero:null],
+  ["Componente curricular",x.discipline],
+  ["Área de conhecimento",x.area&&x.area!==x.discipline?x.area:null],
+  ["Seriação",raw.seriacao],
+  ["Vigência",raw.vigencia?.status?raw.vigencia.status+(raw.vigencia.desde?" · desde "+raw.vigencia.desde:"")+(raw.vigencia.ate?" · até "+raw.vigencia.ate:""):null],
+  ["Documento de origem",sourceSummary]
+ ].filter(r=>r[1]);
  const contexts=[],seen=new Set(),add=(kind,value)=>{if(!value)return;const key=kind+"|"+value;if(seen.has(key))return;seen.add(key);contexts.push([kind,value]);};
+ if(isComp){
+  if(x.compType==="geral")add("Abrangência transversal","Mobilizada em todas as etapas da Educação Básica (Educação Infantil, Ensino Fundamental e Ensino Médio).");
+  else if(x.compType==="computacao")add("Abrangência","Eixos de Pensamento Computacional, Mundo Digital e Cultura Digital na BNCC.");
+  else if(x.compType==="especifica_de_area")add("Abrangência","Competência articuladora da área de conhecimento "+(x.area||"BNCC")+".");
+  else if(x.compType==="especifica_de_componente")add("Abrangência","Competência articuladora do componente curricular "+(x.discipline||"BNCC")+".");
+ }
  (raw.objetos_conhecimento||[]).forEach(id=>add("Objeto de conhecimento",name(id,x.kind==="computacao"?S.data.objects:S.data.ctx)));
  const organization=raw.organizacao||{},typedContextIds=new Set();
  (organization.campos_atuacao||[]).forEach(id=>{typedContextIds.add(id);add("Campo de atuação",name(id,S.data.ctx));});
@@ -239,31 +459,224 @@ function detailHeaderHtml(x){
  ids.forEach(id=>{const c=S.data.bnccCompetencies.get(id)||S.data.compCompetencies.get(id);add("Competência "+(c?.numero||"relacionada"),c?.texto||name(id,S.data.compCompetencies));});
  if(!ids.length&&x.stage==="EF")add("Vínculo a competências","A fonte não declara competência específica por habilidade para esta etapa.");
  if(x.kind==="cieb"){
+  if(raw.unitName)add("Unidade curricular",raw.unitName);
+  if(raw.unitType)add("Tipo de unidade curricular",raw.unitType);
+  if(raw.workload)add("Carga horária",raw.workload);
+  if(raw.axisCompetencies?.length)add("Competências do eixo CIEB",raw.axisCompetencies.join(", "));
+  if(raw.teacherProfile)add("Perfil docente sugerido",raw.teacherProfile);
   if(raw.generalCompetencies?.length)add("Competências gerais indicadas pelo CIEB",raw.generalCompetencies.map(h=>h.codigo).join(", "));
   const missing=(raw.bnccLinks||[]).filter(h=>!S.by.has(h.codigo));if(missing.length)add("Códigos BNCC indicados pelo CIEB sem registro no catálogo",missing.map(h=>h.codigo).join(", "));
  }
  if(raw.alinhamento)add("Alinhamento entre faixas",raw.alinhamento);
- const factHtml=facts.map(([label,value])=>{const isSource=label==="Documento de origem",href=x.kind==="cieb"?"https://curriculo.cieb.net.br/":"https://github.com/bncc-dev/bncc-dados",credit=x.kind==="cieb"?"Currículo de referência do CIEB":"Dados estruturados: bncc.dev (mantido pela Profy), CC BY 4.0";return '<div class="detail-header-fact'+(isSource?' detail-header-fact-source" id="detalhe-fonte':'')+'"><span>'+E(label)+'</span><strong>'+E(value)+'</strong>'+(isSource?'<a class="detail-header-source-link" href="'+href+'" target="_blank" rel="noopener noreferrer">'+E(credit)+' ↗</a>':'')+'</div>';}).join("");
+ const factHtml=facts.map(([label,value])=>{
+  const isSource=label==="Documento de origem",href=x.kind==="cieb"?"https://curriculo.cieb.net.br/":"https://github.com/bncc-dev/bncc-dados",credit=x.kind==="cieb"?"Currículo de referência do CIEB":"Dados estruturados: bncc.dev (mantido pela Profy), CC BY 4.0";
+  if(isSource){
+   return '<details class="detail-header-fact detail-header-fact-source" id="detalhe-fonte">'
+    +'<summary class="detail-source-summary">'
+    +'<span>'+E(label)+'</span>'
+    +'<span class="detail-source-toggle"><span class="detail-source-closed">Ver origem e proveniência ▾</span><span class="detail-source-opened">Recolher ▴</span></span>'
+    +'</summary>'
+    +'<div class="detail-source-content">'
+    +'<strong>'+E(value)+'</strong>'
+    +'<a class="detail-header-source-link" href="'+href+'" target="_blank" rel="noopener noreferrer">'+E(credit)+' ↗</a>'
+    +'</div>'
+    +'</details>';
+  }
+  return '<div class="detail-header-fact"><span>'+E(label)+'</span><strong>'+E(value)+'</strong></div>';
+ }).join("");
  const contextHtml=contexts.length?'<div class="detail-header-contexts"><span class="detail-header-label">Contextos e competências</span><ul>'+contexts.map(([label,value])=>'<li><span>'+E(label)+'</span><strong>'+E(value)+'</strong></li>').join("")+'</ul></div>':'<p class="detail-header-empty">A fonte não informa contextos adicionais para este registro.</p>';
  return '<section class="detail-header-info" id="detalhe-organizacao" aria-label="Enquadramento curricular"><div class="detail-header-info-title"><span>ENQUADRAMENTO CURRICULAR</span><a href="./documentacao.html">Documentação das fontes <b aria-hidden="true">↗</b></a></div><div class="detail-header-facts">'+factHtml+'</div>'+contextHtml+'</section>';
 }
-function relationCard({item:y,rel:z}){return '<a class="relation-card" href="?codigo='+encodeURIComponent(y.code)+'" data-code="'+E(y.code)+'"><span class="origin-label">'+(z.kind==="suggested"?"Sugestão temática":z.kind==="cieb"?"Vínculo indicado pelo CIEB":"Referência em comum")+'</span><span class="rel-code">'+E(y.code)+'</span><span class="rel-type">'+E(y.discipline)+' · '+E(z.type)+'</span><p>'+E(y.text)+'</p><p class="relation-basis">'+E(z.basis)+'</p></a>';}
+function getExtraCardBadge(currentSkill,y,z){
+ if(!z)return "";
+ if(z.badge)return z.badge;
+ if(z.conf!==undefined&&z.conf!==null){
+  const pct=Math.round(Number(z.conf)>1?Number(z.conf):Number(z.conf)*100);
+  return pct+"% similaridade";
+ }
+ if(z.similarity!==undefined&&z.similarity!==null){
+  const pct=Math.round(Number(z.similarity)>1?Number(z.similarity):Number(z.similarity)*100);
+  return pct+"% similaridade";
+ }
+ const uA=currentSkill?.raw?.organizacao?.unidade_tematica;
+ const uB=y?.raw?.organizacao?.unidade_tematica;
+ if(uA&&uB&&uA===uB){
+  const uNome=name(uA,S.data.ctx);
+  if(uNome)return uNome;
+ }
+ if(uB&&currentSkill?.discipline===y.discipline){
+  const uNome=name(uB,S.data.ctx);
+  if(uNome)return uNome;
+ }
+ const obj=(currentSkill?.objectIds||[]).filter(x=>(y?.objectIds||[]).includes(x));
+ if(obj.length){
+  const objNome=name(obj[0],currentSkill?.kind==="computacao"?S.data.objects:S.data.ctx);
+  if(objNome)return objNome;
+ }
+ if(z.kind==="cieb")return "Vínculo CIEB";
+ return "";
+}
+function relationCard({item:y,rel:z}){
+ const component=componentLabel(y),co=color(component);
+ const extraBadge=getExtraCardBadge(S.currentSkill,y,z);
+ const extraHtml=extraBadge?'<span class="skill-tag skill-tag--extra">'+E(extraBadge)+'</span>':'';
+ return '<article class="skill-card relation-card detail-rail-card" role="button" tabindex="0" data-code="'+E(y.code)+'" data-detail-kind="skill" data-component="'+E(component)+'" data-rel-type="'+E(z.type||"Referência")+'" data-rel-basis="'+E(z.basis||"")+'" data-rel-kind="'+E(z.kind||"")+'" style="--accent:'+co+'">'
+  +'<div class="card-top"><span class="skill-code">'+E(y.code)+'</span><span class="skill-group">'+E(y.group||y.doc||"BNCC")+'</span></div>'
+  +'<div class="card-identity"><span class="skill-tag">'+E(component)+'</span>'+extraHtml+'</div>'
+  +'<p class="card-text">'+E(y.text)+'</p>'
+  +'<div class="card-foot"><span>1 clique: detalhes · 2 cliques: abrir</span><span aria-hidden="true">↗</span></div>'
+  +'</article>';
+}
 function relatedListHtml(list,kind,empty){const cards=list.slice(0,6).map(relationCard).join(""),remaining=Math.max(0,list.length-6);return '<div class="relation-grid">'+(cards||'<p class="empty-message">'+E(empty)+'</p>')+'</div>'+(remaining?'<details class="more-relations" data-relation-kind="'+E(kind)+'"><summary>Ver mais '+remaining+' habilidades relacionadas</summary><div class="relation-grid" data-relation-grid></div><button class="load-more-relations" type="button">Carregar mais</button></details>':"");}
 function ciebRelations(x,related){
  const items=new Map(related.filter(r=>r.item.kind==="cieb").map(r=>[r.item.code,r])),byCode=new Map(S.all.filter(y=>y.kind==="cieb").map(y=>[y.code,y]));
  for(const y of S.data.cieb){if(y.code===x.code||items.has(y.code))continue;const item=byCode.get(y.code);if(!item)continue;const explicit=(y.bnccLinks||[]).some(h=>h.codigo===x.code),terms=[...x._topicWords].filter(w=>y.words.has(w));if(!explicit&&terms.length<2)continue;items.set(y.code,{item,rel:explicit?{kind:"cieb",type:"Vínculo indicado pelo CIEB",basis:"Esta relação consta no currículo de referência do CIEB.",score:110}:{kind:"suggested",type:"Aproximação temática sugerida",basis:"Temas em comum: "+terms.slice(0,4).join(", ")+". Proposta para exploração pedagógica.",score:20+terms.length}});}
  return [...items.values()].sort((a,b)=>b.rel.score-a.rel.score||a.item.code.localeCompare(b.item.code));
 }
-function detailRelations(x){const related=relations(x,Infinity);return {curriculo:related.filter(r=>r.item.kind!=="cieb"),cieb:ciebRelations(x,related)};}
-function relatedMapListHtml(related){return '<div class="map-related-list"><h3 class="related-heading">Habilidades BNCC e Computação <span>'+related.length+'</span></h3>'+relatedListHtml(related,"curriculo","Não encontramos conexões com habilidades BNCC ou Computação.")+'</div>';}
-function mapWorkspaceHtml(x,related){
- const graph=x.kind!=="cieb"?'<div id="detalhe-grafo"><div class="loading-state" role="status">Carregando grafo local…</div></div>':'';
- return '<section class="detail-section map-workspace" id="detalhe-mapas"><div class="section-heading"><span class="section-number">⌘</span><div><h2>Mapas</h2><p class="section-caption">Explore a progressão curricular e as conexões desta habilidade em diferentes visualizações.</p></div></div>'+graph+relatedMapListHtml(related)+'</section>';
+function ehComputacao(x){return x.kind==="computacao"||x.kind==="cieb";}
+function detailRelations(x){
+ const related=relations(x,Infinity);
+ if(x.kind==="competencia"){
+  return {
+   curriculo:related.filter(r=>r.item.kind==="bncc"||r.item.kind==="computacao"),
+   cieb:related.filter(r=>r.item.kind==="cieb"),
+   competencias:related.filter(r=>r.item.kind==="competencia")
+  };
+ }
+ const computacao=ehComputacao(x);
+ return {curriculo:related.filter(r=>computacao?r.item.kind==="bncc":(r.item.kind==="computacao"||r.item.kind==="cieb")),cieb:ciebRelations(x,related)};
 }
-function aiHtml(x){const entry=S.data.ai[x.code];if(!entry?.por_componente)return "";const groups=Object.entries(entry.por_componente).filter(([,d])=>d&&((d.codigos||[]).length||d.justificativa||d.atividade));
- return '<section class="detail-section" id="detalhe-interdisciplinar"><div class="section-heading"><span class="section-number">↗</span><div><h2>Sugestões interdisciplinares</h2><p class="section-caption">Possibilidades geradas por IA para apoiar o planejamento e a revisão docente.</p></div></div>'+((entry.conceitos||[]).length?'<div class="concept-group"><h3>Conceitos de aproximação</h3><ul class="concept-grid">'+entry.conceitos.map(t=>'<li>'+E(t)+'</li>').join("")+'</ul></div>':"")+'<div class="relation-grid">'+groups.map(([component,d])=>{const codes=[...new Set(d.codigos||[])];return '<article class="ai-card" data-ai-component="'+E(component)+'"><span class="origin-label">SUGESTÃO DE IA</span><h3 class="ai-card-component">'+E(component)+'</h3>'+(codes.length?'<div class="ai-card-codes" aria-label="Habilidades sugeridas">'+codes.map(code=>S.by.has(code)?'<a class="rel-code" href="?codigo='+encodeURIComponent(code)+'" data-code="'+E(code)+'">'+E(code)+'</a>':'<span class="rel-code">'+E(code)+'</span>').join("")+'</div>':'')+(d.confianca?'<span class="rel-type">Confiança informada: '+E(d.confianca)+'</span>':"")+'<p>'+E(d.justificativa||"Relação sugerida na base interdisciplinar.")+'</p>'+(d.atividade?'<details class="activity-detail"><summary>Ver sugestão de atividade</summary><p>'+E(d.atividade)+'</p></details>':"")+'</article>';}).join("")+'</div></section>';}
-function ciebHtml(x,list){const raw=x.raw||{},guidance=x.kind==="cieb"?[["Práticas sugeridas",raw.practices||[]],["Avaliação sugerida",raw.evaluations||[]]].filter(([,items])=>items.length):[],guidanceHtml=guidance.length?'<div class="detail-columns cieb-guidance">'+guidance.map(([label,items])=>'<div class="info-block"><h3>'+E(label)+'</h3><ul>'+items.map(t=>'<li>'+E(t)+'</li>').join("")+'</ul></div>').join("")+'</div>':"";
- return '<section class="detail-section" id="detalhe-cieb"><div class="section-heading"><span class="section-number">↗</span><div><h2>Computação e currículo CIEB</h2><p class="section-caption">Vínculos indicados pelo CIEB e sugestões por termos em comum são identificados em cada cartão.</p></div></div>'+guidanceHtml+'<h3 class="related-heading">Habilidades CIEB relacionadas <span>'+list.length+'</span></h3>'+relatedListHtml(list,"cieb","Nenhuma aproximação temática encontrada para esta habilidade.")+'</section>';}
+function detailChipsHtml(items,getComponentFn){
+ if(!items||items.length<=3)return '';
+ const counts=new Map();
+ for(const item of items){
+  const comp=getComponentFn(item)||"Outros";
+  counts.set(comp,(counts.get(comp)||0)+1);
+ }
+ const chips=['<button type="button" class="component-chip active" data-detail-chip="" aria-pressed="true"><span class="component-chip-dot" aria-hidden="true"></span><span>Todos</span><span class="component-chip-count">'+items.length+'</span></button>'];
+ for(const [name,count] of counts.entries()){
+  chips.push('<button type="button" class="component-chip" data-detail-chip="'+E(name)+'" aria-pressed="false" style="--chip-accent:'+color(name)+'"><span class="component-chip-dot" aria-hidden="true"></span><span>'+E(name)+'</span><span class="component-chip-count">'+count+'</span></button>');
+ }
+ return '<div class="row-components detail-chips-row"><div class="component-rail"><div class="row-component-list" role="group" aria-label="Filtrar por componente">'+chips.join("")+'</div></div></div>';
+}
+function relatedMapListHtml(related,x){
+ if(!related?.length)return '';
+ const isComp=x?.kind==="competencia";
+ const isCompOrCieb=x&&ehComputacao(x);
+ const heading=isComp?"Habilidades articuladas":(isCompOrCieb?"Habilidades da BNCC":"Computação");
+ const idAttr=isCompOrCieb?'':' id="detalhe-computacao"';
+ const chipsHtml=detailChipsHtml(related,r=>componentLabel(r.item));
+ return '<div class="map-related-list detail-faixa-group"'+idAttr+'>'
+  +'<div class="faixa-head"><h3 class="related-heading">'+heading+' <span>'+related.length+'</span></h3>'+chipsHtml+'</div>'
+  +'<div class="row-rail detail-row-rail" data-relation-kind="curriculo">'
+  +'<button type="button" class="rail-arrow rail-prev" data-direction="-1" aria-label="Cartões anteriores"'+(related.length<=1?' hidden':'')+'>‹</button>'
+  +'<div class="row-track" role="region" aria-label="'+heading+' relacionadas">'
+  +related.map(relationCard).join("")
+  +'</div>'
+  +'<button type="button" class="rail-arrow rail-next" data-direction="1" aria-label="Próximos cartões"'+(related.length<=1?' hidden':'')+'>›</button>'
+  +'</div>'
+  +'</div>';
+}
+function mapWorkspaceHtml(x,related){
+ if(ehComputacao(x)){
+  if(!related?.length)return '';
+  return '<section class="detail-section" id="detalhe-computacao">'+relatedMapListHtml(related,x)+'</section>';
+ }
+ if(x.kind==="competencia"){
+  if(!related?.length)return '';
+  return '<section class="detail-section" id="detalhe-articulacoes"><div class="section-heading"><span class="section-number">⌘</span><div><h2>Habilidades articuladas</h2><p class="section-caption">Habilidades da BNCC e de Computação articuladas ao desenvolvimento desta competência.</p></div></div>'+relatedMapListHtml(related,x)+'</section>';
+ }
+ const graph='<div id="detalhe-grafo"><div class="loading-state" role="status">Carregando grafo local…</div></div>';
+ return '<section class="detail-section map-workspace" id="detalhe-mapas"><div class="section-heading"><span class="section-number">⌘</span><div><h2>Mapas</h2><p class="section-caption">Explore a progressão curricular e as conexões desta habilidade em diferentes visualizações.</p></div></div>'+graph+relatedMapListHtml(related,x)+'</section>';
+}
+function aiHtml(x){
+ const entry=S.data.ai[x.code];if(!entry?.por_componente)return "";
+ const groups=Object.entries(entry.por_componente).filter(([,d])=>d&&((d.codigos||[]).length||d.justificativa||d.atividade));
+ const conceitos=entry.conceitos||[];
+
+ const conceitosHtml=conceitos.length?(
+  '<div class="concept-group detail-faixa-group" id="detalhe-conceitos">'
+  +'<h3 class="related-heading">Conceitos de aproximação <span>'+conceitos.length+'</span></h3>'
+  +'<div class="row-rail detail-row-rail">'
+  +'<button type="button" class="rail-arrow rail-prev" data-direction="-1" aria-label="Conceitos anteriores"'+(conceitos.length<=1?' hidden':'')+'>‹</button>'
+  +'<div class="row-track" role="region" aria-label="Conceitos de aproximação">'
+  +conceitos.map(t=>
+    '<article class="skill-card detail-rail-card detail-concept-card" role="button" tabindex="0" data-detail-kind="concept" data-concept="'+E(t)+'" style="--accent:#9c78d4">'
+    +'<div class="card-top"><span class="skill-code">'+E(t)+'</span><span class="skill-group">Aproximação</span></div>'
+    +'<div class="card-identity"><span class="skill-tag">Conceito-chave</span></div>'
+    +'<p class="card-text">Conceito de aproximação temática articulado a esta aprendizagem para conexões curriculares e contextualização pedagógica.</p>'
+    +'<div class="card-foot"><span>1 clique: detalhes</span><span aria-hidden="true">↗</span></div>'
+    +'</article>'
+  ).join("")
+  +'</div>'
+  +'<button type="button" class="rail-arrow rail-next" data-direction="1" aria-label="Próximos conceitos"'+(conceitos.length<=1?' hidden':'')+'>›</button>'
+  +'</div>'
+  +'</div>'
+ ):"";
+
+ const chipsHtml=detailChipsHtml(groups,([comp])=>comp);
+ const suggestionsHtml=groups.length?(
+  '<div class="ai-suggestions-group detail-faixa-group">'
+  +'<div class="faixa-head">'
+  +'<h3 class="related-heading">Sugestões interdisciplinares <span>'+groups.length+'</span></h3>'
+  +chipsHtml
+  +'</div>'
+  +'<div class="row-rail detail-row-rail">'
+  +'<button type="button" class="rail-arrow rail-prev" data-direction="-1" aria-label="Sugestões anteriores"'+(groups.length<=1?' hidden':'')+'>‹</button>'
+  +'<div class="row-track" role="region" aria-label="Sugestões interdisciplinares">'
+  +groups.map(([component,d])=>{
+    const codes=[...new Set(d.codigos||[])];
+    const confStr=d.confianca?String(d.confianca):"";
+    const confBadge=confStr?'<span class="skill-tag skill-tag--extra">'+E(confStr.includes("%")?confStr:confStr+" similaridade")+'</span>':"";
+    const codesTop=codes.length?codes.map(c=>'<span class="rel-code" data-code="'+E(c)+'">'+E(c)+'</span>').join(" · "):"IA";
+    return '<article class="ai-card" data-ai-component="'+E(component)+'">'
+      +'<div class="card-top"><span class="skill-code">'+codesTop+'</span><span class="skill-group">SUGESTÃO DE IA</span></div>'
+      +'<div class="card-identity"><span class="skill-tag">'+E(component)+'</span>'+confBadge+'</div>'
+      +'<p class="card-text">'+E(d.justificativa||"Relação sugerida na base interdisciplinar.")+'</p>'
+      +(d.atividade?'<details class="activity-detail sr-only"><summary>Atividade</summary><p>'+E(d.atividade)+'</p></details>':"")
+      +'<div class="card-foot"><span>1 clique: detalhes · 2 cliques: abrir</span><span aria-hidden="true">↗</span></div>'
+      +'</article>';
+  }).join("")
+  +'</div>'
+  +'<button type="button" class="rail-arrow rail-next" data-direction="1" aria-label="Próximas sugestões"'+(groups.length<=1?' hidden':'')+'>›</button>'
+  +'</div>'
+  +'</div>'
+ ):"";
+
+ return '<section class="detail-section" id="detalhe-interdisciplinar">'
+  +'<div class="section-heading"><span class="section-number">↗</span><div><h2>Interdisciplinaridade</h2><p class="section-caption">Possibilidades geradas por IA para apoiar o planejamento e a revisão docente.</p></div></div>'
+  +conceitosHtml
+  +suggestionsHtml
+  +'</section>';
+}
+function ciebHtml(x,list){
+ const raw=x.raw||{},guidance=x.kind==="cieb"?[["Práticas sugeridas",raw.practices||[]],["Avaliação sugerida",raw.evaluations||[]],["Atitudes e valores",raw.attitudes||[]],["Recursos didáticos",raw.resources||[]],["Temáticas integradoras",raw.tematicas||[]]].filter(([,items])=>items.length):[];
+ const guidanceHtml=guidance.length?'<div class="detail-columns cieb-guidance cieb-guidance-stacked">'+guidance.map(([label,items])=>'<div class="info-block"><h3>'+E(label)+'</h3><ul>'+items.map(t=>'<li>'+E(t)+'</li>').join("")+'</ul></div>').join("")+'</div>':"";
+ const structureHtml=raw.structure?.length?(
+  '<div class="info-block cieb-structure-block" style="margin-top:1.25rem;">'
+  +'<h3 style="font-size:0.95rem;font-weight:700;margin-bottom:0.75rem;color:var(--text, #f0f4fc);">Estrutura e detalhamento da unidade curricular</h3>'
+  +'<div class="cieb-structure-grid" style="display:flex;flex-direction:column;gap:0.75rem;">'
+  +raw.structure.map(s=>
+    '<div class="cieb-structure-item" style="padding:0.75rem 1rem;background:rgba(255,255,255,0.04);border-radius:8px;border:1px solid rgba(255,255,255,0.08);">'
+    +(s.habilidades?'<p style="margin:0 0 0.35rem 0;"><strong>Habilidade específica:</strong> '+E(s.habilidades)+'</p>':'')
+    +(s.conhecimentos?'<p style="margin:0 0 0.35rem 0;"><strong>Conhecimentos:</strong> '+E(s.conhecimentos)+'</p>':'')
+    +(s.praticas_sugeridas?'<p style="margin:0;"><strong>Práticas sugeridas:</strong> '+E(s.praticas_sugeridas)+'</p>':'')
+    +'</div>'
+  ).join("")
+  +'</div></div>'
+ ):"";
+ const chipsHtml=detailChipsHtml(list,r=>componentLabel(r.item));
+ const railHtml=list.length?(
+  '<div class="row-rail detail-row-rail" data-relation-kind="cieb">'
+  +'<button type="button" class="rail-arrow rail-prev" data-direction="-1" aria-label="Habilidades CIEB anteriores"'+(list.length<=1?' hidden':'')+'>‹</button>'
+  +'<div class="row-track" role="region" aria-label="Habilidades CIEB relacionadas">'
+  +list.map(relationCard).join("")
+  +'</div>'
+  +'<button type="button" class="rail-arrow rail-next" data-direction="1" aria-label="Próximas habilidades CIEB"'+(list.length<=1?' hidden':'')+'>›</button>'
+  +'</div>'
+ ):'<p class="empty-message">Nenhuma aproximação temática encontrada para esta habilidade.</p>';
+ return '<section class="detail-section" id="detalhe-cieb"><div class="section-heading"><span class="section-number">↗</span><div><h2>Computação e currículo CIEB</h2><p class="section-caption">Vínculos indicados pelo CIEB e sugestões por termos em comum são identificados em cada cartão.</p></div></div>'+guidanceHtml+structureHtml+'<div class="detail-faixa-group"><div class="faixa-head"><h3 class="related-heading">Habilidades CIEB relacionadas <span>'+list.length+'</span></h3>'+chipsHtml+'</div>'+railHtml+'</div></section>';
+}
 const REUNA_CLASSES={AF:"Aprendizagem focal (AF)",AC:"Aprendizagem complementar (AC)",EF:"Expectativa de fluência (EF)"};
 const REUNA_ETAPAS={EI:"Educação Infantil",EF:"Ensino Fundamental",EM:"Ensino Médio"};
 const REUNA_SITE="https://www.institutoreuna.org.br/";
@@ -332,14 +745,39 @@ function reunaBlock(title,inner,cls){return '<div class="reuna-block'+(cls?' '+c
 function reunaList(items){return '<ul class="reuna-list">'+items.map(t=>'<li>'+E(t)+'</li>').join("")+'</ul>';}
 function reunaParas(items){return items.map(t=>'<p>'+E(t)+'</p>').join("");}
 function ptList(a){return a.length>1?a.slice(0,-1).join(", ")+" e "+a[a.length-1]:a.join("");}
+function reunaRelCardsHtml(codes,k,expl,area,ano){
+ const items=codes.map(c=>{
+  const it=S.by.get(c)||{code:c,text:'Habilidade indicada no Mapa de Foco do Instituto Reúna.',discipline:area,group:ano};
+  const explicacao=expl&&expl[c];
+  const rel={
+   type:REUNA_CLASSES[k]||"Aprendizagem focal (AF)",
+   basis:explicacao||("Habilidade classificada como "+(REUNA_CLASSES[k]||k)+" no Mapa de Foco da BNCC do Instituto Reúna."),
+   kind:"reuna-"+k.toLowerCase(),
+   badge:k==="AF"?"Aprendizagem Focal":(k==="AC"?"Aprendizagem Complementar":"Expectativa de Fluência")
+  };
+  return {item:it,rel};
+ });
+ const heading=REUNA_CLASSES[k]||"Habilidades relacionadas";
+ const chipsHtml=detailChipsHtml(items,r=>componentLabel(r.item));
+ return '<div class="detail-faixa-group reuna-faixa-group" data-relation-kind="reuna-'+E(k.toLowerCase())+'">'
+  +'<div class="faixa-head"><h4 class="related-heading">'+E(heading)+' <span>'+items.length+'</span></h4>'+chipsHtml+'</div>'
+  +'<div class="row-rail detail-row-rail">'
+  +'<button type="button" class="rail-arrow rail-prev" data-direction="-1" aria-label="Cartões anteriores"'+(items.length<=1?' hidden':'')+'>‹</button>'
+  +'<div class="row-track" role="region" aria-label="'+E(heading)+'">'
+  +items.map(relationCard).join("")
+  +'</div>'
+  +'<button type="button" class="rail-arrow rail-next" data-direction="1" aria-label="Próximos cartões"'+(items.length<=1?' hidden':'')+'>›</button>'
+  +'</div>'
+  +'</div>';
+}
 function reunaOccurrenceHtml(o,resumo,area,code){
  const comp=o.competencias||{},rel=o.habilidadesRelacionadas||{},expl=o.explicacoesRelacionadas||{},parts=[];
  if(o.conhecimentoPrevio&&o.conhecimentoPrevio.length)parts.push(reunaBlock("Conhecimento prévio",reunaChipsGroup(o.conhecimentoPrevio)));
  if(o.objetivos&&o.objetivos.length)parts.push(reunaBlock("Objetivos de aprendizagem",reunaList(o.objetivos)));
  const refs=[];["CG","CA","CE"].forEach(k=>(comp[k]||[]).forEach(n=>refs.push(reunaCompRef(k,n,area,code))));
  if(refs.length)parts.push(reunaBlock("Competências relacionadas",reunaCompGroup(refs)));
- ["AF","AC","EF"].forEach(k=>{if(rel[k]&&rel[k].length)parts.push(reunaBlock("Relacionadas · "+REUNA_CLASSES[k],reunaChipsGroup(rel[k],{explicacoes:expl})));});
- if(o.comentario)parts.push('<details class="reuna-comment"><summary>Comentário pedagógico</summary><p>'+E(o.comentario)+'</p></details>');
+ ["AF","AC","EF"].forEach(k=>{if(rel[k]&&rel[k].length)parts.push(reunaRelCardsHtml(rel[k],k,expl,area,o.ano));});
+ if(o.comentario)parts.push('<details class="reuna-comment" open><summary>Comentário pedagógico</summary><p>'+E(o.comentario)+'</p></details>');
  if(resumo)parts.push('<details class="reuna-comment"><summary>Resumo do ano</summary>'+reunaParas(resumo.texto?[resumo.texto]:[])+(resumo.totais?'<p class="reuna-totais">'+E(resumo.totais)+'</p>':'')+'</details>');
  return '<article class="reuna-occurrence"><header class="reuna-occ-head"><h4>'+E(o.ano)+'</h4><span class="reuna-unit">'+E(o.campoOuUnidade||"—")+'</span></header>'+parts.join("")+'</article>';
 }
@@ -617,7 +1055,38 @@ function mfBindInteractions(el){
  });
 }
 function habilidadeModalFechar(){const d=document.getElementById("habilidadeDialog");if(d&&d.open)d.close();}
-function habilidadeModalAbrir(code){
+function modalAbrirInfo(opts){
+ let d=document.getElementById("habilidadeDialog");
+ if(!d){
+  d=document.createElement("dialog");
+  d.id="habilidadeDialog";d.className="hab-dialog";d.setAttribute("aria-labelledby","habilidadeDialogTitulo");
+  d.addEventListener("click",e=>{if(e.target===d)d.close();});
+  document.body.appendChild(d);
+ }
+ let acoesHtml=opts.acoes;
+ if(!acoesHtml){
+  if(opts.code){
+   const isComp=opts.kicker&&opts.kicker.toLowerCase().includes("competência");
+   const defaultBtnText=isComp?"Ir para os detalhes da competência →":"Ir para os detalhes da habilidade →";
+   acoesHtml='<div class="hab-dialog-acoes"><button type="button" class="print-btn print-btn--primary" data-hab-abrir="'+E(opts.code)+'">'+E(opts.botaoTexto||defaultBtnText)+'</button><button type="submit" class="print-btn" value="fechar">Fechar</button></div>';
+  }else{
+   acoesHtml='<div class="hab-dialog-acoes"><button type="submit" class="print-btn print-btn--primary" value="fechar">Fechar</button></div>';
+  }
+ }
+ d.innerHTML='<form method="dialog" class="hab-dialog-form">'
+  +'<div class="hab-dialog-topo"><span class="hab-dialog-kicker">'+E(opts.kicker||"Detalhes")+'</span><button type="submit" class="hab-dialog-fechar" value="fechar" aria-label="Fechar">×</button></div>'
+  +'<h2 id="habilidadeDialogTitulo">'+E(opts.title||"")+'</h2>'
+  +(opts.meta?'<p class="hab-dialog-meta">'+E(opts.meta)+'</p>':'')
+  +(opts.corpo||'')
+  +(opts.texto?'<p class="hab-dialog-texto">'+E(opts.texto)+'</p>':'')
+  +acoesHtml
+  +'</form>';
+ d.querySelectorAll("[data-hab-abrir]").forEach(btn=>{
+  btn.addEventListener("click",()=>{d.close();open(btn.dataset.habAbrir);});
+ });
+ if(!d.open)d.showModal();
+}
+function habilidadeModalAbrir(code,extra){
  const x=S.by.get(code);if(!x)return;
  let d=document.getElementById("habilidadeDialog");
  if(!d){
@@ -626,10 +1095,228 @@ function habilidadeModalAbrir(code){
   d.addEventListener("click",e=>{if(e.target===d)d.close();});
   document.body.appendChild(d);
  }
+ const isComp=x.kind==="competencia";
  const meta=[x.discipline,x.group||x.stage,x.area&&x.area!==x.discipline?x.area:null].filter(Boolean).join(" · ");
- d.innerHTML='<form method="dialog" class="hab-dialog-form"><div class="hab-dialog-topo"><span class="hab-dialog-kicker">Habilidade</span><button type="submit" class="hab-dialog-fechar" value="fechar" aria-label="Fechar">×</button></div><h2 id="habilidadeDialogTitulo">'+E(x.code)+'</h2><p class="hab-dialog-meta">'+E(meta)+'</p>'+habilidadeMapaHtml(code)+'<p class="hab-dialog-texto">'+E(x.text)+'</p><div class="hab-dialog-acoes"><button type="button" class="print-btn print-btn--primary" data-hab-abrir="'+E(code)+'">Abrir página da habilidade →</button></div></form>';
- d.querySelector("[data-hab-abrir]").addEventListener("click",()=>{d.close();open(code);});
+ let relHtml="";
+ if(extra&&(extra.relType||extra.relBasis||extra.relConf)){
+  relHtml='<div class="hab-dialog-rel"><strong>'+E(extra.relType||"Relação")+(extra.relConf?' · <span class="progress-badge is-suggested">'+E(extra.relConf)+'</span>':'')+'</strong>'+(extra.relBasis?'<p>'+E(extra.relBasis)+'</p>':'')+'</div>';
+ }
+ const kicker=isComp?"Competência":(x.kind==="cieb"?"Referência CIEB":"Habilidade");
+ const btnText=isComp?"Ir para os detalhes da competência →":"Ir para os detalhes da habilidade →";
+ d.innerHTML='<form method="dialog" class="hab-dialog-form">'
+  +'<div class="hab-dialog-topo"><span class="hab-dialog-kicker">'+E(kicker)+'</span><button type="submit" class="hab-dialog-fechar" value="fechar" aria-label="Fechar">×</button></div>'
+  +'<h2 id="habilidadeDialogTitulo">'+E(x.code)+'</h2>'
+  +'<p class="hab-dialog-meta">'+E(meta)+'</p>'
+  +relHtml
+  +habilidadeMapaHtml(code)
+  +'<p class="hab-dialog-texto">'+E(x.text)+'</p>'
+  +'<div class="hab-dialog-acoes"><button type="button" class="print-btn print-btn--primary" data-hab-abrir="'+E(code)+'">'+E(btnText)+'</button><button type="submit" class="print-btn" value="fechar">Fechar</button></div>'
+  +'</form>';
+ d.querySelectorAll("[data-hab-abrir]").forEach(btn=>{
+  btn.addEventListener("click",()=>{d.close();open(btn.dataset.habAbrir);});
+ });
  if(!d.open)d.showModal();
+}
+function openCardDetailModal(card){
+ const kind=card.dataset.detailKind;
+ if(kind==="concept"){
+  modalAbrirInfo({
+   kicker:"Conceito de Aproximação",
+   title:card.dataset.concept||"Conceito",
+   meta:"Articulação Interdisciplinar",
+   texto:"Conceito estruturante articulado a esta aprendizagem nas conexões interdisciplinares. Apoia o diálogo entre diferentes componentes curriculares e o planejamento de atividades integradas."
+  });
+  return;
+ }
+ if(kind==="competency"){
+  const code=card.dataset.code||card.dataset.rotulo;
+  const targetCode=code&&(S.by.has(code)?code:resolveCompDetails({id:code,rotulo:card.dataset.rotulo})?.code);
+  const finalCode=targetCode&&(S.by.has(targetCode)?targetCode:code);
+  modalAbrirInfo({
+   kicker:card.dataset.tipo||"Competência",
+   title:card.dataset.rotulo||code||"Competência",
+   meta:card.dataset.area||"BNCC",
+   texto:card.dataset.texto||"",
+   code:finalCode,
+   botaoTexto:"Ir para os detalhes da competência →"
+  });
+  return;
+ }
+ if(kind==="ai-suggestion"||card.classList.contains("ai-card")||card.dataset.aiComponent){
+  const comp=card.dataset.aiComponent||"Sugestão";
+  const just=card.querySelector(".card-text")?.textContent||card.querySelector("p")?.textContent||card.dataset.justificativa||"";
+  const ativ=card.querySelector(".activity-detail p")?.textContent||card.dataset.atividade||"";
+  const conf=card.querySelector(".skill-tag--extra")?.textContent||card.querySelector(".rel-type")?.textContent||card.dataset.confianca||"";
+  const codes=[...card.querySelectorAll("[data-code]")].map(c=>c.dataset.code).filter(Boolean);
+  const codesHtml=codes.length?'<div class="hab-dialog-codes"><span>Habilidades sugeridas:</span><div class="ai-card-codes">'+codes.map(c=>'<button type="button" class="print-btn print-btn--small" data-hab-abrir="'+E(c)+'">'+E(c)+' →</button>').join("")+'</div></div>':'';
+  const corpo='<div class="hab-dialog-ai-corpo">'
+   +(conf?'<p class="hab-dialog-meta"><strong>Confiança informada:</strong> '+E(conf)+'</p>':'')
+   +(just?'<div class="hab-dialog-bloco"><strong>Justificativa pedagógica:</strong><p>'+E(just)+'</p></div>':'')
+   +(ativ?'<div class="hab-dialog-bloco"><strong>Sugestão de atividade:</strong><p>'+E(ativ)+'</p></div>':'')
+   +codesHtml
+   +'</div>';
+  modalAbrirInfo({
+   kicker:"Sugestão Interdisciplinar · IA",
+   title:comp,
+   meta:"Conexão curricular apoiada por inteligência artificial",
+   corpo,
+   code:codes.length===1?codes[0]:null,
+   botaoTexto:codes.length===1?"Ir para os detalhes da habilidade ("+codes[0]+") →":null
+  });
+  return;
+ }
+ const code=card.dataset.code||card.dataset.graphCode||card.querySelector("[data-code]")?.dataset.code;
+ if(code){
+  habilidadeModalAbrir(code,{
+   relType:card.dataset.relType,
+   relBasis:card.dataset.relBasis,
+   relConf:card.dataset.relConf
+  });
+ }
+}
+function initializeDetailRails(scope){
+ if(!scope)return;
+ scope.querySelectorAll(".row-track").forEach(track=>{
+  syncDetailRailArrows(track);
+  track.addEventListener("scroll",()=>syncDetailRailArrows(track),{passive:true});
+ });
+}
+function syncDetailRailArrows(track){
+ const rail=track.closest(".row-rail");if(!rail)return;
+ const prev=rail.querySelector(".rail-prev"),next=rail.querySelector(".rail-next");
+ if(!prev||!next)return;
+ const scrollable=track.scrollWidth>track.clientWidth+2;
+ if(!scrollable){prev.hidden=true;next.hidden=true;return;}
+ prev.hidden=track.scrollLeft<=4;
+ next.hidden=track.scrollLeft+track.clientWidth>=track.scrollWidth-4;
+}
+function getCompetenciasForSkill(x){
+ const list=[],seen=new Set();
+ const isComp=x.kind==="competencia";
+ if(isComp){
+  const allComps=S.all.filter(c=>c.kind==="competencia"&&c.code!==x.code);
+  const sameGroup=allComps.filter(c=>(x.compType==="geral"&&c.compType==="geral")||c.discipline===x.discipline||(c.area&&c.area===x.area&&c.area!=="Educação Básica")||(x.compType==="computacao"&&c.compType==="computacao"));
+  const picks=sameGroup.length?sameGroup:allComps.slice(0,10);
+  picks.forEach(c=>{
+   list.push({id:c.code,rotulo:c.code,tipo:c.group||"Competência",area:c.area||c.discipline,texto:c.text});
+  });
+  return list;
+ }
+ const add=(id,rotulo,tipo,area,texto)=>{
+  if(!texto&&!rotulo)return;
+  const key=(rotulo||id)+"|"+(texto||"");
+  if(seen.has(key))return;
+  seen.add(key);
+  list.push({id:id||rotulo,rotulo:rotulo||id,tipo:tipo||"Competência",area:area||"",texto:texto||""});
+ };
+ const ids=[...(x.raw?.competencias_especificas||[]),...(x.raw?.competencia?[x.raw.competencia]:[]),...(x.competencyIds||[])];
+ ids.forEach(id=>{
+  const bc=S.data.bnccCompetencies?.get(id);
+  if(bc){
+   const num=bc.numero?'Competência Específica '+bc.numero:'Competência Específica';
+   const areaNome=reunaAreaNome(bc.area)||bc.area||x.discipline||x.area;
+   add(id,num,"Competência específica",areaNome,bc.texto);
+   return;
+  }
+  const cc=S.data.compCompetencies?.get(id);
+  if(cc){
+   const num=cc.numero?'Competência '+cc.numero:'Competência';
+   add(id,num,"Competência de Computação","Computação",cc.texto||name(id,S.data.compCompetencies));
+   return;
+  }
+ });
+ (x.raw?.generalCompetencies||[]).forEach(gc=>{
+  const code=gc.codigo||"";
+  const m=code.match(/(\d+)/);
+  const num=m?Number(m[1]):null;
+  const texto=num?reunaCgTexto(num):"";
+  add(code,"Competência Geral "+(num||code),"Competência Geral BNCC","Educação Básica",texto||gc.descricao||"");
+ });
+ const r=S.data.reuna?.[x.code];
+ if(r?.mapaDeFoco?.ocorrencias){
+  r.mapaDeFoco.ocorrencias.forEach(o=>{
+   const comp=o.competencias||{};
+   ['CG','CA','CE'].forEach(k=>{
+    (comp[k]||[]).forEach(n=>{
+     const ref=reunaCompRef(k,n,r.mapaDeFoco.area,x.code);
+     if(ref&&(ref.texto||ref.nome)){
+      add(ref.key,ref.sigla+" "+ref.numero,ref.nome,r.mapaDeFoco.area,ref.texto);
+     }
+    });
+   });
+  });
+ }
+ if(r?.bnccComentada?.competenciasEspecificasBNCC){
+  r.bnccComentada.competenciasEspecificasBNCC.forEach(id=>{
+   const bc=S.data.bnccCompetencies?.get(id);
+   if(bc){
+    const num=bc.numero?'Competência Específica '+bc.numero:'Competência Específica';
+    add(id,num,"Competência específica",reunaAreaNome(bc.area),bc.texto);
+   }
+  });
+ }
+ if(!list.length&&x.kind==="computacao"&&S.data.compCompetencies){
+  S.data.compCompetencies.forEach((cc,id)=>{
+   const num=cc.numero?'Competência '+cc.numero:'Competência';
+   add(id,num,"Competência de Computação","Computação",cc.texto||name(id,S.data.compCompetencies));
+  });
+ }
+ if(!list.length&&S.data.structure?.competencias_especificas){
+  const compId=x.raw?.componente;
+  const comps=(S.data.structure.competencias_especificas||[]).filter(c=>(compId&&c.componente===compId)||c.area===x.discipline||c.area===x.area);
+  comps.forEach(c=>{
+   const num=c.numero?'Competência Específica '+c.numero:'Competência Específica';
+   add(c.id,num,"Competência específica",reunaAreaNome(c.area),c.texto);
+  });
+ }
+ if(!list.length&&S.data.structure?.competencias_gerais){
+  (S.data.structure.competencias_gerais||[]).forEach(cg=>{
+   add("cg-"+cg.numero,"Competência Geral "+cg.numero,"Competência Geral BNCC","Educação Básica",cg.texto);
+  });
+ }
+ return list;
+}
+function resolveCompDetails(c){
+ let target=(c.id&&S.by.get(c.id))||(c.rotulo&&S.by.get(c.rotulo));
+ if(!target&&c.id){target=S.all.find(it=>it.kind==="competencia"&&(it._id===c.id||it.code===c.id));}
+ if(!target){const m=(c.id||c.rotulo||"").match(/CG\s*0?(\d+)/i);if(m){target=S.by.get("CG"+String(m[1]).padStart(2,"0"));}}
+ if(target){
+  const comp=componentLabel(target)||c.area||"Competência";
+  return {code:target.code,group:target.group||c.tipo||"BNCC",component:comp,text:target.text||c.texto,color:color(comp)};
+ }
+ let shortCode=c.rotulo||c.id||"COMP";
+ const mEsp=shortCode.match(/Competência\s+Específica\s*(\d+)/i);if(mEsp)shortCode="CE"+String(mEsp[1]).padStart(2,"0");
+ const mGer=shortCode.match(/Competência\s+Geral\s*(\d+)/i);if(mGer)shortCode="CG"+String(mGer[1]).padStart(2,"0");
+ const mComp=shortCode.match(/Competência\s*(\d+)/i);if(mComp)shortCode="CO"+String(mComp[1]).padStart(2,"0");
+ const comp=c.area||"Competência";
+ return {code:shortCode,group:c.tipo||"BNCC",component:comp,text:c.texto||"Competência articulada na organização curricular.",color:color(comp)};
+}
+function competenciasHtml(x){
+ const list=getCompetenciasForSkill(x);
+ if(!list.length)return "";
+ const chipsHtml=detailChipsHtml(list,c=>{
+  const d=resolveCompDetails(c);
+  return d.component;
+ });
+ return '<section class="detail-section detail-faixa-group" id="detalhe-competencias">'
+  +'<div class="section-heading"><span class="section-number">✦</span><div><h2>Competências relacionadas</h2><p class="section-caption">Competências gerais, específicas e de área articuladas a esta aprendizagem.</p></div></div>'
+  +'<div class="faixa-head"><h3 class="related-heading">Competências articuladas <span>'+list.length+'</span></h3>'+chipsHtml+'</div>'
+  +'<div class="row-rail detail-row-rail">'
+  +'<button type="button" class="rail-arrow rail-prev" data-direction="-1" aria-label="Competências anteriores"'+(list.length<=1?' hidden':'')+'>‹</button>'
+  +'<div class="row-track" role="region" aria-label="Competências relacionadas">'
+  +list.map(c=>{
+   const d=resolveCompDetails(c);
+   return '<article class="skill-card detail-rail-card detail-comp-card" role="button" tabindex="0" data-code="'+E(d.code)+'" data-detail-kind="competency" data-component="'+E(d.component)+'" data-rotulo="'+E(c.rotulo||d.code)+'" data-tipo="'+E(d.group)+'" data-area="'+E(d.component)+'" data-texto="'+E(d.text)+'" style="--accent:'+d.color+'">'
+    +'<div class="card-top"><span class="skill-code">'+E(d.code)+'</span><span class="skill-group">'+E(d.group)+'</span></div>'
+    +'<div class="card-identity"><span class="skill-tag">'+E(d.component)+'</span></div>'
+    +'<p class="card-text">'+E(d.text)+'</p>'
+    +'<div class="card-foot"><span>1 clique: texto completo · 2 cliques: abrir</span><span aria-hidden="true">↗</span></div>'
+    +'</article>';
+  }).join("")
+  +'</div>'
+  +'<button type="button" class="rail-arrow rail-next" data-direction="1" aria-label="Próximas competências"'+(list.length<=1?' hidden':'')+'>›</button>'
+  +'</div>'
+  +'</section>';
 }
 function habilidadeMapaHtml(code){
  const e=mfContextoAtual&&mfContextoAtual.itens.get(code);
@@ -665,22 +1352,141 @@ function mapaFocalMonta(x){
  vista.innerHTML=mfHtml(x,grupos);
  page.querySelector('[data-graph-view="focal"]')?.click();
 }
+let detailTapTimer=null;
+function detailNavItems(x,relationLists,competenciasList){
+ const isComp=x.kind==="competencia";
+ const isCompOrCieb=ehComputacao(x);
+ return [
+  ["detalhe-organizacao",isComp?"Enquadramento":"Organização"],
+  ...(competenciasList?.length?[["detalhe-competencias",isComp?"Competências afins":"Competências"]]:[]),
+  ...(!isComp&&!isCompOrCieb?[["detalhe-mapas","Mapas"]]:(isComp&&relationLists?.curriculo?.length?[["detalhe-articulacoes","Habilidades articuladas"]]:[])),
+  ...(relationLists?.curriculo?.length&&isCompOrCieb?[["detalhe-computacao","Habilidades BNCC"]]:(relationLists?.curriculo?.length&&!isComp?[["detalhe-computacao","Computação"]]:[])),
+  ...(S.data.ai[x.code]?.por_componente?[["detalhe-interdisciplinar","Interdisciplinar"]]:[]),
+  ...(relationLists?.cieb?.length?[["detalhe-cieb","CIEB"]]:(x.kind==="cieb"?[["detalhe-cieb","CIEB"]]:[])),
+  ...(S.data.reuna?.[x.code]?[["detalhe-reuna","Reúna"]]:[])
+ ];
+}
 function detail(code){
- const x=S.by.get(code);if(!x){home();return;}closeMobileFilters();SkillGraph.detach();$("#catalogPage").hidden=true;const page=$("#detailPage");page.hidden=false;delete page.dataset.pendingGraphJump;
+ const x=S.by.get(code);if(!x){home();return;}S.currentSkill=x;closeMobileFilters();SkillGraph.detach();$("#catalogPage").hidden=true;const page=$("#detailPage");page.hidden=false;delete page.dataset.pendingGraphJump;
  const relationLists=detailRelations(x);
- const nav=[["detalhe-organizacao","Organização"],["detalhe-fonte","Fonte"],["detalhe-mapas","Mapas"],...(S.data.ai[x.code]?.por_componente?[["detalhe-interdisciplinar","Interdisciplinar"]]:[]),["detalhe-cieb","CIEB"],...(S.data.reuna?.[x.code]?[["detalhe-reuna","Reúna"]]:[])];
- page.classList.remove("has-compact-summary");page.innerHTML=printHeadHtml(x)+'<section class="detail-hero" style="--detail-accent:'+color(x.discipline||x.area)+'"><div class="detail-hero-inner"><button class="back-button" id="backButton">← &nbsp; Voltar ao catálogo</button><div class="detail-header-grid"><div class="detail-header-main"><div class="detail-topline"><span class="detail-kicker">HABILIDADE EM DETALHE</span><span>'+E(x.doc||"BNCC")+'</span></div><div class="detail-title"><h1>'+E(x.code)+'</h1><p class="skill-long-text">'+E(x.text)+'</p></div>'+(x.kind!=="cieb"?'<div class="detail-header-actions"><button type="button" class="detail-copy-button" data-copy-official>Copiar texto oficial</button><a class="detail-header-map" href="#skillGraph">Explorar progressão <span aria-hidden="true">↓</span></a></div>':'')+'</div></div></div></section><nav class="detail-nav" aria-label="Nesta habilidade"><span>Nesta habilidade</span>'+nav.map(([id,label])=>'<a href="#'+id+'">'+E(label)+'</a>').join("")+'</nav><div class="detail-content">'+detailHeaderHtml(x)+mapWorkspaceHtml(x,relationLists.curriculo)+aiHtml(x)+ciebHtml(x,relationLists.cieb)+reunaHtml(x)+'</div>'+printBarHtml();
- const detailHero=page.querySelector(".detail-hero"),detailNav=page.querySelector(".detail-nav"),stickySummary=document.createElement("div"),navShell=document.createElement("div");stickySummary.className="detail-sticky-summary";stickySummary.hidden=true;stickySummary.setAttribute("aria-hidden","true");stickySummary.setAttribute("aria-label","Habilidade em foco");stickySummary.innerHTML="<strong></strong><p></p>";stickySummary.querySelector("strong").textContent=x.code;stickySummary.querySelector("p").textContent=x.text;navShell.className="detail-sticky-shell";detailHero.after(stickySummary);detailNav.before(navShell);navShell.append(detailNav);requestAnimationFrame(syncDetailStickySummary);
- if(x.kind!=="cieb"){const relationsShortcut=page.querySelector('.detail-nav a[href="#detalhe-mapas"]');if(relationsShortcut){relationsShortcut.href="#detalhe-grafo";relationsShortcut.textContent="Relações de progressão";const graphShortcut=document.createElement("a");graphShortcut.href="#skillGraph";graphShortcut.textContent="Mapa de progressão";relationsShortcut.after(graphShortcut);}}
+ const competenciasList=getCompetenciasForSkill(x);
+ const isComp=x.kind==="competencia";
+ const isCompOrCieb=ehComputacao(x);
+ const nav=detailNavItems(x,relationLists,competenciasList);
+ const kicker=isComp?"COMPETÊNCIA EM DETALHE":(x.kind==="cieb"?"REFERÊNCIA CIEB EM DETALHE":"HABILIDADE EM DETALHE");
+ const docLabel=x.doc||(isComp?"BNCC":(x.kind==="cieb"?"CIEB":x.kind==="computacao"?"BNCC Computação":"BNCC"));
+ const printBtnSvg='<svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" style="vertical-align:-1px;margin-right:2px"><path d="M6 9V2h12v7M6 18H4a2 2 0 0 1-2-2v-5a2 2 0 0 1 2-2h16a2 2 0 0 1 2 2v5a2 2 0 0 1-2 2h-2"/><rect x="6" y="14" width="12" height="8"/></svg>';
+ const actionsHtml='<div class="detail-header-actions">'
+  +'<button type="button" class="detail-copy-button" data-copy-official>Copiar texto oficial</button>'
+  +'<button type="button" class="detail-copy-button" id="printOpen" aria-haspopup="dialog">'+printBtnSvg+'Imprimir / Salvar em PDF</button>'
+  +(!isCompOrCieb&&!isComp?'<a class="detail-header-map" href="#skillGraph">Explorar progressão <span aria-hidden="true">↓</span></a>':'')
+  +'</div>';
+ page.classList.remove("has-compact-summary");page.innerHTML=printHeadHtml(x)+'<section class="detail-hero" style="--detail-accent:'+color(x.discipline||x.area)+'"><div class="detail-hero-inner"><button class="back-button" id="backButton">← &nbsp; Voltar ao catálogo</button><div class="detail-header-grid"><div class="detail-header-main"><div class="detail-topline"><span class="detail-kicker">'+E(kicker)+'</span><span>'+E(docLabel)+'</span></div><div class="detail-title"><h1>'+E(x.code)+'</h1><p class="skill-long-text">'+E(x.text)+'</p></div>'+actionsHtml+'</div></div></div></section><nav class="detail-nav" aria-label="Nesta habilidade"><span>Nesta habilidade</span>'+nav.map(([id,label])=>'<a href="#'+id+'">'+E(label)+'</a>').join("")+'</nav><div class="detail-content">'+detailHeaderHtml(x)+competenciasHtml(x)+mapWorkspaceHtml(x,relationLists.curriculo)+aiHtml(x)+ciebHtml(x,relationLists.cieb)+reunaHtml(x)+'</div>';
+ page.querySelector('[data-copy-official]')?.addEventListener('click',async e=>{const button=e.currentTarget;try{const textToCopy=page.querySelector('.skill-long-text')?.textContent||x.text||"";await navigator.clipboard.writeText(textToCopy);button.textContent='Texto copiado';setTimeout(()=>button.textContent='Copiar texto oficial',1800);}catch{button.textContent='Não foi possível copiar';}});
+ const detailHero=page.querySelector(".detail-hero"),detailNav=page.querySelector(".detail-nav"),stickySummary=document.createElement("div"),navShell=document.createElement("div");stickySummary.className="detail-sticky-summary";stickySummary.style.setProperty('--detail-accent',color(x.discipline||x.area));stickySummary.hidden=true;stickySummary.setAttribute("aria-hidden","true");stickySummary.setAttribute("aria-label","Habilidade em foco");stickySummary.innerHTML="<strong></strong><p></p>";stickySummary.querySelector("strong").textContent=x.code;stickySummary.querySelector("p").textContent=x.text;navShell.className="detail-sticky-shell";detailHero.after(stickySummary);detailNav.before(navShell);navShell.append(detailNav);requestAnimationFrame(()=>{syncDetailStickySummary();syncDetailNavScrollspy();});
+ if(!isCompOrCieb&&!isComp){const relationsShortcut=page.querySelector('.detail-nav a[href="#detalhe-mapas"]');if(relationsShortcut){relationsShortcut.href="#detalhe-grafo";relationsShortcut.textContent="Relações de progressão";const graphShortcut=document.createElement("a");graphShortcut.href="#skillGraph";graphShortcut.textContent="Mapa de progressão";relationsShortcut.after(graphShortcut);}}
  $("#backButton").addEventListener("click",()=>home());
- page.onclick=e=>{const jump=e.target.closest(".graph-jump,a[href=\"#skillGraph\"]");if(jump){e.preventDefault();const progressTab=page.querySelector('[data-graph-view="progression"]');if(progressTab&&!progressTab.classList.contains("active"))progressTab.click();if(!page.querySelector("#skillGraph")){page.dataset.pendingGraphJump="true";return;}requestAnimationFrame(()=>page.querySelector("#skillGraph")?.scrollIntoView({behavior:"smooth",block:"start"}));return;}const b=e.target.closest("[data-graph-code]");if(b){open(b.dataset.graphCode);return;}const a=e.target.closest("a[data-code]");if(a&&page.contains(a)){e.preventDefault();open(a.dataset.code);}};
- if(x.kind!=="cieb")BnccData.load().then(state=>{const section=document.getElementById("detalhe-grafo");if(page.hidden||!section||new URLSearchParams(location.search).get("codigo")!==code)return;const node=state.nodes.get(code);if(!node){section.innerHTML='<p class="empty-message">Esta habilidade não está presente no grafo fornecido.</p>';return;}page.querySelector('.skill-long-text').textContent=node.texto;const compactDescription=page.querySelector('.detail-sticky-summary p');if(compactDescription)compactDescription.textContent=node.texto;section.innerHTML=SkillPanel.html(state,node);SkillGraph.mount(section.querySelector('#skillGraph'),state,code,open,()=>{});mapaFocalMonta(x);if(page.dataset.pendingGraphJump){delete page.dataset.pendingGraphJump;requestAnimationFrame(()=>page.querySelector('#skillGraph')?.scrollIntoView({behavior:'smooth',block:'start'}));}page.querySelector('[data-copy-official]')?.addEventListener('click',async e=>{const button=e.currentTarget;try{await navigator.clipboard.writeText(node.texto);button.textContent='Texto copiado';setTimeout(()=>button.textContent='Copiar texto oficial',1800);}catch{button.textContent='Não foi possível copiar';}});}).catch(error=>{const section=document.getElementById("detalhe-grafo");if(section&&!page.hidden&&new URLSearchParams(location.search).get("codigo")===code)section.innerHTML='<p class="empty-message">Não foi possível abrir o grafo local: '+E(error.message)+'</p>';});
+ initializeDetailRails(page);
+
+ page.onclick=e=>{
+  if(e.target.closest("#habilidadeDialog"))return;
+  const chip=e.target.closest("[data-detail-chip]");
+  if(chip){
+   e.preventDefault();
+   const wrap=chip.closest(".detail-faixa-group, .detail-section, .progress-block");
+   if(!wrap)return;
+   const chips=wrap.querySelectorAll("[data-detail-chip]");
+   chips.forEach(c=>{
+    c.classList.remove("active");
+    c.setAttribute("aria-pressed","false");
+   });
+   chip.classList.add("active");
+   chip.setAttribute("aria-pressed","true");
+   const selected=chip.dataset.detailChip;
+   const cards=wrap.querySelectorAll(".detail-rail-card, .progress-relation-card, .ai-card, .skill-card");
+   cards.forEach(card=>{
+    const cardComp=card.dataset.component||card.dataset.aiComponent||"";
+    const match=!selected||cardComp===selected;
+    card.hidden=!match;
+   });
+   const track=wrap.querySelector(".row-track");
+   if(track){
+    track.scrollLeft=0;
+    syncDetailRailArrows(track);
+   }
+   return;
+  }
+  const arrow=e.target.closest(".rail-arrow");
+  if(arrow){
+   const track=arrow.closest(".row-rail")?.querySelector(".row-track");
+   if(track){
+    const dir=Number(arrow.dataset.direction)||1;
+    const distance=Math.max(280,track.clientWidth*.7);
+    track.scrollBy({left:dir*distance,behavior:"smooth"});
+    setTimeout(()=>syncDetailRailArrows(track),320);
+   }
+   return;
+  }
+  const jump=e.target.closest(".graph-jump,a[href=\"#skillGraph\"]");
+  if(jump){
+   e.preventDefault();
+   const progressTab=page.querySelector('[data-graph-view="progression"]');
+   if(progressTab&&!progressTab.classList.contains("active"))progressTab.click();
+   if(!page.querySelector("#skillGraph")){page.dataset.pendingGraphJump="true";return;}
+   requestAnimationFrame(()=>page.querySelector("#skillGraph")?.scrollIntoView({behavior:"smooth",block:"start"}));
+   return;
+  }
+  if(e.target.closest("#backButton")){home();return;}
+  const navFonte=e.target.closest('a[href="#detalhe-fonte"]');
+  if(navFonte){
+   const fonteEl=document.getElementById("detalhe-fonte");
+   if(fonteEl)fonteEl.open=true;
+  }
+  const navLink=e.target.closest(".detail-nav a");
+  if(navLink){
+   const allLinks=[...page.querySelectorAll(".detail-nav a")];
+   setActiveDetailNavLink(allLinks,navLink);
+  }
+  if(e.target.closest("[data-copy-official],#printOpen,[data-action-print],.detail-nav a"))return;
+  if(e.target.closest(".reuna-code-btn,.mf-code"))return;
+
+  const card=e.target.closest(".detail-rail-card,.progress-relation-card,.ai-card,[data-graph-code],[data-code]");
+  if(card&&page.contains(card)){
+   e.preventDefault();
+   if(e.detail>=2)return;
+   clearTimeout(detailTapTimer);
+   detailTapTimer=setTimeout(()=>{
+    detailTapTimer=null;
+    openCardDetailModal(card);
+   },240);
+   return;
+  }
+ };
+
+ page.ondblclick=e=>{
+  if(e.target.closest("#habilidadeDialog"))return;
+  if(e.target.closest(".reuna-code-btn,.mf-code"))return;
+  const card=e.target.closest(".detail-rail-card,.progress-relation-card,.ai-card,[data-graph-code],[data-code]");
+  if(card&&page.contains(card)){
+   e.preventDefault();
+   clearTimeout(detailTapTimer);
+   detailTapTimer=null;
+   habilidadeModalFechar();
+   const code=card.dataset.code||card.dataset.graphCode||card.querySelector("[data-code]")?.dataset.code;
+   if(code&&S.by.has(code)){
+    open(code);
+   }else{
+    openCardDetailModal(card);
+   }
+  }
+ };
+
+ if(!isCompOrCieb&&!isComp)BnccData.load().then(state=>{const section=document.getElementById("detalhe-grafo");if(page.hidden||!section||new URLSearchParams(location.search).get("codigo")!==code)return;const node=state.nodes.get(code);if(!node){section.innerHTML='<p class="empty-message">Esta habilidade não está presente no grafo fornecido.</p>';return;}page.querySelector('.skill-long-text').textContent=node.texto;const compactDescription=page.querySelector('.detail-sticky-summary p');if(compactDescription)compactDescription.textContent=node.texto;section.innerHTML=SkillPanel.html(state,node);initializeDetailRails(section);SkillGraph.mount(section.querySelector('#skillGraph'),state,code,open,()=>{});mapaFocalMonta(x);if(page.dataset.pendingGraphJump){delete page.dataset.pendingGraphJump;requestAnimationFrame(()=>page.querySelector('#skillGraph')?.scrollIntoView({behavior:'smooth',block:'start'}));}page.querySelector('[data-copy-official]')?.addEventListener('click',async e=>{const button=e.currentTarget;try{await navigator.clipboard.writeText(node.texto);button.textContent='Texto copiado';setTimeout(()=>button.textContent='Copiar texto oficial',1800);}catch{button.textContent='Não foi possível copiar';}});}).catch(error=>{const section=document.getElementById("detalhe-grafo");if(section&&!page.hidden&&new URLSearchParams(location.search).get("codigo")===code)section.innerHTML='<p class="empty-message">Não foi possível abrir o grafo local: '+E(error.message)+'</p>';});
  page.querySelectorAll(".more-relations[data-relation-kind]").forEach(more=>{
    const list=relationLists[more.dataset.relationKind]||[],grid=more.querySelector("[data-relation-grid]"),button=more.querySelector(".load-more-relations");let cursor=6;
    const append=()=>{const batch=list.slice(cursor,cursor+RELATION_BATCH);cursor+=batch.length;grid.insertAdjacentHTML("beforeend",batch.map(relationCard).join(""));const left=list.length-cursor;button.hidden=left<=0;if(left>0)button.textContent="Carregar mais ("+left+" restantes)";};
    more.addEventListener("toggle",()=>{if(more.open&&cursor===6)append();});button.addEventListener("click",append);
  });
-
 }
 function setupMobileFilters(){
  const actions=$(".top-actions");if(!actions||actions.querySelector(".mobile-filter-toggle"))return;
@@ -694,6 +1500,8 @@ function closeMobileFilters(){const actions=$(".top-actions"),toggle=actions?.qu
 const PRINT_SECOES=[
  {id:"detalhe-organizacao",titulo:"Cabeçalho e organização curricular"},
  {id:"detalhe-fonte",titulo:"Fonte e referência"},
+ {id:"detalhe-competencias",titulo:"Competências relacionadas"},
+ {id:"detalhe-articulacoes",titulo:"Habilidades articuladas"},
  {id:"detalhe-grafo",titulo:"Progressão (grafo)"},{id:"mapa-focal",titulo:"Mapa Focal"},
  {id:"detalhe-mapas",titulo:"Mapas de relações"},
  {id:"detalhe-interdisciplinar",titulo:"Sugestões interdisciplinares"},
@@ -704,7 +1512,7 @@ const PRINT_KEY="conecta-bncc-impressao";
 let printEstado=null,printTimer=null,printRevelados=[],printZoomSlot=null,printRestaurarAba=null;
 function printPreferencias(){try{return JSON.parse(localStorage.getItem(PRINT_KEY)||"{}")||{};}catch(e){return {};}}
 function printSalvarPreferencias(p){try{localStorage.setItem(PRINT_KEY,JSON.stringify(p));}catch(e){}}
-function printBarHtml(){return '<div class="print-bar"><button type="button" class="print-btn print-btn--primary" id="printOpen" aria-haspopup="dialog">Imprimir ou salvar em PDF</button></div>';}
+function printBarHtml(){return '';}
 function printHeadHtml(x){return '<div class="print-head"><p class="print-brand">Conecta BNCC 2.0 · ficha da habilidade</p><h1>'+E(x.code)+'</h1><p class="print-text">'+E(x.text)+'</p></div>';}
 function printPresente(id){const page=$("#detailPage"),el=document.getElementById(id);return !!(el&&page&&page.contains(el));}
 function ensurePrintDialog(){
@@ -807,9 +1615,18 @@ function imprimirComOpcoes(op){
 }
 function events(){
  reunaBindInteractions($("#detailPage"));mfBindInteractions($("#detailPage"));
- $("#detailPage").addEventListener("click",e=>{if(e.target.closest("#printOpen"))printAbrirDialogo();});
+ $("#detailPage").addEventListener("click",e=>{if(e.target.closest("#printOpen,[data-action-print]"))printAbrirDialogo();});
  setupMobileFilters();let searchTimer;
- window.addEventListener("scroll",syncDetailStickySummary,{passive:true});window.addEventListener("resize",syncDetailStickySummary,{passive:true});
+ let detailScrollRaf=null;
+ const handleDetailScroll=()=>{
+  if(detailScrollRaf)return;
+  detailScrollRaf=requestAnimationFrame(()=>{
+   detailScrollRaf=null;
+   syncDetailStickySummary();
+   syncDetailNavScrollspy();
+  });
+ };
+ window.addEventListener("scroll",handleDetailScroll,{passive:true});window.addEventListener("resize",handleDetailScroll,{passive:true});
  const jumpToRow=row=>{if(!row)return;const bar=$(".topbar"),offset=bar&&getComputedStyle(bar).position==="sticky"?bar.getBoundingClientRect().height:0;window.scrollTo({top:Math.max(0,window.scrollY+row.getBoundingClientRect().top-offset-16),behavior:"smooth"});};
  $("#searchInput").addEventListener("input",e=>{const wasDetail=!$("#detailPage").hidden;S.q=e.target.value;if(wasDetail)home(false);clearTimeout(searchTimer);searchTimer=setTimeout(()=>{render();if(wasDetail)$(".catalog")?.scrollIntoView({behavior:"smooth"});},SEARCH_DELAY);});
   $("#stageSelect").addEventListener("change",e=>{const wasDetail=!$("#detailPage").hidden;S.stageFilter=e.target.value;if(wasDetail)home(false);clearTimeout(searchTimer);render();if(wasDetail)$(".catalog")?.scrollIntoView({behavior:"smooth"});});
@@ -866,7 +1683,7 @@ function events(){
      [...bar.querySelectorAll("[data-row-component]")].find(b=>b.dataset.component===next)?.focus({preventScroll:true});
      syncComponentArrows(replacement);updateResultCount();return;
    }
-   const arrow=e.target.closest(".rail-arrow");if(arrow){const track=arrow.closest(".row-rail").querySelector(".row-track");moveRail(track,Number(arrow.dataset.direction));return;}const c=e.target.closest(".skill-card");if(c)open(c.dataset.code);
+   const arrow=e.target.closest(".rail-arrow");if(arrow){const track=arrow.closest(".row-rail").querySelector(".row-track");moveRail(track,Number(arrow.dataset.direction));return;}const c=e.target.closest(".skill-card");if(c){open(c.dataset.code);}
  });
  const interruptRailMotion=e=>{const track=e.target.closest(".row-track");if(track)cancelRailAnimation(track);};
  $("#catalogRows").addEventListener("pointerdown",interruptRailMotion,{passive:true});$("#catalogRows").addEventListener("touchstart",interruptRailMotion,{passive:true});$("#catalogRows").addEventListener("wheel",interruptRailMotion,{passive:true});
@@ -874,7 +1691,7 @@ function events(){
  $("#catalogRows").addEventListener("focusin",e=>{const c=e.target.closest(".skill-card"),track=c?.closest(".row-track");if(track){syncRailA11y(track);scheduleRail(track);}});
  window.addEventListener("resize",()=>requestAnimationFrame(()=>{initializeRails($("#catalogRows"));syncComponentArrows($("#catalogRows"));}));
  $("#catalogRows").addEventListener("keydown",e=>{const c=e.target.closest(".skill-card");if(!c)return;if(e.key==="Enter"||e.key===" "){e.preventDefault();open(c.dataset.code);}else if(e.key==="ArrowLeft"||e.key==="ArrowRight"){e.preventDefault();moveRailFocus(c.closest(".row-track"),c,e.key==="ArrowLeft"?-1:1);}});
- $("#stageShortcuts").addEventListener("click",e=>{const b=e.target.closest("[data-scroll]");if(b)jumpToRow($("#row-"+b.dataset.scroll));});
+ $("#stageShortcuts").addEventListener("click",e=>{const b=e.target.closest("[data-scroll]");if(!b)return;if(!$("#detailPage").hidden)home(false);let row=$("#row-"+b.dataset.scroll);if(!row){clearTimeout(searchTimer);$("#searchInput").value="";$("#stageSelect").value="";$("#areaSelect").value="";S.q=S.filter=S.stageFilter="";S.rowFilters.clear();S.yearFilters.clear();render();row=$("#row-"+b.dataset.scroll);}jumpToRow(row);});
  document.querySelectorAll("[data-home]").forEach(a=>a.addEventListener("click",e=>{e.preventDefault();if(!$("#detailPage").hidden)home();else window.scrollTo({top:0,behavior:"smooth"});}));
   document.querySelectorAll("[data-jump]").forEach(a=>a.addEventListener("click",e=>{e.preventDefault();if(!$("#detailPage").hidden)home(false);let row=$("#row-"+a.dataset.jump);if(!row){clearTimeout(searchTimer);$("#searchInput").value="";$("#stageSelect").value="";$("#areaSelect").value="";S.q=S.filter=S.stageFilter="";S.rowFilters.clear();S.yearFilters.clear();render();row=$("#row-"+a.dataset.jump);}jumpToRow(row);}));
  $("#aboutButton").addEventListener("click",()=>$("#aboutDialog").showModal());$("#themeButton").addEventListener("click",()=>{const t=document.body.dataset.theme==="light"?"dark":"light";document.body.dataset.theme=t;localStorage.setItem("conecta-bncc-theme",t);$("#themeButton").textContent=t==="light"?"☾":"☼";$("#themeButton").title=t==="light"?"Ativar tema escuro":"Ativar tema claro";});document.querySelectorAll("[data-close-dialog]").forEach(b=>b.addEventListener("click",()=>$("#aboutDialog").close()));
