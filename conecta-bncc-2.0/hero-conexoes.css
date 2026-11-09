@@ -1,0 +1,88 @@
+/* Banner do catálogo: uma constelação discreta de habilidades que se
+   conectam ao fundo. A máscara protege a área do texto para não atrapalhar
+   a leitura, e os nós pulsam suavemente com a carta em destaque. */
+/* Os nós são posicionados pelo script apenas nos vazios do banner, então a
+   malha inteira pode aparecer sem máscara, sem tocar em textos ou na carta. */
+.hero-constellation{position:absolute;inset:0;z-index:1;pointer-events:none}
+.hero-constellation svg{display:block;width:100%;height:100%;animation:hn-drift 34s ease-in-out infinite}
+.spotlight,.hero-catalog,.hero-copy{position:relative;z-index:2}
+@keyframes hn-drift{0%,100%{transform:translate(0,0)}50%{transform:translate(-10px,6px)}}
+
+/* Fios visíveis mas finos, desenhando-se uma única vez na entrada. */
+.hn-wire{fill:none;stroke:#c9aede6b;stroke-width:1.2;stroke-dasharray:100;stroke-dashoffset:100;animation:hn-draw 1.6s ease-out var(--wd) forwards}
+@keyframes hn-draw{to{stroke-dashoffset:0}}
+
+/* Pulsos de luz lentos cruzando algumas conexões, com brilho suave. */
+.hn-flow{fill:none;stroke:var(--c,#b5a0ff);stroke-width:2.2;stroke-linecap:round;stroke-dasharray:9 91;opacity:0;filter:drop-shadow(0 0 4px var(--c,#b5a0ff));animation:hn-appear 1s ease var(--fd) forwards,hn-flow var(--fdur) linear var(--fd) infinite}
+@keyframes hn-appear{to{opacity:.75}}
+@keyframes hn-flow{to{stroke-dashoffset:-100}}
+
+/* Nós: halo translúcido respirando, núcleo firme e código discreto. */
+.hn-halo{fill:var(--c,#b5a0ff);opacity:0;transform-box:fill-box;transform-origin:center;animation:hn-pop .6s ease var(--nd) forwards,hn-pulse 5s ease-in-out calc(var(--nd) + .6s) infinite}
+@keyframes hn-pop{from{opacity:0;transform:scale(.3)}to{opacity:.3;transform:scale(1)}}
+@keyframes hn-pulse{0%,100%{opacity:.26;transform:scale(1)}50%{opacity:.42;transform:scale(1.2)}}
+.hn-core{fill:var(--c,#b5a0ff);stroke:#10101466;stroke-width:.8;opacity:0;filter:drop-shadow(0 0 5px var(--c,#b5a0ff));animation:hn-core-in .6s ease var(--nd) forwards}
+@keyframes hn-core-in{to{opacity:1}}
+.hn-label{fill:var(--c,#b5a0ff);font:700 10px 'DM Sans',Arial,sans-serif;letter-spacing:.04em;paint-order:stroke;stroke:#10101499;stroke-width:2.5px;opacity:0;animation:hn-label-in 1s ease calc(var(--nd) + .2s) forwards}
+@keyframes hn-label-in{to{opacity:.62}}
+
+/* Paleta herdada dos acentos do app. */
+.hn-purple{--c:var(--purple)}.hn-green{--c:var(--green)}.hn-blue{--c:var(--blue)}
+.hn-orange{--c:var(--orange)}.hn-pink{--c:var(--pink)}.hn-gold{--c:var(--gold)}
+
+/* Fundo do banner respira com brilhos muito suaves de cor. */
+.hero::before{content:"";position:absolute;inset:-15% -10%;z-index:0;pointer-events:none;background:radial-gradient(ellipse 42% 55% at 78% 40%,#8d5fa82e,transparent 65%),radial-gradient(ellipse 36% 48% at 55% 65%,#3f6f9626,transparent 65%),radial-gradient(ellipse 30% 42% at 92% 20%,#5fae8d21,transparent 65%);filter:blur(36px);animation:hn-aurora 22s ease-in-out infinite alternate}
+@keyframes hn-aurora{from{transform:translate(-3%,-1%) scale(1)}50%{transform:translate(2%,2%) scale(1.05)}to{transform:translate(-1%,2%) scale(1.02)}}
+body[data-theme="light"] .hero::before{background:radial-gradient(ellipse 42% 55% at 78% 40%,#c9a2dd3d,transparent 65%),radial-gradient(ellipse 36% 48% at 55% 65%,#9ec5e83d,transparent 65%),radial-gradient(ellipse 30% 42% at 92% 20%,#a5dcc43d,transparent 65%)}
+
+/* Órbitas do cartão em destaque girando lentamente ao redor da habilidade. */
+.spotlight-orbit{animation:hn-spin 90s linear infinite}
+@keyframes hn-spin{from{transform:rotate(-19deg)}to{transform:rotate(341deg)}}
+
+/* Título: as "novas conexões" brilham com um fluxo de cor lento e suave. */
+.hero h1 span{background:linear-gradient(90deg,#dca5ee,#b7a6e8,#dca5ee);background-size:280% 100%;-webkit-background-clip:text;background-clip:text;color:transparent;animation:hn-shimmer 14s linear infinite}
+@keyframes hn-shimmer{to{background-position:280% 0}}
+body[data-theme="light"] .hero h1 span{background-image:linear-gradient(90deg,#8d4ba0,#7a5fb0,#8d4ba0)}
+
+/* O ponto "ao vivo" do eyebrow respira devagar. */
+.live-dot{animation:hn-blip 3.2s ease-in-out infinite}
+@keyframes hn-blip{0%,100%{transform:scale(1);box-shadow:0 0 14px var(--green)}50%{transform:scale(1.3);box-shadow:0 0 18px var(--green)}}
+
+/* A carta em destaque troca com um levantar suave e uma barra de progresso
+   discreta avisando quando a próxima habilidade chega. */
+.spotlight-card{position:relative;overflow:hidden}
+@keyframes hn-card-swap{0%{opacity:0;transform:translateY(16px) scale(.99)}100%{opacity:1;transform:translateY(0) scale(1)}}
+.spotlight-in{animation:hn-card-swap .7s cubic-bezier(.22,.9,.3,1)}
+.spotlight-in::after{content:"";position:absolute;left:1px;right:1px;bottom:1px;height:2px;width:auto;border-radius:0 0 14px 14px;background:linear-gradient(90deg,#b5a0ff88,#61b8ff88);transform-origin:left;animation:hn-progress 6.5s linear}
+@keyframes hn-progress{from{transform:scaleX(0)}to{transform:scaleX(1)}}
+
+/* O nó correspondente acende com delicadeza quando a carta o cita. */
+.hn-node.hn-active .hn-halo{animation:hn-pulse-active 2.4s ease-in-out infinite}
+@keyframes hn-pulse-active{0%,100%{opacity:.3;transform:scale(1.15)}50%{opacity:.45;transform:scale(1.35)}}
+.hn-node.hn-active .hn-core{opacity:1}
+.hn-node.hn-active .hn-label{opacity:.85}
+
+/* Tema claro: mesma rede, em tinta suave sobre o fundo lavanda. */
+body[data-theme="light"] .hn-purple{--c:#7d3fa8}
+body[data-theme="light"] .hn-green{--c:#1f8a63}
+body[data-theme="light"] .hn-blue{--c:#2668b0}
+body[data-theme="light"] .hn-orange{--c:#b05e12}
+body[data-theme="light"] .hn-pink{--c:#b23a72}
+body[data-theme="light"] .hn-gold{--c:#8a6d10}
+body[data-theme="light"] .hn-wire{stroke:#5b3f6e5c}
+body[data-theme="light"] .hn-label{stroke:#f4f3f6cc}
+body[data-theme="light"] .hn-core{stroke:#f4f3f666;filter:drop-shadow(0 0 5px #7d3fa855)}
+
+@media(max-width:900px){.hn-label{display:none}}
+@media(prefers-reduced-motion:reduce){
+ .hero::before,.hero-constellation svg,.hn-wire,.hn-flow,.hn-halo,.hn-core,.hn-label,.spotlight-orbit,.spotlight-in,.spotlight-in::after,.hn-node.hn-active .hn-halo,.hero h1 span,.live-dot{animation:none}
+ .hn-wire{stroke-dashoffset:0}
+ .hn-flow{opacity:.4;stroke-dashoffset:-20}
+ .hn-halo{opacity:.28}
+ .hn-core{opacity:1}
+ .hn-label{opacity:.6}
+ .spotlight-orbit{transform:rotate(-19deg)}
+ .spotlight-in::after{transform:scaleX(1)}
+ .hero h1 span{background:none;-webkit-background-clip:unset;background-clip:unset;color:#dca5ee}
+ body[data-theme="light"] .hero h1 span{color:#8d4ba0}
+}

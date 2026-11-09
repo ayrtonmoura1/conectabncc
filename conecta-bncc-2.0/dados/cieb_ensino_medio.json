@@ -1,0 +1,3438 @@
+{
+  "metadados": {
+    "titulo": "Currículo de Referência em Tecnologia E Computação do Ensino Médio",
+    "fonte": "CIEB — Centro de Inovação para a Educação Brasileira",
+    "url_origem": "https://curriculo.cieb.net.br/impressao",
+    "arquivo_origem": "Curr_culo_de_Refer_ncia_em_Tecnologia_E_Computa__o_do_Ensino_M_dio.html",
+    "etapa_atendida": "Ensino Médio",
+    "data_extracao": "2026-11-09",
+    "total_competencias": 44,
+    "total_unidades_curriculares": 44,
+    "total_itens_estrutura": 113,
+    "total_materiais_referencia": 192,
+    "carga_horaria_total_horas": 2440,
+    "fontes": [
+      {
+        "arquivo": "Curr_culo_de_Refer_ncia_em_Tecnologia_E_Computa__o_do_Ensino_M_dio.html",
+        "origem": "https://curriculo.cieb.net.br/impressao",
+        "papel": "extracao inicial das 44 competencias"
+      },
+      {
+        "arquivo": "Curriculo-de-referencia_Ensino-medio.pdf",
+        "origem": "Curriculo de Referencia — Itinerario Formativo em Tecnologia e Computacao, Ensino Medio, CIEB, out/2020, 76p",
+        "papel": "conferencia e correcao de eixo/tipo/carga das 26 UCs CDEM/TDEM/PCEM"
+      }
+    ],
+    "data_atualizacao": "2026-11-09"
+  },
+  "introducao": "Este currículo de referência, destinado à Educação Infantil e ao Ensino Fundamental, está organizado em três eixos – cultura digital, pensamento computacional e tecnologia digital – , subdivididos em conceitos. Cada conceito propõe o desenvolvimento de uma ou mais habilidades, para as quais são sugeridas práticas pedagógicas, avaliações e materiais de referência. A realização de cada uma das práticas sugeridas pressupõe um determinado nível de maturidade das escolas e dos docentes em relação aos usos das TDICs, indicados neste material. Para facilitar a relação entre este Currículo de Referência em Tecnologia e Computação e a BNCC, as habilidades aqui propostas estão diretamente associadas às competências gerais e às habilidades da própria Base.",
+  "objetivos": [
+    "Oferecer diretrizes e orientações para apoiar redes de ensino a incluir os temas tecnologia e computação nos seus currículos, de forma a promover o direito de aprendizagem dos alunos.",
+    "Auxiliar os gestores na identificação da infraestrutura e dos recursos humanos necessários para se trabalhar nas escolas as temáticas do currículo de referência.",
+    "Apoiar as escolas na revisão de seus projetos político-pedagógicos, propondo o uso de tecnologias no processo de ensino e aprendizagem.",
+    "Inspirar professores com materiais de referência e práticas pedagógicas inovadoras que abordem conceitos da computação e utilizem tecnologia para aperfeiçoar a atuação pedagógica docente no contexto escolar.",
+    "Oferecer diretrizes para professores e comunidade escolar com sugestões de avaliação que permitam averiguar a aprendizagem dos alunos em relação aos conceitos e práticas trabalhadas em sala de aula.",
+    "Promover uma aprendizagem mais contemporânea e significativa para os alunos, a partir do uso e da criação de tecnologia e também do estudo dos conceitos de computação."
+  ],
+  "estrutura_curricular": [
+    {
+      "nome": "Cultura Digital",
+      "descricao": "Este eixo, remete às relações humanas fortemente mediadas por tecnologias e comunicações por meio digital, aproximando-se de outros conceitos como sociedade da informação, cibercultura e revolução digital. Nesse contexto, a compreensão de textos narrativos, sejam verbais ou não verbais, requer análise e interpretação das informações recebidas, bem como reconhecimento dos diferentes tipos de mídias envolvidas.",
+      "competencias_do_eixo": [
+        {
+          "codigo": "CDEM01",
+          "descricao": "Propor ações criativas que contribuam para a transformação da sociedade, analisando e utilizando as tecnologias de forma crítica, considerando os diferentes tipos de mídia e as relações humanas mediadas por elas."
+        },
+        {
+          "codigo": "CDEM02",
+          "descricao": "Analisar a relação tecnologia e sociedade, avaliando suas potencialidades e riscos, considerando a ética, a sustentabilidade e o empreendedorismo, a fim de atuar no mundo de forma responsável."
+        }
+      ]
+    },
+    {
+      "nome": "Tecnologia Digital",
+      "descricao": "Neste currículo, Tecnologia Digital representa o conjunto de conhecimentos relacionados a como funcionam os computadores e suas tecnologias, em especial as redes e a internet. Muitos dos conceitos aqui compreendidos são costumeiramente tratados pela área da computação, como hardware, software, internet, sistemas operacionais, bancos de dados, dentre outros.",
+      "competencias_do_eixo": [
+        {
+          "codigo": "TDEM01",
+          "descricao": "Compreender as bases das tecnologias digitais atuais, como hardware, software, redes e representação de dados, refletindo sobre as tendências tecnológicas e seus impactos na sociedade."
+        },
+        {
+          "codigo": "TDEM02",
+          "descricao": "Utilizar de forma segura, propositiva e intencional as ferramentas tecnológicas digitais para se expressar em ambientes físicos ou digitais."
+        }
+      ]
+    },
+    {
+      "nome": "Pensamento Computacional",
+      "descricao": "Refere-se à capacidade de resolver problemas a partir de conhecimentos e práticas da computação, englobando sistematizar, representar, analisar e resolver problemas. O Pensamento Computacional tem sido considerado como um dos pilares fundamentais do intelecto humano, junto a leitura, a escrita e a aritmética, visto que ele também é aplicado para descrever, explicar e modelar o universo e seus processos complexos.",
+      "competencias_do_eixo": [
+        {
+          "codigo": "PCEM01",
+          "descricao": "Representar problemas complexos na forma de problemas menores, reconhecendo os seus detalhes relevantes e projetar soluções na forma de sequências de passos simples, coerentes e não ambíguos capazes de serem executados por computadores."
+        },
+        {
+          "codigo": "PCEM02",
+          "descricao": "Analisar os dados relevantes de um problema e representá-los em formatos que possam ser inseridos em um computador para serem posteriormente analisados, manipulados e visualizados de modo a se extrair informações, conhecimentos e conclusões."
+        },
+        {
+          "codigo": "PCEM03",
+          "descricao": "Compreender os processos e tecnologias envolvidas no desenvolvimento de programas para computadores, incluindo computadores pessoais, dispositivos móveis e aplicações na Web, a fim de utilizar estas soluções tecnológicas de maneira segura e responsável, avaliando seus riscos e benefícios."
+        }
+      ]
+    }
+  ],
+  "unidades_curriculares": [
+    {
+      "id": 1,
+      "eixo": "Cultura Digital",
+      "tipo_unidade_curricular": "Essenciais",
+      "nome": "Autoria digital",
+      "competencias_do_eixo": [
+        "TDEM02",
+        "CDEM01",
+        "CDEM02",
+        "TDEM01"
+      ],
+      "competencia": {
+        "codigo": "CDEMAD01",
+        "descricao": "Produzir conhecimento e conteúdo com base nos multiletramentos, por meio de sinais verbais e não verbais, códigos, a fim de utilizar os recursos digitais e a internet em seu cotidiano.",
+        "carga_horaria": "80h",
+        "recursos": [
+          "Computadores com acesso à internet (laboratório, espaços de inovação ou computadores portáteis)."
+        ],
+        "tematicas": [
+          "Ser humano e máquina.",
+          "Manipulação de dados e informações.",
+          "Vivência online."
+        ],
+        "atitudes": [
+          "Atenção no compartilhamento de informações e pesquisas de terceiros.",
+          "Cuidado com plágio e autoria de projetos audiovisuais.",
+          "Empatia ao se comunicar na internet.",
+          "Respeito e responsabilidade com a informação em meio digital.",
+          "Cuidado com plágio e autoria de documentos."
+        ],
+        "estrutura": [
+          {
+            "conhecimentos": "Acesso e armazenamento da informação (áudio, vídeo, texto, imagem)",
+            "habilidades": "Conhecer fundamentos de como a informação é acessada e armazenada em computadores",
+            "praticas_sugeridas": "Compreensão de que todo conteúdo disponibilizado na internet foi criado usando ferramentas e técnicas.Compreensão de que as informações podem ser de diferentes naturezas – por exemplo, vídeo, áudio, texto, imagem – e armazenadas em arquivos e pastas. Discussão sobre a existência de informações protegidas, a importância das senhas e das boas práticas para criação destas."
+          },
+          {
+            "conhecimentos": "Cidadania digital: Identidade no mundo virtual, vivência online e pensamento crítico",
+            "habilidades": "Compreender como áudios e vídeos são produzidos, armazenados e compartilhados na internet.",
+            "praticas_sugeridas": "Exploração de áudios e vídeos, conhecimento de atributos – por exemplo, amostragem, taxa de bits e quadros por segundo. Compreensão sobre o que são Codecs, sua influência no tamanho do arquivo e na qualidade do áudio e do vídeo, os diferentes codecs. Manipulação de arquivos de áudio e vídeo – por exemplo, copiando e movendo arquivos entre diferentes aplicativos e enviando-os para uma plataforma de vídeo na internet ou compartilhando-os em um canal ou por link."
+          },
+          {
+            "conhecimentos": "Autoria e edição de textos, planilhas e apresentações.",
+            "habilidades": "Utilizar ferramentas para autoria e edição de textos",
+            "praticas_sugeridas": "Utilização de editores de texto para autoria de documentos – por exemplo, trabalhos escolares, convites, poemas e outros. Experimentando as diferentes formatações de um texto. Exercitando a escrita de forma colaborativa e on-line."
+          },
+          {
+            "conhecimentos": "Planejamento e Produção de áudio e vídeo",
+            "habilidades": "Praticar a captação de áudio e vídeo.",
+            "praticas_sugeridas": "Compreensão das formas e necessidades para captura de áudio e de vídeo com qualidade, considerando aspectos como equipamentos, ruído e iluminação, composição, planos e contraste."
+          },
+          {
+            "conhecimentos": "Autoria e edição de textos, planilhas e apresentações; Acesso e armazenamento da informação (áudio, vídeo, texto, imagem); Criação de blog e websites.",
+            "habilidades": "Utilizar a tecnologia para a proposição de soluções em caráter individual ou coletivo",
+            "praticas_sugeridas": "Desenvolvimento de um projeto, individualmente ou em equipe, para solucionar um problema – por exemplo, mantendo um site ou um blog com conteúdo de prevenção de doenças e orientação de cunho específico. Proposições alternativas: criação de um conjunto de filmagens sobre obras artísticas ou prédios históricos; criação de conteúdos que integrem textos, imagens, áudios e vídeos para expressar uma ideia; desenvolvimento de solução digital que contemple sua documentação, conteúdo e propaganda para uma oportunidade de mercado."
+          },
+          {
+            "conhecimentos": "Autoria e edição de textos, planilhas e apresentações.",
+            "habilidades": "Utilizar ferramentas para autoria e edição de planilhas",
+            "praticas_sugeridas": "Utilização de planilhas de cálculo para registro e organização de informações. Explorando modos de criar fórmulas de cálculo para somas, médias e outras expressões aritméticas. Construindo gráficos e discutindo as melhores formas de apresentar informações."
+          },
+          {
+            "conhecimentos": "Captação de áudio e vídeo.",
+            "habilidades": "Utilizar softwares para edição de áudio e vídeo.",
+            "praticas_sugeridas": "Criação de vídeos que integrem uma trilha sonora, compreensão do conceito de linha do tempo, sincronia e canais de áudio. Realização de edições para união de diferentes sequência de vídeos e áudio, adicionando efeitos de transição, legendas e efeitos sonoros."
+          },
+          {
+            "conhecimentos": "Autoria e edição de textos, planilhas e apresentações.",
+            "habilidades": "Utilizar ferramentas para autoria e edição de apresentações",
+            "praticas_sugeridas": "Utilização de editores de apresentação para sintetizar e organizar informações para apoio à verbalização. Exploração de diferentes formatos de slides e combinação de textos e imagens. Discussão de boas práticas em relação a tamanho de textos, densidade de informação e uso de cores."
+          },
+          {
+            "conhecimentos": "Edição de áudio e vídeo.",
+            "habilidades": "Aplicar técnicas de planejamento e produção audiovisual.",
+            "praticas_sugeridas": "Proposição de criação de vídeos sobre temas de interesse dos(as) estudantes, envolvendo um planejamento que detalhe, por exemplo, o roteiro, a construção de um script, a produção dos locais e espaços de gravação, os planos de cenas, o contato com os(as) entrevistados(as), a gravação, a edição e o compartilhamento do material. Identificação das preferências da audiência, avaliando filmes, programas de TV, canais de YouTube, analisando e refletindo a respeito das etapas da produção e dos equipamentos necessários para transmissões ao vivo."
+          },
+          {
+            "conhecimentos": "Hipertexto: conceito e usos",
+            "habilidades": "Utilizar a internet para acessar informações compreendendo o conceito de hipertexto",
+            "praticas_sugeridas": "Acesso a diferentes websites, por exemplo, usando um software para navegar na internet. Apresentação da definição de hipertexto e percepção das formas não lineares de leitura possíveis a partir dele."
+          },
+          {
+            "conhecimentos": "Autoria e edição de textos, planilhas e apresentações.",
+            "habilidades": "Utilizar ferramentas para autoria e edição de imagens e desenhos",
+            "praticas_sugeridas": "Utilização de editores de imagens e de desenho para captura de imagens existentes e ajuste de tamanho ou recorte de partes. Utilização do recurso de captura de tela. Compreensão de formatos de arquivos de imagem e seus tamanhos. Produção de desenhos a partir de ferramentas geométricas e de mão livre. Conhecimento dos recursos disponíveis para esse fim nas ferramentas de desenho."
+          },
+          {
+            "conhecimentos": "Análise crítica da informação, Confiabilidade de informações e Fake news",
+            "habilidades": "Analisar criticamente a informação disponível na internet",
+            "praticas_sugeridas": "Acesso a informações de diferentes fontes sobre o mesmo tema – por exemplo, textos jornalísticos, científicos e blogs pessoais. Avaliação crítica dos discursos e suas motivações. Discussão sobre a confiabilidade da informação disponível e o papel das instituições em promover a curadoria dessas informações – por exemplo, editoras, órgãos governamentais, periódicos científicos e outros, avaliando os critérios usados para a curadoria."
+          }
+        ],
+        "indicadores_avaliacao": [
+          "Apresenta fluência no uso da tecnologia, considerando tecnologias físicas e digitais.",
+          "Produz conteúdo digital com respeito e ética."
+        ],
+        "perfil_docente": "Docente com conhecimentos de informática em nível básico.",
+        "materiais_referencia": [
+          {
+            "idioma": "portugues",
+            "nome": "A importância do hábito da leitura na era digital",
+            "link": "https://www.oconhecimento.com.br/a-importancia-do-habito-da-leitura-na-era-digital/"
+          },
+          {
+            "idioma": "portugues",
+            "nome": "Afinal o que é letramento?",
+            "link": "https://educacao.uol.com.br/planos-de-aula/fundamental/portugues-afinal-o-que-e-letramento.htm"
+          },
+          {
+            "idioma": "inglês",
+            "nome": "Apache OpenOffice (Software: Writer, Calc, Impress e Draw)",
+            "link": "https://www.openoffice.org/"
+          },
+          {
+            "idioma": "inglês",
+            "nome": "Audacity – Editor de áudio",
+            "link": "https://www.audacityteam.org/"
+          },
+          {
+            "idioma": "portugues",
+            "nome": "Canva",
+            "link": "https://www.canva.com/"
+          },
+          {
+            "idioma": "inglês",
+            "nome": "DaVinci Resolve – Edição de vídeo",
+            "link": "https://www.blackmagicdesign.com/products/davinciresolve/"
+          },
+          {
+            "idioma": "inglês",
+            "nome": "Goldwave – Editor de áudio.",
+            "link": "https://www.goldwave.com/"
+          },
+          {
+            "idioma": "portugues",
+            "nome": "Google Drive (Documentos, Planilhas, Apresentações, Formulários, Desenhos, Sites) (Software: Documentos, Planilha, Apresentações e Desenhos)",
+            "link": "https://www.google.com/intl/pt-BR/docs/about/"
+          },
+          {
+            "idioma": "inglês",
+            "nome": "Inkskape – Draw Freely",
+            "link": "https://inkscape.org/"
+          },
+          {
+            "idioma": "portugues",
+            "nome": "Notícias falsas – Fake News",
+            "link": "https://foconoenem.com/fake-news-redacao-enem/"
+          },
+          {
+            "idioma": "portugues",
+            "nome": "TV Escola: Bits e bytes — Que mundo é esse? – Os arquivos de computador",
+            "link": "https://tvescola.org.br/videos/bits-e-bytes-que-mundo-e-esse-os-arquivos-do-computador/"
+          },
+          {
+            "idioma": "portugues",
+            "nome": "TV Escola: Bits e bytes — Que mundo é esse? – Os números e a invenção do computador",
+            "link": "https://www.youtube.com/watch?v=WtjRa_W6EwQ"
+          },
+          {
+            "idioma": "portugues",
+            "nome": "YouTube Studio",
+            "link": "https://studio.youtube.com/"
+          }
+        ]
+      },
+      "eixo_fonte": "pdf"
+    },
+    {
+      "id": 2,
+      "eixo": "Cultura Digital",
+      "tipo_unidade_curricular": "Essenciais",
+      "nome": "Segurança digital",
+      "competencias_do_eixo": [
+        "CDEM02",
+        "TDEM01",
+        "TDEM02",
+        "CDEM01"
+      ],
+      "competencia": {
+        "codigo": "CDEMSD01",
+        "descricao": "Identificar e aplicar técnicas de proteção e segurança digital de informações, principalmente às relacionadas ao uso da internet.",
+        "carga_horaria": "40h",
+        "recursos": [
+          "Computadores com acesso à internet (laboratório, espaços de inovação ou computadores portáteis)."
+        ],
+        "tematicas": [
+          "Ser humano e máquina.",
+          "Tecnologia e computação.",
+          "Vivência online.",
+          "Manipulação de dados e informações."
+        ],
+        "atitudes": [
+          "Respeito e responsabilidade no compartilhamento de informação em meio digital.",
+          "Atenção com dados e informações na web."
+        ],
+        "estrutura": [
+          {
+            "conhecimentos": "Proteção da informação (uso de senhas e boas práticas);Conteúdos bons e prejudiciais / Perigos na internet",
+            "habilidades": "Identificar os principais perigos e problemas de segurança digital",
+            "praticas_sugeridas": "Reconhecimento e análise dos aspectos do direito digital – por exemplo, realizando estudos e debates sobre responsabilidades, direitos e deveres da vivência em meio digital. Reflexão sobre as características do cyberbullying – por exemplo, propondo ações para solucionar o problema em um debate sobre um caso real. Reflexão sobre conduta on-line – por exemplo, construindo coletivamente regras de conduta que colaborem para o debate de questões éticas em evidência."
+          },
+          {
+            "conhecimentos": "Proteção da informação (uso de senhas e boas práticas). Conteúdos bons e prejudiciais / Perigos na internet.",
+            "habilidades": "Aplicar protocolos de segurança no computador e na internet",
+            "praticas_sugeridas": "Criação de portfólios de usos pessoais de cada estudante, realizando debates e apresentações. Discussões sobre segurança, proteção de informação e casos sobre os perigos da vivência na internet, como a inserção de dados pessoais, conversa em chats com desconhecidos, entre outros. Discussões sobre a importância das senhas e boas práticas para a criação destas, e sobre a relevância da importância do tráfego de informações criptografadas nas redes – por exemplo, em relação a dados como senhas e informações bancárias das pessoas. Testagem de aplicação de filtros, antivírus, protocolos de segurança digital."
+          },
+          {
+            "conhecimentos": "Análise crítica da informação, confiabilidade de informações e fake news",
+            "habilidades": "Distinguir conteúdos bons dos prejudiciais, e conteúdos confiáveis",
+            "praticas_sugeridas": "Reflexão de valores e atitudes responsáveis relacionadas ao uso de dados em ambiente digital – por exemplo, trabalhando no comparativo de sites prejudiciais e conteúdos confiáveis."
+          },
+          {
+            "conhecimentos": "Proteção da informação (uso de senhas e boas práticas). Conteúdos bons e prejudiciais / Perigos na internet.",
+            "habilidades": "Compreender os perigos relacionados ao uso de computadores e da internet",
+            "praticas_sugeridas": "Reconhecimento dos perigos do uso do computador e internet – vírus, invasão, roubo de dados, crimes cibernéticos, por exemplo, discutindo e analisando as consequências desses perigos em nosso cotidiano. Discussão de casos de pessoas tiveram dados roubados e foram impactadas negativamente por vírus ou situações envolvendo o fornecimento de informações pessoais."
+          }
+        ],
+        "indicadores_avaliacao": [
+          "Aplica técnicas de segurança digital ao utilizar as tecnologias, em especial no uso de senhas para proteção de dados.",
+          "Compreende a importância da segurança digital."
+        ],
+        "perfil_docente": "Docente com conhecimentos de informática em nível intermediário.",
+        "materiais_referencia": [
+          {
+            "idioma": "portugues",
+            "nome": "Cartilhas do CGI.BR (Cartilhas: Golpes na Internet; Mecanismos de Segurança; Uso Seguro da Internet)",
+            "link": "https://cartilha.cert.br/"
+          },
+          {
+            "idioma": "portugues",
+            "nome": "Direito autoral",
+            "link": "https://pt.wikipedia.org/wiki/Direito_autoral"
+          },
+          {
+            "idioma": "portugues",
+            "nome": "Direito digital",
+            "link": "https://diogoprestes.jusbrasil.com.br/artigos/252818928/o-que-e-direito-digital"
+          },
+          {
+            "idioma": "portugues",
+            "nome": "Etiqueta on-line",
+            "link": "https://olhardigital.com.br/noticia/etiqueta-nas-redes-sociais-o-que-devemos-e-nao-devemos-fazer-no-convivio-virtual/22569"
+          },
+          {
+            "idioma": "portugues",
+            "nome": "Segurança na web – Infância e adolescência",
+            "link": "https://escoladainteligencia.com.br/seguranca-digital-como-proteger-seus-filhos-dos-perigos-da-internet/"
+          },
+          {
+            "idioma": "portugues",
+            "nome": "Segurança na web – Infância e adolescência (Segurança digital)",
+            "link": "https://www.welivesecurity.com/br/2016/12/05/idade-ideal-para-criancas/"
+          },
+          {
+            "idioma": "portugues",
+            "nome": "Tecnologia e cotidiano",
+            "link": "https://www.youtube.com/watch?time_continue=134&v=QU_F2fCKqmU"
+          }
+        ]
+      },
+      "eixo_fonte": "pdf"
+    },
+    {
+      "id": 3,
+      "eixo": "Cultura Digital",
+      "tipo_unidade_curricular": "Essenciais",
+      "nome": "Ciência e pesquisa na era digital",
+      "competencias_do_eixo": [
+        "CDEM02",
+        "TDEM01",
+        "TDEM02",
+        "CDEM01"
+      ],
+      "competencia": {
+        "codigo": "CDEMCP01",
+        "descricao": "Pesquisar em meio digital, compreendendo suas características e identificando os fundamentos da ciência.",
+        "carga_horaria": "40h",
+        "recursos": [
+          "Computadores com acesso à internet (laboratório ou computadores portáteis)."
+        ],
+        "tematicas": [
+          "Ser humano e máquina.",
+          "Vivência online.",
+          "Manipulação de dados e informações."
+        ],
+        "atitudes": [
+          "Atenção com plágio e autoria de documentos.",
+          "Responsabilidade no compartilhamento de informações e pesquisas de terceiros."
+        ],
+        "estrutura": [
+          {
+            "conhecimentos": "Fundamentos da Ciência e Pseudociência / Pensamento Científico",
+            "habilidades": "Organizar um argumento com embasamento científico",
+            "praticas_sugeridas": "Produção de um relatório no qual os(as) estudantes tenham de argumentar e fundamentar questões com base em referências ou dados – por exemplo, um(a) estudante pode argumentar que “a terra é redonda” e organizar as referências, evidências ou dados que apoiam essa argumentação."
+          },
+          {
+            "conhecimentos": "Repositórios e mecanismos de busca específicos",
+            "habilidades": "Pesquisar em repositórios científicos e compreender formas de avaliar o impacto de pesquisas",
+            "praticas_sugeridas": "Conhecimento e utilização de repositórios de trabalhos acadêmicos – por exemplo, o portal da Capes, portais de editoras, Google Acadêmico e sociedades científicas. Avaliando indicadores de impacto, como índice H e número de citações."
+          },
+          {
+            "conhecimentos": "Fundamentos da Ciência e Pseudociência / Pensamento Científico",
+            "habilidades": "Compreender fundamentos da ciência e do método científico",
+            "praticas_sugeridas": "Discussão sobre a importância da ciência na busca da verdade e do conhecimento, caracterizando o que é evidência e as diferentes formas de buscar evidências. Debate sobre o rigor metodológico e a pseudociência"
+          },
+          {
+            "conhecimentos": "Repositórios e mecanismos de busca específicos",
+            "habilidades": "Compreender o funcionamento de um mecanismo de busca da internet",
+            "praticas_sugeridas": "Realização de pesquisa na internet utilizando palavras-chave – por exemplo, pesquisando sobre os rios do município onde está localizada a escola. Identificação da relação entre as palavras pesquisadas e as respostas listadas pelo buscador – por exemplo, acessando as páginas indicadas e observando a presença das palavras nos resultados do buscador. Identificação da existência de uma ordenação (rankeamento) nos resultados da pesquisa – por exemplo, comparando os primeiros dez resultados com os dez consecutivos e debatendo o critério de relevância dos resultados."
+          },
+          {
+            "conhecimentos": "Repositórios e mecanismos de busca específicos",
+            "habilidades": "Realizar pesquisas avançadas na internet com algum propósito",
+            "praticas_sugeridas": "Utilizaçã de critérios avançados em pesquisa, como o uso de aspas e parênteses ou a disjunção lógica (OR) – por exemplo, pesquisas usando aspas para expressões como 'receita de bolo' ou usando OR para tratar sinônimos (escola OR colégio)."
+          },
+          {
+            "conhecimentos": "Repositórios e mecanismos de busca específicos. Análise crítica da informação, confiabilidade de informações e fake news",
+            "habilidades": "Realizar pesquisas em diferentes fontes de informação e avaliar a confiabilidade dos dados",
+            "praticas_sugeridas": "Distinção de fontes científicas de jornalísticas e pessoais. Conhecimento dos tipos de trabalhos acadêmicos existentes – por exemplo, artigos, monografias, teses e dissertações. Discussão sobre o processo científico de revisão por pares e distinguindo trabalhos revisados por pares de outros tipos de trabalhos. Discussão sobre os critérios de qualidade de pesquisas em relação a método e rigor científico."
+          }
+        ],
+        "indicadores_avaliacao": [
+          "Identifica fontes científicas, jornalísticas e pessoais de informação.",
+          "Desenvolve pesquisa na web, utilizando diferentes navegadores e páginas de buscas, livres ou de pesquisa científica, mapeando e organizando dados."
+        ],
+        "perfil_docente": "Docente com conhecimentos de informática em nível básico.",
+        "materiais_referencia": [
+          {
+            "idioma": "portugues",
+            "nome": "Brasil Escola – Internet",
+            "link": "https://brasilescola.uol.com.br/informatica/internet.htm"
+          },
+          {
+            "idioma": "portugues",
+            "nome": "Busca avançada no Google",
+            "link": "https://marketingdeconteudo.com/busca-avancada-no-google/"
+          },
+          {
+            "idioma": "portugues",
+            "nome": "Google Scholar (Google Acadêmico)",
+            "link": "https://scholar.google.com.br/"
+          },
+          {
+            "idioma": "inglês",
+            "nome": "How search works (legendado)",
+            "link": "https://www.youtube.com/watch?time_continue=4&v=BNHR6IQJGZs"
+          },
+          {
+            "idioma": "portugues",
+            "nome": "Portal de Periódicos da Capes",
+            "link": "http://www.periodicos.capes.gov.br/"
+          },
+          {
+            "idioma": "inglês",
+            "nome": "Portal Scielo",
+            "link": "http://www.scielo.br/"
+          }
+        ]
+      },
+      "eixo_fonte": "pdf"
+    },
+    {
+      "id": 4,
+      "eixo": "Cultura Digital",
+      "tipo_unidade_curricular": "Essenciais",
+      "nome": "Ambiência e tecnologia",
+      "competencias_do_eixo": [
+        "CDEM02",
+        "TDEM01",
+        "TDEM02",
+        "CDEM01"
+      ],
+      "competencia": {
+        "codigo": "CDEMAT01",
+        "descricao": "Analisar a relação homem-máquina, considerando a dimensão social, política, econômica e ambiental.",
+        "carga_horaria": "40h",
+        "recursos": [
+          "Computadores com acesso à internet (laboratório, espaços de inovação ou computadores portáteis)."
+        ],
+        "tematicas": [
+          "Manipulação de dados e informações.",
+          "Ser humano e máquina.",
+          "Vivência online."
+        ],
+        "atitudes": [
+          "Responsabilidade social no uso da internet.",
+          "Atitude sustentável no uso de tecnologias."
+        ],
+        "estrutura": [
+          {
+            "conhecimentos": "Meio ambiente e tecnologias: sustentabilidade, consumo e cotidiano",
+            "habilidades": "Compreender os impactos ambientais do uso de tecnologias no cotidiano do ser humano",
+            "praticas_sugeridas": "Discussão sobre o impacto da produção e do consumo de tecnologias no descarte de lixo eletrônico. Criação de solução para um problema ambiental relacionado ao uso de tecnologias, como, por exemplo, combustível em veículos, uso de plásticos, uso de celulares e baterias."
+          },
+          {
+            "conhecimentos": "Interação humano-computador",
+            "habilidades": "Distinguir características da evolução da tecnologia e seus impactos no cotidiano e na comunicação entre os seres humanos (consumo, meios de comunicação, saúde, educação, lazer, dentre outros)",
+            "praticas_sugeridas": "Criação de um painel da evolução das tecnologias e seus impactos na vida cotidiana do ser humano. Discussão sobre os problemas gerados pelo uso de tecnologias, como, por exemplo, avaliando o uso de celulares, jogos, consumo de tecnologias."
+          },
+          {
+            "conhecimentos": "Tecnologias emergentes",
+            "habilidades": "Identificar e analisar tecnologias emergentes, reconhecendo suas características.",
+            "praticas_sugeridas": "Criação de um painel sobre tecnologias inovadoras, apresentando suas características e usos. Discussão sobre os impactos e as transformações das tecnologias inovadoras no cotidiano das pessoas, com estudos de casos reais."
+          },
+          {
+            "conhecimentos": "Tecnologias emergentes",
+            "habilidades": "Utilizar tecnologias emergentes, considerando suas características, potencialidades e limitações, refletindo sobre seus impactos no cotidiano.",
+            "praticas_sugeridas": "Experimentando e analisando diferentes tecnologias emergentes, como realidade virtual, realidade aumentada, fabricação digital, cidades inteligentes, Internet das Coisas, Inteligência Artificial, Big Data, carros autônomos, blockchain, chatbots, tecnologias de interação etc."
+          }
+        ],
+        "indicadores_avaliacao": [
+          "Apresenta perspectivas relevantes quanto à relação homem-máquina e suas implicações para o mundo do trabalho, o consumo, as relações sociais e a educação.",
+          "Compreende a relação do ser humano com o uso de tecnologias no cotidiano, destacando os pontos positivos e negativos de sua evolução."
+        ],
+        "perfil_docente": "Docente com conhecimentos de informática em nível básico.",
+        "materiais_referencia": [
+          {
+            "idioma": "portugues",
+            "nome": "Laboratório de inovação tecnológica na educação",
+            "link": "http://lite.acad.univali.br/pt/"
+          },
+          {
+            "idioma": "portugues",
+            "nome": "Lista de tecnologias emergentes",
+            "link": "https://pt.wikipedia.org/wiki/Lista_de_tecnologias_emergentes"
+          },
+          {
+            "idioma": "portugues",
+            "nome": "Objetivos desenvolvimento sustentável da ONU",
+            "link": "https://sgssustentabilidade.com.br/conheca-os-17-objetivos-de-desenvolvimento-sustentavel-ods/?gclid=CjwKCAjw4rf6BRAvEiwAn2Q76geTSvauEc59VVKMDJSSfBXvIwSn_oLlfMhlMAlwyigAcCC3ef7FYhoCXtYQAvD_BwE"
+          },
+          {
+            "idioma": "portugues",
+            "nome": "Relação homem-maquina",
+            "link": "http://sandraturchi.com.br/relacao-homem-maquina-como-sera-o-trabalho-no-futuro/"
+          },
+          {
+            "idioma": "portugues",
+            "nome": "Tecnologias emergentes",
+            "link": "https://liga.ventures/2018/01/tecnologias-emergentes-conceito/"
+          }
+        ]
+      },
+      "eixo_fonte": "pdf"
+    },
+    {
+      "id": 5,
+      "eixo": "Cultura Digital",
+      "tipo_unidade_curricular": "Essenciais",
+      "nome": "Letramento midiático",
+      "competencias_do_eixo": [
+        "TDEM01",
+        "TDEM02",
+        "CDEM01",
+        "CDEM02"
+      ],
+      "competencia": {
+        "codigo": "CDEMLM01",
+        "descricao": "Utilizar diferentes mídias para a comunicação, agindo de forma crítica e ética na produção e consumo de informação.",
+        "carga_horaria": "40h",
+        "recursos": [
+          "Software de edição de áudio",
+          "Dispositivo para captura de vídeo (máquinas fotográficas digitais, webcam, celular ou tablets).",
+          "Computadores com acesso à internet (laboratório, espaços de inovação ou computadores portáteis).",
+          "Software para edição de vídeo.",
+          "dispositivo para captura de áudio (microfone, celular ou tablet)."
+        ],
+        "tematicas": [
+          "Vivência online.",
+          "Ser humano e máquina."
+        ],
+        "atitudes": [
+          "Criticidade no consumo e produção de informações nos meios midiáticos.",
+          "Ética, responsabilidade e respeito no compartilhamento de opinião e informação em meios de comunicação."
+        ],
+        "estrutura": [
+          {
+            "conhecimentos": "A influência das novas tecnologias e dos gêneros digitais nas mídias; Liberdade de Expressão; Liberdade de Imprensa; Comunicação, Cidadania e Democracia; Ética na comunicação.",
+            "habilidades": "Compreender o papel e o impacto da comunicação em nossa sociedade.",
+            "praticas_sugeridas": "Realização de estudos de caso sobre o impacto de algum evento midiático e os efeitos da desinformação no dia a dia das pessoas, e discussão sobre a responsabilidade na produção de informação por parte dos veículos e profissionais de imprensa e produtores de conteúdo."
+          },
+          {
+            "conhecimentos": "Gêneros e técnicas jornalísticas. Técnicas e linguagens publicitárias; Fontes de informação; Informação em redes sociais.",
+            "habilidades": "Compreender as formas de comunicação, suas linguagens e técnicas em diferentes mídias.",
+            "praticas_sugeridas": "Criação de um portfólio com as características de gêneros jornalísticos da atualidade, bem como as mídias e a difusão de informação."
+          },
+          {
+            "conhecimentos": "Análise crítica de mídia: Checagem de informações; Diferenciação entre informação e opinião; Intencionalidade das fontes de informação; Interpretação do discurso.",
+            "habilidades": "Reconhecer a qualidade, confiabilidade, os vieses e as intencionalidades no discurso de fontes de informação em diferentes mídias.",
+            "praticas_sugeridas": "Criação de uma simulação de empresa de checagem de fatos para realizar análise de conteúdos de diversas fontes e mídias, como aplicativos de mensagens instantâneas e matérias de blogs e veículos de imprensa."
+          },
+          {
+            "conhecimentos": "Técnicas de produção de textos; Construção de argumentação e discurso; Tecnologias Digitais de Informação e Comunicação; Estratégias de Produção; Linha Editorial.",
+            "habilidades": "Produzir conteúdo midiático escolhendo os melhores gêneros digitais para expressar suas ideias e intervir em seu contexto social, exercendo seu protagonismo de maneira ética e responsável.",
+            "praticas_sugeridas": "Criação de uma simulação de uma agência de notícias que produzirá conteúdos de diferentes formatos, como reportagens em texto, podcasts, videojornalismo, etc."
+          }
+        ],
+        "indicadores_avaliacao": [
+          "Analisa criticamente um conteúdo midiático, checando informações, diferenciando informação de opinião, identificando a intenção das fontes de informação e interpretando o discurso.",
+          "Aplica processos de checagem da confiabilidade das informações encontradas em conteúdos de diversas mídias.",
+          "Se expressa produzindo conteúdos para diferentes mídias utilizando as melhores tecnologias de acordo com o contexto e a intencionalidade."
+        ],
+        "perfil_docente": "Docente com conhecimentos de informática em nível intermediário.",
+        "materiais_referencia": [
+          {
+            "idioma": "inglês",
+            "nome": "Audacity",
+            "link": "https://www.audacityteam.org/"
+          },
+          {
+            "idioma": "portugues",
+            "nome": "Canva",
+            "link": "https://www.canva.com/pt_br/"
+          },
+          {
+            "idioma": "portugues",
+            "nome": "OepnShot",
+            "link": "https://www.openshot.org/pt/"
+          },
+          {
+            "idioma": "portugues",
+            "nome": "Rádio Favela",
+            "link": "https://www.youtube.com/watch?v=v5JQjDb5Us4"
+          }
+        ]
+      },
+      "eixo_fonte": "pdf"
+    },
+    {
+      "id": 6,
+      "eixo": "Cultura Digital",
+      "tipo_unidade_curricular": "Essenciais",
+      "nome": "Ética e direito digital",
+      "competencias_do_eixo": [
+        "CDEM02",
+        "TDEM01",
+        "TDEM02",
+        "CDEM01"
+      ],
+      "competencia": {
+        "codigo": "CDEMED01",
+        "descricao": "Analisar a convivência em meio digital sob a luz da ética e do direito digital.",
+        "carga_horaria": "40h",
+        "recursos": [
+          "Computadores com acesso à internet (laboratório, espaços de inovação ou computadores portáteis)."
+        ],
+        "tematicas": [
+          "Vivência online.",
+          "Tecnologia e computação.",
+          "Ser humano e máquina."
+        ],
+        "atitudes": [
+          "Atenção no compartilhamento de informações e pesquisas de terceiros.",
+          "Empatia ao se comunicar na internet.",
+          "Respeito e responsabilidade com a informação em meio digital.",
+          "Cuidado com plágio e autoria de documentos, planilhas, apresentações, audiovisuais."
+        ],
+        "estrutura": [
+          {
+            "conhecimentos": "Lei geral de proteção de dados. Noções de direito digital",
+            "habilidades": "Identificar e compreender o impacto dos direitos e deveres em meio digital nas ações dos indivíduos",
+            "praticas_sugeridas": "Análise de legislação relacionada ao direito digital por meio da criação de portfólios. Criação de projetos de cidadania digital que contemplem o combate ao cyberbullying e a criação de blogs que tratam do direito digital"
+          },
+          {
+            "conhecimentos": "Análise crítica da informação, confiabilidade de informações e fake news",
+            "habilidades": "Distinguir informações verdadeiras e falsas (fake news)",
+            "praticas_sugeridas": "Reflexão sobre valores e atitudes responsáveis relacionadas ao uso de dados em ambiente digital – por exemplo, trabalhando com fake news e avaliando formas de detectá-las."
+          },
+          {
+            "conhecimentos": "Cyberbullying, conduta e linguagem apropriada na Internet(redes sociais e memes).",
+            "habilidades": "Analisar e refletir sobre questões éticas da internet, cyberbullying e direito digital, conduta e linguagem apropriadas ao se comunicar, bem como ações de conscientização que possam ser feitas na comunidade",
+            "praticas_sugeridas": "Reconhecimento e análise dos aspectos do direito digital – por exemplo, realizando estudos e debates sobre responsabilidades, direitos e deveres da vivência em meio digital. Reflexão sobre as características do cyberbullying – por exemplo, propondo ações para solucionar o problema em um debate sobre um caso real. Reflexão sobre conduta on-line – por exemplo, construindo coletivamente regras de conduta que colaborem para o debate de questões éticas em evidência."
+          },
+          {
+            "conhecimentos": "Cyberbullying, conduta e linguagem apropriada na Internet (redes sociais e memes).",
+            "habilidades": "Analisar e refletir sobre o tempo de vivência em meio digital, jogos, redes sociais, entre outros, bem como sobre os perigos da internet.",
+            "praticas_sugeridas": "Identificação dos problemas decorrentes do uso excessivo da tecnologia – por exemplo, debatendo sobre participação em jogos on-line e uso de celular. Proposição de ações e projetos a respeito de vivência digital. Criação de portfólios de usos pessoais de cada estudante, realizando debates e apresentações. Discussão de segurança, proteção de informação e casos sobre os perigos da vivência na internet, como a inserção de dados pessoais, conversa em chats com desconhecidos, entre outros. Discussão sobre a importância das senhas e boas práticas para criação destas, e a relevância do tráfego de informações criptografadas nas redes – por exemplo, em relação a dados como senhas e informações bancárias das pessoas."
+          }
+        ],
+        "indicadores_avaliacao": [
+          "Estrutura ações de cidadania digital, contemplando ação humanizada do indivíduo frente aos desafios do uso das tecnologias digitais.",
+          "Identifica e compreende os direitos e deveres da convivência em meio digital, destacando a ética no compartilhamento de informações, opiniões, dados, dentre outros."
+        ],
+        "perfil_docente": "Docente com conhecimentos de informática em nível básico.",
+        "materiais_referencia": [
+          {
+            "idioma": "portugues",
+            "nome": "Cartilhas do CGI.BR (Cartilhas: Golpes na Internet; Mecanismos de Segurança; Uso Seguro da Internet)",
+            "link": "https://cartilha.cert.br/"
+          },
+          {
+            "idioma": "portugues",
+            "nome": "Direito digital",
+            "link": "https://diogoprestes.jusbrasil.com.br/artigos/252818928/o-que-e-direito-digital Direito autoral: https://pt.wikipedia.org/wiki/Direito_autoral"
+          },
+          {
+            "idioma": "portugues",
+            "nome": "Etiqueta on-line",
+            "link": "https://olhardigital.com.br/noticia/etiqueta-nas-redes-sociais-o-que-devemos-e-nao-devemos-fazer-no-convivio-virtual/22569"
+          },
+          {
+            "idioma": "portugues",
+            "nome": "Segurança na web – Infância e adolescência",
+            "link": "https://escoladainteligencia.com.br/seguranca-digital-como-proteger-seus-filhos-dos-perigos-da-internet/"
+          },
+          {
+            "idioma": "portugues",
+            "nome": "Segurança na web – Infância e adolescência (Segurança digital)",
+            "link": "https://www.welivesecurity.com/br/2016/12/05/idade-ideal-para-criancas/"
+          },
+          {
+            "idioma": "portugues",
+            "nome": "Tecnologia e cotidiano",
+            "link": "https://www.youtube.com/watch?time_continue=134&v=QU_F2fCKqmU"
+          }
+        ]
+      },
+      "eixo_fonte": "pdf"
+    },
+    {
+      "id": 7,
+      "eixo": "Cultura Digital",
+      "tipo_unidade_curricular": "Eletivas",
+      "nome": "Empreendedorismo tecnológico",
+      "competencias_do_eixo": [
+        "CDEM02",
+        "TDEM01",
+        "TDEM02",
+        "CDEM01"
+      ],
+      "competencia": {
+        "codigo": "CDEMET01",
+        "descricao": "Desenvolver soluções inovadoras utilizando tecnologias para resolver problemas.",
+        "carga_horaria": "80h",
+        "recursos": [
+          "Computadores com acesso à internet (laboratório, espaços de inovação ou computadores portáteis)."
+        ],
+        "tematicas": [
+          "Ser humano e máquina.",
+          "Manipulação de dados e informações.",
+          "Vivência online.",
+          "Tecnologia e computação."
+        ],
+        "atitudes": [
+          "Proatividade no desenvolvimento de projetos.",
+          "Atitude empreendedora.",
+          "Respeito no trabalho em equipe."
+        ],
+        "estrutura": [
+          {
+            "conhecimentos": "Empreendedorismo: teoria e prática",
+            "habilidades": "Compreender os fundamentos do empreendedorismo, considerando as características dos modelos de negócio e das ferramentas disponíveis",
+            "praticas_sugeridas": "Abordagem de temáticas como etapas da elaboração de planos de negócios, projetos, pesquisa de mercado, e destacando ferramentas como Canvas, design thinking, PMI, entre outras."
+          },
+          {
+            "conhecimentos": "Soluções tecnológicas em problemas sociais",
+            "habilidades": "Analisar problemas sociais relacionados a sua cidade ou estado usando ambientes digitais para propor e discutir soluções",
+            "praticas_sugeridas": "Apresentação de propostas/soluções para problemas da cidade ou do bairro onde está a escola – por exemplo, usando um fórum ou um recurso digital aberto para expressar as ideias."
+          },
+          {
+            "conhecimentos": "Soluções tecnológicas em problemas sociais",
+            "habilidades": "Propor soluções inovadoras, individuais ou coletivas, considerando o uso de tecnologias no desenvolvimento de produtos ou serviços que atendam a necessidades locais, regionais, nacionais ou globais",
+            "praticas_sugeridas": "Reflexão sobre valores e atitudes responsáveis relacionadas ao uso de dados em ambiente digital – por exemplo, trabalhando com fake news e avaliando formas de detectá-las."
+          }
+        ],
+        "indicadores_avaliacao": [
+          "Cria projeto utilizando a tecnologia como meio ou finalidade, com base em princípios do empreendedorismo e da cidadania."
+        ],
+        "perfil_docente": "Docente com conhecimentos de empreendedorismo ou instrutor(a) de informática da escola ou profissional do mercado com experiência docente.",
+        "materiais_referencia": [
+          {
+            "idioma": "portugues",
+            "nome": "Design thinking",
+            "link": "http://www.sebrae.com.br/sites/PortalSebrae/artigos/entenda-o-design-thinking,369d9cb730905410VgnVCM1000003b74010aRCRD"
+          },
+          {
+            "idioma": "portugues",
+            "nome": "Empreendedorismo SEBRAE",
+            "link": "http://www.sebrae.com.br/sites/PortalSebrae/bis/o-que-e-ser-empreendedor,ad17080a3e107410VgnVCM1000003b74010aRCRD"
+          },
+          {
+            "idioma": "portugues",
+            "nome": "Projeto Canvas On Line",
+            "link": "https://app.projectcanvas.online/#/start"
+          }
+        ]
+      },
+      "eixo_fonte": "pdf"
+    },
+    {
+      "id": 8,
+      "eixo": "Cultura Digital",
+      "tipo_unidade_curricular": "Eletivas",
+      "nome": "E-sports",
+      "competencias_do_eixo": [
+        "CDEM02",
+        "TDEM01",
+        "TDEM02",
+        "CDEM01"
+      ],
+      "competencia": {
+        "codigo": "CDEMES01",
+        "descricao": "Analisar a cultura dos esportes eletrônicos profissionais, seu impacto cultural e social e suas diversas possibilidades.",
+        "carga_horaria": "40h",
+        "recursos": [
+          "Computadores com acesso à internet (laboratório, espaços de inovação ou computadores portáteis)."
+        ],
+        "tematicas": [
+          "Ser humano e máquina.",
+          "Vivência online."
+        ],
+        "atitudes": [
+          "Consciência do poder inclusivo e transformador da tecnologia e seu impacto social, econômico e cultural.",
+          "Consciência dos direitos e deveres em ambientes digitais."
+        ],
+        "estrutura": [
+          {
+            "conhecimentos": "Solução colaborativa e coordenada de problemas; Planejamento e divisão de tarefas.",
+            "habilidades": "Compreender o papel da colaboração, das habilidades de comunicação, organização e estratégia em uma equipe em jogos eletrônicos cooperativos.",
+            "praticas_sugeridas": "Organização dos(as) estudantes em grupos para a investigação de jogos digitais cooperativos em equipes, levantando as necessidades de comunicação, organização e de estratégia que uma equipe precisa ter para ser bem-sucedida. Posteriormente, apresentação das conclusões para a turma de colegas."
+          },
+          {
+            "conhecimentos": "Profissões e carreiras nos esportes eletrônicos.",
+            "habilidades": "Conhecer as possibilidades profissionais no segmento dos esportes eletrônicos profissionais.",
+            "praticas_sugeridas": "Organização simulada de campeonato de algum e-Sport, com estudantes divididos em equipes de jornalismo, analistas, nutricionistas, psicólogos(as), técnicos(as), gerentes, advogados(as) e jogadores(as)."
+          },
+          {
+            "conhecimentos": "Efeitos positivos e negativos dos jogos.",
+            "habilidades": "Compreender os efeitos positivos e negativos dos jogos eletrônicos em crianças, adolescentes e adultos.",
+            "praticas_sugeridas": "Realização de campanhas de conscientização sobre o uso seguro e responsável dos jogos digitais pela escola."
+          },
+          {
+            "conhecimentos": "História dos jogos eletrônicos.",
+            "habilidades": "Compreender o processo histórico evolutivo dos games aos e-Sports.",
+            "praticas_sugeridas": "Estudo da história dos jogos digitais e sua evolução desde a década de 1950 até o cenário atual das grandes competições nacionais e internacionais."
+          },
+          {
+            "conhecimentos": "Diferenças entre brincadeira, jogo e esporte.",
+            "habilidades": "Compreender as semelhanças e diferenças entre os esportes eletrônicos profissionais e os esportes tradicionais.",
+            "praticas_sugeridas": "Investigação da rotina de atletas profissionais tanto dos esportes tradicionais quanto dos e-Sports e os requisitos de cada um em termos de exigências físicas, mentais e de alto rendimento, e realizando um debate em relação ao preparo do atleta em ambos os cenários."
+          }
+        ],
+        "indicadores_avaliacao": [
+          "Compreende a importância das habilidades de comunicação, raciocínio lógico, estratégia e cooperação em jogos cooperativos.",
+          "Compreende o processo histórico evolutivo que levou ao atual cenário dos e-Sports no Brasil e no mundo.",
+          "Se posiciona criticamente em relação aos benefícios e malefícios dos jogos digitais na sociedade.",
+          "Entende o mercado profissional dos jogos eletrônicos profissionais e suas possibilidades de atuação."
+        ],
+        "perfil_docente": "Docente com conhecimentos de informática em nível básico.",
+        "materiais_referencia": [
+          {
+            "idioma": "portugues",
+            "nome": "Esportes digitais",
+            "link": "https://medium.com/tend%C3%AAncias-digitais/esportes-digitais-dd0ddaa1ff99"
+          },
+          {
+            "idioma": "portugues",
+            "nome": "Esportes digitais são esportes?",
+            "link": "https://newronio.espm.br/35390/"
+          },
+          {
+            "idioma": "portugues",
+            "nome": "História dos jogos eletrônicos",
+            "link": "https://www.youtube.com/watch?v=otzKbS7a428"
+          },
+          {
+            "idioma": "portugues",
+            "nome": "História e videogames: como os jogos eletrônicos podem ser pensados por historiadores",
+            "link": "https://www.cafehistoria.com.br/historia-e-videogames/"
+          },
+          {
+            "idioma": "portugues",
+            "nome": "O que são os eSports?",
+            "link": "http://cbesports.com.br/esports/esports-o-que-sao/"
+          }
+        ]
+      },
+      "eixo_fonte": "pdf"
+    },
+    {
+      "id": 9,
+      "eixo": "Cultura Digital",
+      "tipo_unidade_curricular": "Eletivas",
+      "nome": "Diagramação e editoração",
+      "competencias_do_eixo": [
+        "TDEM01",
+        "TDEM02",
+        "CDEM01",
+        "CDEM02"
+      ],
+      "competencia": {
+        "codigo": "CDEMDE01",
+        "descricao": "Criar materiais gráficos utilizando diferentes softwares de diagramação e editoração no desenvolvimento de projetos.",
+        "carga_horaria": "40h",
+        "recursos": [
+          "Programas para diagramação e editoração.",
+          "Computadores com acesso à internet (laboratório, espaços de inovação ou computadores portáteis)."
+        ],
+        "tematicas": [
+          "Tecnologia e computação.",
+          "Vivência online."
+        ],
+        "atitudes": [
+          "Cuidado com plágio e autoria de imagens e projetos.",
+          "Responsabilidade e sigilo no desenvolvimento de projetos."
+        ],
+        "estrutura": [
+          {
+            "conhecimentos": "Produção de materiais gráficos. Técnicas de diagramação e editoração",
+            "habilidades": "Identificar princípios e técnicas de diagramação e editoração, relfetindo sobre sua aplicabilidade e usos.",
+            "praticas_sugeridas": "Conhecimento dos princípios básicos do design – por exemplo, aplicando ou reconhecendo princípios de proximidade, alinhamento, repetição e contraste em materiais."
+          },
+          {
+            "conhecimentos": "Produção de materiais gráficos. Técnicas de diagramação e editoração",
+            "habilidades": "Utilizar diferentes softwares de diagramação e editoração.",
+            "praticas_sugeridas": "Produção de materiais gráficos Técnicas de diagramação e editoração"
+          },
+          {
+            "conhecimentos": "Produção de materiais gráficos. Técnicas de diagramação e editoração. Produção de e-book",
+            "habilidades": "Diagramar materiais gráficos e produção de e-book, considerando autoria, intencionalidade e comunicação do texto.",
+            "praticas_sugeridas": "Criação de material gráfico digital com uso das técnicas e ferramentas trabalhadas – por exemplo, desenvolvendo e-mail marketing ou anúncios digitais ou ainda organizando uma obra mais ampla como e-book ou fanzine."
+          }
+        ],
+        "indicadores_avaliacao": [
+          "Desenvolve projetos de diagramação e editoração de acordo com os objetivos estabelecidos, levando-se em consideração a confidencialidade do projeto.",
+          "Utiliza ferramentas digitais de diagramação e editoração"
+        ],
+        "perfil_docente": "Docente com conhecimentos de empreendedorismo ou instrutor(a) de informática da escola ou profissional do mercado com experiência docente.",
+        "materiais_referencia": [
+          {
+            "idioma": "portugues",
+            "nome": "Apache OpenOffice (Softwares: Writer e Draw)",
+            "link": "https://www.openoffice.org/"
+          },
+          {
+            "idioma": "portugues",
+            "nome": "Canva",
+            "link": "https://www.canva.com/"
+          },
+          {
+            "idioma": "portugues",
+            "nome": "GIMP – GNU",
+            "link": "https://www.gimp.org/"
+          },
+          {
+            "idioma": "portugues",
+            "nome": "Google Drive (Documentos, Planilhas, Apresentações, Formulários, Desenhos, Sites) (Softwares: Documentos e Desenhos)",
+            "link": "https://drive.google.com/"
+          },
+          {
+            "idioma": "portugues",
+            "nome": "Inkskape – Draw Freely",
+            "link": "https://inkscape.org/"
+          }
+        ]
+      },
+      "eixo_fonte": "pdf"
+    },
+    {
+      "id": 10,
+      "eixo": "Cultura Digital",
+      "tipo_unidade_curricular": "Eletivas",
+      "nome": "Desenho técnico e vetorial",
+      "competencias_do_eixo": [
+        "CDEM01",
+        "CDEM02",
+        "TDEM01",
+        "TDEM02"
+      ],
+      "competencia": {
+        "codigo": "CDEMDT01",
+        "descricao": "Criar desenho técnico e vetorial considerando softwares de manipulação e técnicas no desenvolvimento de projetos.",
+        "carga_horaria": "40h",
+        "recursos": [
+          "Computadores com acesso à internet (laboratório, espaços de inovação ou computadores portáteis).",
+          "Programas de desenho técnico e vetorial."
+        ],
+        "tematicas": [
+          "Tecnologia e computação.",
+          "Vivência online."
+        ],
+        "atitudes": [
+          "Responsabilidade e sigilo no desenvolvimento de projetos.",
+          "Cuidado com plágio e autoria de imagens e projetos."
+        ],
+        "estrutura": [
+          {
+            "conhecimentos": "Produção de materiais gráficos. Princípios básicos do design (proximidade, alinhamento, repetição e contraste). Alternativas de softwares de diagramação e editoração",
+            "habilidades": "Identificar ferramentas de editoração eletrônica de imagens e de projeto assistido por computador (CAD).",
+            "praticas_sugeridas": "Exploração dos recursos de ferramentas de desenho bidimensional – por exemplo, a criação de entidades básicas: linhas, arcos, círculos, polilinhas. Compreensão e utilização do conceito do desenho em camadas. Exploração de recursos disponíveis no apoio, seleção e manipulação de objetos e suas propriedades."
+          },
+          {
+            "conhecimentos": "Autoria e edição de imagens",
+            "habilidades": "Demonstrar postura apropriada nas atividades de coleta, transferência, guarda e uso de dados, considerando suas fontes.",
+            "praticas_sugeridas": "Compreensão da questão ética relacionada ao uso da tecnologia – por exemplo, ao salvar um texto e usá-lo como referência em uma atividade/projeto individual ou coletivo, citá-lo apropriadamente. Demonstração sobre as maneiras pelas quais o meio digital marca a presença das pessoas constantemente – por exemplo, relacionando a impressão digital de dedos ou documentos pessoais (RG) com os computadores pessoais e suas identidades na web"
+          },
+          {
+            "conhecimentos": "Produção de materiais gráficos. Princípios básicos do design (proximidade, alinhamento, repetição e contraste). Alternativas de softwares de diagramação e editoração",
+            "habilidades": "Desenvolver projetos com uso de ferramentas de editoração eletrônica ou de projeto assistido por computador (CAD)",
+            "praticas_sugeridas": "Criação de imagens bidimensionais para fins diversos – por exemplo, logotipos, personagens, paisagens, cenários etc. Construção de projetos de espaços – por exemplo, quartos, salas e pequenas casas, trabalhando conceitos de arquitetura e design de interiores. Construção de projetos de ambientes externos, como estacionamentos, praças, bairros e cidades, trabalhando conceitos de urbanismo e paisagismo."
+          },
+          {
+            "conhecimentos": "Produção de materiais gráficos. Princípios básicos do design (proximidade, alinhamento, repetição e contraste)",
+            "habilidades": "Compreender os fundamentos do desenho técnico e vetorial, refletindo sobre sua aplicabilidade e usos",
+            "praticas_sugeridas": "Desenho e debate sobre os conceitos de ponto, reta, plano, plano cartesiano, leitura e representação das projeções ortográficas."
+          }
+        ],
+        "indicadores_avaliacao": [
+          "Utiliza ferramentas digitais de desenho técnico e vetorial, compreendendo princípios do design.",
+          "Desenvolve projetos de desenhos técnicos e vetoriais de acordo com os objetivos do projeto, levando em consideração a confidencialidade do projeto."
+        ],
+        "perfil_docente": "Docente com conhecimentos de informática em nível avançado, ou instrutor(a) de informática da escola ou profissional do mercado com experiência docente.",
+        "materiais_referencia": [
+          {
+            "idioma": "portugues",
+            "nome": "Autocad",
+            "link": "https://www.autodesk.com.br/products/autocad/overview"
+          },
+          {
+            "idioma": "inglês",
+            "nome": "FreeCAD",
+            "link": "https://www.freecadweb.org/?lang=pt_PT"
+          },
+          {
+            "idioma": "inglês",
+            "nome": "Inkskape – Draw Freely",
+            "link": "https://inkscape.org/"
+          }
+        ]
+      },
+      "eixo_fonte": "pdf"
+    },
+    {
+      "id": 11,
+      "eixo": "Tecnologia Digital",
+      "tipo_unidade_curricular": "Essenciais",
+      "nome": "Montagem e manutenção de computadores",
+      "competencias_do_eixo": [
+        "CDEM01",
+        "CDEM02",
+        "TDEM01",
+        "TDEM02"
+      ],
+      "competencia": {
+        "codigo": "TDEMMM01",
+        "descricao": "Montar computadores pessoais, compreendendo e reconhecendo seus componentes e organização em diferentes arquiteturas.",
+        "carga_horaria": "80h",
+        "recursos": [
+          "Espaço com peças de computadores, ferramentas e, preferencialmente, bancadas.",
+          "Computadores com acesso à internet (laboratório, espaços de inovação ou computadores portáteis)."
+        ],
+        "tematicas": [
+          "Tecnologia e computação.",
+          "Manipulação de dados e informações."
+        ],
+        "atitudes": [
+          "Atitude sustentável, tendo em vista as dimensões econômica, ambiental e social.",
+          "Consciência no consumo de produtos tecnológicos.",
+          "Responsabilidade no descarte de eletrônicos."
+        ],
+        "estrutura": [
+          {
+            "conhecimentos": "História da tecnologia; história dos computadores; identificação de computadores.",
+            "habilidades": "Compreender a evolução dos computadores e de suas tecnologias subjacentes e perspectivas futuras.",
+            "praticas_sugeridas": "Criação de uma linha do tempo colaborativa feita por cada sala, começando pelos primórdios da computação até o momento atual. Posteriormente, apresentação do resultado para toda a escola."
+          },
+          {
+            "conhecimentos": "Arquitetura e organização de computadores; componentes de hardware.",
+            "habilidades": "Executar montagem de computadores, identificando seus componentes e sua organização interna a partir dos quatro componentes do processamento: entrada, armazenamento, processamento e saída.",
+            "praticas_sugeridas": "Realização da montagem de cada uma das peças de um computador utilizando as ferramentas e instrumentos corretos e obedecendo às normas de segurança."
+          },
+          {
+            "conhecimentos": "Sistemas operacionais; instalação e desinstalação de aplicativos; instalação e remoção de drivers",
+            "habilidades": "Executar a instalação de sistemas operacionais, aplicativos e drivers em computadores.",
+            "praticas_sugeridas": "Instalação de um sistema operacional em um computador e configuração de seus parâmetros (ex: ajuste de hora, backup e restauração, instalação de antivírus, ajuste de configurações de acessibilidade, etc.)."
+          },
+          {
+            "conhecimentos": "Atualização de software; instalação de antivírus e antimalware; configurações de segurança e privacidade (Firewall); procedimentos de BackUp.",
+            "habilidades": "Identificar e solucionar problemas de hardware e software em computadores.",
+            "praticas_sugeridas": "Utilização de computadores completos, mas com falhas conhecidas para que os(as) estudantes realizem o diagnóstico e a correção."
+          }
+        ],
+        "indicadores_avaliacao": [
+          "Identifica corretamente peças e componentes, reconhecendo suas funções em um computador.",
+          "Identifica a origem de problemas de hardware e software em computadores."
+        ],
+        "perfil_docente": "Docente com conhecimentos de informática em nível básico.",
+        "materiais_referencia": [
+          {
+            "idioma": "portugues",
+            "nome": "A história do teclado",
+            "link": "https://www.youtube.com/watch?v=Zo4kR8Q1qWE&list=PL0JnomkAUpaE0FqwOCND1O2xTaL5Gq7a0"
+          },
+          {
+            "idioma": "portugues",
+            "nome": "A história dos computadores e da computação",
+            "link": "https://www.tecmundo.com.br/tecnologia-da-informacao/1697-a-historia-dos-computadores-e-da-computacao.htm"
+          },
+          {
+            "idioma": "portugues",
+            "nome": "Curso de Hardware Grátis",
+            "link": "https://www.youtube.com/playlist?list=PLHz_AreHm4dn1JHgN9wpbIUhzZmycYQXW"
+          },
+          {
+            "idioma": "portugues",
+            "nome": "Curso rápido de manutenção de computadores",
+            "link": "https://www.youtube.com/watch?v=mGsfcXQgzHg"
+          },
+          {
+            "idioma": "portugues",
+            "nome": "Museu do computador",
+            "link": "https://museudocomputador.org.br/"
+          },
+          {
+            "idioma": "portugues",
+            "nome": "Viagem por dentro do computador (legendado)",
+            "link": "https://www.youtube.com/watch?v=0A4CxxJ9h24"
+          }
+        ]
+      },
+      "eixo_fonte": "pdf"
+    },
+    {
+      "id": 12,
+      "eixo": "Tecnologia Digital",
+      "tipo_unidade_curricular": "Essenciais",
+      "nome": "Tecnologias e o mundo do trabalho",
+      "competencias_do_eixo": [
+        "TDEM01",
+        "TDEM02",
+        "CDEM01",
+        "CDEM02"
+      ],
+      "competencia": {
+        "codigo": "TDEMTT01",
+        "descricao": "Analisar a relação entre tecnologia e o trabalho no século XXI, considerando impactos e transformações sociais, econômicas e políticas.",
+        "carga_horaria": "80h",
+        "recursos": [
+          "Computadores com acesso à internet (laboratório, espaços de inovação ou computadores portáteis)."
+        ],
+        "tematicas": [
+          "Ser humano e máquina.",
+          "Tecnologia e computação.",
+          "Vivência online."
+        ],
+        "atitudes": [
+          "Responsabilidade no compartilhamento de informações pessoais.",
+          "Proatividade na proposição de soluções.",
+          "Atitude empreendedora frente aos desafios da evolução tecnológica e o mundo do trabalho."
+        ],
+        "estrutura": [
+          {
+            "conhecimentos": "Profissões da tecnologia: equidade e inovação Mundo do trabalho e novas profissões.",
+            "habilidades": "Compreender as mudanças tecnológicas no mundo do trabalho e sobre a evolução da sociedade.",
+            "praticas_sugeridas": "Reconhecimento das mudanças no mundo produtivo e do trabalho com a evolução da tecnologia – por exemplo, discutindo e analisando as mudanças nas formas produtivas e as profissões que surgiram na última década. Discussão sobre o impacto da tecnologia e da automação nas profissões existentes, projetando aquelas que são suscetíveis à automatização."
+          },
+          {
+            "conhecimentos": "Mundo do trabalho e novas profissões.",
+            "habilidades": "Identificar e avaliar o mercado de trabalho e às profissões do presente e do futuro, considerando suas escolhas e projeto de vida.",
+            "praticas_sugeridas": "Reconhecimento do mercado de trabalho regional, nacional e global por meio, por exemplo, da estruturação de um quadro comparativo de profissões em alta e em baixa de acordo com a localidade e utilização de tecnologias. Organização de elementos para escolha de profissão em seu projeto de vida, como, por exemplo, criando um mapa conceitual ou portfólio que estabeleça relação com as profissões e o uso de tecnologia do fazer profissional."
+          },
+          {
+            "conhecimentos": "Tecnologias no cotidiano do fazer profissional.",
+            "habilidades": "Utilizar as tecnologias na composição de currículo pessoal e em tarefas relacionadas ao dia a dia de escritórios e locais de trabalho em geral.",
+            "praticas_sugeridas": "Criação de currículo em programas de escrita digital, apresentações pessoais, utilizando e-mail para apresentação pessoal. Desenvolvimento de um projeto pessoal de escolha de profissão, tendo em vista as tecnologias no fazer profissional."
+          }
+        ],
+        "indicadores_avaliacao": [
+          "Reconhece às transformações do mundo do trabalho, compreendendo seu impacto na vida, em projetos pessoais e na fluência digital."
+        ],
+        "perfil_docente": "Docente com conhecimentos de informática em nível básico.",
+        "materiais_referencia": [
+          {
+            "idioma": "portugues",
+            "nome": "Mercado de trabalho e tecnologias",
+            "link": "https://www.youtube.com/watch?v=YeAV5MeJdgY"
+          },
+          {
+            "idioma": "portugues",
+            "nome": "Relações de trabalho e tecnologias",
+            "link": "https://cbic.org.br/en_US/entrevista-o-futuro-do-trabalho-e-as-novas-tecnologias/"
+          },
+          {
+            "idioma": "portugues",
+            "nome": "Trabalho e tecnologia",
+            "link": "https://www.youtube.com/watch?v=_dSRr4mQiJE"
+          }
+        ]
+      },
+      "eixo_fonte": "pdf"
+    },
+    {
+      "id": 13,
+      "eixo": "Tecnologia Digital",
+      "tipo_unidade_curricular": "Essenciais",
+      "nome": "Criptografia e cibersegurança",
+      "competencias_do_eixo": [
+        "CDEM02",
+        "TDEM01",
+        "TDEM02",
+        "CDEM01"
+      ],
+      "competencia": {
+        "codigo": "TDEMCC01",
+        "descricao": "Analisar a segurança digital de dados e suas aplicações e implicações na privacidade, proteção de dados pessoais e segurança digital.",
+        "carga_horaria": "80h",
+        "recursos": [
+          "Computadores com acesso à internet (laboratório, espaços de inovação ou computadores portáteis)."
+        ],
+        "tematicas": [
+          "Vivência online.",
+          "Manipulação de dados e informações.",
+          "Ser humano e máquina.",
+          "Tecnologia e computação."
+        ],
+        "atitudes": [
+          "Consciência dos riscos do compartilhamento de informações pessoais.",
+          "Consciência dos direitos e deveres em ambientes digitais.",
+          "Ética e cuidado com a segurança e a privacidade no compartilhamento e manipulação de dados e informações pessoais ou de terceiros."
+        ],
+        "estrutura": [
+          {
+            "conhecimentos": "Criptografia monoalfabética; criptografia polialfabética; criptografia de chaves assimétricas.",
+            "habilidades": "Compreender as tecnologias, técnicas e as bases matemáticas necessárias para se criptografar informações e mantê-las seguras.",
+            "praticas_sugeridas": "Elaboração de um mural coletivo onde os(as) estudantes enviam mensagens cifradas uns para os outros."
+          },
+          {
+            "conhecimentos": "Riscos de integridade, disponibilidade e autenticidade em dispositivos e redes.",
+            "habilidades": "Identificar riscos relacionados a segurança da informação em ambientes online e no uso de dispositivos computacionais.",
+            "praticas_sugeridas": "Estudo de artigos de imprensa sobre incidentes relacionados à segurança digital, como roubo de informações, de identidades, exposição de dados, etc."
+          },
+          {
+            "conhecimentos": "Legislação: direitos, deveres e sanções; Lei Geral de Proteção de Dados Pessoais; Marco Civil da Internet; Normas ISO (27000 à 27003).",
+            "habilidades": "Compreender as leis, normas e padrões vigentes de segurança da informação e proteção de dados.",
+            "praticas_sugeridas": "Elaboração de um estudo de segurança da informação para uma empresa fictícia e um plano de adequação à LGDP."
+          },
+          {
+            "conhecimentos": "Antivírus; antimalware; firewall; permissões de usuários(as); autenticação e senhas.",
+            "habilidades": "Aplicar tecnologias e técnicas para mitigar riscos à privacidade, confidencialidade e proteção de dados pessoais.",
+            "praticas_sugeridas": "Configuração de serviços de firewall, antivírus e antimalware em um computador de testes."
+          }
+        ],
+        "indicadores_avaliacao": [
+          "Compreende seus direitos e deveres com relação à privacidade e à proteção de dados pessoais em serviços online e no relacionamento digital com instituições.",
+          "Identifica os potenciais riscos relacionados à segurança da informação em ambientes digitais e no uso de dispositivos pessoais, como computadores e celulares.",
+          "Entende a necessidade de uso de senhas e criptografias seguras para armazenamento e transferência da informação."
+        ],
+        "perfil_docente": "Docente com conhecimentos de informática em nível avançado.",
+        "materiais_referencia": [
+          {
+            "idioma": "portugues",
+            "nome": "Cartilha de segurança para internet",
+            "link": "https://cartilha.cert.br/"
+          },
+          {
+            "idioma": "portugues",
+            "nome": "Cifra de César – Criptografia monoalfabética",
+            "link": "http://clubedosgeeks.com.br/sem-categoria/cifra-de-cesar-criptografia-monoalfabetica"
+          },
+          {
+            "idioma": "portugues",
+            "nome": "Como codificar e decodificar usando a cifra de Vigènere",
+            "link": "https://pt.wikihow.com/Codificar-e-Decodificar-Usando-a-Cifra-de-Vig%C3%A8nere"
+          },
+          {
+            "idioma": "portugues",
+            "nome": "Como criptografar com a Cifra de César",
+            "link": "https://www.youtube.com/watch?v=Iw-CO4MjDkE"
+          },
+          {
+            "idioma": "portugues",
+            "nome": "Como funciona um Firewall",
+            "link": "https://www.tecmundo.com.br/seguranca/3329-como-funciona-o-firewall-.htm"
+          },
+          {
+            "idioma": "portugues",
+            "nome": "Criptografia Cifra de Vigenère",
+            "link": "https://www.youtube.com/watch?v=Tc--MPir6rI"
+          },
+          {
+            "idioma": "portugues",
+            "nome": "Criptografia de chave pública: o que é isso? | Ciência da Computação | Khan Academy",
+            "link": "https://www.youtube.com/watch?v=63H4Idhn1Kc"
+          },
+          {
+            "idioma": "portugues",
+            "nome": "Entendendo melhor a Cifra de César",
+            "link": "https://www.youtube.com/watch?v=IfjuZl5pln4"
+          },
+          {
+            "idioma": "portugues",
+            "nome": "Firewall (O que é, como funciona, exemplos)",
+            "link": "https://www.youtube.com/watch?v=GOAEybxj4bQ"
+          },
+          {
+            "idioma": "portugues",
+            "nome": "Lei Geral de Proteção de Dados Pessoais (LGPD)",
+            "link": "http://www.planalto.gov.br/ccivil_03/_ato2015-2018/2018/lei/L13709.htm"
+          },
+          {
+            "idioma": "portugues",
+            "nome": "Marco Civil da Internet",
+            "link": "http://www.planalto.gov.br/ccivil_03/_ato2011-2014/2014/lei/l12965.htm"
+          },
+          {
+            "idioma": "portugues",
+            "nome": "Uma jornada pela criptografia",
+            "link": "https://pt.khanacademy.org/computing/computer-science/cryptography"
+          }
+        ]
+      },
+      "eixo_fonte": "pdf"
+    },
+    {
+      "id": 14,
+      "eixo": "Tecnologia Digital",
+      "tipo_unidade_curricular": "Essenciais",
+      "nome": "Realidade misturada",
+      "competencias_do_eixo": [
+        "CDEM02",
+        "TDEM01",
+        "TDEM02",
+        "CDEM01"
+      ],
+      "competencia": {
+        "codigo": "TDEMRM01",
+        "descricao": "Criar e utilizar ambientes imersivos de realidade aumentada, virtual ou misturada, desenvolvendo pensamento crítico sobre usos, limitações, desafios e cuidados nestes ambientes.",
+        "carga_horaria": "40h",
+        "recursos": [
+          "Computadores com acesso à internet (laboratório, espaços de inovação ou computadores portáteis).",
+          "Óculos de realidade virtual ou kit de realidade virtual para acoplamento no celular (ex: Google Cardboard, etc.).",
+          "Programas para realidade aumentada e virtual.",
+          "Celular ou tablet com câmera."
+        ],
+        "tematicas": [
+          "Tecnologia e computação.",
+          "Ser humano e máquina."
+        ],
+        "atitudes": [
+          "Respeito aos direitos autorais e a propriedade intelectual em meios digitais.",
+          "Consciência do poder inclusivo e transformador da tecnologia e seu impacto social, econômico e cultural.",
+          "Ser propositivo e responsável no uso tecnologias."
+        ],
+        "estrutura": [
+          {
+            "conhecimentos": "Fundamentos e aplicações de realidade aumentada e virtual.",
+            "habilidades": "Entender os benefícios, cuidados e potencial de uso da realidade virtual e realidade aumentada em diversos contextos.",
+            "praticas_sugeridas": "Discussão dos fundamentos da realidade virtual e aumentada, como, por exemplo, em um brainstorm com a apresentação de práticas e exemplos aos(às) estudantes. Solicitação uma pesquisa sobre realidade aumentada e virtual e, em aula, discussão sobre o que foi pesquisado com a exposição do(a) docente sobre os fundamentos. A partir da seleção de uma área de atuação profissional de interesse do(a) estudante, criação de um plano para utilização da realidade virtual ou realidade aumentada, justificando os benefícios dessa utilização e os cuidados a serem tomados."
+          },
+          {
+            "conhecimentos": "Reconhecimento de imagem; reconhecimento de padrões; computação gráfica.",
+            "habilidades": "Entender as tecnologias subjacentes aos conceitos das realidades virtual e aumentada.",
+            "praticas_sugeridas": "Pesquisa sobre como a evolução histórica de tecnologias, como o reconhecimento de imagem e de padrões e a computação gráfica, contribuíram para o atual estado das tecnologias de realidade virtual e aumentada."
+          },
+          {
+            "conhecimentos": "Plataformas de criação de realidade virtual e aumentada.",
+            "habilidades": "Projetar aplicações, experiências ou ambientes imersivos em realidades virtuais ou aumentadas.",
+            "praticas_sugeridas": "Utilização de plataformas de criação de realidade virtual e aumentada para a criação de uma mostra virtual interativa na escola."
+          }
+        ],
+        "indicadores_avaliacao": [
+          "Cria aplicação de realidade virtual ou aumentada para um objetivo proposto.",
+          "Avalia os benefícios e cuidados a serem tomados na utilização de aplicações de realidade virtual ou aumentada em diversos contextos."
+        ],
+        "perfil_docente": "Docente com conhecimentos de informática em nível avançado.",
+        "materiais_referencia": [
+          {
+            "idioma": "inglês",
+            "nome": "Assemblr",
+            "link": "https://assemblrworld.com/"
+          },
+          {
+            "idioma": "ingês",
+            "nome": "Brio VR",
+            "link": "https://experience.briovr.com/"
+          },
+          {
+            "idioma": "inglês",
+            "nome": "CoSpaces Edu",
+            "link": "https://cospaces.io/edu/"
+          },
+          {
+            "idioma": "inglês",
+            "nome": "Cupix",
+            "link": "https://www.cupix.com/homes/index.html"
+          },
+          {
+            "idioma": "inglês",
+            "nome": "GMetri",
+            "link": "https://gmetri.com/"
+          },
+          {
+            "idioma": "inglês",
+            "nome": "InstaVR",
+            "link": "https://www.instavr.co/"
+          },
+          {
+            "idioma": "portugues",
+            "nome": "Introdução à Realidade Virtual e Aumentada",
+            "link": "http://www.de.ufpb.br/~labteve/publi/2018_livroRVA.pdf"
+          },
+          {
+            "idioma": "inglês",
+            "nome": "Lens Studio",
+            "link": "https://lensstudio.snapchat.com/"
+          },
+          {
+            "idioma": "portugues",
+            "nome": "Seleção de aplicativos de realidade aumentada",
+            "link": "https://edshelf.com/shelf/sincronizaeducacao-realidade-aumentada/"
+          },
+          {
+            "idioma": "portugues",
+            "nome": "Seleção de aplicativos de realidade virtual",
+            "link": "https://edshelf.com/shelf/sincronizaeducacao-realidade-virtual/"
+          }
+        ]
+      },
+      "eixo_fonte": "pdf"
+    },
+    {
+      "id": 15,
+      "eixo": "Tecnologia Digital",
+      "tipo_unidade_curricular": "Eletivas",
+      "nome": "Fotografia digital",
+      "competencias_do_eixo": [
+        "CDEM02",
+        "TDEM01",
+        "TDEM02",
+        "CDEM01"
+      ],
+      "competencia": {
+        "codigo": "TDEMFO01",
+        "descricao": "Produzir fotografia digital, explorando os recursos do equipamento, utilizando diferentes softwares como ferramenta e meio de produção e reprodução das imagens.",
+        "carga_horaria": "40h",
+        "recursos": [
+          "Computadores com acesso à internet (laboratório, espaços de inovação ou computadores portáteis).",
+          "Câmeras fotográficas digitais ou celulares.",
+          "Softwares de imagens."
+        ],
+        "tematicas": [
+          "Vivência online.",
+          "Manipulação de dados e informações.",
+          "Tecnologia e computação.",
+          "Ser humano e máquina."
+        ],
+        "atitudes": [
+          "Atitude empreendedora.",
+          "Responsabilidade na utilização e veiculação de imagens."
+        ],
+        "estrutura": [
+          {
+            "conhecimentos": "Tratamento de imagens fotográficas digitais: definição, princípios, diferença entre tratar imagens e manipular imagens. Arquivo digital: definição; princípio de funcionamento; tipos de arquivo. Programas de edição de imagens.",
+            "habilidades": "Descarregar, transferir e preparar imagens digitais, utilizando software apropriado.",
+            "praticas_sugeridas": "Desenvolvimento de um projeto fotográfico digital de interesse pessoal/coletivo (realização individual ou em equipe). Exemplo: criação de um portfólio de imagens ou um projeto social ou profissional."
+          },
+          {
+            "conhecimentos": "Imagem digital: história, evolução e recursos disponíveis.",
+            "habilidades": "Identificar e avaliar as principais características da fotografia digital.",
+            "praticas_sugeridas": "Discussão sobre elementos da fotografia digital e a evolução das tecnologias das câmeras, como, por exemplo, criando um painel sobre os tipos de câmeras e recursos, uso de celular para fotografia."
+          },
+          {
+            "conhecimentos": "Câmera fotográfica: tipos e características Captação de imagens digitais: profundidade, luz e composição",
+            "habilidades": "Captar imagens digitais considerando objetivos pessoais ou profissionais.",
+            "praticas_sugeridas": "Produção de imagens digitais por meio do uso de câmeras. Exemplo: registro de fotografias de objetos, pessoas ou lugares e criação de um portfólio digital."
+          }
+        ],
+        "indicadores_avaliacao": [
+          "Utiliza softwares para fotografia digital.",
+          "Reconhece as características da fotografia digital, bem como os principais recursos e tecnologias relacionados. Produz fotografia digital de acordo com o objetivo proposto."
+        ],
+        "perfil_docente": "Docente com conhecimentos de informática em nível intermediário.",
+        "materiais_referencia": [
+          {
+            "idioma": "portugues",
+            "nome": "Composição de imagem",
+            "link": "https://www.youtube.com/watch?v=1qi63gIPCvg"
+          },
+          {
+            "idioma": "portugues",
+            "nome": "Diferença entre fotografia digital e analógica",
+            "link": "https://www.terra.com.br/noticias/dino/entenda-a-diferenca-da-fotografia-digital-e-da-analogica,9c23a5098278ff6a2f63995c59010d8eirdz51q3.html"
+          },
+          {
+            "idioma": "portugues",
+            "nome": "História da fotografia digital",
+            "link": "https://www.ipf.pt/site/historia-fotografia-digital/"
+          }
+        ]
+      },
+      "eixo_fonte": "pdf"
+    },
+    {
+      "id": 16,
+      "eixo": "Tecnologia Digital",
+      "tipo_unidade_curricular": "Eletivas",
+      "nome": "Inteligência Artificial",
+      "competencias_do_eixo": [
+        "TDEM01",
+        "TDEM02",
+        "CDEM01",
+        "CDEM02"
+      ],
+      "competencia": {
+        "codigo": "TDEMIA01",
+        "descricao": "Criar e utilizar aplicações de Inteligência Artificial e suas tecnologias subjacentes, refletindo sobre os impactos sociais, culturais e ambientais desta tecnologia em cenários de utilização.",
+        "carga_horaria": "40h",
+        "recursos": [
+          "Lataformas gratuitas de serviços de inteligência artificial (ex: IBM Cloud, Microsoft Azure, etc.).",
+          "Computadores com acesso à internet (laboratório, espaços de inovação ou computadores portáteis)."
+        ],
+        "tematicas": [
+          "Ser humano e máquina.",
+          "Tecnologia e computação.",
+          "Vivência online.",
+          "Manipulação de dados e informações."
+        ],
+        "atitudes": [
+          "Ética e cuidado com a segurança e a privacidade no compartilhamento e manipulação de dados e informações pessoais ou de terceiros.",
+          "Consciência do poder inclusivo e transformador da tecnologia e seu impacto social, econômico e cultural.",
+          "Criticidade frente ao uso de tecnologias digitais.",
+          "Atitude propositiva e responsável no uso de tecnologias."
+        ],
+        "estrutura": [
+          {
+            "conhecimentos": "Inovação tecnológica; mercado de trabalho; economia.",
+            "habilidades": "Compreender os impactos sociais, ambientais e culturais da Inteligência Artificial.",
+            "praticas_sugeridas": "Elaboração de uma pesquisa, a partir de uma das áreas de atuação profissional de interesse do(a) estudante, sobre os possíveis impactos da Inteligência Artificial na área em questão, incluindo possíveis benefícios e potenciais problemas."
+          },
+          {
+            "conhecimentos": "Plataformas e serviços de Inteligência Artificial.",
+            "habilidades": "Utilizar serviços web, APIs ou bibliotecas para criar aplicações de Inteligência Artificial para um contexto escolhido.",
+            "praticas_sugeridas": "Utilização de um serviço web para a criação de um robô de conversação (chatbot) que responda dúvidas a respeito de uma carreira específica de interesse do(a) estudante, utilizando perguntas de colegas para treinar e testar o robô."
+          },
+          {
+            "conhecimentos": "Aplicações de Inteligência Artificial.",
+            "habilidades": "Reconhecer e avaliar aplicações de Inteligência Artificial em diversos cenários e usos.",
+            "praticas_sugeridas": "Estudo sobre a útilização de técnicas de Inteligência Artificial, como o processamento de linguagem natural, visão computacional, aprendizagem de máquina, redes neurais artificiais, etc., em aplicações acessadas no dia a dia, como tradutores, ferramentas de busca, filtros de recomendação, assistentes pessoais, e como que estas aplicações utilizam os dados para aprender."
+          },
+          {
+            "conhecimentos": "Impactos da Inteligência Artificial na sociedade.",
+            "habilidades": "Posicionar-se e argumentar criticamente face ao uso da Inteligência Artificial.",
+            "praticas_sugeridas": "Promoção de debate sobre uma aplicação de Inteligência Artificial (ex: carros autônomos, filtros de recomendação, reconhecimento facial, etc.). Os(as) estudantes devem discutir, sob diversos pontos de vista, temas somo privacidade, uso de dados, possibilidades de erros, impactos econômicos, emprego, etc."
+          }
+        ],
+        "indicadores_avaliacao": [
+          "Cria protótipos de aplicações de Inteligência Artificial para um contexto escolhido utilizando serviços web, APIs ou bibliotecas de terceiros.",
+          "Reconhece aplicações de Inteligência Artificial em diversos cenários.",
+          "Argumenta criticamente sobre os impactos sociais, ambientais e culturais do uso da Inteligência Artificial."
+        ],
+        "perfil_docente": "Docente com conhecimentos de informática em nível avançado.",
+        "materiais_referencia": [
+          {
+            "idioma": "portugues",
+            "nome": "Aulão Chatbots",
+            "link": "https://www.youtube.com/watch?time_continue=1&v=9jjY9vDiMOA&feature=emb_logo"
+          },
+          {
+            "idioma": "inglês",
+            "nome": "Cognimates",
+            "link": "http://cognimates.me/home/"
+          },
+          {
+            "idioma": "portugues",
+            "nome": "Machine learning for kids",
+            "link": "https://machinelearningforkids.co.uk/"
+          },
+          {
+            "idioma": "inglês",
+            "nome": "Open Dialog",
+            "link": "https://www.opendialog.ai/"
+          },
+          {
+            "idioma": "portugues",
+            "nome": "Plataforma IBM Watson",
+            "link": "https://www.ibm.com/br-pt/cloud/ai"
+          },
+          {
+            "idioma": "inglês",
+            "nome": "Teachable machine",
+            "link": "https://teachablemachine.withgoogle.com/"
+          },
+          {
+            "idioma": "portugues",
+            "nome": "Watson Assistant: Como criar o seu chatbot usando Skills e Assistants",
+            "link": "https://medium.com/ibmdeveloperbr/watson-assistant-como-criar-o-seu-chatbot-usando-skills-e-assistants-755b4677984b"
+          }
+        ]
+      },
+      "eixo_fonte": "pdf"
+    },
+    {
+      "id": 17,
+      "eixo": "Tecnologia Digital",
+      "tipo_unidade_curricular": "Eletivas",
+      "nome": "Modelagem 3D",
+      "competencias_do_eixo": [
+        "CDEM01",
+        "CDEM02",
+        "TDEM01",
+        "TDEM02"
+      ],
+      "competencia": {
+        "codigo": "TDEMMD01",
+        "descricao": "Modelar objetos tridimensionais utilizando técnicas e ferramentas digitais.",
+        "carga_horaria": "40h",
+        "recursos": [
+          "Computadores com acesso à internet (laboratório, espaços de inovação ou computadores portáteis).",
+          "Programas de modelagem e animação 3D."
+        ],
+        "tematicas": [
+          "Manipulação de dados e informações.",
+          "Tecnologia e computação."
+        ],
+        "atitudes": [
+          "Proatividade na resolução de problemas.",
+          "Responsabilidade na condução de projetos."
+        ],
+        "estrutura": [
+          {
+            "conhecimentos": "Princípios de modelagem tridimensional. Animação digital",
+            "habilidades": "Compreender os fundamentos de animação e engines de jogos.",
+            "praticas_sugeridas": "Desenvolvimento de projetos práticos de modelagem – por exemplo, a criação de personagens e objetos para cenários de jogos. Busca e edição de objetos a partir de repositórios. Conhecimento dos princípios de animação e engines de jogos tridimensionais."
+          },
+          {
+            "conhecimentos": "Animação digital. Animação de logotipos e imagens bidimensional.",
+            "habilidades": "Desenhar e animar logotipos e imagens bidimensionais e tridimensionais.",
+            "praticas_sugeridas": "Modelagem e estruturação de logotipos e outras imagens bidimensionais – por exemplo, convertendo logos da escola em uma versão tridimensional, aplicando efeitos de animação e sombra."
+          },
+          {
+            "conhecimentos": "Sólidos para impressão 3D.",
+            "habilidades": "Projetar sólidos para impressão 3D.",
+            "praticas_sugeridas": "Desenvolvimento de projetos de sólidos voltados a impressão 3D – por exemplo, engrenagens, acoplamentos e outras peças de engenharia ou partes de maquetes. Conhecimento de repositórios de objetos voltados a impressão 3D. Experimentos com as etapas da impressão 3D, identificando as restrições, possibilidades, os softwares envolvidos e suas configurações."
+          },
+          {
+            "conhecimentos": "Princípios de modelagem tridimensional.",
+            "habilidades": "Identificar os recursos das ferramentas de modelagem tridimensional.",
+            "praticas_sugeridas": "Emprego de recursos dos softwares de modelagem tridimensional – por exemplo, a representação nos eixos x, y e z, formas de visualização, criação de sólidos e superfícies. Utilização de ferramentas para medir, mudar a escala, rotacionar e transladar os objetos. Exercícios sobre a criação de sólidos por extrusão, revolução e secção."
+          }
+        ],
+        "indicadores_avaliacao": [
+          "Cria projetos de modelagem 3D digital"
+        ],
+        "perfil_docente": "Docente com conhecimentos de empreendedorismo ou instrutor(a) de informática da escola ou profissional do mercado com experiência docente.",
+        "materiais_referencia": [
+          {
+            "idioma": "inglês",
+            "nome": "Blender – Software Gratuito de Criação 3D",
+            "link": "https://www.blender.org/"
+          },
+          {
+            "idioma": "portugues",
+            "nome": "Microsoft 3D Builder",
+            "link": "https://www.microsoft.com/pt-br/p/3d-builder/9wzdncrfj3t6?activetab=pivot:overviewtab"
+          },
+          {
+            "idioma": "inglês",
+            "nome": "SktechUp",
+            "link": "https://www.sketchup.com/"
+          },
+          {
+            "idioma": "portugues",
+            "nome": "Tinkercad – Ferramenta CAD On-Line",
+            "link": "https://www.tinkercad.com/"
+          }
+        ]
+      },
+      "eixo_fonte": "pdf"
+    },
+    {
+      "id": 18,
+      "eixo": "Tecnologia Digital",
+      "tipo_unidade_curricular": "Eletivas",
+      "nome": "Fabricação digital",
+      "competencias_do_eixo": [
+        "CDEM01",
+        "CDEM02",
+        "TDEM01",
+        "TDEM02"
+      ],
+      "competencia": {
+        "codigo": "TDEMFA01",
+        "descricao": "Criar projetos de fabricação digital utilizando materiais diversos.",
+        "carga_horaria": "40h",
+        "recursos": [
+          "Computadores com acesso à internet (laboratório, espaços de inovação ou computadores portáteis).",
+          "Recursos de fabricação digital como impressoras 3D, cortadoras a laser, fresadoras cnc, ferramental diverso, dentre outros."
+        ],
+        "tematicas": [
+          "Manipulação de dados e informações.",
+          "Ser humano e máquina.",
+          "Vivência online."
+        ],
+        "atitudes": [
+          "Atitude empreendedora.",
+          "Responsabilidade na condução de projetos."
+        ],
+        "estrutura": [
+          {
+            "conhecimentos": "Fabricação digital e a cultura do 'faça você mesmo'.",
+            "habilidades": "Compreender a fabricação digital e seus impactos na atualidade.",
+            "praticas_sugeridas": "Discussão sobre elementos que levaram à evolução das tecnologias e,consequentemente, à sua democratização, como, por exemplo, em um brainstorming com os(as) estudantes."
+          },
+          {
+            "conhecimentos": "Recursos e ferramentas para fabricação digital: funcionalidades e práticas.",
+            "habilidades": "Identificar e avaliar as principais ferramentas e recursos para fabricação digital (Cortadora a laser, fresadora CNC, impressora 3D, dentre outras)",
+            "praticas_sugeridas": "Análise das principais ferramentas e recursos para fabricação digital, como fresadoras CNC, impressora 3D, cortadora a laser, dentre outras. Exemplo: estruturação de um quadro comparativo com as principais características de cada recurso."
+          },
+          {
+            "conhecimentos": "Recursos e ferramentas para fabricação digital: funcionalidades e práticas. Elaboração de projetos.",
+            "habilidades": "Utilizar as tecnologias na fabricação digital para proposição de soluções em caráter individual ou coletivo.",
+            "praticas_sugeridas": "Desenvolvimento de um projeto, individual ou em equipe, para solucionar um problema ou criar algo inovador –por exemplo, elaborando um objeto/produto utilizando ferramentas de fabricação digital."
+          }
+        ],
+        "indicadores_avaliacao": [
+          "Reconhece as características da fabricação digital, compreendendo seu impacto na vida das pessoas.",
+          "Planeja e constrói artefatos com recursos de fabricação digital de acordo com o projeto."
+        ],
+        "perfil_docente": "Docente com conhecimentos de informática em nível intermediário, com conhecimentos de recursos de fabricação digital.",
+        "materiais_referencia": [
+          {
+            "idioma": "portugues",
+            "nome": "Entendendo a fabricação digital",
+            "link": "https://site.designoteca.com/2012/01/20/fabricacao-digital/ Laboratório da UFRGS: https://www.youtube.com/watch?v=9CtlIuYYSIk"
+          },
+          {
+            "idioma": "portugues",
+            "nome": "Fabricação digital",
+            "link": "https://www.proxxima.com.br/home/proxxima/noticias/2016/10/12/fabricacao-digital-a-nova-revolucao-industrial.html"
+          }
+        ]
+      },
+      "eixo_fonte": "pdf"
+    },
+    {
+      "id": 19,
+      "eixo": "Pensamento Computacional",
+      "tipo_unidade_curricular": "Essenciais",
+      "nome": "Programação de computadores",
+      "competencias_do_eixo": [
+        "TDEM02",
+        "PCEM01",
+        "PCEM02",
+        "CDEM01",
+        "CDEM02",
+        "PCEM03",
+        "TDEM01"
+      ],
+      "competencia": {
+        "codigo": "PCEMPC01",
+        "descricao": "Resolver problemas por meio do desenvolvimento de algoritmos e implementá-los em linguagens de programação textual.",
+        "carga_horaria": "80h",
+        "recursos": [
+          "Computadores com acesso à internet (laboratório, espaços de inovação ou computadores portáteis)."
+        ],
+        "tematicas": [
+          "Manipulação de dados e informações.",
+          "Tecnologia e computação."
+        ],
+        "atitudes": [
+          "Respeito aos direitos autorais e à propriedade intelectual em meios digitais.",
+          "Respeito e responsabilidade com a informação em meio digital.",
+          "Atitude propositiva e responsável no uso tecnologias.",
+          "Consciência do poder inclusivo e transformador da tecnologia e seu impacto social, econômico e cultural."
+        ],
+        "estrutura": [
+          {
+            "conhecimentos": "Modularização de código através do uso de funções e procedimentos com passagem de valores por valor, referência e resultado.",
+            "habilidades": "Organizar programas em módulos (procedimentos, funções ou subrotinas), realizando a troca de dados entre eles por diferentes estratégias: por valor, referência e resultado.",
+            "praticas_sugeridas": "Escrita de programas que resolvam problemas complexos, dividindo-os em problemas menores e escrevendo módulos para a sua resolução (ex: construir uma calculadora a partir dos módulos de soma, subtração, divisão, multiplicação, etc.) ou então resolvendo problemas que permitam a reutilização de um algoritmo, evitando sua duplicação (ex: um programa que toque uma determinada música e que utiliza um procedimento para tocar seu refrão)."
+          },
+          {
+            "conhecimentos": "Tipos de dados e suas representações pelo computador.",
+            "habilidades": "Distinguir e utilizar diferentes tipos de dados (numéricos, textos e booleanos) em algoritmos e conhecer suas representações pelo computador.",
+            "praticas_sugeridas": "Escrita de programas em linguagens de programação textual, podendo ser interpretadas com compiladas, que representem e resolvam problemas dos mais variados domínios (científico, financeiro, lúdico, etc.)."
+          },
+          {
+            "conhecimentos": "Medidas de desempenho e complexidade de algoritmos.",
+            "habilidades": "Avaliar diferentes soluções algorítmicas para um mesmo problema em termos de desempenho e complexidade de tempo e espaço.",
+            "praticas_sugeridas": "Comparação de abordagens diferentes para resolver um mesmo problema (ex: busca em largura recursiva versus iterativa, busca linear versus busca binária em um vetor ordenado, etc.)."
+          },
+          {
+            "conhecimentos": "Estruturas de controle do fluxo de execução de comandos: estruturas sequenciais, laços de repetição, estruturas de decisão, de processamento paralelo e tratamento de exceção.",
+            "habilidades": "Utilizar estruturas de controle de fluxo de execução de comandos em algoritmos e programas: estruturas sequenciais, laços de repetição, estruturas de decisão, de processamento paralelo e tratamento de exceção.",
+            "praticas_sugeridas": "Escrita de programas em linguagens de programação textual, podendo ser interpretadas ou compiladas, que realizam processamentos sequenciais, condicionais ou com controle de repetições."
+          },
+          {
+            "conhecimentos": "Armazenamento e organização de dados na memória do computador utilizando constantes, variáveis, conjuntos (arranjos unidimensionais, bidimensionais e superiores, listas e dicionários).",
+            "habilidades": "Utilizar apropriadamente constantes, variáveis, conjuntos (arranjos unidimensionais, bidimensionais e superiores, listas e dicionários) e objetos em algoritmos e programas.",
+            "praticas_sugeridas": "Escrita de programas em linguagens de programação textual, podendo ser interpretadas ou compiladas, que armazenem em memória dados de diferentes tipos e em diferentes estruturas."
+          },
+          {
+            "conhecimentos": "Processos de criação, compilação/interpretação, execução, depuração e teste de programas de computadores",
+            "habilidades": "Conhecer os princípios de criação, compilação/interpretação, execução, depuração e teste de programas de computadores.",
+            "praticas_sugeridas": "Escrita de programas em linguagens de programação textuais, podendo ser interpretadas com compiladas, para resolver problemas simples que envolvam entrada, processamento e saída de dados."
+          }
+        ],
+        "indicadores_avaliacao": [
+          "Modela e representa dados de diferentes contextos reais utilizando os tipos mais adequados para cada dado.",
+          "Cria, compila/interpreta, executa e testa um programa que implemente um algoritmo para realizar uma determinada tarefa.",
+          "Desenvolve algoritmos que utilizam estruturas de controle de fluxo de execução de comandos adequadamente para realizar uma determinada tarefa.",
+          "Classifica soluções diferentes para um mesmo problema em termos de desempenho e complexidade computacional da solução.",
+          "Desenvolve algoritmos capazes de utilizar constantes e variáveis, e de inserir, apagar e buscar informações em conjuntos de dados (arranjos unidimensionais, bidimensionais e superiores, listas e dicionários).",
+          "Organiza um programa em módulos utilizando procedimentos e funções e realizando transferência de dados por valor, por referência e por resultado."
+        ],
+        "perfil_docente": "Docente com conhecimentos de informática em nível avançado.",
+        "materiais_referencia": [
+          {
+            "idioma": "portugues",
+            "nome": "CC50 (Ciência da Computação 50) em português",
+            "link": "https://cc50.com.br/"
+          },
+          {
+            "idioma": "portugues",
+            "nome": "Como pensar como um cientista da computação",
+            "link": "https://panda.ime.usp.br/pensepy/static/pensepy/"
+          },
+          {
+            "idioma": "portugues",
+            "nome": "Curso de introdução à ciência da computação com Python (Parte 1)",
+            "link": "https://pt.coursera.org/learn/ciencia-computacao-python-conceitos"
+          },
+          {
+            "idioma": "portugues",
+            "nome": "Curso de introdução à ciência da computação com Python (Parte 2)",
+            "link": "https://pt.coursera.org/learn/ciencia-computacao-python-conceitos-2"
+          },
+          {
+            "idioma": "portugues",
+            "nome": "Curso de introdução à programação de computadores da Olimpíada Brasileira de Informática",
+            "link": "https://olimpiada.ic.unicamp.br/saci/"
+          },
+          {
+            "idioma": "portugues",
+            "nome": "Curso em vídeo de algoritmos",
+            "link": "https://www.cursoemvideo.com/course/curso-de-algoritmo/"
+          },
+          {
+            "idioma": "inglês",
+            "nome": "Plataforma de exercícios de programação da URI",
+            "link": "https://www.urionlinejudge.com.br/"
+          }
+        ]
+      },
+      "eixo_fonte": "pdf"
+    },
+    {
+      "id": 20,
+      "eixo": "Pensamento Computacional",
+      "tipo_unidade_curricular": "Essenciais",
+      "nome": "Tecnologias para internet",
+      "competencias_do_eixo": [
+        "CDEM02",
+        "TDEM01",
+        "TDEM02",
+        "PCEM01",
+        "CDEM01",
+        "PCEM02",
+        "PCEM03"
+      ],
+      "competencia": {
+        "codigo": "PCEMTI01",
+        "descricao": "Criar páginas estáticas e dinâmicas para a internet utilizando suas tecnologias subjacentes, tendo em vista a segurança nas redes, privacidade e navegação segura.",
+        "carga_horaria": "80h",
+        "recursos": [
+          "Computadores com acesso à internet (laboratório, espaços de inovação ou computadores portáteis)."
+        ],
+        "tematicas": [
+          "Ser humano e máquina.",
+          "Manipulação de dados e informações.",
+          "Tecnologia e computação.",
+          "Vivência online."
+        ],
+        "atitudes": [
+          "Consciência do poder inclusivo e transformador da tecnologia e seu impacto social, econômico e cultural.",
+          "Respeito aos direitos autorais e a propriedade intelectual em meios digitais.",
+          "Ética e cuidado com a segurança e a privacidade no compartilhamento e manipulação de dados e informações pessoais ou de terceiros.",
+          "Atitude propositiva e responsável no uso tecnologias."
+        ],
+        "estrutura": [
+          {
+            "conhecimentos": "Pilha de protocolos TCP/IP; endereçamento IP; protocolos HTTP, FTP e SMTP; Sistema de Nomes de Domínio (DNS); estrutura de um URL.",
+            "habilidades": "Compreender o funcionamento dos protocolos TCP/IP.",
+            "praticas_sugeridas": "Utilização de um analisador de protocolos ou simulador de tráfego de redes para capturar os pacotes trafegados com diversos conteúdos multimídia e avaliação das características como endereços de origem e destino, protocolo, pacotes, etc."
+          },
+          {
+            "conhecimentos": "Criação de conteúdo e interações dinâmicas utilizando JavaScript.",
+            "habilidades": "Criar conteúdo dinâmico para a internet.",
+            "praticas_sugeridas": "Criação de um jogo (ex: jogo da velha) interativo que possa ser executado em um navegador utilizando JavaScript, HTML e CSS."
+          },
+          {
+            "conhecimentos": "Criação de conteúdo utilizando a linguagem de marcação HTML e as folhas de estilo CSS.",
+            "habilidades": "Criar páginas estáticas para a internet.",
+            "praticas_sugeridas": "Utilização de um editor HTML para criação de um site para divulgar uma ONG ou causa social escolhida."
+          },
+          {
+            "conhecimentos": "História da internet e da World Wide Web.",
+            "habilidades": "Compreender a história da internet de da World Wide Web e os processos evolutivos que culminaram em seu estado atual.",
+            "praticas_sugeridas": "Estudo das biografias dos principais criadores da World Wide Web (WWW) e contato com documentários sobre a história e a evolução desta tecnologia."
+          }
+        ],
+        "indicadores_avaliacao": [
+          "Entende os processos evolutivos que desenvolveram a internet e a WWW no estado que estão hoje.",
+          "Reconhece os principais protocolos da internet, como HTTP, FTP e SMTP.",
+          "Cria conteúdos utilizando a linguagem de marcação HTML e as folhas de estilo CSS.",
+          "Entende o sistema de endereçamento IP e sua relação com o Sistema de Nomes de Domínio (DNS).",
+          "Cria conteúdos e interações dinâmicas utilizando JavaScript."
+        ],
+        "perfil_docente": "Docente com conhecimentos de informática em nível avançado.",
+        "materiais_referencia": [
+          {
+            "idioma": "portugues",
+            "nome": "A história da internet",
+            "link": "https://www.youtube.com/watch?v=pKxWPo73pX0"
+          },
+          {
+            "idioma": "portugues",
+            "nome": "A história da internet no Brasil",
+            "link": "https://www.youtube.com/watch?v=k_inQhpKprg"
+          },
+          {
+            "idioma": "portugues",
+            "nome": "Aprenda a estilizar HTML utilizando CSS",
+            "link": "https://developer.mozilla.org/pt-BR/docs/Aprender/CSS"
+          },
+          {
+            "idioma": "portugues",
+            "nome": "Como funciona o Wireshark -–Protocolo TCP",
+            "link": "https://www.youtube.com/watch?v=Xpw4o0Gds0E"
+          },
+          {
+            "idioma": "portugues",
+            "nome": "Criando um Jogo da Velha em Javascript, HTML CSS",
+            "link": "http://www.linhadecodigo.com.br/artigo/3506/criando-um-jogo-da-velha-em-javascript-html-e-css.aspx"
+          },
+          {
+            "idioma": "portugues",
+            "nome": "Curso de HTML e CSS para iniciantes",
+            "link": "https://www.youtube.com/watch?v=zq1oXf6ejaI"
+          },
+          {
+            "idioma": "portugues",
+            "nome": "Introdução a HTML/CSS: criação de página Web",
+            "link": "https://pt.khanacademy.org/computing/computer-programming/html-css"
+          },
+          {
+            "idioma": "portugues",
+            "nome": "Introdução ao HTML",
+            "link": "https://developer.mozilla.org/pt-BR/docs/Aprender/HTML/Introducao_ao_HTML"
+          },
+          {
+            "idioma": "portugues",
+            "nome": "Os endereços IP não são todos iguais",
+            "link": "https://www.youtube.com/watch?v=jnuHODaLcO8"
+          },
+          {
+            "idioma": "portugues",
+            "nome": "Portugol Studio",
+            "link": "http://lite.acad.univali.br/portugol/"
+          },
+          {
+            "idioma": "inglês",
+            "nome": "Repl.it Instant IDE",
+            "link": "https://repl.it/site/ide"
+          },
+          {
+            "idioma": "inglês",
+            "nome": "Wireshark",
+            "link": "https://www.wireshark.org/"
+          },
+          {
+            "idioma": "portugues",
+            "nome": "Wireshark: entendendo e analisando protocolos de rede",
+            "link": "https://www.youtube.com/watch?v=Nc44ggRq3p8"
+          }
+        ]
+      },
+      "eixo_fonte": "pdf"
+    },
+    {
+      "id": 21,
+      "eixo": "Pensamento Computacional",
+      "tipo_unidade_curricular": "Essenciais",
+      "nome": "Design de aplicativos",
+      "competencias_do_eixo": [
+        "PCEM02",
+        "CDEM01",
+        "PCEM03",
+        "CDEM02",
+        "TDEM01",
+        "TDEM02",
+        "PCEM01"
+      ],
+      "competencia": {
+        "codigo": "PCEMDA01",
+        "descricao": "Criar aplicativos para dispositivos móveis considerando fatores como usabilidade, acessibilidade, experiência do usuário, padrões de sistemas operacionais de dispositivos móveis, respeito à privacidade de dados, aos direitos autorais e às licenças de software.",
+        "carga_horaria": "80h",
+        "recursos": [
+          "Computadores com acesso à internet (laboratório, espaços de inovação ou computadores portáteis)."
+        ],
+        "tematicas": [
+          "Ser humano e máquina.",
+          "Manipulação de dados e informações.",
+          "Tecnologia e computação.",
+          "Vivência online."
+        ],
+        "atitudes": [
+          "Atitude propositiva e responsável no uso tecnologias.",
+          "Consciência do poder inclusivo e transformador da tecnologia e seu impacto social, econômico e cultural.",
+          "Ética e cuidado com a segurança e a privacidade no compartilhamento e manipulação de dados e informações pessoaisou de terceiros.",
+          "Respeito aos direitos autorais e a propriedade intelectual em meios digitais."
+        ],
+        "estrutura": [
+          {
+            "conhecimentos": "Criação de aplicativos para dispositivos móveis utilizando ambientes de desenvolvimento integrado ou plataformas de desenvolvimento sem código.",
+            "habilidades": "Avaliar diferentes ferramentas e métodos de criação de aplicativos para dispositivos móveis.",
+            "praticas_sugeridas": "Utilização de ambientes de desenvolvimento integrado ou plataformas de desenvolvimento sem código para criação de aplicativos para dispositivos móveis."
+          },
+          {
+            "conhecimentos": "Levantamento e especificação de requisitos de sistemas.",
+            "habilidades": "Criar especificações de funcionalidades para desenvolver aplicativos que atendam às necessidades de diferentes tipos de usuários(as) e situações de uso, considerando fatores como usabilidade, acessibilidade e Experiência do Usuário.",
+            "praticas_sugeridas": "Planejamento da criação de um aplicativo simples para facilitar alguma rotina do ambiente escolar. Ponto de partida: entrevistas com usuários(as) (colegas, familiares, responsáveis, docentes ou demais funcionários/as da escola) para entender suas necessidades e transformá-las em requisitos de um aplicativo na forma de descrição de cada uma das funcionalidades identificadas."
+          },
+          {
+            "conhecimentos": "Prototipação de aplicativos.",
+            "habilidades": "Gerar protótipos de alta ou baixa fidelidade, funcionais ou não, que comuniquem suas ideias e decisões de projeto de aplicativo de acordo com as especificações de uso e o objetivos.",
+            "praticas_sugeridas": "A partir de um aplicativo idealizado, criação de um protótipo de baixa fidelidade, desenhando cada tela em papel e utilizando uma ferramenta de prototipação para digitalizar."
+          },
+          {
+            "conhecimentos": "Usabilidade; Acessibilidade; Design de Experiência do Usuário; Interação humano-computador para aplicações móveis.",
+            "habilidades": "Criar interfaces gráficas atendendo a critérios de estética, usabilidade, acessibilidade e padrões de interação recomendados pelo fabricante do sistema operacional.",
+            "praticas_sugeridas": "A partir de uma especificação de requisitos de um aplicativo, planejamento das interfaces (telas) do aplicativo por meio de desenhos em papel que indiquem seus componentes (ex: botões, listas, figuras, etc.) e interações (ex: tocar, deslizar para cima, para baixo, arrastar, etc.). Posteriormente, conversão desses desenhos em interfaces que possam ser testadas em um dispositivo ou emulador."
+          }
+        ],
+        "indicadores_avaliacao": [
+          "Cria especificações de funcionalidades de um aplicativo de acordo com as necessidades de diferentes tipos de usuários(as) e situações de uso, considerando fatores como usabilidade, acessibilidade e Experiência do Usuário.",
+          "Conhece diferentes ferramentas de criação de aplicativos para dispositivos móveis.",
+          "Identifica corretamente os componentes de um URL, incluindo protocolos, endereços, portas, caminhos e recursos.",
+          "Cria interfaces gráficas do(a) usuário(a) atendendo a critérios de estética, usabilidade, acessibilidade e os padrões de interação recomendados pelo fabricante do sistema operacional.",
+          "Gera protótipos de alta ou baixa fidelidade, funcionais ou não, para comunicar suas ideias e decisões de projeto de aplicativo de acordo com especificações de uso e objetivos.",
+          "Conhece as principais etapas da criação de um aplicativo para dispositivos móveis."
+        ],
+        "perfil_docente": "Docente com conhecimentos de informática em nível avançado.",
+        "materiais_referencia": [
+          {
+            "idioma": "portugues",
+            "nome": "Como criar aplicativos Android no Kodular sem orogramação",
+            "link": "https://www.youtube.com/watch?v=_5QK10KyZkk&list=PLZL68elhOXv-PhzP91PoIFfk0HdXBR8su"
+          },
+          {
+            "idioma": "portugues",
+            "nome": "Introdução ao MIT App Inventor",
+            "link": "https://technovationchallenge.org/wp-content/uploads/2015/01/tutorial-construcao_app-FaleComigo-pt.pdf"
+          },
+          {
+            "idioma": "portugues",
+            "nome": "Jornada Hacker - Chegou a hora prototipar com Marvel App:",
+            "link": "https://www.youtube.com/watch?v=E_-942yP6Vc"
+          },
+          {
+            "idioma": "inglês",
+            "nome": "Kodular",
+            "link": "https://www.kodular.io/"
+          },
+          {
+            "idioma": "portugues",
+            "nome": "Manual de utilização da Marvel App",
+            "link": "https://profandreagarcia.files.wordpress.com/2019/09/manual-apresentac3a7c3a3o-marvelapp-final.pdf"
+          },
+          {
+            "idioma": "inglês",
+            "nome": "Marvel",
+            "link": "https://marvelapp.com/"
+          },
+          {
+            "idioma": "inglês",
+            "nome": "MIT App Inventor",
+            "link": "https://appinventor.mit.edu/"
+          },
+          {
+            "idioma": "inglês",
+            "nome": "Thunkable",
+            "link": "https://thunkable.com/"
+          },
+          {
+            "idioma": "portugues",
+            "nome": "Thunkable: Guia de Criação de Apps",
+            "link": "https://www.androidpro.com.br/blog/desenvolvimento-android/thunkable/"
+          },
+          {
+            "idioma": "portugues",
+            "nome": "Tutorial de App Inventor",
+            "link": "https://www.youtube.com/watch?v=W508yjdVqSg"
+          },
+          {
+            "idioma": "portugues",
+            "nome": "Tutorial Kodular",
+            "link": "https://lipscell.com.br/tag/tutorial-kodular/"
+          },
+          {
+            "idioma": "portugues",
+            "nome": "Tutorial Thunkable para iniciantes | Como criar um App Mobile",
+            "link": "https://www.youtube.com/watch?v=eA2zun5SW30"
+          }
+        ]
+      },
+      "eixo_fonte": "pdf"
+    },
+    {
+      "id": 22,
+      "eixo": "Pensamento Computacional",
+      "tipo_unidade_curricular": "Essenciais",
+      "nome": "Ciência de dados",
+      "competencias_do_eixo": [
+        "PCEM02",
+        "CDEM01",
+        "PCEM03",
+        "CDEM02",
+        "TDEM01",
+        "TDEM02",
+        "PCEM01"
+      ],
+      "competencia": {
+        "codigo": "PCEMCD01",
+        "descricao": "Coletar, organizar, visualizar e interpretar conjuntos de dados para extração de informações, conhecimentos, criações de previsões que apoiem a tomada de decisão.",
+        "carga_horaria": "40h",
+        "recursos": [
+          "Planilha eletrônica (LibreOffice Calc, Google Sheets, Excel, etc.).",
+          "Computadores com acesso à internet (laboratório, espaços de inovação ou computadores portáteis)."
+        ],
+        "tematicas": [
+          "Tecnologia e computação.",
+          "Manipulação de dados e informações."
+        ],
+        "atitudes": [
+          "Respeito e responsabilidade com a informação em meio digital.",
+          "Ética e cuidado com a segurança e a privacidade na manipulação de dados e informações pessoais ou de terceiros."
+        ],
+        "estrutura": [
+          {
+            "conhecimentos": "Estatísticas descritivas: análise univariada e bivariada.",
+            "habilidades": "Realizar análises exploratórias descritivas para descobrir padrões, tendências e extrair informações a partir de conjuntos de dados.",
+            "praticas_sugeridas": "Utilização de técnicas de estatística descritiva (ex: frequência, média, mediana, moda, desvio, variância, etc.) em um conjunto de dados públicos (ex: dados do ENEM, Censo Escolar, IBGE, etc.) ou coletados pelos(as) estudantes e apresentar os resultados encontrados."
+          },
+          {
+            "conhecimentos": "Coleta de dados. Modelagem. Pré-processamento: Limpeza e normalização de dados; Tipos de dados; Tipos e classificação de variáveis.",
+            "habilidades": "Criar abstrações e representação do mundo físico em formato de dados digitais.",
+            "praticas_sugeridas": "Em uma planilha eletrônica, registro dos dados de algum fenômeno recorrente na escola (ex: preferências e hábitos de lanche dos/as estudantes, perfil de uso da biblioteca, preferências nas práticas esportivas, etc.) escolhendo quais variáveis representar, quais tipos de dados utilizar, realizando posterior coleta, limpeza e normalização dos dados."
+          },
+          {
+            "conhecimentos": "Tipos de gráficos; Ferramentas para construção de gráficos; Infográficos e dashboards.",
+            "habilidades": "Utilizar gráficos para criar visualizações a partir de conjuntos de dados para interpretação e/ou divulgação de informações.",
+            "praticas_sugeridas": "Utilização de diversos tipos de gráficos (ex: colunas, barras, setor, linha, dispersão, boxplot, histograma, etc.) para a criação de um infográfico capaz de comunicar resultados encontrados em um conjunto de dados públicos (ex: dados do ENEM, Censo Escolar, IBGE, etc.) ou coletados pelos(as) estudantes."
+          }
+        ],
+        "indicadores_avaliacao": [
+          "Utiliza os tipos de gráficos mais adequados para comunicar os dados e suas descobertas em função de suas características.",
+          "Cria um modelo para coletar dados, escolhendo corretamente quais dados representar por quais tipos e quais variáveis armazenar.",
+          "Utiliza as principais técnicas de estatística descritiva para extrair informações preliminares de conjuntos de dados."
+        ],
+        "perfil_docente": "Docente com conhecimentos de informática em nível avançado.",
+        "materiais_referencia": [
+          {
+            "idioma": "portugues",
+            "nome": "Aula iniciantes 3 – visualização de dados",
+            "link": "https://www.youtube.com/watch?v=HQ1jGr5g8k0 Workshop de visualização de dados: https://infogram.com/pt/pagina/oficina-de-visualizacao-de-dados"
+          },
+          {
+            "idioma": "portugues",
+            "nome": "Educa IBGE",
+            "link": "https://educa.ibge.gov.br/professores"
+          },
+          {
+            "idioma": "portugues",
+            "nome": "Ensinando estatística: experimentos em sala de aula",
+            "link": "https://www.sbm.org.br/wp-content/uploads/2017/07/Simposio_Nordeste_Ensinando-Estatistica.pdf"
+          },
+          {
+            "idioma": "portugues",
+            "nome": "Estatísticas do ensino médio",
+            "link": "https://pt.khanacademy.org/math/probability"
+          },
+          {
+            "idioma": "portugues",
+            "nome": "Guia prático da visualização de dados: definição, exemplos e recursos de aprendizado",
+            "link": "https://www.tableau.com/pt-br/learn/articles/data-visualization"
+          },
+          {
+            "idioma": "inglês",
+            "nome": "Kaggle",
+            "link": "https://www.kaggle.com/"
+          },
+          {
+            "idioma": "portugues",
+            "nome": "O que é a visualização de dados",
+            "link": "https://www.youtube.com/watch?v=TgLIgmE13rI"
+          },
+          {
+            "idioma": "portugues",
+            "nome": "Principais tipos de gráficos para a educação básica",
+            "link": "https://educa.ibge.gov.br/professores/educa-recursos/20773-tipos-de-graficos-no-ensino.html"
+          },
+          {
+            "idioma": "portugues",
+            "nome": "Roteiro didático para o ensino de estatística: A cidadania na/pela Matemática",
+            "link": "https://docplayer.com.br/9124333-Roteiro-didatico-para-o-ensino-de-estatistica-a-cidadania-na-pela-matematica-paulo-apolinario-nogueira-eline-das-flores-victer-cristina-novikoff.html"
+          },
+          {
+            "idioma": "portugues",
+            "nome": "Tableau Public",
+            "link": "https://public.tableau.com/s/"
+          },
+          {
+            "idioma": "portugues",
+            "nome": "Turbinando o Excel para análise de dados",
+            "link": "https://www.impacta.com.br/blog/2017/08/28/8-funcionalidades-do-excel-que-vao-transformar-sua-analise-de-dados/"
+          }
+        ]
+      },
+      "eixo_fonte": "pdf"
+    },
+    {
+      "id": 23,
+      "eixo": "Pensamento Computacional",
+      "tipo_unidade_curricular": "Eletivas",
+      "nome": "Jogos digitais e analógicos",
+      "competencias_do_eixo": [
+        "TDEM02",
+        "PCEM01",
+        "PCEM02",
+        "CDEM01",
+        "CDEM02",
+        "PCEM03",
+        "TDEM01"
+      ],
+      "competencia": {
+        "codigo": "PCEMJD01",
+        "descricao": "Criar jogos analógicos ou digitais autorais, considerando seus aspectos sociais e culturais, a diversidade e a representatividade, assim como aplicar esses conceitos para potencializar o engajamento e as experiências proporcionadas pelos jogos em outros contextos.",
+        "carga_horaria": "40h",
+        "recursos": [
+          "Computadores com acesso à internet (laboratório, espaços de inovação ou computadores portáteis).",
+          "Acesso a um motor de jogos ou plataforma de desenvolvimento de jogos."
+        ],
+        "tematicas": [
+          "Manipulação de dados e informações.",
+          "Vivência online.",
+          "Tecnologia e computação."
+        ],
+        "atitudes": [
+          "Respeito aos direitos autorais e a propriedade intelectual em meios digitais.",
+          "Atitude propositiva e responsável no uso tecnologias.",
+          "Consciência do poder inclusivo e transformador da tecnologia e seu impacto social, econômico e cultural."
+        ],
+        "estrutura": [
+          {
+            "conhecimentos": "Elementos de jogos analógicos; Mecanismos e mecânicas; Prototipação de jogos analógicos; Game Test.",
+            "habilidades": "Criar protótipos de jogos analógicos aplicando conscientemente técnicas, elementos, mecânicas e mecanismos de acordo com a intencionalidade desejada.",
+            "praticas_sugeridas": "Criação de um protótipo de um jogo de tabuleiro idealizado pelo grupo com um tema livre ou determinado pelo(a) professor(a), utilizando materiais reciclados, realizando uma sessão de com os coletas para registrar as impressões, opiniões a fim de promover posteriores ajustes."
+          },
+          {
+            "conhecimentos": "Plataformas e motores para criação de jogos digitais; Mecanismos e mecânicas; Prototipação de jogos digitais; Game Test.",
+            "habilidades": "Utilizar plataformas, ferramentas e recursos digitais para criar protótipos de jogos digitais aplicando conscientemente técnicas, elementos, mecânicas e mecanismos de acordo com a intencionalidade desejada.",
+            "praticas_sugeridas": "Utilização de plataforma digital ou motor de jogos para criação um protótipo de um jogo digital idealizado pelo grupo, com um tema livre ou determinado pelo(a) professor(a); e realização de uma sessão com os(as) colegas para registrar as impressões e opiniões a fim de promover posteriores ajustes."
+          },
+          {
+            "conhecimentos": "Design de jogo; Conceito e componentes de um jogo; Processos de criação de jogos; Estados de um jogo; Gameplay; Game Design Document.",
+            "habilidades": "Compreender as técnicas, metodologias e ferramentas de game design para aplicá-las na criação do conceito de um jogo.",
+            "praticas_sugeridas": "Criação de um Game Design Document para registrar o conceito de um jogo idealizado pelo grupo com um tema livre ou determinado pelo(a) professor(a)."
+          },
+          {
+            "conhecimentos": "História do jogo e da indústria de jogos; Classificação de jogos; Aplicações dos jogos em diferentes contextos.",
+            "habilidades": "Compreender o que é um jogo, a origem e a evolução dos jogos e seus aspectos culturais, sociais, econômicos, tecnológicos e suas aplicações.",
+            "praticas_sugeridas": "Escolha de uma determinada época, sociedade e cultura para estudar quais jogos existiam e como eram utilizados; realização de um jogo de época escolhida com os(as) colegas e apresentação para a turma das descobertas da pesquisa."
+          },
+          {
+            "conhecimentos": "Experiência do(a) jogador(a): interatividade, jogabilidade e imersividade; storyboard; gêneros; enredo e roteiro; personagens e cenário; a jornada do herói.",
+            "habilidades": "Desenvolver o enredo de um jogo, incluindo elementos, narrativas e personagens considerando aspectos como o respeito à diversidade e a representatividade.",
+            "praticas_sugeridas": "Criação de um roteiro que desenvolva um enredo de um jogo idealizado pelo grupo com um tema livre ou determinado pelo(a) professor(a) e que apresente o cenário, os personagens e o desenvolvimento da narrativa do jogo."
+          }
+        ],
+        "indicadores_avaliacao": [
+          "Cria um protótipo de jogo analógico aplicando uma ou mais mecânicas e elementos do jogo de acordo com a intencionalidade desejada.",
+          "Cria o conceito de um jogo digital ou não, utilizando as técnicas, metodologias e ferramentas de game design, e o documenta por meio de um Game Design Document.",
+          "Cria um protótipo de jogo digital utilizando recursos digitais, plataformas ou motores de jogos.",
+          "Elabora narrativa de um jogo digital ou não, por meio de um roteiro, cenário e personagens, tendo em vista o respeito à diversidade e a representatividade.",
+          "Conduz sessões de teste com jogadores para avaliar aspectos como a interatividade, jogabilidade e imersividade de um jogo."
+        ],
+        "perfil_docente": "Docente com conhecimentos de informática em nível intermediário.",
+        "materiais_referencia": [
+          {
+            "idioma": "portugues",
+            "nome": "Como (e quando) criar um GDD: formatos, dicas e exemplos práticos",
+            "link": "https://producaodejogos.com/gdd/"
+          },
+          {
+            "idioma": "portugues",
+            "nome": "Como criar um GDD (Game Design Document) + Modelo para Download",
+            "link": "https://www.crieseusjogos.com.br/como-criar-um-gdd-game-design-document-modelo-para-download/"
+          },
+          {
+            "idioma": "portugues",
+            "nome": "Como criar um jogo (GameMaker Studio 2)",
+            "link": "https://www.youtube.com/watch?v=x9CdEBIwb1Q&list=PLeo3Cf8CZtd60K9z542VqTwhSSbagxIsp"
+          },
+          {
+            "idioma": "portugues",
+            "nome": "Como ser um programador de jogos: Game Design Document",
+            "link": "https://gamedeveloper.com.br/game-design-document/"
+          },
+          {
+            "idioma": "portugues",
+            "nome": "CONSTRUCT 2 E 3 PARA INICIANTES - Aprenda como usar o Construct para CRIAR GAMES",
+            "link": "https://www.youtube.com/watch?v=3HWLRKVkPNc"
+          },
+          {
+            "idioma": "inglês",
+            "nome": "Construct 3",
+            "link": "https://www.scirra.com/"
+          },
+          {
+            "idioma": "portugues",
+            "nome": "Curso Unreal Engine Essentials",
+            "link": "https://www.youtube.com/playlist?list=PLmhLyed6mNpZD0fSYEEUSTcaS821eVQ2j"
+          },
+          {
+            "idioma": "inglês",
+            "nome": "Game Maker",
+            "link": "https://www.yoyogames.com/gamemaker"
+          },
+          {
+            "idioma": "portugues",
+            "nome": "GameMaker: Studio (o guia completo do iniciante)",
+            "link": "https://producaodejogos.com/fazendo-jogos-com-gamemaker/"
+          },
+          {
+            "idioma": "inglês",
+            "nome": "RPG Maker",
+            "link": "https://www.rpgmakerweb.com/"
+          },
+          {
+            "idioma": "portugues",
+            "nome": "RPG Maker: o guia completo",
+            "link": "https://producaodejogos.com/rpg-maker/"
+          },
+          {
+            "idioma": "portugues",
+            "nome": "Tutorial de introdução a nova Unreal Engine 4",
+            "link": "https://www.youtube.com/watch?v=XZsjcHC9lbE"
+          },
+          {
+            "idioma": "portugues",
+            "nome": "Tutorial RPG Maker VX Ace",
+            "link": "https://www.youtube.com/watch?v=FPDlZasLHe8"
+          },
+          {
+            "idioma": "inglês",
+            "nome": "Unreal Engine",
+            "link": "https://www.unrealengine.com/en-US/feed"
+          }
+        ]
+      },
+      "eixo_fonte": "pdf"
+    },
+    {
+      "id": 24,
+      "eixo": "Pensamento Computacional",
+      "tipo_unidade_curricular": "Eletivas",
+      "nome": "Internet das Coisas",
+      "competencias_do_eixo": [
+        "CDEM02",
+        "PCEM03",
+        "TDEM01",
+        "TDEM02",
+        "PCEM01",
+        "PCEM02",
+        "CDEM01"
+      ],
+      "competencia": {
+        "codigo": "PCEMIC01",
+        "descricao": "Criar dispositivos eletrônicos conectados que possam interagir com o mundo físico para melhorar a qualidade de vida das pessoas e criar impactos sociais positivos e transformadores.",
+        "carga_horaria": "80h",
+        "recursos": [
+          "Módulo bluetooth ou Wi-Fi para o microcontrolador.",
+          "Computadores com acesso à internet (laboratório, espaços de inovação ou computadores portáteis).",
+          "Microcontrolador (ex: arduino, BBC micro:bit, etc.).",
+          "Componentes eletrônicos (LEDs, resistores, capacitores, buzzers, etc.).",
+          "Multímetro."
+        ],
+        "tematicas": [
+          "Manipulação de dados e informações.",
+          "Tecnologia e computação."
+        ],
+        "atitudes": [
+          "Ser propositivo e responsável no uso tecnologias.",
+          "Atitude sustentável, tendo em vista as dimensões econômica, ambiental e social.",
+          "Consciência do poder inclusivo e transformador da tecnologia e seu impacto social, econômico e cultural."
+        ],
+        "estrutura": [
+          {
+            "conhecimentos": "Eletricidade; Circuitos elétricos; Resistores; Capacitores; LEDs;",
+            "habilidades": "Conhecer os princípios e principais componentes da eletrônica, como LEDs, resistores, capacitores e seus papéis em um circuito elétrico.",
+            "praticas_sugeridas": "Montando circuitos com fontes de alimentação e experimentando diversas associações de resistores e capacitores e medindo seu efeito em LEDs, motores ou em instrumentos de medição como multímetros."
+          },
+          {
+            "conhecimentos": "Controle de motores, displays, LEDs, buzzers e alto falantes; Saídas analógicas (PWM), digitais e suas diferenças.",
+            "habilidades": "Controlar dispositivos externos usando saídas digitais e analógicas de um microcontrolador.",
+            "praticas_sugeridas": "Criação de um projeto que controle um servo motor para funcionar como uma trava de porta e indique com um LED verde quando a trava estiver aberta (ex: ângulo do servo motor em 0°) e com um LED vermelho quando estiver fechada (ex: ângulo do servo motor em 180°)."
+          },
+          {
+            "conhecimentos": "Microcontroladores: funcionamento básico e programação.",
+            "habilidades": "Programar um microcontrolador utilizando programação em texto ou por blocos para ler sinais e informações de suas entradas e enviar informações para suas saídas.",
+            "praticas_sugeridas": "Programação de um microcontrolador físico ou por meio de um simulador online para simular um semáforo de três fases usando três LEDs (vermelho, amarelo e verde)."
+          },
+          {
+            "conhecimentos": "Leitura de sensores (ex: sensores de temperatura, umidade, luminosidade, etc.) diferenciando o tipo de leitura, analógica ou digital, requerida por cada sensor.",
+            "habilidades": "Ler sinais, informações e sinais de sensores usando entradas digitais e analógicas de um microcontrolador.",
+            "praticas_sugeridas": "Criação de um projeto capaz de ler a luminosidade do ambiente por meio de um sensor LDR que indique com um LED verde quando o ambiente está propício para a leitura (ex: luminosidade alta) e com um LED vermelho quando não estiver (ex: luminosidade baixa)."
+          },
+          {
+            "conhecimentos": "Componentes e padrões de comunicação Bluetooth; Componentes, padrões e protocolos para conexão pela internet.",
+            "habilidades": "Comunicar um ou mais dispositivos por meio de comunicação sem fio para troca de informações, envio ou recebimento de comandos e instruções.",
+            "praticas_sugeridas": "Criação de um projeto para enviar informações do microcontrolador (ex: sensor de luminosidade) para o celular, utilizando um módulo bluetooth ou Wi-Fi e um app para leitura no celular."
+          }
+        ],
+        "indicadores_avaliacao": [
+          "Cria um programa em um microcontrolador capaz de enviar informações para suas portas de saída a fim de controlar motores, displays ou alto-falantes.",
+          "Cria e executa corretamente um programa em um microcontrolador ou emulador capaz de ler portas de entrada e escrever nas portas de saída, de acordo com um objetivo proposto.",
+          "A partir de um microcontrolador, envia e recebe informações de outros microcontroladores ou dispositivos, como celulares e computadores pessoais.",
+          "Cria um programa em um microcontrolador capaz de ler e processar informações do ambiente através de sensores.",
+          "Reconhece os componentes eletrônicos, como LEDs, resistores, capacitores e seus papéis em um circuito elétrico."
+        ],
+        "perfil_docente": "Docente com conhecimentos de informática em nível intermediário.",
+        "materiais_referencia": [
+          {
+            "idioma": "inglês",
+            "nome": "Arduino",
+            "link": "https://www.arduino.cc/"
+          },
+          {
+            "idioma": "portugues",
+            "nome": "Arduino Guia Iniciante",
+            "link": "https://edisciplinas.usp.br/pluginfile.php/3252633/mod_resource/content/1/Guia_Arduino_Iniciante_Multilogica_Shop.pdf"
+          },
+          {
+            "idioma": "portugues",
+            "nome": "Ative relés com os pinos virtuais do Blynk",
+            "link": "https://www.youtube.com/watch?v=Q363NtYWgjA"
+          },
+          {
+            "idioma": "inglês",
+            "nome": "BBC MicroBit",
+            "link": "https://microbit.org/"
+          },
+          {
+            "idioma": "portugues",
+            "nome": "Blynk – Executando os primeiros projetos com Arduino",
+            "link": "https://blogmasterwalkershop.com.br/blynk/blynk-executando-os-primeiros-projetos-com-arduino/"
+          },
+          {
+            "idioma": "inglês",
+            "nome": "Blynk.io",
+            "link": "https://blynk.io/"
+          },
+          {
+            "idioma": "portugues",
+            "nome": "Como utilizar o módulo bluetooth com Arduino",
+            "link": "https://www.robocore.net/tutoriais/bluetooth-hc-05-arduino-comunicando-com-smartphone?newlang=brazilian"
+          },
+          {
+            "idioma": "portugues",
+            "nome": "Curso de Arduino para iniciantes",
+            "link": "https://www.youtube.com/watch?v=oOWuq_Nazig"
+          },
+          {
+            "idioma": "portugues",
+            "nome": "Introdução ao BlynkApp",
+            "link": "https://www.embarcados.com.br/introducao-ao-blynk-app/"
+          },
+          {
+            "idioma": "inglês",
+            "nome": "MakeCode",
+            "link": "https://makecode.microbit.org/"
+          },
+          {
+            "idioma": "portugues",
+            "nome": "Primeiros passos usando o BBC micro:bit",
+            "link": "https://www.youtube.com/watch?v=6paCCT3PDBs"
+          },
+          {
+            "idioma": "portugues",
+            "nome": "Programação em blocos para o BBC micro:bit",
+            "link": "https://www.robocore.net/tutorials/programacao-em-blocos-para-microbit"
+          },
+          {
+            "idioma": "portugues",
+            "nome": "Programação para Arduino - Primeiros Passos",
+            "link": "https://www.circuitar.com.br/tutoriais/programacao-para-arduino-primeiros-passos/"
+          },
+          {
+            "idioma": "portugues",
+            "nome": "TinkerCad - Emulador e Simulador de Circuitos",
+            "link": "https://www.tinkercad.com/learn/circuits"
+          },
+          {
+            "idioma": "inglês",
+            "nome": "Tutoriais Make Code",
+            "link": "https://makecode.microbit.org/tutorials"
+          }
+        ]
+      },
+      "eixo_fonte": "pdf"
+    },
+    {
+      "id": 25,
+      "eixo": "Pensamento Computacional",
+      "tipo_unidade_curricular": "Eletivas",
+      "nome": "Simulação de fenômenos naturais",
+      "competencias_do_eixo": [
+        "PCEM01",
+        "PCEM02",
+        "CDEM01",
+        "CDEM02",
+        "PCEM03",
+        "TDEM01",
+        "TDEM02"
+      ],
+      "competencia": {
+        "codigo": "PCEMSN01",
+        "descricao": "Criar modelos computacionais de fenômenos naturais para simular situações, levantar questões-problemas, comprovar ou refutar hipóteses e entender fenômenos.",
+        "carga_horaria": "40h",
+        "recursos": [
+          "Computadores com acesso à internet (laboratório, espaços de inovação ou computadores portáteis)."
+        ],
+        "tematicas": [
+          "Manipulação de dados e informações.",
+          "Tecnologia e computação."
+        ],
+        "atitudes": [
+          "Consciência do poder inclusivo e transformador da tecnologia e seu impacto social, econômico e cultural.",
+          "Ser propositivo e responsável no uso tecnologias."
+        ],
+        "estrutura": [
+          {
+            "conhecimentos": "Programação de computadores; Representação de modelos matemáticos.",
+            "habilidades": "Criar programas de computador para a obtenção de soluções de modelos matemáticos.",
+            "praticas_sugeridas": "Partindo de um modelo matemático dado pelo(a) docente ou construído pelos(as) estudantes, criação de uma representação desse modelo em programa de computador de forma parametrizável, ou seja, de modo que seja possível entrar com o valor de suas variáveis e obtendo como resposta o valor de saída previsto de acordo com este modelo."
+          },
+          {
+            "conhecimentos": "Constantes; Variáveis dependentes; Variáveis independentes; Relações geométricas, gráficas, algébricas ou estatísticas entre variáveis.",
+            "habilidades": "Desenvolver ou utilizar modelos matemáticos que descrevam ou expliquem fenômenos naturais.",
+            "praticas_sugeridas": "Partindo da observação de um fenômeno (por exemplo, um pêndulo simples sendo abandonado em repouso), criação de um modelo para descrever a duração de seu período, selecionando quais variáveis (ex: comprimento, massa, ângulo de liberação do pêndulo, etc.) podem afetar este período e como elas se relacionam entre si."
+          },
+          {
+            "conhecimentos": "Coleta de dados; Lógica de argumentação; Construção de teorias e hipóteses a partir de observações. Argumentação científica.",
+            "habilidades": "Utilizar os dados obtidos por meio da comparação entre os fenômenos observados e os simulados para raciocinar sobre a qualidade e a fidelidade do modelo utilizado pelo simulador.",
+            "praticas_sugeridas": "Comparação do resultado de uma simulação de um determinado fenômeno sob certas circunstâncias com o resultado da observação experimental do mesmo fenômeno sob as mesmas circunstâncias."
+          },
+          {
+            "conhecimentos": "Programação de computadores; Programação Gráfica; Animação; Simulação.",
+            "habilidades": "Criar programas de computador que simulem o comportamento de um fenômeno natural.",
+            "praticas_sugeridas": "Criação de uma simulação gráfica na forma de uma animação de um fenômeno (ex: o abandono de um objeto em queda livre) a partir de seu modelo matemático utilizando um ambiente de programação por blocos ou textual."
+          }
+        ],
+        "indicadores_avaliacao": [
+          "Cria uma simulação gráfica na forma de uma animação de um fenômeno a partir de seu modelo matemático.",
+          "Avalia a fidelidade do modelo de um fenômeno comparando os dados obtidos por este modelo com as observações reais do fenômeno.",
+          "Propõe um modelo para descrever um fenômeno, selecionando quais variáveis devem ser representadas e como elas se relacionam entre si.",
+          "Cria uma representação de um modelo matemático na forma de um programa de computador por onde seja possível fazer inferências inserindo valores para as variáveis do modelo."
+        ],
+        "perfil_docente": "Docente com conhecimentos de informática em nível avançado.",
+        "materiais_referencia": [
+          {
+            "idioma": "portugues",
+            "nome": "Animações de Física em Scratch",
+            "link": "https://scratch.mit.edu/studios/2885550/"
+          },
+          {
+            "idioma": "portugues",
+            "nome": "Aprendendo conceitos de Física com Python: uma introdução ao VPython",
+            "link": "https://pynorte.github.io/pyconamazonia2017-site/images/slides/Paulo%20Giovani%20-%20Apresentacao_VPython_PyConAmazonia2017.pdf"
+          },
+          {
+            "idioma": "portugues",
+            "nome": "Informática no ensino de Física com Scratch",
+            "link": "https://scratch.mit.edu/studios/4979124/"
+          },
+          {
+            "idioma": "portugues",
+            "nome": "Introdução a simulações naturais com Javascript",
+            "link": "https://pt.khanacademy.org/computing/computer-programming/programming-natural-simulations"
+          },
+          {
+            "idioma": "portugues",
+            "nome": "PhET: Simulações em física, química, biologia, ciências da natureza",
+            "link": "https://phet.colorado.edu/pt_BR/"
+          },
+          {
+            "idioma": "portugues",
+            "nome": "Simulações com VPython",
+            "link": "https://def.fe.up.pt/python/vpython.html"
+          }
+        ]
+      },
+      "eixo_fonte": "pdf"
+    },
+    {
+      "id": 26,
+      "eixo": "Pensamento Computacional",
+      "tipo_unidade_curricular": "Eletivas",
+      "nome": "Robótica",
+      "competencias_do_eixo": [
+        "TDEM02",
+        "PCEM01",
+        "PCEM02",
+        "CDEM01",
+        "CDEM02",
+        "PCEM03",
+        "TDEM01"
+      ],
+      "competencia": {
+        "codigo": "PCEMRB01",
+        "descricao": "Criar autômatos por meio da aplicação prática de conceitos físicos como estruturas, rodas e eixos, alavancas, plano inclinado, polias e engrenagens.",
+        "carga_horaria": "80h",
+        "recursos": [
+          "Polias.",
+          "Sensores diversos (luminosidade, distância, som, presença, etc.).",
+          "Rodas.",
+          "Multímetro.",
+          "Engrenagens.",
+          "Sucata.",
+          "Eixos.",
+          "Microcontrolador (ex: arduino, BBC micro:bit, etc.).",
+          "Motores DC de baixa tensão.",
+          "Computadores com acesso à internet (laboratório, espaços de inovação ou computadores portáteis)."
+        ],
+        "tematicas": [
+          "Manipulação de dados e informações.",
+          "Tecnologia e computação."
+        ],
+        "atitudes": [
+          "Atitude sustentável, tendo em vista as dimensões econômica, ambiental e social.",
+          "Consciência do poder inclusivo e transformador da tecnologia e seu impacto social, econômico e cultural.",
+          "Ser propositivo e responsável no uso tecnologias."
+        ],
+        "estrutura": [
+          {
+            "conhecimentos": "Transmissão de Movimento; Engrenagens; Cremalheiras; Caixas de Redução.",
+            "habilidades": "Combinar máquinas simples e outros elementos mecânicos para criar autômatos complexos para a realização de tarefas em diferentes contextos.",
+            "praticas_sugeridas": "Utilizando eixos, alavancas, engrenagens, polias e/ou roldanas, criação de uma máquina de Rube Goldberg pela turma de estudantes para automatizar o acionamento do interruptor de luz da sala."
+          },
+          {
+            "conhecimentos": "Método de engenharia; Coleta e análise de dados; Processos de melhoria.",
+            "habilidades": "Realizar testes em montagens e construções, coletando dados para mensurar o desempenho e identificar oportunidades melhoria.",
+            "praticas_sugeridas": "Realização de sessões de testes para as construções sob diversas condições, e registro dos resultados dos desempenhos para posterior reflexão sobre o que poderia ser feito diferente ou melhorado."
+          },
+          {
+            "conhecimentos": "Programação de controladores; Sensores; Motores.",
+            "habilidades": "Utilizar dispositivos de controle programáveis para automatizar mecanismos utilizando sensores, motores, luzes e sons.",
+            "praticas_sugeridas": "Construção de um carro que utilize um motor controlado por uma unidade programável para fazer com que se movimente para frente, quando acionado um botão, e pare, quando acionado um sensor de presença, indicando um obstáculo à frente."
+          },
+          {
+            "conhecimentos": "Estruturas rígidas e articuladas; Resistência dos Materiais.",
+            "habilidades": "Aplicar diferentes tipos de estruturas de acordo com suas propriedades e à necessidade de uso, conhecendo as características mecânicas de diversos tipos de materiais e seus comportamentos quando submetidos a cargas e aplicação de forças.",
+            "praticas_sugeridas": "Construção de uma estrutura a partir de materiais reciclados ou blocos de montar que deverá ficará suspensa por duas bases (ex: duas mesas ou cadeiras) distantes entre si e suportar uma determinada carga aplicada no ponto médio de sua extensão."
+          },
+          {
+            "conhecimentos": "Alavanca; Rosca; Plano inclinado; Polias; Roda e eixo.",
+            "habilidades": "Conhecer as máquinas simples e saber como utilizá-las para obter vantagens mecânicas em diferentes contextos",
+            "praticas_sugeridas": "Pesquisa sobre quais objetos do dia a dia podemos encontrar máquinas simples e como estas oferecem vantagem mecânica para realizar determinadas tarefas."
+          }
+        ],
+        "indicadores_avaliacao": [
+          "Identifica as máquinas simples presentes em objetos do dia a dia e oportunidades de uso das máquinas simples para facilitar a realização de tarefas em suas montagens.",
+          "Combina duas ou mais máquinas simples em uma montagem para obter um efeito desejado.",
+          "Cria estruturas resistentes, eficientes e com o material adequado, de acordo com a necessidade.",
+          "Cria programas que são embarcados em um microcontrolador para controlar sensores e atuadores para dar movimento a duas montagens.",
+          "Utiliza dados registrados a partir de observações de seus experimentos para produzir medir o desempenho e promover melhorias para os mesmos."
+        ],
+        "perfil_docente": "Docente com conhecimentos de informática em nível intermediário.",
+        "materiais_referencia": [
+          {
+            "idioma": "portugues",
+            "nome": "5 maquinas de Rube Goldberg mirabolantes e divertidas",
+            "link": "https://manualdomundo.uol.com.br/2014/09/5-maquinas-de-rube-goldberg-mirabolantes-e-divertidas/"
+          },
+          {
+            "idioma": "portugues",
+            "nome": "Aprenda a fazer uma máquina de Rube Goldberg!",
+            "link": "https://www.youtube.com/watch?v=TyVPrGhPDYY"
+          },
+          {
+            "idioma": "inglês",
+            "nome": "Arduino",
+            "link": "https://www.arduino.cc/"
+          },
+          {
+            "idioma": "portugues",
+            "nome": "Arduino guia iniciante",
+            "link": "https://edisciplinas.usp.br/pluginfile.php/3252633/mod_resource/content/1/Guia_Arduino_Iniciante_Multilogica_Shop.pdf"
+          },
+          {
+            "idioma": "portugues",
+            "nome": "Como fazer um autômato, o avô dos robôs",
+            "link": "https://www.youtube.com/watch?v=tuqQgTb3cmU"
+          },
+          {
+            "idioma": "portugues",
+            "nome": "Como fazer uma garra mecânica com sucata",
+            "link": "https://www.youtube.com/watch?v=xetpc8YQyaQ"
+          },
+          {
+            "idioma": "portugues",
+            "nome": "Criação de autômatos",
+            "link": "https://www.youtube.com/watch?v=3zOuFCG7O-s"
+          },
+          {
+            "idioma": "portugues",
+            "nome": "Curso de Arduino para iniciantes",
+            "link": "https://www.youtube.com/watch?v=oOWuq_Nazig"
+          },
+          {
+            "idioma": "portugues",
+            "nome": "Programação para Arduino – Primeiros passos",
+            "link": "https://www.circuitar.com.br/tutoriais/programacao-para-arduino-primeiros-passos/"
+          },
+          {
+            "idioma": "portugues",
+            "nome": "Robótica com sucata, promovendo a sustentabilidade",
+            "link": "http://basenacionalcomum.mec.gov.br/implementacao/praticas/caderno-de-praticas/ensino-fundamental-anos-finais/172-robotica-com-sucata-promovendo-a-sustentabilidade-2"
+          }
+        ]
+      },
+      "eixo_fonte": "pdf"
+    },
+    {
+      "id": 27,
+      "eixo": "Cultura Digital",
+      "tipo_unidade_curricular": null,
+      "nome": "Transformação digital e inovação",
+      "competencias_do_eixo": [
+        "CDEM02",
+        "TDEM01",
+        "TDEM02",
+        "CDEM01"
+      ],
+      "competencia": {
+        "codigo": "GEDDS01",
+        "descricao": "Compreender os ambientes organizacionais e a importância dos dados nos processos de transformação digital e inovação, além dos processos de gestão de ciclo de vida dos dados, desde sua originação até o uso",
+        "carga_horaria": "40h",
+        "recursos": null,
+        "tematicas": null,
+        "atitudes": [
+          "Respeito e cuidado nas interações com às pessoas",
+          "Criatividade nos processos de trabalho",
+          "Colaboração na interação com a equipe de trabalho.",
+          "Priorização de tarefas no ambiente de trabalho",
+          "Criticidade no processo de trabalho.",
+          "Comunicação assertiva no ambiente de trabalho",
+          "Proatividade e autonomia no trabalho",
+          "Resiliência ao vivenciar situações complexas e adversas",
+          "Atitude sustentável tendo em vista as dimensões econômica, ambiental e social.",
+          "Atenção aos detalhes do projeto",
+          "Zelo pela organização e guarda de projetos e documentos",
+          "Ética e cuidado com a segurança e a privacidade na manipulação de dados e informações de empresas e dos usuários.",
+          "Adaptabilidade às mudanças no mundo do trabalho e em seu processo de aprendizagem",
+          "Cordialidade e empatia nas relações de trabalho.",
+          "Flexibilidade frente a situações inesperadas"
+        ],
+        "estrutura": [],
+        "indicadores_avaliacao": null,
+        "perfil_docente": "Profissional com formação técnica ou superior em Tecnologia da Informação, Administração ou afim (em geral áreas de exatas ou outra área com pós-graduação em tecnologia e/ou dados) e experiência profissional em transformação digital, inovação e metodologias ágeis.",
+        "materiais_referencia": []
+      },
+      "eixo_fonte": "html"
+    },
+    {
+      "id": 28,
+      "eixo": "Cultura Digital",
+      "tipo_unidade_curricular": null,
+      "nome": "Armazenamento, manipulação e transformação de dados",
+      "competencias_do_eixo": [
+        "CDEM02",
+        "TDEM01",
+        "TDEM02",
+        "CDEM01"
+      ],
+      "competencia": {
+        "codigo": "GEDDS02",
+        "descricao": "Projetar, modelar e implementar esquemas de armazenamento de dados; Criar scripts de manipulação de dados e transformações, utilizando línguagem SQL",
+        "carga_horaria": "120h",
+        "recursos": null,
+        "tematicas": null,
+        "atitudes": [
+          "Zelo pela organização e guarda de projetos e documentos",
+          "Ética e cuidado com a segurança e a privacidade na manipulação de dados e informações de empresas e dos usuários.",
+          "Adaptabilidade às mudanças no mundo do trabalho e em seu processo de aprendizagem",
+          "Cordialidade e empatia nas relações de trabalho.",
+          "Flexibilidade frente a situações inesperadas",
+          "Respeito e cuidado nas interações com às pessoas",
+          "Criatividade nos processos de trabalho",
+          "Colaboração na interação com a equipe de trabalho.",
+          "Priorização de tarefas no ambiente de trabalho",
+          "Criticidade no processo de trabalho.",
+          "Comunicação assertiva no ambiente de trabalho",
+          "Proatividade e autonomia no trabalho",
+          "Resiliência ao vivenciar situações complexas e adversas",
+          "Atitude sustentável tendo em vista as dimensões econômica, ambiental e social.",
+          "Atenção aos detalhes do projeto"
+        ],
+        "estrutura": [],
+        "indicadores_avaliacao": null,
+        "perfil_docente": "Profissional com formação técnica ou superior em Tecnologia da Informação ou afim (em geral áreas de exatas ou outra área com pós-graduação em tecnologia e/ou dados) e experiência em banco de dados estruturados (relacionais) e não estruturados (NoSQL).",
+        "materiais_referencia": []
+      },
+      "eixo_fonte": "html"
+    },
+    {
+      "id": 29,
+      "eixo": "Cultura Digital",
+      "tipo_unidade_curricular": null,
+      "nome": "Lógica e linguagens de programação",
+      "competencias_do_eixo": [
+        "CDEM02",
+        "TDEM01",
+        "TDEM02",
+        "CDEM01"
+      ],
+      "competencia": {
+        "codigo": "GEDDS03",
+        "descricao": "Aplicar conhecimentos e técnicas de lógica de programação utilizando línguagens voltadas a dados",
+        "carga_horaria": "80h",
+        "recursos": null,
+        "tematicas": null,
+        "atitudes": [
+          "Comunicação assertiva no ambiente de trabalho",
+          "Proatividade e autonomia no trabalho",
+          "Resiliência ao vivenciar situações complexas e adversas",
+          "Atitude sustentável tendo em vista as dimensões econômica, ambiental e social.",
+          "Atenção aos detalhes do projeto",
+          "Zelo pela organização e guarda de projetos e documentos",
+          "Ética e cuidado com a segurança e a privacidade na manipulação de dados e informações de empresas e dos usuários.",
+          "Adaptabilidade às mudanças no mundo do trabalho e em seu processo de aprendizagem",
+          "Cordialidade e empatia nas relações de trabalho.",
+          "Flexibilidade frente a situações inesperadas",
+          "Respeito e cuidado nas interações com às pessoas",
+          "Criatividade nos processos de trabalho",
+          "Colaboração na interação com a equipe de trabalho.",
+          "Priorização de tarefas no ambiente de trabalho",
+          "Criticidade no processo de trabalho."
+        ],
+        "estrutura": [],
+        "indicadores_avaliacao": null,
+        "perfil_docente": "Profissional com formação técnica ou superior em Tecnologia da Informação ou afim (em geral áreas de exatas ou outra área com pós-graduação em tecnologia e/ou dados) e experiência em banco de dados estruturados (relacionais) e não estruturados (NoSQL).",
+        "materiais_referencia": []
+      },
+      "eixo_fonte": "html"
+    },
+    {
+      "id": 30,
+      "eixo": "Tecnologia Digital",
+      "tipo_unidade_curricular": null,
+      "nome": "Estruturas e qualidade de dados",
+      "competencias_do_eixo": [
+        "TDEM02",
+        "CDEM01",
+        "CDEM02",
+        "TDEM01"
+      ],
+      "competencia": {
+        "codigo": "GEDDS04",
+        "descricao": "Aplicar técnicas de limpeza e tratamento de dados, compreendendo suas estruturas",
+        "carga_horaria": "40h",
+        "recursos": null,
+        "tematicas": null,
+        "atitudes": [
+          "Criticidade no processo de trabalho.",
+          "Criatividade nos processos de trabalho",
+          "Comunicação assertiva no ambiente de trabalho",
+          "Colaboração na interação com a equipe de trabalho.",
+          "Priorização de tarefas no ambiente de trabalho",
+          "Proatividade e autonomia no trabalho",
+          "Resiliência ao vivenciar situações complexas e adversas",
+          "Atitude sustentável tendo em vista as dimensões econômica, ambiental e social.",
+          "Atenção aos detalhes do projeto",
+          "Ética e cuidado com a segurança e a privacidade na manipulação de dados e informações de empresas e dos usuários.",
+          "Zelo pela organização e guarda de projetos e documentos",
+          "Adaptabilidade às mudanças no mundo do trabalho e em seu processo de aprendizagem",
+          "Cordialidade e empatia nas relações de trabalho.",
+          "Flexibilidade frente a situações inesperadas",
+          "Respeito e cuidado nas interações com às pessoas"
+        ],
+        "estrutura": [],
+        "indicadores_avaliacao": null,
+        "perfil_docente": "Profissional com formação técnica ou superior em Tecnologia da Informação ou afim (em geral áreas de exatas ou outra área com pós-graduação em tecnologia e/ou dados) e experiência em banco de dados estruturados (relacionais) e não estruturados (NoSQL).",
+        "materiais_referencia": []
+      },
+      "eixo_fonte": "html"
+    },
+    {
+      "id": 31,
+      "eixo": "Cultura Digital",
+      "tipo_unidade_curricular": null,
+      "nome": "Visualização de dados",
+      "competencias_do_eixo": [
+        "CDEM02",
+        "TDEM01",
+        "TDEM02",
+        "CDEM01"
+      ],
+      "competencia": {
+        "codigo": "GEDDS05",
+        "descricao": "Aplicar técnicas de visualização, painéis ou gráficos para comunicar informações contidas nos dados",
+        "carga_horaria": "40h",
+        "recursos": null,
+        "tematicas": null,
+        "atitudes": [
+          "Respeito e cuidado nas interações com às pessoas",
+          "Adaptabilidade às mudanças no mundo do trabalho e em seu processo de aprendizagem",
+          "Criatividade nos processos de trabalho",
+          "Cordialidade e empatia nas relações de trabalho.",
+          "Colaboração na interação com a equipe de trabalho.",
+          "Flexibilidade frente a situações inesperadas",
+          "Priorização de tarefas no ambiente de trabalho",
+          "Criticidade no processo de trabalho.",
+          "Comunicação assertiva no ambiente de trabalho",
+          "Proatividade e autonomia no trabalho",
+          "Resiliência ao vivenciar situações complexas e adversas",
+          "Atitude sustentável tendo em vista as dimensões econômica, ambiental e social.",
+          "Atenção aos detalhes do projeto",
+          "Zelo pela organização e guarda de projetos e documentos",
+          "Ética e cuidado com a segurança e a privacidade na manipulação de dados e informações de empresas e dos usuários."
+        ],
+        "estrutura": [],
+        "indicadores_avaliacao": null,
+        "perfil_docente": "Profissional com formação técnica ou superior em Tecnologia da Informação ou afim (em geral áreas de exatas ou outra área com pós-graduação em tecnologia e/ou dados) e experiência em banco de dados estruturados (relacionais) e não estruturados (NoSQL).",
+        "materiais_referencia": []
+      },
+      "eixo_fonte": "html"
+    },
+    {
+      "id": 32,
+      "eixo": "Cultura Digital",
+      "tipo_unidade_curricular": null,
+      "nome": "Inglês aplicado à gestão de dados",
+      "competencias_do_eixo": [
+        "CDEM02",
+        "TDEM01",
+        "TDEM02",
+        "CDEM01"
+      ],
+      "competencia": {
+        "codigo": "GEDDS06",
+        "descricao": "Compreender e apresentar insights sobre dados em vários formatos, incluindo apresentações orais, relatórios escritos e visualizações interativas sobre tópicos em gestão de dados",
+        "carga_horaria": "40h",
+        "recursos": null,
+        "tematicas": null,
+        "atitudes": [
+          "Proatividade e autonomia no trabalho",
+          "Zelo pela organização e guarda de projetos e documentos",
+          "Ética e cuidado com a segurança e a privacidade na manipulação de dados e informações de empresas e dos usuários.",
+          "Resiliência ao vivenciar situações complexas e adversas",
+          "Atitude sustentável tendo em vista as dimensões econômica, ambiental e social.",
+          "Adaptabilidade às mudanças no mundo do trabalho e em seu processo de aprendizagem",
+          "Cordialidade e empatia nas relações de trabalho.",
+          "Atenção aos detalhes do projeto",
+          "Flexibilidade frente a situações inesperadas",
+          "Respeito e cuidado nas interações com às pessoas",
+          "Criatividade nos processos de trabalho",
+          "Colaboração na interação com a equipe de trabalho.",
+          "Priorização de tarefas no ambiente de trabalho",
+          "Criticidade no processo de trabalho.",
+          "Comunicação assertiva no ambiente de trabalho"
+        ],
+        "estrutura": [],
+        "indicadores_avaliacao": null,
+        "perfil_docente": "Profissional com formação técnica ou superior em Tecnologia da Informação ou afim (em geral áreas de exatas ou outra área com pós-graduação em tecnologia e/ou dados) e experiência em banco de dados estruturados (relacionais) e não estruturados (NoSQL).",
+        "materiais_referencia": []
+      },
+      "eixo_fonte": "html"
+    },
+    {
+      "id": 33,
+      "eixo": "Cultura Digital",
+      "tipo_unidade_curricular": null,
+      "nome": "Projeto profissional de gestão de dados",
+      "competencias_do_eixo": [
+        "CDEM02",
+        "TDEM01",
+        "TDEM02",
+        "CDEM01"
+      ],
+      "competencia": {
+        "codigo": "GEDDS07",
+        "descricao": "Projeto Profissional",
+        "carga_horaria": "40h",
+        "recursos": null,
+        "tematicas": null,
+        "atitudes": [],
+        "estrutura": [],
+        "indicadores_avaliacao": null,
+        "perfil_docente": "Profissional com formação técnica ou superior em Tecnologia da Informação ou afim (em geral áreas de exatas ou outra área com pós-graduação em tecnologia e/ou dados) e experiência em banco de dados estruturados (relacionais) e não estruturados (NoSQL).",
+        "materiais_referencia": []
+      },
+      "eixo_fonte": "html"
+    },
+    {
+      "id": 34,
+      "eixo": "Tecnologia Digital",
+      "tipo_unidade_curricular": null,
+      "nome": "Ecossistema de Big Data",
+      "competencias_do_eixo": [
+        "TDEM01",
+        "TDEM02",
+        "CDEM01",
+        "CDEM02"
+      ],
+      "competencia": {
+        "codigo": "BGDAT01",
+        "descricao": "Avaliar metodologias e ferramentas para a infraestrutura de processamento de dados em larga escala.",
+        "carga_horaria": "40h",
+        "recursos": null,
+        "tematicas": null,
+        "atitudes": [
+          "Resiliência ao vivenciar situações complexas e adversas",
+          "Atenção aos detalhes do projeto",
+          "Proatividade e autonomia no trabalho",
+          "Zelo pela organização e guarda de projetos e documentos",
+          "Atitude sustentável, tendo em vista as dimensões econômica, ambiental e social.",
+          "Adaptabilidade às mudanças no mundo do trabalho e em seu processo de aprendizagem",
+          "Ética e cuidado com a segurança e a privacidade na manipulação de dados e informações de empresas e dos usuários.",
+          "Flexibilidade frente a situações inesperadas",
+          "Cordialidade e empatia nas relações de trabalho.",
+          "Criatividade no processo de trabalho",
+          "Colaboração na interação com a equipe de trabalho.",
+          "Priorização de tarefas no trabalho",
+          "Criticidade no processo de trabalho.",
+          "Comunicação assertiva no ambiente de trabalho"
+        ],
+        "estrutura": [],
+        "indicadores_avaliacao": null,
+        "perfil_docente": "Profissional com formação técnica ou superior em Tecnologia da Informação ou afim (em geral áreas de exatas ou outra área com pós-graduação em tecnologia e/ou dados) e experiência em banco de dados estruturados (relacionais) e não estruturados (NoSQL).",
+        "materiais_referencia": []
+      },
+      "eixo_fonte": "html"
+    },
+    {
+      "id": 35,
+      "eixo": "Cultura Digital",
+      "tipo_unidade_curricular": null,
+      "nome": "Desenvolvimento de sistemas aplicados a dados",
+      "competencias_do_eixo": [
+        "CDEM02",
+        "TDEM01",
+        "TDEM02",
+        "CDEM01"
+      ],
+      "competencia": {
+        "codigo": "BGDAT02",
+        "descricao": "Aplicar as melhores práticas de desenvolvimento de software, gestão de código e repositório, teste e implantação de sistemas computacionais",
+        "carga_horaria": "40h",
+        "recursos": null,
+        "tematicas": null,
+        "atitudes": [
+          "Comunicação assertiva no ambiente de trabalho",
+          "Proatividade e autonomia no trabalho",
+          "Resiliência ao vivenciar situações complexas e adversas",
+          "Atenção aos detalhes do projeto",
+          "Zelo pela organização e guarda de projetos e documentos",
+          "Atitude sustentável, tendo em vista as dimensões econômica, ambiental e social.",
+          "Adaptabilidade às mudanças no mundo do trabalho e em seu processo de aprendizagem",
+          "Ética e cuidado com a segurança e a privacidade na manipulação de dados e informações de empresas e dos usuários.",
+          "Flexibilidade frente a situações inesperadas",
+          "Cordialidade e empatia nas relações de trabalho.",
+          "Criatividade no processo de trabalho",
+          "Colaboração na interação com a equipe de trabalho.",
+          "Priorização de tarefas no trabalho",
+          "Criticidade no processo de trabalho."
+        ],
+        "estrutura": [],
+        "indicadores_avaliacao": null,
+        "perfil_docente": "Profissional com formação técnica ou superior em Tecnologia da Informação ou afim (em geral áreas de exatas ou outra área com pós-graduação em tecnologia e/ou dados) e experiência em banco de dados estruturados (relacionais) e não estruturados (NoSQL).",
+        "materiais_referencia": []
+      },
+      "eixo_fonte": "html"
+    },
+    {
+      "id": 36,
+      "eixo": "Cultura Digital",
+      "tipo_unidade_curricular": null,
+      "nome": "Ingestão de dados",
+      "competencias_do_eixo": [
+        "CDEM02",
+        "TDEM01",
+        "TDEM02",
+        "CDEM01"
+      ],
+      "competencia": {
+        "codigo": "BGDAT03",
+        "descricao": "Utilizar linguagens e ferramentas para ingestão de dados",
+        "carga_horaria": "80h",
+        "recursos": null,
+        "tematicas": null,
+        "atitudes": [
+          "Priorização de tarefas no trabalho",
+          "Criticidade no processo de trabalho.",
+          "Comunicação assertiva no ambiente de trabalho",
+          "Proatividade e autonomia no trabalho",
+          "Resiliência ao vivenciar situações complexas e adversas",
+          "Atenção aos detalhes do projeto",
+          "Zelo pela organização e guarda de projetos e documentos",
+          "Atitude sustentável, tendo em vista as dimensões econômica, ambiental e social.",
+          "Adaptabilidade às mudanças no mundo do trabalho e em seu processo de aprendizagem",
+          "Ética e cuidado com a segurança e a privacidade na manipulação de dados e informações de empresas e dos usuários.",
+          "Flexibilidade frente a situações inesperadas",
+          "Cordialidade e empatia nas relações de trabalho.",
+          "Criatividade no processo de trabalho",
+          "Colaboração na interação com a equipe de trabalho."
+        ],
+        "estrutura": [],
+        "indicadores_avaliacao": null,
+        "perfil_docente": "Profissional com formação técnica ou superior em Tecnologia da Informação ou afim (em geral áreas de exatas ou outra área com pós-graduação em tecnologia e/ou dados) e experiência em banco de dados estruturados (relacionais) e não estruturados (NoSQL).",
+        "materiais_referencia": []
+      },
+      "eixo_fonte": "html"
+    },
+    {
+      "id": 37,
+      "eixo": "Tecnologia Digital",
+      "tipo_unidade_curricular": null,
+      "nome": "Inglês aplicado à Big Data",
+      "competencias_do_eixo": [
+        "TDEM02",
+        "CDEM01",
+        "CDEM02",
+        "TDEM01"
+      ],
+      "competencia": {
+        "codigo": "BGDAT04",
+        "descricao": "Compreender e apresentar insights sobre dados em vários formatos, incluindo apresentações orais, relatórios escritos e visualizações interativas sobre tópicos em Big Data",
+        "carga_horaria": "40h",
+        "recursos": null,
+        "tematicas": null,
+        "atitudes": [
+          "Criatividade no processo de trabalho",
+          "Colaboração na interação com a equipe de trabalho.",
+          "Priorização de tarefas no trabalho",
+          "Criticidade no processo de trabalho.",
+          "Comunicação assertiva no ambiente de trabalho",
+          "Proatividade e autonomia no trabalho",
+          "Resiliência ao vivenciar situações complexas e adversas",
+          "Atenção aos detalhes do projeto",
+          "Zelo pela organização e guarda de projetos e documentos",
+          "Atitude sustentável, tendo em vista as dimensões econômica, ambiental e social.",
+          "Adaptabilidade às mudanças no mundo do trabalho e em seu processo de aprendizagem",
+          "Ética e cuidado com a segurança e a privacidade na manipulação de dados e informações de empresas e dos usuários.",
+          "Flexibilidade frente a situações inesperadas",
+          "Cordialidade e empatia nas relações de trabalho."
+        ],
+        "estrutura": [],
+        "indicadores_avaliacao": null,
+        "perfil_docente": "Profissional com formação técnica ou superior em Tecnologia da Informação ou afim (em geral áreas de exatas ou outra área com pós-graduação em tecnologia e/ou dados) e experiência em banco de dados estruturados (relacionais) e não estruturados (NoSQL).",
+        "materiais_referencia": []
+      },
+      "eixo_fonte": "html"
+    },
+    {
+      "id": 38,
+      "eixo": "Tecnologia Digital",
+      "tipo_unidade_curricular": null,
+      "nome": "Projeto profissional de Big Data",
+      "competencias_do_eixo": [
+        "TDEM02",
+        "CDEM01",
+        "CDEM02",
+        "TDEM01"
+      ],
+      "competencia": {
+        "codigo": "BGDAT05",
+        "descricao": "Projeto Profissional",
+        "carga_horaria": "40h",
+        "recursos": null,
+        "tematicas": null,
+        "atitudes": [],
+        "estrutura": [],
+        "indicadores_avaliacao": null,
+        "perfil_docente": "Profissional com formação técnica ou superior em Tecnologia da Informação ou afim (em geral áreas de exatas ou outra área com pós-graduação em tecnologia e/ou dados) e experiência em banco de dados estruturados (relacionais) e não estruturados (NoSQL).",
+        "materiais_referencia": []
+      },
+      "eixo_fonte": "html"
+    },
+    {
+      "id": 39,
+      "eixo": "Cultura Digital",
+      "tipo_unidade_curricular": null,
+      "nome": "Métodos estatísticos aplicados à análise de dados",
+      "competencias_do_eixo": [
+        "CDEM01",
+        "CDEM02",
+        "TDEM01",
+        "TDEM02"
+      ],
+      "competencia": {
+        "codigo": "ANEDS01",
+        "descricao": "Aplicar estatísticas descritivas e distribuições para análise de dados",
+        "carga_horaria": "120h",
+        "recursos": null,
+        "tematicas": null,
+        "atitudes": [
+          "Flexibilidade frente a situações inesperadas",
+          "Cordialidade e empatia nas relações de trabalho.",
+          "Criatividade no processo de trabalho",
+          "Colaboração na interação com a equipe de trabalho.",
+          "Priorização de tarefas no trabalho",
+          "Criticidade no processo de trabalho.",
+          "Comunicação assertiva no ambiente de trabalho",
+          "Proatividade e autonomia no trabalho",
+          "Resiliência ao vivenciar situações complexas e adversas",
+          "Atenção aos detalhes do projeto",
+          "Atitude sustentável, tendo em vista as dimensões econômica, ambiental e social.",
+          "Zelo pela organização e guarda de projetos e documentos",
+          "Adaptabilidade às mudanças no mundo do trabalho e em seu processo de aprendizagem",
+          "Ética e cuidado com a segurança e a privacidade na manipulação de dados e informações de empresas e dos usuários."
+        ],
+        "estrutura": [],
+        "indicadores_avaliacao": null,
+        "perfil_docente": "Profissional com formação técnica ou superior em Matemática, Estatística ou afim (em geral áreas de exatas ou outra área com pós-graduação com disciplinas de matemática e/ou estatística) e experiência profissional em análise de dados e SQL.",
+        "materiais_referencia": []
+      },
+      "eixo_fonte": "html"
+    },
+    {
+      "id": 40,
+      "eixo": "Cultura Digital",
+      "tipo_unidade_curricular": null,
+      "nome": "Métodos e ferramentas de análise de dados",
+      "competencias_do_eixo": [
+        "CDEM01",
+        "CDEM02",
+        "TDEM01",
+        "TDEM02"
+      ],
+      "competencia": {
+        "codigo": "ANEDS02",
+        "descricao": "Desenvolver análises exploratórias e descritivas de dados, utilizando-se ferramentas de análise de dados, identificando tendências e métodos em inteligência artificial",
+        "carga_horaria": "80h",
+        "recursos": null,
+        "tematicas": null,
+        "atitudes": [
+          "Cordialidade e empatia nas relações de trabalho.",
+          "Adaptabilidade às mudanças no mundo do trabalho e em seu processo de aprendizagem",
+          "Ética e cuidado com a segurança e a privacidade na manipulação de dados e informações de empresas e dos usuários.",
+          "Criatividade no processo de trabalho",
+          "Flexibilidade frente a situações inesperadas",
+          "Colaboração na interação com a equipe de trabalho.",
+          "Priorização de tarefas no trabalho",
+          "Criticidade no processo de trabalho.",
+          "Comunicação assertiva no ambiente de trabalho",
+          "Proatividade e autonomia no trabalho",
+          "Resiliência ao vivenciar situações complexas e adversas",
+          "Atenção aos detalhes do projeto",
+          "Atitude sustentável, tendo em vista as dimensões econômica, ambiental e social.",
+          "Zelo pela organização e guarda de projetos e documentos"
+        ],
+        "estrutura": [],
+        "indicadores_avaliacao": null,
+        "perfil_docente": "Profissional com formação técnica ou superior em Matemática, Estatística ou afim (em geral áreas de exatas ou outra área com pós-graduação com disciplinas de matemática e/ou estatística) e experiência profissional em análise de dados e SQL.",
+        "materiais_referencia": []
+      },
+      "eixo_fonte": "html"
+    },
+    {
+      "id": 41,
+      "eixo": "Tecnologia Digital",
+      "tipo_unidade_curricular": null,
+      "nome": "Metodologias ágeis para projetos de dados",
+      "competencias_do_eixo": [
+        "TDEM01",
+        "TDEM02",
+        "CDEM01",
+        "CDEM02"
+      ],
+      "competencia": {
+        "codigo": "ANEDS03",
+        "descricao": "Aplicar metodologias ágeis a projetos de dados em ambientes organizacionais",
+        "carga_horaria": "40h",
+        "recursos": null,
+        "tematicas": null,
+        "atitudes": [
+          "Ética e cuidado com a segurança e a privacidade na manipulação de dados e informações de empresas e dos usuários.",
+          "Atenção aos detalhes do projeto",
+          "Flexibilidade frente a situações inesperadas",
+          "Zelo pela organização e guarda de projetos e documentos",
+          "Atitude sustentável, tendo em vista as dimensões econômica, ambiental e social.",
+          "Cordialidade e empatia nas relações de trabalho.",
+          "Adaptabilidade às mudanças no mundo do trabalho e em seu processo de aprendizagem",
+          "Criatividade no processo de trabalho",
+          "Colaboração na interação com a equipe de trabalho.",
+          "Priorização de tarefas no trabalho",
+          "Criticidade no processo de trabalho.",
+          "Comunicação assertiva no ambiente de trabalho",
+          "Proatividade e autonomia no trabalho",
+          "Resiliência ao vivenciar situações complexas e adversas"
+        ],
+        "estrutura": [],
+        "indicadores_avaliacao": null,
+        "perfil_docente": "Profissional com formação técnica ou superior em Tecnologia da Informação, Administração ou afim (em geral áreas de exatas ou outra área com pós-graduação em tecnologia e/ou dados) e experiência profissional em transformação digital, inovação e metodologias ágeis.",
+        "materiais_referencia": []
+      },
+      "eixo_fonte": "html"
+    },
+    {
+      "id": 42,
+      "eixo": "Cultura Digital",
+      "tipo_unidade_curricular": null,
+      "nome": "Storytelling com dados",
+      "competencias_do_eixo": [
+        "CDEM02",
+        "TDEM01",
+        "TDEM02",
+        "CDEM01"
+      ],
+      "competencia": {
+        "codigo": "ANEDS04",
+        "descricao": "Aplicar técnicas de visualização de dados em um contexto adequado para apresentação de uma solução ou resultado de análise",
+        "carga_horaria": "40h",
+        "recursos": null,
+        "tematicas": null,
+        "atitudes": [
+          "Atitude sustentável, tendo em vista as dimensões econômica, ambiental e social.",
+          "Proatividade e autonomia no trabalho",
+          "Zelo pela organização e guarda de projetos e documentos",
+          "Adaptabilidade às mudanças no mundo do trabalho e em seu processo de aprendizagem",
+          "Resiliência ao vivenciar situações complexas e adversas",
+          "Ética e cuidado com a segurança e a privacidade na manipulação de dados e informações de empresas e dos usuários.",
+          "Atenção aos detalhes do projeto",
+          "Flexibilidade frente a situações inesperadas",
+          "Cordialidade e empatia nas relações de trabalho.",
+          "Criatividade no processo de trabalho",
+          "Colaboração na interação com a equipe de trabalho.",
+          "Priorização de tarefas no trabalho",
+          "Criticidade no processo de trabalho.",
+          "Comunicação assertiva no ambiente de trabalho"
+        ],
+        "estrutura": [],
+        "indicadores_avaliacao": null,
+        "perfil_docente": "Profissional com formação técnica ou superior em Tecnologia da Informação ou afim (em geral áreas de exatas ou outra área com pós-graduação em tecnologia e/ou dados) e experiência em banco de dados estruturados (relacionais) e não estruturados (NoSQL).",
+        "materiais_referencia": []
+      },
+      "eixo_fonte": "html"
+    },
+    {
+      "id": 43,
+      "eixo": "Cultura Digital",
+      "tipo_unidade_curricular": null,
+      "nome": "Inglês aplicado à análise de dados",
+      "competencias_do_eixo": [
+        "CDEM02",
+        "TDEM01",
+        "TDEM02",
+        "CDEM01"
+      ],
+      "competencia": {
+        "codigo": "ANEDS05",
+        "descricao": "Compreender e apresentar insights sobre dados em vários formatos, incluindo apresentações orais, relatórios escritos e visualizações interativas sobre tópicos em análise de dados",
+        "carga_horaria": "40h",
+        "recursos": null,
+        "tematicas": null,
+        "atitudes": [
+          "Resiliência ao vivenciar situações complexas e adversas",
+          "Atenção aos detalhes do projeto",
+          "Atitude sustentável, tendo em vista as dimensões econômica, ambiental e social.",
+          "Proatividade e autonomia no trabalho",
+          "Zelo pela organização e guarda de projetos e documentos",
+          "Adaptabilidade às mudanças no mundo do trabalho e em seu processo de aprendizagem",
+          "Ética e cuidado com a segurança e a privacidade na manipulação de dados e informações de empresas e dos usuários.",
+          "Flexibilidade frente a situações inesperadas",
+          "Cordialidade e empatia nas relações de trabalho.",
+          "Criatividade no processo de trabalho",
+          "Colaboração na interação com a equipe de trabalho.",
+          "Priorização de tarefas no trabalho",
+          "Criticidade no processo de trabalho.",
+          "Comunicação assertiva no ambiente de trabalho"
+        ],
+        "estrutura": [],
+        "indicadores_avaliacao": null,
+        "perfil_docente": "Profissional com formação técnica ou superior em Tecnologia da Informação ou afim (em geral áreas de exatas ou outra área com pós-graduação em tecnologia e/ou dados) e experiência em banco de dados estruturados (relacionais) e não estruturados (NoSQL).",
+        "materiais_referencia": []
+      },
+      "eixo_fonte": "html"
+    },
+    {
+      "id": 44,
+      "eixo": "Tecnologia Digital",
+      "tipo_unidade_curricular": null,
+      "nome": "Projeto profissional de análise de dados",
+      "competencias_do_eixo": [
+        "TDEM02",
+        "CDEM01",
+        "CDEM02",
+        "TDEM01"
+      ],
+      "competencia": {
+        "codigo": "ANEDS06",
+        "descricao": "Projeto Profissional",
+        "carga_horaria": "40h",
+        "recursos": null,
+        "tematicas": null,
+        "atitudes": [],
+        "estrutura": [],
+        "indicadores_avaliacao": null,
+        "perfil_docente": "Profissional com formação técnica ou superior em Tecnologia da Informação ou afim (em geral áreas de exatas ou outra área com pós-graduação em tecnologia e/ou dados) e experiência em banco de dados estruturados (relacionais) e não estruturados (NoSQL).",
+        "materiais_referencia": []
+      },
+      "eixo_fonte": "html"
+    }
+  ],
+  "resumo": {
+    "competencias_por_eixo": {
+      "Cultura Digital": 22,
+      "Tecnologia Digital": 14,
+      "Pensamento Computacional": 8
+    },
+    "competencias_por_tipo_unidade_curricular": {
+      "Essenciais": 14,
+      "Eletivas": 12,
+      "None": 18
+    },
+    "competencias_com_recursos_tematicas_indicadores": 26,
+    "competencias_sem_materiais_referencia": 18,
+    "competencias_com_tabela_materiais": 26,
+    "competencias_por_eixo_26_pdf": {
+      "Cultura Digital": 10,
+      "Tecnologia Digital": 8,
+      "Pensamento Computacional": 8
+    },
+    "eixos_corrigidos_pelo_pdf": 14
+  },
+  "metodo": {
+    "origem": "Arquivo HTML salvo da pagina de impressao do Curriculo CIEB (curriculo.cieb.net.br/impressao), enviado pelo usuario. Extracao local por leitura do DOM; nenhum texto foi inventado.",
+    "campos_ausentes": "Campos que nao existem no HTML para uma competencia ficam null (recursos, tematicas, indicadores_avaliacao) ou [] (materiais_referencia, estrutura). As 18 competencias dos blocos GEDDS/BGDAT/ANEDS nao tem no HTML recursos, tematicas, indicadores nem itens de estrutura — so carga horaria, atitudes, perfil docente e materiais (nenhum).",
+    "eixo": "Eixo das 26 UCs CDEM/TDEM/PCEM corrigido pelo PDF oficial (p.27-28 e cabecalhos de cada UC, que coincidem com o prefixo do codigo: CDEM=Cultura Digital, TDEM=Tecnologia Digital, PCEM=Pensamento Computacional). O HTML de impressao traz os cabecalhos de eixo embaralhados — 14 das 26 estavam com o eixo errado — por isso o campo eixo_fonte indica \"pdf\" (verificado) ou \"html\" (blocos de dados, sem confirmacao).",
+    "tipo_unidade_curricular": "Herdado do cabecalho mais recente da pagina; uma secao (a das unidades de dados, GEDDS/BGDAT/ANEDS) nao traz valor no HTML e ficou null.",
+    "competencias_do_eixo": "Lista de codigos exibida no cabecalho da secao de cada unidade curricular; as descricoes completas estao em estrutura_curricular.",
+    "pdf": "O PDF oficial (76p) cobre apenas as 26 unidades curriculares do Itinerario Formativo em Tecnologia e Computacao (carga total 1440h, p.22). Os blocos GEDDS (Gestao de Dados), BGDAT (Big Data) e ANEDS (Analise de Dados) NAO aparecem no PDF: nenhuma ocorrencia dos codigos nem dos nomes das 18 unidades. Por isso tipo, recursos, tematicas, indicadores de avaliacao, itens de estrutura e materiais de referencia dessas 18 seguem ausentes no JSON — nao ha fonte neste PDF para preenche-los. As 3 competencias com Atitudes vazias (GEDDS07, BGDAT05, ANEDS06) tambem nao tem essa informacao no PDF.",
+    "contagem_estrutura": "O PDF (p.22) informa 112 habilidades para as 26 UCs; o HTML traz 113 linhas de estrutura (conhecimentos/habilidades/praticas). Nenhuma linha duplicada ou incompleta foi encontrada no HTML e a contagem da UC Autoria digital confere (12 nos dois). Diferenca de 1 linha segue sem explicacao — registrada aqui, sem ajuste inventado."
+  },
+  "observacoes": [
+    "O texto de introducao do proprio HTML diz que o curriculo e \"destinado a Educacao Infantil e ao Ensino Fundamental\", embora o titulo da pagina seja do Ensino Medio — transcrito como esta no arquivo, provavelmente texto reutilizado da versao EI/EF no site. O PDF traz a apresentacao e a introducao proprias do Ensino Medio (p.4-5).",
+    "Os codigos das competencias seguem o padrao do CIEB para o Ensino Medio: CDEM (Cultura Digital), TDEM (Tecnologia Digital), PCEM (Pensamento Computacional), alem de GEDDS, BGDAT e ANEDS nas unidades de dados.",
+    "Eixo corrigido pelo PDF em 14 das 26 UCs: Autoria digital, Letramento midiatico e Diagramacao e editoracao (Tecnologia Digital -> Cultura Digital); Montagem e manutencao, Criptografia, Realidade misturada, Fotografia digital, Modelagem 3D e Fabricacao digital (Cultura Digital -> Tecnologia Digital); Programacao de computadores, Tecnologias para internet, Jogos digitais, Internet das Coisas e Robotica (-> Pensamento Computacional). Tipo e carga horaria ja estavam certos nas 26.",
+    "As 18 unidades de dados (GEDDS/BGDAT/ANEDS) nao estao no PDF oficial: continuam sem tipo, recursos, tematicas, indicadores, estrutura e materiais no JSON."
+  ]
+}
