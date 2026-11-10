@@ -98,7 +98,7 @@ test('uma sugestão interdisciplinar com várias habilidades mantém os códigos
 
 test('o aviso de progressão aparece uma vez e continua visível no mapa expandido',()=>{
  const source=fs.readFileSync(path.join(root,'SkillGraph.js'),'utf8');
- const patched=source.replace('return {mount,detach,refresh(){if(root&&cy)update();}};','return {syncMapNotices,setTestState(r,s,c){root=r;state=s;code=c;}};');
+ const patched=source.replace('return {mount,detach,refresh(){if(root&&cy)update();},resize(){if(root&&cy)resizeGraph();}};','return {syncMapNotices,setTestState(r,s,c){root=r;state=s;code=c;}};');
  assert.notEqual(patched,source);
  const env={window:{},document:{fullscreenElement:null}};vm.runInNewContext(patched,env,{filename:'SkillGraph.js'});
  const graph=env.window.SkillGraph,notice={dataset:{hasSuggested:'true'},hidden:false},before={textContent:''},after={textContent:''};
@@ -281,9 +281,9 @@ test('itens de competência possuem página de detalhes completa com relações 
 
   const mapHtml=api.mapWorkspaceHtml(x,groups.curriculo);
   assert.ok(mapHtml.includes('id="detalhe-articulacoes"'),code+' deve conter container de articulações curriculares');
-  assert.ok(!mapHtml.includes('id="detalhe-mapas"'),code+' não deve ter seção detalhe-mapas');
-  assert.ok(!mapHtml.includes('id="detalhe-grafo"'),code+' não deve incluir container de grafo local vazio');
-  assert.ok(!mapHtml.includes('<h2>Mapas</h2>'),code+' não deve ter cabeçalho Mapas');
+  assert.ok(!mapHtml.includes('id="detalhe-relacoes"')&&!mapHtml.includes('id="detalhe-mapa-progressao"'),code+' não deve ter seções de relações ou mapa de progressão');
+  assert.ok(!mapHtml.includes('id="detalhe-mapa-conteudo"'),code+' não deve incluir container de mapa vazio');
+  assert.ok(!mapHtml.includes('<h2>Mapa de progressão</h2>'),code+' não deve ter cabeçalho Mapa de progressão');
   assert.ok(mapHtml.includes('Habilidades articuladas'),code+' deve intitular a faixa como Habilidades articuladas');
  }
 });
@@ -293,9 +293,9 @@ test('habilidades de Computação, CIEB e Competências não exibem seções de 
   const x=api.S.by.get(code);
   const rels=api.detailRelations(x);
   const html=api.mapWorkspaceHtml(x,rels.curriculo);
-  assert.ok(!html.includes('id="detalhe-mapas"'),code+' não deve ter seção detalhe-mapas');
-  assert.ok(!html.includes('id="detalhe-grafo"'),code+' não deve ter container detalhe-grafo');
-  assert.ok(!html.includes('<h2>Mapas</h2>'),code+' não deve ter cabeçalho Mapas');
+  assert.ok(!html.includes('id="detalhe-relacoes"')&&!html.includes('id="detalhe-mapa-progressao"'),code+' não deve ter seções de relações ou mapa de progressão');
+  assert.ok(!html.includes('id="detalhe-mapa-conteudo"'),code+' não deve ter container de mapa');
+  assert.ok(!html.includes('<h2>Mapa de progressão</h2>'),code+' não deve ter cabeçalho Mapa de progressão');
   if(x.kind==='competencia'){
    assert.ok(html.includes('id="detalhe-articulacoes"'),code+' deve ter seção de habilidades articuladas');
   }else if(rels.curriculo.length){
@@ -306,9 +306,9 @@ test('habilidades de Computação, CIEB e Competências não exibem seções de 
  const regular=api.S.by.get('EF06MA01');
  const regularRels=api.detailRelations(regular);
  const regularHtml=api.mapWorkspaceHtml(regular,regularRels.curriculo);
- assert.ok(regularHtml.includes('id="detalhe-mapas"'),'habilidade regular BNCC deve ter detalhe-mapas');
- assert.ok(regularHtml.includes('id="detalhe-grafo"'),'habilidade regular BNCC deve ter detalhe-grafo');
- assert.ok(regularHtml.includes('<h2>Mapas</h2>'),'habilidade regular BNCC deve ter cabeçalho Mapas');
+ assert.ok(regularHtml.includes('id="detalhe-relacoes"')&&regularHtml.includes('id="detalhe-mapa-progressao"'),'habilidade regular BNCC deve ter seções de relações e mapa de progressão');
+ assert.ok(regularHtml.includes('id="detalhe-mapa-conteudo"'),'habilidade regular BNCC deve ter container do mapa');
+ assert.ok(regularHtml.includes('<h2>Relações de progressão</h2>')&&regularHtml.includes('<h2>Mapa de progressão</h2>'),'habilidade regular BNCC deve ter cabeçalhos Relações de progressão e Mapa de progressão');
 });
 
 test('as faixas de detalhes exibem chips de componentes apenas quando têm mais cartões que a área visível (> 3)',()=>{

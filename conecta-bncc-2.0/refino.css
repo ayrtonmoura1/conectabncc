@@ -175,7 +175,7 @@ body[data-theme="light"] .related-heading span,body[data-theme="light"] .empty-m
 .detail-header-grid{display:grid;grid-template-columns:minmax(0,1fr);gap:clamp(24px,2.5vw,38px)}
 .detail-header-main{min-width:0;padding-top:6px}
 .detail-header-main .detail-title h1{margin-top:19px}
-.detail-header-main .detail-title .skill-long-text{max-width:76ch;font-size:clamp(17px,1.35vw,21px);line-height:1.65}
+.detail-header-main .detail-title .skill-long-text{max-width:none;font-size:clamp(17px,1.35vw,21px);line-height:1.65}
 .detail-header-actions{display:flex;flex-wrap:wrap;gap:9px;margin-top:20px}
 .detail-header-info{min-width:0;padding:clamp(18px,2vw,26px);border:1px solid #403a45;border-radius:12px;background:#ffffff06}
 .detail-header-info-title{display:flex;flex-wrap:wrap;align-items:center;justify-content:space-between;gap:10px;margin-bottom:16px}

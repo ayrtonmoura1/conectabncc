@@ -1,0 +1,16 @@
+/* Seções da página de habilidade: título e legenda ficam visíveis; o conteúdo abre ao clicar. */
+.section-toggle{display:inline-flex;align-items:center;gap:11px;margin:0;padding:0;border:0;background:none;color:inherit;font:inherit;letter-spacing:inherit;text-transform:inherit;text-align:left;cursor:pointer}
+.section-toggle:focus-visible{outline:2px solid #e6c6ef;outline-offset:4px;border-radius:3px}
+.section-chevron{display:inline-block;flex:0 0 auto;width:9px;height:9px;margin-left:2px;border-right:2px solid currentColor;border-bottom:2px solid currentColor;opacity:.75;transform:rotate(-45deg);transition:transform .2s ease}
+.detail-collapsible.is-open .section-chevron{transform:rotate(45deg)}
+.detail-section.detail-collapsible.is-collapsed{padding-top:28px;padding-bottom:28px}
+.detail-collapsible.is-collapsed .section-heading{margin-bottom:0}
+.detail-collapsible.is-collapsed .detail-collapsible-head,.detail-collapsible.is-collapsed>.section-caption{cursor:pointer}
+.detail-collapsible.is-collapsed .detail-collapsible-head:hover .section-toggle,.detail-collapsible.is-collapsed>.section-caption:hover{color:#e6c6ef}
+body[data-theme="light"] .detail-collapsible.is-collapsed .detail-collapsible-head:hover .section-toggle,body[data-theme="light"] .detail-collapsible.is-collapsed>.section-caption:hover{color:#643a7a}
+.detail-collapsible.is-collapsed>.detail-collapse-body{display:none}
+.detail-header-info>.section-caption{margin:0 0 14px;color:#a9a4ae;font-size:12px;line-height:1.55}
+.detail-header-info-title+.section-caption{margin-top:-8px}
+.detail-header-info.is-collapsed>.section-caption{margin-bottom:0}
+body[data-theme="light"] .detail-header-info>.section-caption{color:#6b646f}
+@media print{.detail-collapse-body{display:block !important}.section-chevron{display:none !important}}

@@ -77,17 +77,19 @@ window.SkillPanel = (() => {
     }
     return '<div class="row-components detail-chips-row"><div class="component-rail"><div class="row-component-list" role="group" aria-label="Filtrar por componente">' + chips.join('') + '</div></div></div>';
   }
-  function html(state, node) {
+  function relacoesHtml(state, node) {
     const trails=state.trails.get(node.codigo)||[], incoming=state.incoming.get(node.codigo)||[], outgoing=state.outgoing.get(node.codigo)||[];
     const inChips = progressChips(state, incoming, 'o');
     const outChips = progressChips(state, outgoing, 'd');
     return '<div class="progress-page"><div class="progress-copy">'
-      +'<div class="progress-heading"><span class="progress-kicker">PERCURSO CURRICULAR</span><h3>Relações de progressão</h3><p>As referências anteriores e posteriores ficam organizadas abaixo; o mapa mostra como se conectam.</p><a class="graph-jump" href="#skillGraph">Ir para o mapa de progressão ↓</a></div>'
+      +'<a class="graph-jump" href="#skillGraph">Ir para o mapa de progressão ↓</a>'
       +'<div class="progress-block detail-faixa-group"><div class="faixa-head"><h4>Vem antes <small>'+incoming.length+'</small></h4>'+inChips+'</div>'+relationList(state,incoming,'o','vêm antes')+'</div>'
       +'<div class="progress-block detail-faixa-group"><div class="faixa-head"><h4>Vem depois <small>'+outgoing.length+'</small></h4>'+outChips+'</div>'+relationList(state,outgoing,'d','vêm depois')+'</div>'+
     (trails.length?'<div class="progress-block"><h4>Trilhas</h4><ul class="context-list">'+trails.map(t=>'<li>'+esc(t.nome)+' <small>· '+t.position+' de '+t.membros.length+'</small></li>').join('')+'</ul></div>':'')+
     ((incoming.concat(outgoing).some(e=>e.fonte==='inferida'))?'<p class="graph-warning">'+warning+'</p>':'')+
-    '</div><div class="graph-column" id="skillGraph"></div></div>';
+    '</div></div>';
   }
-  return {html, warning};
+  function mapaHtml(){return '<div class="graph-column" id="skillGraph"></div>';}
+  function html(state, node){return relacoesHtml(state,node)+mapaHtml();}
+  return {html, relacoesHtml, mapaHtml, warning};
 })();

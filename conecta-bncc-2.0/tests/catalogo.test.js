@@ -7,14 +7,14 @@ const vm = require('node:vm');
 const root=path.join(__dirname,'..');
 const read=file=>JSON.parse(fs.readFileSync(path.join(root,'dados',file),'utf8'));
 const original=fs.readFileSync(path.join(root,'app.js'),'utf8');
-const instrumented=original.replace(/load\(\);\s*\}\)\(\);\s*$/,'globalThis.catalogApi={normalize,S,ROWS,E,componentLabel,periods,rowView,rowPeriodChips,rowComponentChips,rowItems,card,railMarkup};})();');
+const instrumented=original.replace(/load\(\);\s*\}\)\(\);\s*$/,'globalThis.catalogApi={normalize,S,ROWS,E,componentLabel,periods,rowView,rowPeriodChips,rowComponentChips,rowItems,card,railMarkup,rowIsOpen};})();');
 assert.notEqual(instrumented,original,'Não foi possível preparar o catálogo para verificação');
 const sandbox={document:{body:{dataset:{}}},localStorage:{getItem:()=>null},console};
 vm.runInNewContext(instrumented,sandbox,{filename:'app.js'});
 const api=sandbox.catalogApi;
 api.normalize({ei:read('educacao-infantil.json'),ef:read('ensino-fundamental.json'),em:read('ensino-medio.json'),structure:read('estrutura.json'),comp:read('computacao.json'),cieb:read('curriculo_cieb_computacao.json'),ai:read('sugestoes_interdisciplinares_ia.json'),reuna:read('hierarquia_reuna.json')});
 const row=id=>api.ROWS.find(r=>r.id===id);
-const reset=()=>{api.S.q='';api.S.filter='';api.S.stageFilter='';api.S.rowFilters.clear();api.S.yearFilters.clear();};
+const reset=()=>{api.S.q='';api.S.filter='';api.S.stageFilter='';api.S.rowFilters.clear();api.S.yearFilters.clear();api.S.rowState.clear();};
 const components=html=>[...html.matchAll(/data-component="([^"]*)"/g)].map(m=>m[1]);
 const periodButtons=html=>[...html.matchAll(/data-period="([^"]*)" aria-pressed="(true|false)"><span>[^<]*<\/span><span class="component-chip-count">([^<]*)<\/span>/g)].map(m=>({key:m[1],active:m[2]==='true',count:m[3]}));
 const expectedComponents=view=>[...new Set(view.available.map(x=>api.E(api.componentLabel(x))))];
@@ -116,4 +116,19 @@ test('a faixa do Reúna no catálogo lista apenas as 266 habilidades focais na s
  const viewAno1 = api.rowView(r);
  assert.ok(viewAno1.items.length > 0 && viewAno1.items.length < 266, 'filtro por 1º ano deve retornar apenas as focais do 1º ano');
  assert.ok(viewAno1.items.every(x => api.periods(x, r.id).some(p => p.key === 'ano1')));
+});
+
+test('as faixas nascem recolhidas com resumo e abrem sozinhas só durante busca ou filtro, com a escolha manual prevalecendo',()=>{
+ reset();
+ for(const r of api.ROWS)assert.ok(r.resumo&&r.resumo.length>20,r.id+' precisa de um resumo');
+ for(const r of api.ROWS)assert.equal(api.rowIsOpen(r,api.rowView(r)),false,r.id+' deve nascer recolhida');
+
+ api.S.q='EF06MA01';
+ const finais=row('finais'),ei=row('ei');
+ assert.equal(api.rowIsOpen(finais,api.rowView(finais)),true,'a busca abre a faixa que tem resultados');
+ assert.equal(api.rowIsOpen(ei,api.rowView(ei)),false,'faixa sem resultados não abre');
+
+ api.S.rowState.set('finais',false);
+ assert.equal(api.rowIsOpen(finais,api.rowView(finais)),false,'a escolha manual prevalece sobre a busca');
+ reset();
 });

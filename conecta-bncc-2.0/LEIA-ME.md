@@ -16,9 +16,13 @@ O navegador será aberto no endereço local escolhido pelo aplicativo.
 
 ## O catálogo
 
+As faixas nascem recolhidas: cada uma mostra o título, a contagem e um resumo do que reúne. Clique no título ou no resumo para abri-la; ao abrir, aparecem os chips, os cartões e os demais controles de sempre. Durante uma busca ou um filtro, as faixas com resultados abrem sozinhas.
+
 As faixas do catálogo reúnem Educação Infantil, Anos Iniciais, Anos Finais, Ensino Médio, BNCC Computação e referências Reúna. Computação inclui as aprendizagens do complemento à BNCC e os registros do currículo CIEB aparecem como referências relacionadas. Os atalhos coloridos abaixo do título de cada faixa filtram apenas aquela faixa por componente, área, campo de experiência ou eixo; use “Todos” para restaurá-la. O menu superior permite filtrar o catálogo inteiro, e a busca funciona por código, texto, componente e tema.
 
 Passe o cursor sobre um cartão para destacá-lo suavemente. As barras horizontais ficam ocultas; os cartões parcialmente visíveis indicam que há mais conteúdo. As faixas com mais de uma habilidade continuam em ciclo nas duas direções: use as setas ou deslize no celular. Com um cartão em foco, use as setas esquerda e direita do teclado para navegar e Enter ou Espaço para abrir a habilidade. Os chips continuam filtrando a faixa. A página da habilidade reúne o grafo de progressão, a referência de origem, relações estruturais e temáticas, as sugestões interdisciplinares de IA existentes no projeto, referências do CIEB e Reúna, e as visualizações de conexões já disponíveis. O botão de retorno leva ao catálogo. A opção de tema claro/escuro fica no cabeçalho e guarda a escolha no navegador.
+
+Na página de uma habilidade, cada seção (Organização, Competências, Relações de progressão, Mapa de progressão, Computação, Interdisciplinar, CIEB e Reúna) mostra título e descrição e começa recolhida; clique no título, na descrição ou na própria seção para abrir o conteúdo. Um link do menu ou da página abre a seção de destino automaticamente. O mapa de progressão é montado na primeira vez que a sua seção é aberta. Na impressão, as seções escolhidas são exibidas por completo.
 
 ## Grafo de progressão
 

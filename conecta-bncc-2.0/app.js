@@ -12,7 +12,7 @@ const COMPONENT_COLORS={
 };
 const STOP=new Set("a ao as com como da das de do dos e em essa este foi forma há isso mais mas na nas no nos o os ou para pela pelo por que se sem ser sua seu também tem ter um uma é são habilidade habilidades alunos aprendizagem reconhecer desenvolver explorar utilizar identificar analisar".split(" "));
 const $=s=>document.querySelector(s), E=s=>String(s??"").replace(/[&<>"']/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c])), N=s=>String(s??"").normalize("NFD").replace(/[\u0300-\u036f]/g,"").toLowerCase();
-const S={all:[],by:new Map(),data:{},q:"",filter:"",stageFilter:"",rows:new Map(),rails:new Map(),rowFilters:new Map(),yearFilters:new Map(),relationCache:new Map()};
+const S={all:[],by:new Map(),data:{},q:"",filter:"",stageFilter:"",rows:new Map(),rails:new Map(),rowFilters:new Map(),yearFilters:new Map(),rowState:new Map(),relationCache:new Map()};
 const RAIL_BATCH=24, RAIL_BUFFER=8, RAIL_MAX_NODES=80, RAIL_FILTER_SLIDE_MS=1000, RELATION_BATCH=30, SEARCH_DELAY=180;
 document.body.dataset.theme=localStorage.getItem("conecta-bncc-theme")||"dark";
 const colorMap=new Map();
@@ -63,7 +63,7 @@ function normalize(d){
  S.rows.clear();S.relationCache.clear();
  S.all.forEach(x=>{x._textWords=words(x.text);x._topicWords=words(x.text+" "+x.topic);x._search=N([x.code,x.text,x.discipline,x.area,x.topic,x.group].join(" "));if(!S.by.has(x.code))S.by.set(x.code,x);if(x._id&&!S.by.has(x._id))S.by.set(x._id,x);});
 }
-const ROWS=[{id:"ei",title:"Educação Infantil",sub:"93 objetivos · BNCC 2018"},{id:"iniciais",title:"Anos Iniciais",sub:"1º ao 5º ano"},{id:"finais",title:"Anos Finais",sub:"6º ao 9º ano"},{id:"em",title:"Ensino Médio",sub:"habilidades por área"},{id:"competencias",title:"Competências",sub:"gerais, específicas e por área · BNCC"},{id:"computacao",title:"BNCC Computação",sub:"complemento de Computação à BNCC"},{id:"cieb",title:"Currículo CIEB",sub:"referências complementares em tecnologia e computação"},{id:"reuna",title:"Reúna",sub:"mapa de foco · 266 habilidades focais"}];
+const ROWS=[{id:"ei",title:"Educação Infantil",sub:"93 objetivos · BNCC 2018",resumo:"Objetivos de aprendizagem da Educação Infantil para bebês, crianças bem pequenas e crianças pequenas, organizados pelos campos de experiência."},{id:"iniciais",title:"Anos Iniciais",sub:"1º ao 5º ano",resumo:"Habilidades do Ensino Fundamental do 1º ao 5º ano, por componente curricular. Os anos permitem focar em uma série."},{id:"finais",title:"Anos Finais",sub:"6º ao 9º ano",resumo:"Habilidades do Ensino Fundamental do 6º ao 9º ano, por componente curricular e por ano."},{id:"em",title:"Ensino Médio",sub:"habilidades por área",resumo:"Habilidades do Ensino Médio, agrupadas pelas áreas de conhecimento."},{id:"competencias",title:"Competências",sub:"gerais, específicas e por área · BNCC",resumo:"Competências gerais, específicas de área e de componente da BNCC, além das competências de Computação."},{id:"computacao",title:"BNCC Computação",sub:"complemento de Computação à BNCC",resumo:"Aprendizagens do complemento de Computação à BNCC, organizadas pelos eixos da Computação."},{id:"cieb",title:"Currículo CIEB",sub:"referências complementares em tecnologia e computação",resumo:"Registros do Currículo de Referência em Tecnologia e Computação (CIEB), organizados por eixo e etapa. São referências complementares à BNCC."},{id:"reuna",title:"Reúna",sub:"mapa de foco · 266 habilidades focais",resumo:"Habilidades focais do Mapa de Foco da BNCC (Instituto Reúna), na sequência de progressão de cada componente, da Educação Infantil ao Ensino Fundamental."}];
 function rowItems(id){
  if(S.rows.has(id))return S.rows.get(id);
  const bn=S.all.filter(x=>x.kind==="bncc");let result=[];
@@ -257,13 +257,23 @@ function rowComponentChips(row,view){
 function railItemIndex(index,count){return count>0?((index%count)+count)%count:-1;}
 function createRailState(items){const loop=items.length>1;return {items,loop,start:loop?-RAIL_BUFFER:0,end:loop?RAIL_BATCH:items.length,initialized:false,track:null,frame:null,animationFrame:null,trimTimer:null,savedPosition:null};}
 function railMarkup(rail,start,end){if(!rail.items.length)return "";let html="";for(let i=start;i<end;i++)html+=card(rail.items[railItemIndex(i,rail.items.length)],i,rail.rowId);return html;}
+function rowIsOpen(row,view){
+ if(S.rowState.has(row.id))return S.rowState.get(row.id);
+ return Boolean(S.q.trim()||S.filter||S.stageFilter)&&view.base.length>0;
+}
+function setRowOpen(sec,open){
+ if(!sec)return;const id=sec.id.replace(/^row-/,""),rail=S.rails.get(id);
+ S.rowState.set(id,open);sec.classList.toggle("is-open",open);sec.classList.toggle("is-collapsed",!open);
+ sec.querySelector("[data-row-toggle]")?.setAttribute("aria-expanded",String(open));
+ if(open&&rail){rail.initialized=false;initializeRails(sec);}
+}
 function makeRow(row,view){
- const sec=document.createElement("section"),list=view.items,rail=createRailState(list);
+ const sec=document.createElement("section"),list=view.items,rail=createRailState(list),open=rowIsOpen(row,view);
  rail.rowId=row.id;
- S.rails.set(row.id,rail);sec.className="catalog-row";sec.id="row-"+row.id;
+ S.rails.set(row.id,rail);sec.className="catalog-row "+(open?"is-open":"is-collapsed");sec.id="row-"+row.id;
  const count=list.length.toLocaleString("pt-BR")+(list.length===1?" item":" itens")+(view.selected?" · "+view.available.length.toLocaleString("pt-BR")+" no total":"");
  const empty=view.selected?"Nenhuma habilidade neste componente com os filtros atuais. Selecione Todos para voltar à faixa.":"Nenhum resultado nesta faixa.";
- sec.innerHTML='<div class="row-head"><div class="row-heading-main"><h3>'+E(row.title)+'</h3>'+rowPeriodChips(row,view)+'</div><span class="row-meta row-item-count">'+E(count)+'</span></div>'+rowComponentChips(row,view)+'<div class="row-rail"><button type="button" class="rail-arrow rail-prev" data-direction="-1" aria-label="Cartões anteriores"'+(!rail.loop?' hidden':'')+'>‹</button><div class="row-track" role="region" aria-label="Habilidades de '+E(row.title)+'. Use as setas do teclado para navegar." data-rail="'+E(row.id)+'">'+(list.length?railMarkup(rail,rail.start,rail.end):'<div class="empty-row">'+E(empty)+'</div>')+'</div><button type="button" class="rail-arrow rail-next" data-direction="1" aria-label="Próximos cartões"'+(!rail.loop?' hidden':'')+'>›</button></div>';
+ sec.innerHTML='<div class="row-head"><div class="row-heading-main"><h3><button type="button" class="row-toggle" data-row-toggle="'+E(row.id)+'" aria-expanded="'+String(open)+'" aria-controls="row-body-'+E(row.id)+'"><span>'+E(row.title)+'</span><span class="row-chevron" aria-hidden="true"></span></button></h3><p class="row-summary">'+E(row.resumo||"")+'</p>'+rowPeriodChips(row,view)+'</div><span class="row-meta row-item-count">'+E(count)+'</span></div><div class="row-body" id="row-body-'+E(row.id)+'">'+rowComponentChips(row,view)+'<div class="row-rail"><button type="button" class="rail-arrow rail-prev" data-direction="-1" aria-label="Cartões anteriores"'+(!rail.loop?' hidden':'')+'>‹</button><div class="row-track" role="region" aria-label="Habilidades de '+E(row.title)+'. Use as setas do teclado para navegar." data-rail="'+E(row.id)+'">'+(list.length?railMarkup(rail,rail.start,rail.end):'<div class="empty-row">'+E(empty)+'</div>')+'</div><button type="button" class="rail-arrow rail-next" data-direction="1" aria-label="Próximos cartões"'+(!rail.loop?' hidden':'')+'>›</button></div></div>';
  return sec;
 }
 function updateResultCount(){
@@ -370,13 +380,22 @@ function syncDetailNavScrollspy(){
   setActiveDetailNavLink(links,links[links.length-1]);
   return;
  }
- let currentLink=null;
+ let currentLink=null;const reivindicadas=new Set();
  for(let i=0;i<links.length;i++){
   const link=links[i];
   const targetId=link.getAttribute("href").slice(1);
-  const targetEl=document.getElementById(targetId);
+  let targetEl=document.getElementById(targetId);
   if(!targetEl)continue;
   if(targetId==="detalhe-fonte"&&!targetEl.open)continue;
+  if(!targetEl.getClientRects().length){
+   // destino dentro de uma seção recolhida: a posição vem do cabeçalho da seção
+   targetEl=targetEl.closest(".detail-collapsible");
+   if(!targetEl||reivindicadas.has(targetEl))continue;
+  }
+  if(targetEl.classList.contains("detail-collapsible")){
+   if(reivindicadas.has(targetEl))continue;
+   reivindicadas.add(targetEl);
+  }
   const rect=targetEl.getBoundingClientRect?targetEl.getBoundingClientRect():{top:0};
   if(rect.top<=threshold){
    currentLink=link;
@@ -564,9 +583,8 @@ function relatedMapListHtml(related,x){
  const isComp=x?.kind==="competencia";
  const isCompOrCieb=x&&ehComputacao(x);
  const heading=isComp?"Habilidades articuladas":(isCompOrCieb?"Habilidades da BNCC":"Computação");
- const idAttr=isCompOrCieb?'':' id="detalhe-computacao"';
  const chipsHtml=detailChipsHtml(related,r=>componentLabel(r.item));
- return '<div class="map-related-list detail-faixa-group"'+idAttr+'>'
+ return '<div class="map-related-list detail-faixa-group">'
   +'<div class="faixa-head"><h3 class="related-heading">'+heading+' <span>'+related.length+'</span></h3>'+chipsHtml+'</div>'
   +'<div class="row-rail detail-row-rail" data-relation-kind="curriculo">'
   +'<button type="button" class="rail-arrow rail-prev" data-direction="-1" aria-label="Cartões anteriores"'+(related.length<=1?' hidden':'')+'>‹</button>'
@@ -586,8 +604,10 @@ function mapWorkspaceHtml(x,related){
   if(!related?.length)return '';
   return '<section class="detail-section" id="detalhe-articulacoes"><div class="section-heading"><span class="section-number">⌘</span><div><h2>Habilidades articuladas</h2><p class="section-caption">Habilidades da BNCC e de Computação articuladas ao desenvolvimento desta competência.</p></div></div>'+relatedMapListHtml(related,x)+'</section>';
  }
- const graph='<div id="detalhe-grafo"><div class="loading-state" role="status">Carregando grafo local…</div></div>';
- return '<section class="detail-section map-workspace" id="detalhe-mapas"><div class="section-heading"><span class="section-number">⌘</span><div><h2>Mapas</h2><p class="section-caption">Explore a progressão curricular e as conexões desta habilidade em diferentes visualizações.</p></div></div>'+graph+relatedMapListHtml(related,x)+'</section>';
+ const relacoes='<section class="detail-section" id="detalhe-relacoes"><div class="section-heading"><span class="section-number">⌘</span><div><h2>Relações de progressão</h2><p class="section-caption">As referências anteriores e posteriores desta habilidade, organizadas por etapa.</p></div></div><div id="detalhe-relacoes-conteudo"><div class="loading-state" role="status">Carregando relações…</div></div></section>';
+ const mapa='<section class="detail-section map-workspace" id="detalhe-mapa-progressao"><div class="section-heading"><span class="section-number">⌘</span><div><h2>Mapa de progressão</h2><p class="section-caption">Explore a progressão em colunas por ano ou fase e alterne entre o mapa completo e o mapa focal.</p></div></div><div id="detalhe-mapa-conteudo"><div class="loading-state" role="status">Carregando mapa…</div></div></section>';
+ const computacao=related?.length?'<section class="detail-section" id="detalhe-computacao"><div class="section-heading"><span class="section-number">↗</span><div><h2>Computação</h2><p class="section-caption">Habilidades do complemento de Computação que se relacionam a esta habilidade.</p></div></div>'+relatedMapListHtml(related,x)+'</section>':'';
+ return relacoes+mapa+computacao;
 }
 function aiHtml(x){
  const entry=S.data.ai[x.code];if(!entry?.por_componente)return "";
@@ -1174,6 +1194,49 @@ function openCardDetailModal(card){
   });
  }
 }
+function recolherSecoesDetalhe(page){
+ ["detalhe-organizacao","detalhe-competencias","detalhe-articulacoes","detalhe-relacoes","detalhe-mapa-progressao","detalhe-computacao","detalhe-interdisciplinar","detalhe-cieb","detalhe-reuna"].forEach(id=>{
+  const sec=page.querySelector("section#"+id);if(!sec)return;
+  const organizacao=id==="detalhe-organizacao";
+  let cabeca=sec.querySelector(":scope > .section-heading")||(organizacao?sec.querySelector(":scope > .detail-header-info-title"):null);
+  if(!cabeca){
+   cabeca=document.createElement("div");cabeca.className="section-heading";
+   cabeca.innerHTML='<span class="section-number">↗</span><div><h2>Habilidades da BNCC</h2><p class="section-caption">Habilidades da BNCC relacionadas a esta aprendizagem de Computação.</p></div>';
+   sec.prepend(cabeca);
+  }
+  const corpoId=id+"-conteudo",rotulo=organizacao?cabeca.querySelector(":scope > span"):cabeca.querySelector("h2");
+  const texto=rotulo.textContent,botao=document.createElement("button");
+  botao.type="button";botao.className="section-toggle";botao.dataset.sectionToggle="";botao.setAttribute("aria-expanded","false");botao.setAttribute("aria-controls",corpoId);
+  botao.innerHTML='<span></span><span class="section-chevron" aria-hidden="true"></span>';botao.firstElementChild.textContent=texto;
+  rotulo.textContent="";rotulo.append(botao);
+  let legenda=null;
+  if(organizacao){legenda=document.createElement("p");legenda.className="section-caption";legenda.textContent="Etapa, componente, competências e contextos desta aprendizagem na fonte oficial.";cabeca.after(legenda);}
+  const corpo=document.createElement("div");corpo.className="detail-collapse-body";corpo.id=corpoId;
+  [...sec.childNodes].forEach(n=>{if(n!==cabeca&&n!==legenda)corpo.append(n);});
+  sec.append(corpo);
+  cabeca.classList.add("detail-collapsible-head");
+  sec.classList.add("detail-collapsible","is-collapsed");
+ });
+}
+function detailAbrirSecao(sec,abrir=true){
+ if(!sec)return;
+ sec.classList.toggle("is-open",abrir);sec.classList.toggle("is-collapsed",!abrir);
+ sec.querySelector("[data-section-toggle]")?.setAttribute("aria-expanded",String(abrir));
+ if(!abrir)return;
+ sec.querySelectorAll(".row-track").forEach(syncDetailRailArrows);
+ if(detailMontarGrafo&&sec.querySelector("#skillGraph")){const montar=detailMontarGrafo;detailMontarGrafo=null;montar();}
+ else if(sec.querySelector("#skillGraph"))SkillGraph.resize();
+}
+function detailAlternarSecao(sec){detailAbrirSecao(sec,sec.classList.contains("is-collapsed"));}
+function detailMostrarFragmento(alvo){
+ if(!alvo)return;
+ detailRevelar(alvo);
+ if(alvo.id==="detalhe-mapa-progressao")alvo.querySelector('[data-graph-view="progression"]')?.click();
+}
+function detailRevelar(el){
+ let sec=el?.closest?.(".detail-collapsible.is-collapsed");
+ while(sec){detailAbrirSecao(sec,true);sec=sec.parentElement?.closest(".detail-collapsible.is-collapsed")||null;}
+}
 function initializeDetailRails(scope){
  if(!scope)return;
  scope.querySelectorAll(".row-track").forEach(track=>{
@@ -1352,14 +1415,14 @@ function mapaFocalMonta(x){
  vista.innerHTML=mfHtml(x,grupos);
  page.querySelector('[data-graph-view="focal"]')?.click();
 }
-let detailTapTimer=null;
+let detailTapTimer=null,detailMontarGrafo=null;
 function detailNavItems(x,relationLists,competenciasList){
  const isComp=x.kind==="competencia";
  const isCompOrCieb=ehComputacao(x);
  return [
   ["detalhe-organizacao",isComp?"Enquadramento":"Organização"],
   ...(competenciasList?.length?[["detalhe-competencias",isComp?"Competências afins":"Competências"]]:[]),
-  ...(!isComp&&!isCompOrCieb?[["detalhe-mapas","Mapas"]]:(isComp&&relationLists?.curriculo?.length?[["detalhe-articulacoes","Habilidades articuladas"]]:[])),
+  ...(!isComp&&!isCompOrCieb?[["detalhe-relacoes","Relações de progressão"],["detalhe-mapa-progressao","Mapa de progressão"]]:(isComp&&relationLists?.curriculo?.length?[["detalhe-articulacoes","Habilidades articuladas"]]:[])),
   ...(relationLists?.curriculo?.length&&isCompOrCieb?[["detalhe-computacao","Habilidades BNCC"]]:(relationLists?.curriculo?.length&&!isComp?[["detalhe-computacao","Computação"]]:[])),
   ...(S.data.ai[x.code]?.por_componente?[["detalhe-interdisciplinar","Interdisciplinar"]]:[]),
   ...(relationLists?.cieb?.length?[["detalhe-cieb","CIEB"]]:(x.kind==="cieb"?[["detalhe-cieb","CIEB"]]:[])),
@@ -1367,7 +1430,7 @@ function detailNavItems(x,relationLists,competenciasList){
  ];
 }
 function detail(code){
- const x=S.by.get(code);if(!x){home();return;}S.currentSkill=x;closeMobileFilters();SkillGraph.detach();$("#catalogPage").hidden=true;const page=$("#detailPage");page.hidden=false;delete page.dataset.pendingGraphJump;
+ const x=S.by.get(code);if(!x){home();return;}S.currentSkill=x;closeMobileFilters();SkillGraph.detach();$("#catalogPage").hidden=true;const page=$("#detailPage");page.hidden=false;delete page.dataset.pendingGraphJump;detailMontarGrafo=null;
  const relationLists=detailRelations(x);
  const competenciasList=getCompetenciasForSkill(x);
  const isComp=x.kind==="competencia";
@@ -1383,13 +1446,18 @@ function detail(code){
   +'</div>';
  page.classList.remove("has-compact-summary");page.innerHTML=printHeadHtml(x)+'<section class="detail-hero" style="--detail-accent:'+color(x.discipline||x.area)+'"><div class="detail-hero-inner"><button class="back-button" id="backButton">← &nbsp; Voltar ao catálogo</button><div class="detail-header-grid"><div class="detail-header-main"><div class="detail-topline"><span class="detail-kicker">'+E(kicker)+'</span><span>'+E(docLabel)+'</span></div><div class="detail-title"><h1>'+E(x.code)+'</h1><p class="skill-long-text">'+E(x.text)+'</p></div>'+actionsHtml+'</div></div></div></section><nav class="detail-nav" aria-label="Nesta habilidade"><span>Nesta habilidade</span>'+nav.map(([id,label])=>'<a href="#'+id+'">'+E(label)+'</a>').join("")+'</nav><div class="detail-content">'+detailHeaderHtml(x)+competenciasHtml(x)+mapWorkspaceHtml(x,relationLists.curriculo)+aiHtml(x)+ciebHtml(x,relationLists.cieb)+reunaHtml(x)+'</div>';
  page.querySelector('[data-copy-official]')?.addEventListener('click',async e=>{const button=e.currentTarget;try{const textToCopy=page.querySelector('.skill-long-text')?.textContent||x.text||"";await navigator.clipboard.writeText(textToCopy);button.textContent='Texto copiado';setTimeout(()=>button.textContent='Copiar texto oficial',1800);}catch{button.textContent='Não foi possível copiar';}});
- const detailHero=page.querySelector(".detail-hero"),detailNav=page.querySelector(".detail-nav"),stickySummary=document.createElement("div"),navShell=document.createElement("div");stickySummary.className="detail-sticky-summary";stickySummary.style.setProperty('--detail-accent',color(x.discipline||x.area));stickySummary.hidden=true;stickySummary.setAttribute("aria-hidden","true");stickySummary.setAttribute("aria-label","Habilidade em foco");stickySummary.innerHTML="<strong></strong><p></p>";stickySummary.querySelector("strong").textContent=x.code;stickySummary.querySelector("p").textContent=x.text;navShell.className="detail-sticky-shell";detailHero.after(stickySummary);detailNav.before(navShell);navShell.append(detailNav);requestAnimationFrame(()=>{syncDetailStickySummary();syncDetailNavScrollspy();});
- if(!isCompOrCieb&&!isComp){const relationsShortcut=page.querySelector('.detail-nav a[href="#detalhe-mapas"]');if(relationsShortcut){relationsShortcut.href="#detalhe-grafo";relationsShortcut.textContent="Relações de progressão";const graphShortcut=document.createElement("a");graphShortcut.href="#skillGraph";graphShortcut.textContent="Mapa de progressão";relationsShortcut.after(graphShortcut);}}
+ recolherSecoesDetalhe(page);const detailHero=page.querySelector(".detail-hero"),detailNav=page.querySelector(".detail-nav"),stickySummary=document.createElement("div"),navShell=document.createElement("div");stickySummary.className="detail-sticky-summary";stickySummary.style.setProperty('--detail-accent',color(x.discipline||x.area));stickySummary.hidden=true;stickySummary.setAttribute("aria-hidden","true");stickySummary.setAttribute("aria-label","Habilidade em foco");stickySummary.innerHTML="<strong></strong><p></p>";stickySummary.querySelector("strong").textContent=x.code;stickySummary.querySelector("p").textContent=x.text;navShell.className="detail-sticky-shell";detailHero.after(stickySummary);detailNav.before(navShell);navShell.append(detailNav);requestAnimationFrame(()=>{syncDetailStickySummary();syncDetailNavScrollspy();});
  $("#backButton").addEventListener("click",()=>home());
  initializeDetailRails(page);
 
  page.onclick=e=>{
   if(e.target.closest("#habilidadeDialog"))return;
+  const secaoBotao=e.target.closest("[data-section-toggle]");
+  if(secaoBotao){e.preventDefault();detailAlternarSecao(secaoBotao.closest(".detail-collapsible"));return;}
+  const secaoCabeca=!e.target.closest("a,button,input,select,summary")&&e.target.closest(".detail-collapsible.is-collapsed > .detail-collapsible-head, .detail-collapsible.is-collapsed > .section-caption");
+  if(secaoCabeca){detailAbrirSecao(secaoCabeca.closest(".detail-collapsible"),true);return;}
+  const linkInterno=e.target.closest('a[href^="#"]');
+  if(linkInterno)detailMostrarFragmento(document.getElementById(linkInterno.getAttribute("href").slice(1)));
   const chip=e.target.closest("[data-detail-chip]");
   if(chip){
    e.preventDefault();
@@ -1430,9 +1498,10 @@ function detail(code){
   const jump=e.target.closest(".graph-jump,a[href=\"#skillGraph\"]");
   if(jump){
    e.preventDefault();
+   if(!page.querySelector("#skillGraph")){page.dataset.pendingGraphJump="true";return;}
+   detailRevelar(page.querySelector("#skillGraph"));
    const progressTab=page.querySelector('[data-graph-view="progression"]');
    if(progressTab&&!progressTab.classList.contains("active"))progressTab.click();
-   if(!page.querySelector("#skillGraph")){page.dataset.pendingGraphJump="true";return;}
    requestAnimationFrame(()=>page.querySelector("#skillGraph")?.scrollIntoView({behavior:"smooth",block:"start"}));
    return;
   }
@@ -1481,7 +1550,7 @@ function detail(code){
   }
  };
 
- if(!isCompOrCieb&&!isComp)BnccData.load().then(state=>{const section=document.getElementById("detalhe-grafo");if(page.hidden||!section||new URLSearchParams(location.search).get("codigo")!==code)return;const node=state.nodes.get(code);if(!node){section.innerHTML='<p class="empty-message">Esta habilidade não está presente no grafo fornecido.</p>';return;}page.querySelector('.skill-long-text').textContent=node.texto;const compactDescription=page.querySelector('.detail-sticky-summary p');if(compactDescription)compactDescription.textContent=node.texto;section.innerHTML=SkillPanel.html(state,node);initializeDetailRails(section);SkillGraph.mount(section.querySelector('#skillGraph'),state,code,open,()=>{});mapaFocalMonta(x);if(page.dataset.pendingGraphJump){delete page.dataset.pendingGraphJump;requestAnimationFrame(()=>page.querySelector('#skillGraph')?.scrollIntoView({behavior:'smooth',block:'start'}));}page.querySelector('[data-copy-official]')?.addEventListener('click',async e=>{const button=e.currentTarget;try{await navigator.clipboard.writeText(node.texto);button.textContent='Texto copiado';setTimeout(()=>button.textContent='Copiar texto oficial',1800);}catch{button.textContent='Não foi possível copiar';}});}).catch(error=>{const section=document.getElementById("detalhe-grafo");if(section&&!page.hidden&&new URLSearchParams(location.search).get("codigo")===code)section.innerHTML='<p class="empty-message">Não foi possível abrir o grafo local: '+E(error.message)+'</p>';});
+ if(!isCompOrCieb&&!isComp)BnccData.load().then(state=>{const relacoesEl=document.getElementById("detalhe-relacoes-conteudo"),section=document.getElementById("detalhe-mapa-conteudo");if(page.hidden||!section||!relacoesEl||new URLSearchParams(location.search).get("codigo")!==code)return;const node=state.nodes.get(code);if(!node){const aviso='<p class="empty-message">Esta habilidade não está presente no grafo fornecido.</p>';relacoesEl.innerHTML=aviso;section.innerHTML=aviso;return;}page.querySelector('.skill-long-text').textContent=node.texto;const compactDescription=page.querySelector('.detail-sticky-summary p');if(compactDescription)compactDescription.textContent=node.texto;relacoesEl.innerHTML=SkillPanel.relacoesHtml(state,node);section.innerHTML=SkillPanel.mapaHtml();initializeDetailRails(relacoesEl);const montarGrafo=()=>{SkillGraph.mount(section.querySelector('#skillGraph'),state,code,open,()=>{});mapaFocalMonta(x);};if(section.closest(".detail-collapsible.is-collapsed"))detailMontarGrafo=montarGrafo;else montarGrafo();if(page.dataset.pendingGraphJump){delete page.dataset.pendingGraphJump;detailRevelar(section);page.querySelector('[data-graph-view="progression"]')?.click();requestAnimationFrame(()=>page.querySelector('#skillGraph')?.scrollIntoView({behavior:'smooth',block:'start'}));}page.querySelector('[data-copy-official]')?.addEventListener('click',async e=>{const button=e.currentTarget;try{await navigator.clipboard.writeText(node.texto);button.textContent='Texto copiado';setTimeout(()=>button.textContent='Copiar texto oficial',1800);}catch{button.textContent='Não foi possível copiar';}});}).catch(error=>{const aviso='<p class="empty-message">Não foi possível abrir o grafo local: '+E(error.message)+'</p>',relacoesEl=document.getElementById("detalhe-relacoes-conteudo"),section=document.getElementById("detalhe-mapa-conteudo");if(section&&!page.hidden&&new URLSearchParams(location.search).get("codigo")===code){section.innerHTML=aviso;if(relacoesEl)relacoesEl.innerHTML=aviso;}});
  page.querySelectorAll(".more-relations[data-relation-kind]").forEach(more=>{
    const list=relationLists[more.dataset.relationKind]||[],grid=more.querySelector("[data-relation-grid]"),button=more.querySelector(".load-more-relations");let cursor=6;
    const append=()=>{const batch=list.slice(cursor,cursor+RELATION_BATCH);cursor+=batch.length;grid.insertAdjacentHTML("beforeend",batch.map(relationCard).join(""));const left=list.length-cursor;button.hidden=left<=0;if(left>0)button.textContent="Carregar mais ("+left+" restantes)";};
@@ -1502,14 +1571,14 @@ const PRINT_SECOES=[
  {id:"detalhe-fonte",titulo:"Fonte e referência"},
  {id:"detalhe-competencias",titulo:"Competências relacionadas"},
  {id:"detalhe-articulacoes",titulo:"Habilidades articuladas"},
- {id:"detalhe-grafo",titulo:"Progressão (grafo)"},{id:"mapa-focal",titulo:"Mapa Focal"},
- {id:"detalhe-mapas",titulo:"Mapas de relações"},
+ {id:"detalhe-relacoes",titulo:"Relações de progressão"},{id:"detalhe-mapa-progressao",titulo:"Mapa de progressão"},{id:"mapa-focal",titulo:"Mapa Focal"},
+ {id:"detalhe-computacao",titulo:"Computação"},
  {id:"detalhe-interdisciplinar",titulo:"Sugestões interdisciplinares"},
  {id:"detalhe-cieb",titulo:"Computação e currículo CIEB"},
  {id:"detalhe-reuna",titulo:"Referência Reúna",subs:[{id:"reuna-legenda",titulo:"Como ler"},{id:"reuna-mapa",titulo:"Mapa de Foco"},{id:"reuna-comentada",titulo:"BNCC Comentada"},{id:"reuna-conexoes",titulo:"Conexões entre etapas"}]}
 ];
 const PRINT_KEY="conecta-bncc-impressao";
-let printEstado=null,printTimer=null,printRevelados=[],printZoomSlot=null,printRestaurarAba=null;
+let printEstado=null,printTimer=null,printRevelados=[],printColapsadas=[],printZoomSlot=null,printRestaurarAba=null;
 function printPreferencias(){try{return JSON.parse(localStorage.getItem(PRINT_KEY)||"{}")||{};}catch(e){return {};}}
 function printSalvarPreferencias(p){try{localStorage.setItem(PRINT_KEY,JSON.stringify(p));}catch(e){}}
 function printBarHtml(){return '';}
@@ -1557,7 +1626,7 @@ function printLimpar(){
  if(printTimer){clearTimeout(printTimer);printTimer=null;}
  document.querySelectorAll(".print-hidden,.print-graph-on,.print-sem-grafo").forEach(el=>el.classList.remove("print-hidden","print-graph-on","print-sem-grafo"));
  document.querySelectorAll(".print-inserted").forEach(el=>el.remove());
- printRevelados.forEach(el=>{el.hidden=true;});printRevelados=[];if(printRestaurarAba){const f=printRestaurarAba;printRestaurarAba=null;f();}if(printZoomSlot){printZoomSlot.style.zoom="";printZoomSlot=null;}
+ printRevelados.forEach(el=>{el.hidden=true;});printRevelados=[];printColapsadas.forEach(s=>detailAbrirSecao(s,false));printColapsadas=[];if(printRestaurarAba){const f=printRestaurarAba;printRestaurarAba=null;f();}if(printZoomSlot){printZoomSlot.style.zoom="";printZoomSlot=null;}
  const page=$("#detailPage");if(page)page.classList.remove("print-codes-only","print-desc-on");
  if(printEstado){printEstado.detalhes.forEach(([det,aberto])=>{det.open=aberto;});document.title=printEstado.titulo;printEstado=null;}
 }
@@ -1572,14 +1641,15 @@ function imprimirComOpcoes(op){
   (s.subs||[]).forEach(u=>{if(printPresente(u.id))pares.push([document.getElementById(u.id),paiMarcado&&op.secoes[u.id]!==false]);});
  });
  const incluidas=pares.filter(p=>p[1]).map(p=>p[0]);
+ incluidas.forEach(el=>{let s=el.closest?.(".detail-collapsible.is-collapsed");while(s){printColapsadas.push(s);detailAbrirSecao(s,true);s=s.parentElement?.closest(".detail-collapsible.is-collapsed")||null;}});
  pares.forEach(([el,marcado])=>{
   if(marcado)return;
   const dentro=incluidas.filter(t=>el.contains(t));
   if(dentro.length)printManter(el,dentro);else el.classList.add("print-hidden");
  });
-  const cartaoPrint=document.querySelector("#detalhe-grafo .graph-card"),abaPrint=cartaoPrint?cartaoPrint.querySelector("[data-graph-view].active"):null;
- if(incluidas.indexOf(document.getElementById("detalhe-grafo"))>=0&&abaPrint&&abaPrint.dataset.graphView!=="progression"){const abaProg=cartaoPrint.querySelector('[data-graph-view="progression"]');if(abaProg){const voltar=abaPrint;abaProg.click();printRestaurarAba=()=>voltar.click();}}
- const grafoEl=document.getElementById("detalhe-grafo"),focalEl=document.getElementById("mapa-focal");
+  const cartaoPrint=document.querySelector("#detalhe-mapa-progressao .graph-card"),abaPrint=cartaoPrint?cartaoPrint.querySelector("[data-graph-view].active"):null;
+ if(incluidas.indexOf(document.getElementById("detalhe-mapa-progressao"))>=0&&abaPrint&&abaPrint.dataset.graphView!=="progression"){const abaProg=cartaoPrint.querySelector('[data-graph-view="progression"]');if(abaProg){const voltar=abaPrint;abaProg.click();printRestaurarAba=()=>voltar.click();}}
+ const grafoEl=document.getElementById("detalhe-mapa-progressao"),focalEl=document.getElementById("mapa-focal");
  if(grafoEl&&incluidas.indexOf(grafoEl)>=0)grafoEl.querySelectorAll(".graph-map-view,.graph-legend,.graph-hint").forEach(el=>{if(el.hidden){printRevelados.push(el);el.hidden=false;}});
  if(focalEl&&incluidas.indexOf(focalEl)>=0&&focalEl.hidden){printRevelados.push(focalEl);focalEl.hidden=false;}
  const vistos=new Set();
@@ -1596,7 +1666,7 @@ function imprimirComOpcoes(op){
    a.insertAdjacentElement("afterend",sp);
   });
  }
- const grafo=document.getElementById("detalhe-grafo");
+ const grafo=document.getElementById("detalhe-mapa-progressao");
  if(grafo&&incluidas.indexOf(grafo)>=0){
   const slot=grafo.querySelector(".graph-canvas-slot"),mapa=grafo.querySelector(".graph-canvas");
   if(slot&&mapa){
@@ -1627,7 +1697,7 @@ function events(){
   });
  };
  window.addEventListener("scroll",handleDetailScroll,{passive:true});window.addEventListener("resize",handleDetailScroll,{passive:true});
- const jumpToRow=row=>{if(!row)return;const bar=$(".topbar"),offset=bar&&getComputedStyle(bar).position==="sticky"?bar.getBoundingClientRect().height:0;window.scrollTo({top:Math.max(0,window.scrollY+row.getBoundingClientRect().top-offset-16),behavior:"smooth"});};
+ const jumpToRow=row=>{if(!row)return;if(row.classList.contains("is-collapsed"))setRowOpen(row,true);const bar=$(".topbar"),offset=bar&&getComputedStyle(bar).position==="sticky"?bar.getBoundingClientRect().height:0;window.scrollTo({top:Math.max(0,window.scrollY+row.getBoundingClientRect().top-offset-16),behavior:"smooth"});};
  $("#searchInput").addEventListener("input",e=>{const wasDetail=!$("#detailPage").hidden;S.q=e.target.value;if(wasDetail)home(false);clearTimeout(searchTimer);searchTimer=setTimeout(()=>{render();if(wasDetail)$(".catalog")?.scrollIntoView({behavior:"smooth"});},SEARCH_DELAY);});
   $("#stageSelect").addEventListener("change",e=>{const wasDetail=!$("#detailPage").hidden;S.stageFilter=e.target.value;if(wasDetail)home(false);clearTimeout(searchTimer);render();if(wasDetail)$(".catalog")?.scrollIntoView({behavior:"smooth"});});
  $("#areaSelect").addEventListener("change",e=>{const wasDetail=!$("#detailPage").hidden;S.filter=e.target.value;if(wasDetail)home(false);clearTimeout(searchTimer);render();if(wasDetail)$(".catalog")?.scrollIntoView({behavior:"smooth"});});
@@ -1661,6 +1731,8 @@ function events(){
    }
  }
  $("#catalogRows").addEventListener("click",e=>{
+   const toggle=e.target.closest("[data-row-toggle]");if(toggle){const sec=toggle.closest(".catalog-row");setRowOpen(sec,sec.classList.contains("is-collapsed"));return;}
+   const collapsedHead=e.target.closest(".catalog-row.is-collapsed .row-head");if(collapsedHead&&!e.target.closest("button,a,input,select")){setRowOpen(collapsedHead.closest(".catalog-row"),true);return;}
    const componentArrow=e.target.closest("[data-component-direction]");
    if(componentArrow){const list=componentArrow.closest(".component-rail").querySelector(".row-component-list");list.scrollBy({left:Number(componentArrow.dataset.componentDirection)*Math.max(200,list.clientWidth*.7),behavior:"smooth"});return;}
    const periodChip=e.target.closest("[data-row-period]");
@@ -1696,10 +1768,10 @@ function events(){
   document.querySelectorAll("[data-jump]").forEach(a=>a.addEventListener("click",e=>{e.preventDefault();if(!$("#detailPage").hidden)home(false);let row=$("#row-"+a.dataset.jump);if(!row){clearTimeout(searchTimer);$("#searchInput").value="";$("#stageSelect").value="";$("#areaSelect").value="";S.q=S.filter=S.stageFilter="";S.rowFilters.clear();S.yearFilters.clear();render();row=$("#row-"+a.dataset.jump);}jumpToRow(row);}));
  $("#aboutButton").addEventListener("click",()=>$("#aboutDialog").showModal());$("#themeButton").addEventListener("click",()=>{const t=document.body.dataset.theme==="light"?"dark":"light";document.body.dataset.theme=t;localStorage.setItem("conecta-bncc-theme",t);$("#themeButton").textContent=t==="light"?"☾":"☼";$("#themeButton").title=t==="light"?"Ativar tema escuro":"Ativar tema claro";});document.querySelectorAll("[data-close-dialog]").forEach(b=>b.addEventListener("click",()=>$("#aboutDialog").close()));
  $("#aboutMeta").innerHTML="1.721 aprendizagens BNCC + "+S.data.cieb.length+" referências CIEB · "+VERSION+"<br>BNCC-dados CC BY 4.0 · pipeline MIT<br>Todos os arquivos são locais; a aplicação não consulta a rede.";
- $("#footerVersion").textContent=VERSION;$("#themeButton").textContent=document.body.dataset.theme==="light"?"☾":"☼";window.addEventListener("popstate",()=>{const c=new URLSearchParams(location.search).get("codigo");if(c){detail(c);if(location.hash)requestAnimationFrame(()=>document.getElementById(decodeURIComponent(location.hash.slice(1)))?.scrollIntoView());else window.scrollTo({top:0,behavior:"instant"});}else{$("#detailPage").hidden=true;$("#catalogPage").hidden=false;requestAnimationFrame(()=>initializeRails($("#catalogRows")));window.scrollTo({top:S.catalogScroll||0,behavior:"instant"});}});
+ $("#footerVersion").textContent=VERSION;$("#themeButton").textContent=document.body.dataset.theme==="light"?"☾":"☼";window.addEventListener("popstate",()=>{const c=new URLSearchParams(location.search).get("codigo");if(c){if($("#detailPage").hidden||S.currentSkill?.code!==c)detail(c);if(location.hash)requestAnimationFrame(()=>{const alvo=document.getElementById(decodeURIComponent(location.hash.slice(1)));detailMostrarFragmento(alvo);alvo?.scrollIntoView();});else window.scrollTo({top:0,behavior:"instant"});}else{$("#detailPage").hidden=true;$("#catalogPage").hidden=false;requestAnimationFrame(()=>initializeRails($("#catalogRows")));window.scrollTo({top:S.catalogScroll||0,behavior:"instant"});}});
 }
 async function load(){
- try{const files=["educacao-infantil.json","ensino-fundamental.json","ensino-medio.json","estrutura.json","computacao.json","curriculo_cieb_computacao.json","sugestoes_interdisciplinares_ia.json","hierarquia_reuna.json","bncc-busca.min.json","reuna_visao_geral.json"],data=await Promise.all(files.map(async f=>{const r=await fetch(D+f);if(!r.ok)throw Error(f+" HTTP "+r.status);return r.json();}));normalize({ei:data[0],ef:data[1],em:data[2],structure:data[3],comp:data[4],cieb:data[5],ai:data[6],reuna:data[7],reunaVisao:data[9]});const searchIndex=new Map(data[8].itens.map(x=>[x.c,x]));S.all.forEach(x=>{const entry=x.kind!=="cieb"&&searchIndex.get(x.code);if(!entry)return;x.text=entry.t;x._textWords=words(x.text);x._topicWords=words(x.text+" "+x.topic);x._search=N([x.code,x.text,x.discipline,x.area,x.topic,x.group,entry.x,entry.d].join(" "));});fillFilters();render();events();$("#datasetStatus").textContent="1.721 aprendizagens BNCC + "+S.data.cieb.length+" referências CIEB · grafo dados-2026.08";const code=new URLSearchParams(location.search).get("codigo");if(code){detail(code);if(location.hash)requestAnimationFrame(()=>document.getElementById(decodeURIComponent(location.hash.slice(1)))?.scrollIntoView());}
+ try{const files=["educacao-infantil.json","ensino-fundamental.json","ensino-medio.json","estrutura.json","computacao.json","curriculo_cieb_computacao.json","sugestoes_interdisciplinares_ia.json","hierarquia_reuna.json","bncc-busca.min.json","reuna_visao_geral.json"],data=await Promise.all(files.map(async f=>{const r=await fetch(D+f);if(!r.ok)throw Error(f+" HTTP "+r.status);return r.json();}));normalize({ei:data[0],ef:data[1],em:data[2],structure:data[3],comp:data[4],cieb:data[5],ai:data[6],reuna:data[7],reunaVisao:data[9]});const searchIndex=new Map(data[8].itens.map(x=>[x.c,x]));S.all.forEach(x=>{const entry=x.kind!=="cieb"&&searchIndex.get(x.code);if(!entry)return;x.text=entry.t;x._textWords=words(x.text);x._topicWords=words(x.text+" "+x.topic);x._search=N([x.code,x.text,x.discipline,x.area,x.topic,x.group,entry.x,entry.d].join(" "));});fillFilters();render();events();$("#datasetStatus").textContent="1.721 aprendizagens BNCC + "+S.data.cieb.length+" referências CIEB · grafo dados-2026.08";const code=new URLSearchParams(location.search).get("codigo");if(code){detail(code);if(location.hash)requestAnimationFrame(()=>{const alvo=document.getElementById(decodeURIComponent(location.hash.slice(1)));detailMostrarFragmento(alvo);alvo?.scrollIntoView();});}
  }catch(e){console.error(e);$("#catalogRows").innerHTML='<div class="loading-state">Abra INICIAR.bat para iniciar o catálogo offline.<br><small>'+E(e.message)+'</small></div>';$("#datasetStatus").textContent="Arquivos locais prontos; inicie o servidor offline.";}
 }
 load();

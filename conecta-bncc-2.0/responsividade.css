@@ -65,8 +65,8 @@
 .detail-sticky-shell{position:sticky;top:68px;z-index:25}
 .detail-sticky-shell .detail-nav{position:static;top:auto}
 .detail-page.has-compact-summary .detail-sticky-shell{top:120px}
-.detail-page .detail-section,.detail-page #detalhe-grafo,.detail-page .graph-column,.detail-page .detail-header-info,.detail-page .detail-header-fact-source{scroll-margin-top:112px}
-.detail-page.has-compact-summary .detail-section,.detail-page.has-compact-summary #detalhe-grafo,.detail-page.has-compact-summary .graph-column,.detail-page.has-compact-summary .detail-header-info,.detail-page.has-compact-summary .detail-header-fact-source{scroll-margin-top:164px}
+.detail-page .detail-section,.detail-page #detalhe-mapa-progressao,.detail-page .graph-column,.detail-page .detail-header-info,.detail-page .detail-header-fact-source{scroll-margin-top:112px}
+.detail-page.has-compact-summary .detail-section,.detail-page.has-compact-summary #detalhe-mapa-progressao,.detail-page.has-compact-summary .graph-column,.detail-page.has-compact-summary .detail-header-info,.detail-page.has-compact-summary .detail-header-fact-source{scroll-margin-top:164px}
 .map-view-panel[hidden]{display:none!important}
 .map-view-panel{min-width:0}
 .map-workspace .map-view-switch{margin:0 0 18px}
@@ -113,8 +113,8 @@ body[data-theme="light"] .detail-sticky-summary p{color:#4a4450;font-size:12px;f
  .detail-sticky-summary p{font-size:11px;line-height:1.3;padding-left:6px}
  .detail-sticky-shell{top:0}
  .detail-page.has-compact-summary .detail-sticky-shell{top:50px}
- .detail-page .detail-section,.detail-page #detalhe-grafo,.detail-page .graph-column,.detail-page .detail-header-info,.detail-page .detail-header-fact-source{scroll-margin-top:54px}
- .detail-page.has-compact-summary .detail-section,.detail-page.has-compact-summary #detalhe-grafo,.detail-page.has-compact-summary .graph-column,.detail-page.has-compact-summary .detail-header-info,.detail-page.has-compact-summary .detail-header-fact-source{scroll-margin-top:104px}
+ .detail-page .detail-section,.detail-page #detalhe-mapa-progressao,.detail-page .graph-column,.detail-page .detail-header-info,.detail-page .detail-header-fact-source{scroll-margin-top:54px}
+ .detail-page.has-compact-summary .detail-section,.detail-page.has-compact-summary #detalhe-mapa-progressao,.detail-page.has-compact-summary .graph-column,.detail-page.has-compact-summary .detail-header-info,.detail-page.has-compact-summary .detail-header-fact-source{scroll-margin-top:104px}
  .graph-connection-view .map-frame{height:50svh;max-height:520px;min-height:240px}
  .graph-map-view .graph-canvas-wrap{height:50svh;max-height:520px;min-height:240px}
  .graph-map-toolbar{padding:10px;gap:9px}
