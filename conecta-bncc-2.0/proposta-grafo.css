@@ -3,6 +3,10 @@
    Inspirado na animação de constelação e nós de conexões curriculares
    ============================================================ */
 
+.proposal-graph-page[hidden]{
+  display:none!important;
+}
+
 .proposal-graph-page{
   position:fixed;
   top:0;

@@ -734,6 +734,7 @@ test('a Proposta Detalhes 2 possui nós estáticos, filtros superiores multi-sel
  assert.ok(!propostaCss.includes('animation:hn-pulse-central'), 'halo central não deve pulsar com transform scale');
  assert.ok(propostaCss.includes('.graph2-map-controls-top'), 'deve conter classe de controles/filtros na parte superior interna do mapa');
  assert.ok(propostaCss.includes('.graph2-map-legend'), 'deve conter classe de legenda na parte inferior do mapa');
+ assert.ok(propostaCss.includes('.proposal-graph-page[hidden]') && propostaCss.includes('display:none!important'), 'a página de proposta deve ocultar com display:none!important quando tiver atributo hidden');
  
  // 2. app.js deve conter a barra de filtros no topo do mapa e a legenda na base
  assert.ok(appJs.includes('class="graph2-map-controls-top"'), 'app.js deve renderizar filtros no topo do mapa');
