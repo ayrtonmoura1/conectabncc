@@ -875,3 +875,22 @@ test('os cartões e modal do Reúna exibem a sequência da habilidade e os nós 
  assert.ok(relCards.includes('data-reuna-tipo="AF"') || relCards.includes('data-reuna-tipo="AC"'), 'cartões de relação do Reúna devem conter atributo de tipo Reúna');
 });
 
+test('o atalho de detalhes para o Grafo 2.0 usa estilo pill sem herdar back-button e o topo do mapa integra cabeçalho e filtros',()=>{
+ const propostaCss = fs.readFileSync(path.join(root, 'proposta-grafo.css'), 'utf8');
+ const appJs = fs.readFileSync(path.join(root, 'app.js'), 'utf8');
+
+ // 1. Botão de atalho em detalhes
+ assert.ok(appJs.includes('proposal-graph-btn proposal-graph-button') && appJs.includes('id="openProposalGraph"'), 'atalho em detalhes deve usar classes proposal-graph-btn e proposal-graph-button');
+ assert.ok(!appJs.includes('class="back-button proposal-graph-button"'), 'botão de atalho não deve herdar a classe back-button');
+ assert.ok(appJs.includes('Explorar no Grafo') && appJs.includes('proposal-btn-pill'), 'atalho deve usar rótulo "Explorar no Grafo" com pill "2.0"');
+ assert.ok(propostaCss.includes('.proposal-graph-btn'), 'proposta-grafo.css deve estilizar o novo botão');
+ assert.ok(propostaCss.includes('border-radius:999px') || propostaCss.includes('border-radius: 999px'), 'novo botão deve usar formato arredondado de pílula');
+
+ // 2. Topo integrado em dois níveis da Proposta 2
+ assert.ok(appJs.includes('class="proposal-topbar-primary"'), 'cabeçalho deve ter linha primária com navegação e resumo');
+ assert.ok(appJs.includes('class="proposal-skill-divider"'), 'cabeçalho da proposta deve ter divisor vertical entre identificação e descrição');
+ assert.ok(propostaCss.includes('.proposal-topbar-primary'), 'proposta-grafo.css deve estilizar a linha primária do cabeçalho');
+ assert.ok(propostaCss.includes('.graph2-map-controls-top'), 'sub-barra de filtros deve ser estilizada');
+ assert.ok(propostaCss.includes('border-top:1px solid') || propostaCss.includes('border-top: 1px solid'), 'sub-barra de filtros deve estar atracada à base do cabeçalho');
+});
+

@@ -1744,7 +1744,7 @@ function detail(code){
   +'<button type="button" class="detail-copy-button" id="printOpen" aria-haspopup="dialog">'+printBtnSvg+'Imprimir / Salvar em PDF</button>'
   +(!isCompOrCieb&&!isComp?'<a class="detail-header-map" href="#skillGraph">Explorar progressão <span aria-hidden="true">↓</span></a>':'')
   +'</div>';
- page.classList.remove("has-compact-summary");page.innerHTML=printHeadHtml(x)+'<section class="detail-hero" style="--detail-accent:'+color(x.discipline||x.area)+'"><div class="detail-hero-inner"><div class="detail-top-nav-actions"><button class="back-button" id="backButton">← &nbsp; Voltar ao catálogo</button><button type="button" class="back-button proposal-graph-button" id="openProposalGraph"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" style="vertical-align:-2px;margin-right:4px"><circle cx="18" cy="5" r="3"/><circle cx="6" cy="12" r="3"/><circle cx="18" cy="19" r="3"/><line x1="8.59" y1="13.51" x2="15.42" y2="17.49"/><line x1="15.41" y1="6.51" x2="8.59" y2="10.49"/></svg>Proposta Detalhes 2 ↗</button></div><div class="detail-header-grid"><div class="detail-header-main"><div class="detail-topline"><span class="detail-kicker">'+E(kicker)+'</span><span>'+E(docLabel)+'</span></div><div class="detail-title"><h1>'+E(x.code)+'</h1><p class="skill-long-text">'+E(x.text)+'</p></div>'+actionsHtml+'</div></div></div></section><nav class="detail-nav" aria-label="Nesta habilidade"><span>Nesta habilidade</span>'+nav.map(([id,label])=>'<a href="#'+id+'">'+E(label)+'</a>').join("")+'</nav><div class="detail-content">'+detailHeaderHtml(x)+competenciasHtml(x)+mapWorkspaceHtml(x,relationLists.curriculo)+aiHtml(x)+ciebHtml(x,relationLists.cieb)+reunaHtml(x)+'</div>';
+ page.classList.remove("has-compact-summary");page.innerHTML=printHeadHtml(x)+'<section class="detail-hero" style="--detail-accent:'+color(x.discipline||x.area)+'"><div class="detail-hero-inner"><div class="detail-top-nav-actions"><button class="back-button" id="backButton">← &nbsp; Voltar ao catálogo</button><button type="button" class="proposal-graph-btn proposal-graph-button" id="openProposalGraph" title="Abrir o mapa visual interativo em tela cheia com conexões e animações" aria-label="Explorar habilidade no Grafo 2.0"><svg class="proposal-btn-graph-icon" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="18" cy="5" r="3"/><circle cx="6" cy="12" r="3"/><circle cx="18" cy="19" r="3"/><line x1="8.59" y1="13.51" x2="15.42" y2="17.49"/><line x1="15.41" y1="6.51" x2="8.59" y2="10.49"/></svg><span class="proposal-btn-label">Explorar no Grafo</span><span class="proposal-btn-pill">2.0</span><svg class="proposal-btn-launch" width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><line x1="7" y1="17" x2="17" y2="7"/><polyline points="7 7 17 7 17 17"/></svg></button></div><div class="detail-header-grid"><div class="detail-header-main"><div class="detail-topline"><span class="detail-kicker">'+E(kicker)+'</span><span>'+E(docLabel)+'</span></div><div class="detail-title"><h1>'+E(x.code)+'</h1><p class="skill-long-text">'+E(x.text)+'</p></div>'+actionsHtml+'</div></div></div></section><nav class="detail-nav" aria-label="Nesta habilidade"><span>Nesta habilidade</span>'+nav.map(([id,label])=>'<a href="#'+id+'">'+E(label)+'</a>').join("")+'</nav><div class="detail-content">'+detailHeaderHtml(x)+competenciasHtml(x)+mapWorkspaceHtml(x,relationLists.curriculo)+aiHtml(x)+ciebHtml(x,relationLists.cieb)+reunaHtml(x)+'</div>';
  page.querySelector('[data-copy-official]')?.addEventListener('click',async e=>{const button=e.currentTarget;try{const textToCopy=page.querySelector('.skill-long-text')?.textContent||x.text||"";await navigator.clipboard.writeText(textToCopy);button.textContent='Texto copiado';setTimeout(()=>button.textContent='Copiar texto oficial',1800);}catch{button.textContent='Não foi possível copiar';}});
  recolherSecoesDetalhe(page);const detailHero=page.querySelector(".detail-hero"),detailNav=page.querySelector(".detail-nav"),stickySummary=document.createElement("div"),navShell=document.createElement("div");stickySummary.className="detail-sticky-summary";stickySummary.style.setProperty('--detail-accent',color(x.discipline||x.area));stickySummary.hidden=true;stickySummary.setAttribute("aria-hidden","true");stickySummary.setAttribute("aria-label","Habilidade em foco");stickySummary.innerHTML="<strong></strong><p></p>";stickySummary.querySelector("strong").textContent=x.code;stickySummary.querySelector("p").textContent=x.text;navShell.className="detail-sticky-shell";detailHero.after(stickySummary);detailNav.before(navShell);navShell.append(detailNav);requestAnimationFrame(()=>{syncDetailStickySummary();syncDetailNavScrollspy();});
  $("#backButton").addEventListener("click",()=>home());
@@ -2590,16 +2590,17 @@ function openProposalGraph(code){
   +'</aside>';
 
  page.innerHTML='<header class="proposal-topbar">'
+  +'<div class="proposal-topbar-primary">'
   +'<div class="proposal-nav-group">'
-  +'<button type="button" class="proposal-btn" id="proposalBackDetail">← Voltar aos detalhes</button>'
+  +'<button type="button" class="proposal-btn" id="proposalBackDetail"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" style="vertical-align:-1px;margin-right:2px"><line x1="19" y1="12" x2="5" y2="12"/><polyline points="12 19 5 12 12 5"/></svg>Voltar aos detalhes</button>'
   +'<button type="button" class="proposal-btn" data-home>Catálogo</button>'
   +'</div>'
   +'<div class="proposal-skill-pill" id="proposalSkillPill" role="button" tabindex="0" title="Clique para ver os detalhes completos da habilidade '+E(x.code)+'" aria-label="Habilidade em foco: '+E(x.code)+'">'
   +'<div class="proposal-skill-pill-head">'
   +'<span class="proposal-skill-code">'+E(x.code)+'</span>'
-  +'<span class="proposal-skill-meta">'+E(compName)+(x.group?' · '+E(x.group):'')+'</span>'
-  +'<span class="proposal-conn-tag">'+conn.allNodes.size+' conexões</span>'
+  +'<div class="proposal-skill-subline"><span class="proposal-skill-meta">'+E(compName)+(x.group?' · '+E(x.group):'')+'</span><span class="proposal-conn-tag">'+conn.allNodes.size+' conexões</span></div>'
   +'</div>'
+  +'<div class="proposal-skill-divider" aria-hidden="true"></div>'
   +'<p class="proposal-skill-desc">'+E(x.text||'')+'</p>'
   +'</div>'
   +'<div class="proposal-view-actions">'
@@ -2607,8 +2608,7 @@ function openProposalGraph(code){
   +'<button type="button" class="proposal-tool-btn" id="graphZoomOut" aria-label="Diminuir zoom" title="Diminuir zoom">−</button>'
   +'<button type="button" class="proposal-tool-btn" id="graphReset" aria-label="Centralizar grafo" title="Centralizar grafo">⟲</button>'
   +'</div>'
-  +'</header>'
-  +'<div class="proposal-canvas-wrap" id="proposalCanvasWrap">'
+  +'</div>'
   +'<div class="graph2-map-controls-top" role="toolbar" aria-label="Filtrar conexões do mapa">'
   +'<div class="graph2-filter-chips-wrap">'
   +'<span class="graph2-filter-label"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polygon points="22 3 2 3 10 12.46 10 19 14 21 14 12.46 22 3"/></svg> Filtros:</span>'
@@ -2620,6 +2620,8 @@ function openProposalGraph(code){
   +'<span class="legend-toggle-caret" aria-hidden="true">▸</span>'
   +'</button>'
   +'</div>'
+  +'</header>'
+  +'<div class="proposal-canvas-wrap" id="proposalCanvasWrap">'
   +verticalLegendHtml
   +'<svg class="proposal-svg" id="proposalSvg" viewBox="-800 -480 1600 960">'
   +'<g id="proposalZoomGroup" transform="translate(0,0) scale(1)">'
@@ -2636,6 +2638,10 @@ function openProposalGraph(code){
  });
  const handleEscProposal=(e)=>{
   if(e.key==="Escape"&&!page.hidden){
+   if(legendPanel&&!legendPanel.hidden){
+    toggleLegend(false);
+    return;
+   }
    page.hidden=true;
    document.body.classList.remove("has-proposal-graph");
    $("#detailPage").hidden=false;
