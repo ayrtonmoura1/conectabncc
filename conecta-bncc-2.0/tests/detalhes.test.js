@@ -7,7 +7,7 @@ const vm = require('node:vm');
 const root = path.join(__dirname, '..');
 const read = file => JSON.parse(fs.readFileSync(path.join(root, 'dados', file), 'utf8'));
 const original = fs.readFileSync(path.join(root, 'app.js'), 'utf8');
-const instrumented = original.replace(/load\(\);\s*\}\)\(\);\s*$/, 'globalThis.detailApi={normalize,S,E,relations,detailRelations,detailHeaderHtml,detailNavItems,relatedMapListHtml,mapWorkspaceHtml,ciebHtml,aiHtml,reunaHtml,competenciasHtml,relationCard,initializeDetailRails,shortcuts,ROWS,rowItems,modalAbrirInfo,habilidadeModalAbrir,openCardDetailModal,periods,printBarHtml,syncDetailNavScrollspy,setActiveDetailNavLink};})();');
+const instrumented = original.replace(/load\(\);\s*\}\)\(\);\s*$/, 'globalThis.detailApi={normalize,S,E,relations,detailRelations,detailHeaderHtml,detailNavItems,relatedMapListHtml,mapWorkspaceHtml,ciebHtml,aiHtml,reunaHtml,competenciasHtml,relationCard,initializeDetailRails,shortcuts,ROWS,rowItems,modalAbrirInfo,habilidadeModalAbrir,openCardDetailModal,periods,printBarHtml,syncDetailNavScrollspy,setActiveDetailNavLink,rowView,rowPeriodChips};})();');
 assert.notEqual(instrumented, original, 'Não foi possível preparar o módulo da página para verificação');
 const sandbox = {document:{body:{dataset:{}}},localStorage:{getItem:()=>null},console};
 vm.runInNewContext(instrumented, sandbox, {filename:'app.js'});
@@ -615,4 +615,32 @@ test('a faixa Escolha por etapa é fixa no topo (sticky) com atalhos e scrollspy
  assert.ok(appJs.includes('stageBar=$(".stage-sticky-shell, #stageBar")'), 'jumpToRow deve considerar o offset da barra de etapas sticky');
  assert.ok(appJs.includes('function syncCatalogNavScrollspy()'), 'app.js deve implementar syncCatalogNavScrollspy');
  assert.ok(appJs.includes('syncCatalogNavScrollspy();'), 'scroll listener deve invocar syncCatalogNavScrollspy');
+});
+
+test('cada etapa possui botão de busca à esquerda do chip Todos que filtra por código, descrição e componente',()=>{
+ const rowEi = api.ROWS.find(r => r.id === 'ei');
+ const viewEi = api.rowView(rowEi);
+ const periodHtml = api.rowPeriodChips(rowEi, viewEi);
+
+ // 1. O botão de busca existe e antecede o chip Todos
+ assert.ok(periodHtml.includes('class="row-search-wrap'), 'rowPeriodChips deve conter row-search-wrap');
+ assert.ok(periodHtml.includes('data-row-search-toggle="ei"'), 'deve conter botão data-row-search-toggle para ei');
+ assert.ok(periodHtml.indexOf('data-row-search-toggle') < periodHtml.indexOf('data-period=""'), 'o botão de busca deve ficar à esquerda do chip Todos');
+
+ // 2. Filtragem local da linha por código
+ api.S.rowQueries.set('ei', 'EI01CG01');
+ const filteredViewCode = api.rowView(rowEi);
+ assert.equal(filteredViewCode.items.length, 1, 'busca por código na etapa deve isolar o cartão correspondente');
+ assert.equal(filteredViewCode.items[0].code, 'EI01CG01');
+
+ // 3. Filtragem local da linha por descrição / texto
+ api.S.rowQueries.set('ei', 'movimentos');
+ const filteredViewText = api.rowView(rowEi);
+ assert.ok(filteredViewText.items.length > 0, 'busca por termo de descrição deve retornar cartões');
+ assert.ok(filteredViewText.items.every(x => String((x.text||'') + (x.discipline||'') + (x.field||'')).toLowerCase().includes('movimento')), 'todos os itens retornados devem conter o termo');
+
+ // 4. Limpeza da busca restaura todos os itens
+ api.S.rowQueries.delete('ei');
+ const restoredView = api.rowView(rowEi);
+ assert.equal(restoredView.items.length, viewEi.base.length, 'remover query local deve restaurar a quantidade original de itens');
 });

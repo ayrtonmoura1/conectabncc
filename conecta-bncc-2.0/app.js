@@ -12,7 +12,7 @@ const COMPONENT_COLORS={
 };
 const STOP=new Set("a ao as com como da das de do dos e em essa este foi forma há isso mais mas na nas no nos o os ou para pela pelo por que se sem ser sua seu também tem ter um uma é são habilidade habilidades alunos aprendizagem reconhecer desenvolver explorar utilizar identificar analisar".split(" "));
 const $=s=>document.querySelector(s), E=s=>String(s??"").replace(/[&<>"']/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c])), N=s=>String(s??"").normalize("NFD").replace(/[\u0300-\u036f]/g,"").toLowerCase();
-const S={all:[],by:new Map(),data:{},q:"",filter:"",stageFilter:"",rows:new Map(),rails:new Map(),rowFilters:new Map(),yearFilters:new Map(),rowState:new Map(),relationCache:new Map()};
+const S={all:[],by:new Map(),data:{},q:"",filter:"",stageFilter:"",rows:new Map(),rails:new Map(),rowFilters:new Map(),yearFilters:new Map(),rowQueries:new Map(),rowSearchOpen:new Set(),rowState:new Map(),relationCache:new Map()};
 const RAIL_BATCH=24, RAIL_BUFFER=8, RAIL_MAX_NODES=80, RAIL_FILTER_SLIDE_MS=1000, RELATION_BATCH=30, SEARCH_DELAY=180;
 document.body.dataset.theme=localStorage.getItem("conecta-bncc-theme")||"dark";
 const colorMap=new Map();
@@ -233,9 +233,27 @@ function periods(x,rowId){
  if(x.stage==="EM"||x.code.startsWith("EM")||(x.kind==="cieb"&&/médio|medio/i.test(x.raw?.stage)))result.push({key:"em",label:"Ensino Médio",order:30});
  return result;
 }
+function rowSearchMarkup(row){
+ const searchOpen=Boolean(S.rowSearchOpen?.has(row.id)||(S.rowQueries?.get(row.id)));
+ const query=S.rowQueries?.get(row.id)||"";
+ return '<div class="row-search-wrap'+(searchOpen?' is-expanded':'')+'" data-row-search-wrap="'+E(row.id)+'"><button type="button" class="row-search-toggle'+(query?' has-query':'')+'" data-row-search-toggle="'+E(row.id)+'" aria-label="Buscar habilidades em '+E(row.title)+'" title="Buscar em '+E(row.title)+'"><span class="row-search-icon" aria-hidden="true">⌕</span></button><div class="row-search-field"'+(searchOpen?'':' hidden')+'><input type="search" class="row-search-input" data-row-search-input="'+E(row.id)+'" placeholder="Buscar em '+E(row.title)+'…" value="'+E(query)+'" aria-label="Buscar em '+E(row.title)+'" autocomplete="off"><button type="button" class="row-search-clear'+(query?'':' is-hidden')+'" data-row-search-clear="'+E(row.id)+'" aria-label="Limpar busca" title="Limpar busca">×</button></div></div>';
+}
 function rowView(row){
  const base=filtered(rowItems(row.id)),period=S.yearFilters.get(row.id)||"",available=period?base.filter(x=>periods(x,row.id).some(p=>p.key===period)):base,selected=S.rowFilters.get(row.id)||"";
- return {base,period,available,selected,items:selected?available.filter(x=>componentLabel(x)===selected):available};
+ let items=selected?available.filter(x=>componentLabel(x)===selected):available;
+ const q=(S.rowQueries?.get(row.id)||"").trim().toLowerCase();
+ if(q){
+  items=items.filter(x=>{
+   const code=String(x.code||"").toLowerCase();
+   const text=String(x.text||"").toLowerCase();
+   const disc=String(x.discipline||x.area||componentLabel(x)||"").toLowerCase();
+   const group=String(x.group||"").toLowerCase();
+   const field=String(x.field||x.theme||"").toLowerCase();
+   const summary=String(x.summary||"").toLowerCase();
+   return code.includes(q)||text.includes(q)||disc.includes(q)||group.includes(q)||field.includes(q)||summary.includes(q);
+  });
+ }
+ return {base,period,available,selected,items};
 }
 function rowPeriodChips(row,view){
  const counts=new Map();view.base.forEach(x=>periods(x,row.id).forEach(p=>{const entry=counts.get(p.key)||{...p,count:0};entry.count++;counts.set(p.key,entry);}));
@@ -243,7 +261,7 @@ function rowPeriodChips(row,view){
  const ordered=new Set(),matching=view.selected?view.base.filter(x=>componentLabel(x)===view.selected):view.base;
  matching.forEach(x=>periods(x,row.id).forEach(p=>ordered.add(p.key)));counts.forEach((_,key)=>ordered.add(key));
  const button=(key,label,count)=>'<button type="button" class="component-chip period-chip'+(view.period===key?' active':'')+'" data-row-period="'+E(row.id)+'" data-period="'+E(key)+'" aria-pressed="'+String(view.period===key)+'"><span>'+E(label)+'</span><span class="component-chip-count">'+count.toLocaleString("pt-BR")+'</span></button>';
- return '<div class="row-periods"><div class="component-rail"><button type="button" class="component-arrow component-arrow-prev" data-component-direction="-1" aria-label="Ver anos ou fases anteriores" hidden>‹</button><div class="row-component-list" role="group" aria-label="Anos e fases em '+E(row.title)+'">'+button("","Todos",view.base.length)+[...ordered].map(key=>counts.get(key)).map(p=>button(p.key,p.label,p.count)).join("")+'</div><button type="button" class="component-arrow component-arrow-next" data-component-direction="1" aria-label="Ver mais anos ou fases" hidden>›</button></div></div>';
+ return '<div class="row-periods"><div class="component-rail"><button type="button" class="component-arrow component-arrow-prev" data-component-direction="-1" aria-label="Ver anos ou fases anteriores" hidden>‹</button><div class="row-component-list" role="group" aria-label="Anos e fases em '+E(row.title)+'">'+rowSearchMarkup(row)+button("","Todos",view.base.length)+[...ordered].map(key=>counts.get(key)).map(p=>button(p.key,p.label,p.count)).join("")+'</div><button type="button" class="component-arrow component-arrow-next" data-component-direction="1" aria-label="Ver mais anos ou fases" hidden>›</button></div></div>';
 }
 function rowComponentChips(row,view){
  const counts=new Map();
@@ -252,20 +270,38 @@ function rowComponentChips(row,view){
  const labels={ei:"Campos de experiência",iniciais:"Componentes",finais:"Componentes",em:"Áreas de conhecimento",competencias:"Áreas e componentes",computacao:"Eixos da Computação",cieb:"Eixos do CIEB",reuna:"Componentes e áreas"};
  const label=labels[row.id]||"Componentes";
  const button=(name,count)=>'<button type="button" class="component-chip'+(view.selected===name?' active':'')+'" data-row-component="'+E(row.id)+'" data-component="'+E(name)+'" aria-pressed="'+String(view.selected===name)+'"'+(name?' style="--chip-accent:'+color(name)+'"':'')+'><span class="component-chip-dot" aria-hidden="true"></span><span>'+E(name||"Todos")+'</span><span class="component-chip-count">'+count.toLocaleString("pt-BR")+'</span></button>';
- return '<div class="row-components"><span class="row-components-label">'+E(label)+'</span><div class="component-rail"><button type="button" class="component-arrow component-arrow-prev" data-component-direction="-1" aria-label="Ver componentes anteriores" hidden>‹</button><div class="row-component-list" role="group" aria-label="'+E(label+' em '+row.title)+'">'+button("",view.available.length)+[...counts.entries()].map(([name,count])=>button(name,count)).join("")+'</div><button type="button" class="component-arrow component-arrow-next" data-component-direction="1" aria-label="Ver mais componentes" hidden>›</button></div></div>';
+ const searchPrefix=(row.id==="competencias"||!periods(rowItems(row.id)[0]||{},row.id).length)?rowSearchMarkup(row):"";
+ return '<div class="row-components"><span class="row-components-label">'+E(label)+'</span><div class="component-rail"><button type="button" class="component-arrow component-arrow-prev" data-component-direction="-1" aria-label="Ver componentes anteriores" hidden>‹</button><div class="row-component-list" role="group" aria-label="'+E(label+' em '+row.title)+'">'+searchPrefix+button("",view.available.length)+[...counts.entries()].map(([name,count])=>button(name,count)).join("")+'</div><button type="button" class="component-arrow component-arrow-next" data-component-direction="1" aria-label="Ver mais componentes" hidden>›</button></div></div>';
 }
 function railItemIndex(index,count){return count>0?((index%count)+count)%count:-1;}
 function createRailState(items){const loop=items.length>1;return {items,loop,start:loop?-RAIL_BUFFER:0,end:loop?RAIL_BATCH:items.length,initialized:false,track:null,frame:null,animationFrame:null,trimTimer:null,savedPosition:null};}
 function railMarkup(rail,start,end){if(!rail.items.length)return "";let html="";for(let i=start;i<end;i++)html+=card(rail.items[railItemIndex(i,rail.items.length)],i,rail.rowId);return html;}
 function rowIsOpen(row,view){
  if(S.rowState.has(row.id))return S.rowState.get(row.id);
- return Boolean(S.q.trim()||S.filter||S.stageFilter)&&view.base.length>0;
+ return Boolean(S.q.trim()||S.filter||S.stageFilter||S.rowQueries?.get(row.id))&&view.base.length>0;
 }
 function setRowOpen(sec,open){
  if(!sec)return;const id=sec.id.replace(/^row-/,""),rail=S.rails.get(id);
  S.rowState.set(id,open);sec.classList.toggle("is-open",open);sec.classList.toggle("is-collapsed",!open);
  sec.querySelector("[data-row-toggle]")?.setAttribute("aria-expanded",String(open));
  if(open&&rail){rail.initialized=false;initializeRails(sec);}
+}
+function updateRowSearchResults(sec,row){
+ const view=rowView(row);
+ const count=view.items.length.toLocaleString("pt-BR")+(view.items.length===1?" item":" itens")+(view.selected?" · "+view.available.length.toLocaleString("pt-BR")+" no total":"");
+ const countEl=sec.querySelector(".row-meta");if(countEl)countEl.textContent=count;
+ const track=sec.querySelector(".row-track");
+ if(track){
+  S.rails.set(row.id,createRailState(view.items));
+  const rail=S.rails.get(row.id);
+  const empty="Nenhuma habilidade encontrada com o termo digitado.";
+  track.innerHTML=view.items.length?railMarkup(rail,rail.start,rail.end):'<div class="empty-row">'+E(empty)+'</div>';
+  initializeRail(track,{animateStart:false});
+  const prevArrow=sec.querySelector(".rail-prev"),nextArrow=sec.querySelector(".rail-next");
+  if(prevArrow)prevArrow.hidden=!rail.loop;
+  if(nextArrow)nextArrow.hidden=!rail.loop;
+ }
+ if(sec.classList.contains("is-collapsed"))setRowOpen(sec,true);
 }
 function makeRow(row,view){
  const sec=document.createElement("section"),list=view.items,rail=createRailState(list),open=rowIsOpen(row,view);
@@ -1779,7 +1815,7 @@ function events(){
  $("#searchInput").addEventListener("input",e=>{const wasDetail=!$("#detailPage").hidden;S.q=e.target.value;if(wasDetail)home(false);clearTimeout(searchTimer);searchTimer=setTimeout(()=>{render();if(wasDetail)$(".catalog")?.scrollIntoView({behavior:"smooth"});},SEARCH_DELAY);});
   $("#stageSelect").addEventListener("change",e=>{const wasDetail=!$("#detailPage").hidden;S.stageFilter=e.target.value;if(wasDetail)home(false);clearTimeout(searchTimer);render();if(wasDetail)$(".catalog")?.scrollIntoView({behavior:"smooth"});});
  $("#areaSelect").addEventListener("change",e=>{const wasDetail=!$("#detailPage").hidden;S.filter=e.target.value;if(wasDetail)home(false);clearTimeout(searchTimer);render();if(wasDetail)$(".catalog")?.scrollIntoView({behavior:"smooth"});});
-  $("#clearFilters").addEventListener("click",()=>{clearTimeout(searchTimer);$("#searchInput").value="";$("#stageSelect").value="";$("#areaSelect").value="";S.q=S.filter=S.stageFilter="";S.rowFilters.clear();S.yearFilters.clear();render();});
+  $("#clearFilters").addEventListener("click",()=>{clearTimeout(searchTimer);$("#searchInput").value="";$("#stageSelect").value="";$("#areaSelect").value="";S.q=S.filter=S.stageFilter="";S.rowFilters.clear();S.yearFilters.clear();S.rowQueries?.clear();S.rowSearchOpen?.clear();render();});
  $("#exploreButton").addEventListener("click",()=>jumpToRow($("#catalogRows .catalog-row")));
  const featuredCodes=["EF03MA05","EI03EF01","EF07LP14","EM13MAT103","EF06CO02","EI01CG05","EF09LP05","EF01CI04","EM12CO06"];
  const featuredList=featuredCodes.map(c=>S.by.get(c)).filter(Boolean);
@@ -1835,7 +1871,15 @@ function events(){
    }
    const arrow=e.target.closest(".rail-arrow");if(arrow){const track=arrow.closest(".row-rail").querySelector(".row-track");moveRail(track,Number(arrow.dataset.direction));return;}const c=e.target.closest(".skill-card");if(c){open(c.dataset.code);}
  });
- const interruptRailMotion=e=>{const track=e.target.closest(".row-track");if(track)cancelRailAnimation(track);};
+ $("#catalogRows").addEventListener("input",e=>{
+    const input=e.target.closest("[data-row-search-input]");if(!input)return;
+    const id=input.dataset.rowSearchInput,row=ROWS.find(x=>x.id===id),sec=input.closest(".catalog-row");if(!row||!sec)return;
+    const val=input.value,clearBtn=input.closest(".row-search-wrap")?.querySelector(".row-search-clear");
+    if(clearBtn)clearBtn.classList.toggle("is-hidden",!val);
+    if(val.trim())S.rowQueries.set(id,val);else S.rowQueries.delete(id);
+    updateRowSearchResults(sec,row);
+  });
+  const interruptRailMotion=e=>{const track=e.target.closest(".row-track");if(track)cancelRailAnimation(track);};
  $("#catalogRows").addEventListener("pointerdown",interruptRailMotion,{passive:true});$("#catalogRows").addEventListener("touchstart",interruptRailMotion,{passive:true});$("#catalogRows").addEventListener("wheel",interruptRailMotion,{passive:true});
  $("#catalogRows").addEventListener("scroll",e=>{const list=e.target.closest(".row-component-list");if(list)syncComponentArrows(list.closest(".catalog-row"));const track=e.target.closest(".row-track");if(track)scheduleRail(track);},true);
  $("#catalogRows").addEventListener("focusin",e=>{const c=e.target.closest(".skill-card"),track=c?.closest(".row-track");if(track){syncRailA11y(track);scheduleRail(track);}});
