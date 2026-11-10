@@ -204,6 +204,13 @@ function reunaCardContext(reunaFocal,x){
  const rotulo=reunaFocal.rotulo||('Focal '+reunaFocal.posicao+'/'+reunaFocal.total_grupo+' em '+reunaFocal.componente+' ('+groupDesc+')');
  return {unidade,label,groupDesc,rotulo};
 }
+function reunaFormatUnit(unidade){
+ if(!unidade)return "";
+ let label=String(unidade).trim();
+ if(/^campo/i.test(label)||/^unidade/i.test(label))return label;
+ if(/espaços|escuta|o eu|corpo|traços/i.test(label))return 'Campo: '+label;
+ return 'Unidade: '+label;
+}
 function skillConnectionCount(x){
  if(!x)return 0;
  if(x._connectionCount!==undefined)return x._connectionCount;
@@ -721,10 +728,45 @@ function getExtraCardBadge(currentSkill,y,z){
 }
 function relationCard({item:y,rel:z}){
  const component=componentLabel(y),co=color(component);
- const extraBadge=getExtraCardBadge(S.currentSkill,y,z);
- const extraHtml=extraBadge?'<span class="skill-tag skill-tag--extra">'+E(extraBadge)+'</span>':'';
- return '<article class="skill-card relation-card detail-rail-card" role="button" tabindex="0" data-code="'+E(y.code)+'" data-detail-kind="skill" data-component="'+E(component)+'" data-rel-type="'+E(z.type||"Referência")+'" data-rel-basis="'+E(z.basis||"")+'" data-rel-kind="'+E(z.kind||"")+'" style="--accent:'+co+'">'
-  +'<div class="card-top"><span class="skill-code">'+E(y.code)+'</span><span class="skill-group">'+E(y.group||y.doc||"BNCC")+'</span></div>'
+ const isReunaCard=Boolean(z?.kind?.startsWith("reuna")||S.data.reuna?.[y.code]);
+ const reunaFocal=S.data.reuna?.[y.code]?.tipo==="AF"?S.data.reuna[y.code]:null;
+ const reunaCtx=reunaFocal?reunaCardContext(reunaFocal,y):null;
+ const anoCurto=reunaFocal?(/crian/i.test(reunaFocal.ano_faixa)?"Crianças pequenas":(/ano/i.test(reunaFocal.ano_faixa)?reunaFocal.ano_faixa:reunaFocal.ano_faixa+" ano")):"";
+
+ let groupLabel=y.group||y.doc||"BNCC";
+ let extraHtml="";
+ let cardTitle="";
+
+ if(isReunaCard){
+  if(reunaFocal){
+   groupLabel="Focal "+reunaFocal.posicao+"/"+reunaFocal.total_grupo+" · "+(reunaCtx?.groupDesc||anoCurto);
+   const uLabel=reunaCtx?.label||(z.reunaUnidade?reunaFormatUnit(z.reunaUnidade):"");
+   extraHtml=uLabel?'<span class="skill-tag skill-tag--extra skill-tag--theme" title="Unidade temática / Campo da sequência: '+E(reunaCtx?.unidade||z.reunaUnidade)+'">'+E(uLabel)+'</span>':'';
+   cardTitle=' title="'+E((reunaCtx?.rotulo||z.reunaRotulo||groupLabel)+(uLabel?' · '+uLabel:''))+'"';
+  }else{
+   const k=z.reunaTipo||(z.kind==="reuna-ac"?"AC":(z.kind==="reuna-ef"?"EF":"AF"));
+   const prefix=k==="AC"?"Complementar (AC)":(k==="EF"?"Fluência (EF)":"Focal (AF)");
+   groupLabel=prefix+" · "+(y.group||y.doc||"BNCC");
+   const rawU=z.reunaUnidade||y.topic?.split(' · ')[0];
+   const uLabel=rawU?reunaFormatUnit(rawU):(REUNA_CLASSES[k]||"Reúna");
+   extraHtml='<span class="skill-tag skill-tag--extra skill-tag--theme" title="Classificação Reúna / Unidade: '+E(rawU||uLabel)+'">'+E(uLabel)+'</span>';
+   cardTitle=' title="'+E((REUNA_CLASSES[k]||k)+(rawU?' · '+rawU:''))+'"';
+  }
+ }else{
+  const extraBadge=getExtraCardBadge(S.currentSkill,y,z);
+  extraHtml=extraBadge?'<span class="skill-tag skill-tag--extra">'+E(extraBadge)+'</span>':'';
+ }
+
+ const reunaAttrs=isReunaCard?(
+  ' data-reuna-tipo="'+E(z.reunaTipo||(reunaFocal?'AF':''))+'"'
+  +' data-reuna-posicao="'+E(reunaFocal?.posicao||z.reunaPosicao||'')+'"'
+  +' data-reuna-total="'+E(reunaFocal?.total_grupo||z.reunaTotal||'')+'"'
+  +' data-reuna-unidade="'+E(reunaCtx?.unidade||z.reunaUnidade||'')+'"'
+  +' data-reuna-rotulo="'+E(reunaCtx?.rotulo||z.reunaRotulo||'')+'"'
+ ):'';
+
+ return '<article class="skill-card relation-card detail-rail-card" role="button" tabindex="0" data-code="'+E(y.code)+'" data-detail-kind="skill" data-component="'+E(component)+'" data-rel-type="'+E(z.type||"Referência")+'" data-rel-basis="'+E(z.basis||"")+'" data-rel-kind="'+E(z.kind||"")+'"'+reunaAttrs+' style="--accent:'+co+'"'+cardTitle+'>'
+  +'<div class="card-top"><span class="skill-code">'+E(y.code)+'</span><span class="skill-group" title="'+E(groupLabel)+'">'+E(groupLabel)+'</span></div>'
   +'<div class="card-identity"><span class="skill-tag">'+E(component)+'</span>'+extraHtml+'</div>'
   +'<p class="card-text">'+E(y.text)+'</p>'
   +'<div class="card-foot"><span>1 clique: detalhes · 2 cliques: abrir</span><span aria-hidden="true">↗</span></div>'
@@ -979,15 +1021,23 @@ function reunaBlock(title,inner,cls){return '<div class="reuna-block'+(cls?' '+c
 function reunaList(items){return '<ul class="reuna-list">'+items.map(t=>'<li>'+E(t)+'</li>').join("")+'</ul>';}
 function reunaParas(items){return items.map(t=>'<p>'+E(t)+'</p>').join("");}
 function ptList(a){return a.length>1?a.slice(0,-1).join(", ")+" e "+a[a.length-1]:a.join("");}
-function reunaRelCardsHtml(codes,k,expl,area,ano){
+function reunaRelCardsHtml(codes,k,expl,area,ano,unidade){
  const items=codes.map(c=>{
   const it=S.by.get(c)||{code:c,text:'Habilidade indicada no Mapa de Foco do Instituto Reúna.',discipline:area,group:ano};
   const explicacao=expl&&expl[c];
+  const reunaFocal=S.data.reuna?.[c]?.tipo==="AF"?S.data.reuna[c]:null;
+  const reunaCtx=reunaFocal?reunaCardContext(reunaFocal,it):null;
   const rel={
    type:REUNA_CLASSES[k]||"Aprendizagem focal (AF)",
    basis:explicacao||("Habilidade classificada como "+(REUNA_CLASSES[k]||k)+" no Mapa de Foco da BNCC do Instituto Reúna."),
    kind:"reuna-"+k.toLowerCase(),
-   badge:k==="AF"?"Aprendizagem Focal":(k==="AC"?"Aprendizagem Complementar":"Expectativa de Fluência")
+   badge:k==="AF"?"Aprendizagem Focal":(k==="AC"?"Aprendizagem Complementar":"Expectativa de Fluência"),
+   reunaTipo:k,
+   reunaPosicao:reunaFocal?.posicao,
+   reunaTotal:reunaFocal?.total_grupo,
+   reunaRotulo:reunaCtx?.rotulo||reunaFocal?.rotulo,
+   reunaUnidade:reunaCtx?.unidade||unidade,
+   reunaLabel:reunaCtx?.label
   };
   return {item:it,rel};
  });
@@ -1010,7 +1060,7 @@ function reunaOccurrenceHtml(o,resumo,area,code){
  if(o.objetivos&&o.objetivos.length)parts.push(reunaBlock("Objetivos de aprendizagem",reunaList(o.objetivos)));
  const refs=[];["CG","CA","CE"].forEach(k=>(comp[k]||[]).forEach(n=>refs.push(reunaCompRef(k,n,area,code))));
  if(refs.length)parts.push(reunaBlock("Competências relacionadas",reunaCompGroup(refs)));
- ["AF","AC","EF"].forEach(k=>{if(rel[k]&&rel[k].length)parts.push(reunaRelCardsHtml(rel[k],k,expl,area,o.ano));});
+ ["AF","AC","EF"].forEach(k=>{if(rel[k]&&rel[k].length)parts.push(reunaRelCardsHtml(rel[k],k,expl,area,o.ano,o.campoOuUnidade));});
  if(o.comentario)parts.push('<details class="reuna-comment" open><summary>Comentário pedagógico</summary><p>'+E(o.comentario)+'</p></details>');
  if(resumo)parts.push('<details class="reuna-comment"><summary>Resumo do ano</summary>'+reunaParas(resumo.texto?[resumo.texto]:[])+(resumo.totais?'<p class="reuna-totais">'+E(resumo.totais)+'</p>':'')+'</details>');
  return '<article class="reuna-occurrence"><header class="reuna-occ-head"><h4>'+E(o.ano)+'</h4><span class="reuna-unit">'+E(o.campoOuUnidade||"—")+'</span></header>'+parts.join("")+'</article>';
@@ -1335,6 +1385,35 @@ function habilidadeModalAbrir(code,extra){
  if(extra&&(extra.relType||extra.relBasis||extra.relConf)){
   relHtml='<div class="hab-dialog-rel"><strong>'+E(extra.relType||"Relação")+(extra.relConf?' · <span class="progress-badge is-suggested">'+E(extra.relConf)+'</span>':'')+'</strong>'+(extra.relBasis?'<p>'+E(extra.relBasis)+'</p>':'')+'</div>';
  }
+
+ const rf=S.data.reuna?.[code];
+ const isFocal=rf?.tipo==="AF";
+ const rCtx=isFocal?reunaCardContext(rf,x):null;
+ const reunaTipo=extra?.reunaTipo||(isFocal?"AF":(extra?.relKind==="reuna-ac"?"AC":(extra?.relKind==="reuna-ef"?"EF":null)));
+ const reunaPos=extra?.reunaPosicao||rf?.posicao;
+ const reunaTot=extra?.reunaTotal||rf?.total_grupo;
+ const reunaUni=extra?.reunaUnidade||rCtx?.unidade||rf?.mapaDeFoco?.ocorrencias?.[0]?.campoOuUnidade;
+ const reunaRot=extra?.reunaRotulo||rCtx?.rotulo||rf?.rotulo;
+ const reunaDesc=rCtx?.groupDesc||(rf?.ano_faixa?(/ano/i.test(rf.ano_faixa)?rf.ano_faixa:rf.ano_faixa+" ano"):"");
+
+ let reunaBoxHtml="";
+ if(reunaTipo||isFocal||extra?.relKind?.startsWith("reuna")){
+  const tNome=reunaTipo==="AF"?"Aprendizagem Focal (AF)":(reunaTipo==="AC"?"Aprendizagem Complementar (AC)":(reunaTipo==="EF"?"Expectativa de Fluência (EF)":"Referência Reúna"));
+  const pClass=reunaTipo==="AF"?"reuna-pill--af":(reunaTipo==="AC"?"reuna-pill--ac":"reuna-pill--ef");
+  const icon=reunaTipo==="AF"?"🎯":(reunaTipo==="AC"?"📘":"⚡");
+  const seqLabel=reunaPos&&reunaTot?("Focal "+reunaPos+" de "+reunaTot+(reunaDesc?" · "+reunaDesc:"")):(!isFocal&&reunaTipo==="AF"?"Focal (AF)":"");
+  const uniLabel=reunaUni?reunaFormatUnit(reunaUni):"";
+
+  reunaBoxHtml='<div class="hab-dialog-reuna-box">'
+   +'<div class="hab-dialog-reuna-head">'
+   +'<span class="reuna-pill '+pClass+'">'+icon+' '+E(tNome)+'</span>'
+   +(seqLabel?'<span class="hab-dialog-reuna-seq">Sequência: <strong>'+E(seqLabel)+'</strong></span>':'')
+   +'</div>'
+   +(uniLabel?'<p class="hab-dialog-reuna-unit"><strong>Campo ou Unidade Temática:</strong> '+E(uniLabel)+'</p>':'')
+   +(reunaRot?'<p class="hab-dialog-reuna-rotulo">'+E(reunaRot)+'</p>':'')
+   +'</div>';
+ }
+
  const kicker=isComp?"Competência":(x.kind==="cieb"?"Referência CIEB":"Habilidade");
  const btnText=isComp?"Ir para os detalhes da competência →":"Ir para os detalhes da habilidade →";
  d.innerHTML='<form method="dialog" class="hab-dialog-form">'
@@ -1342,6 +1421,7 @@ function habilidadeModalAbrir(code,extra){
   +'<h2 id="habilidadeDialogTitulo">'+E(x.code)+'</h2>'
   +'<p class="hab-dialog-meta">'+E(meta)+'</p>'
   +relHtml
+  +reunaBoxHtml
   +habilidadeMapaHtml(code)
   +'<p class="hab-dialog-texto">'+E(x.text)+'</p>'
   +'<div class="hab-dialog-acoes"><button type="button" class="print-btn print-btn--primary" data-hab-abrir="'+E(code)+'">'+E(btnText)+'</button><button type="submit" class="print-btn" value="fechar">Fechar</button></div>'
@@ -1404,7 +1484,13 @@ function openCardDetailModal(card){
   habilidadeModalAbrir(code,{
    relType:card.dataset.relType,
    relBasis:card.dataset.relBasis,
-   relConf:card.dataset.relConf
+   relConf:card.dataset.relConf,
+   relKind:card.dataset.relKind,
+   reunaTipo:card.dataset.reunaTipo,
+   reunaPosicao:card.dataset.reunaPosicao,
+   reunaTotal:card.dataset.reunaTotal,
+   reunaUnidade:card.dataset.reunaUnidade,
+   reunaRotulo:card.dataset.reunaRotulo
   });
  }
 }
@@ -2055,7 +2141,7 @@ function events(){
 }
 
 function getSkillConnectionsData(x){
- const result={central:x,allNodes:new Map(),groups:{anteriores:[],posteriores:[],competencias:[],interdisciplinar:[],cieb:[],reuna:[],curriculo:[]}};
+ const result={central:x,allNodes:new Map(),groups:{anteriores:[],posteriores:[],competencias:[],interdisciplinar:[],cieb:[],reuna:[],reunaAF:[],reunaAC:[],reunaEF:[],curriculo:[]}};
  if(!x)return result;
  try{
   for(const c of getCompetenciasForSkill(x)){
@@ -2111,15 +2197,87 @@ function getSkillConnectionsData(x){
      }
     }
     const rel=oc.habilidadesRelacionadas||{};
-    for(const code of [...(rel.AF||[]),...(rel.AC||[]),...(rel.EF||[])]){
+    const ocUnit=oc.campoOuUnidade||"";
+
+    // 1) AF - Aprendizagens Focais (com ordem sequencial x/y na unidade temática)
+    for(const code of rel.AF||[]){
      if(code&&code!==x.code&&!result.allNodes.has(code)){
       const item=S.by.get(code);
-      const node={code,item,kind:item?.kind||'bncc',category:'reuna',text:item?.text||''};
+      const rf=S.data.reuna?.[code];
+      const rPos=rf?.posicao;
+      const rTot=rf?.total_grupo;
+      const node={
+       code,
+       item,
+       kind:item?.kind||'bncc',
+       category:'reuna',
+       reunaSubtipo:'AF',
+       reunaPosicao:rPos,
+       reunaTotal:rTot,
+       reunaUnidade:rf?.mapaDeFoco?.ocorrencias?.[0]?.campoOuUnidade||ocUnit,
+       reunaRotulo:rf?.rotulo,
+       reunaSeq:rPos&&rTot?('AF '+rPos+'/'+rTot):'AF',
+       reason:'Aprendizagem Focal (AF)'+(rPos&&rTot?' '+rPos+'/'+rTot:''),
+       text:item?.text||''
+      };
       result.allNodes.set(code,node);
       result.groups.reuna.push(node);
+      result.groups.reunaAF.push(node);
+     }
+    }
+
+    // 2) AC - Aprendizagens Complementares
+    for(const code of rel.AC||[]){
+     if(code&&code!==x.code&&!result.allNodes.has(code)){
+      const item=S.by.get(code);
+      const rf=S.data.reuna?.[code];
+      const node={
+       code,
+       item,
+       kind:item?.kind||'bncc',
+       category:'reuna',
+       reunaSubtipo:'AC',
+       reunaPosicao:rf?.posicao,
+       reunaTotal:rf?.total_grupo,
+       reunaUnidade:rf?.mapaDeFoco?.ocorrencias?.[0]?.campoOuUnidade||ocUnit,
+       reunaRotulo:rf?.rotulo,
+       reunaSeq:'AC',
+       reason:'Aprendizagem Complementar (AC)',
+       text:item?.text||''
+      };
+      result.allNodes.set(code,node);
+      result.groups.reuna.push(node);
+      result.groups.reunaAC.push(node);
+     }
+    }
+
+    // 3) EF - Expectativa de Fluência
+    for(const code of rel.EF||[]){
+     if(code&&code!==x.code&&!result.allNodes.has(code)){
+      const item=S.by.get(code);
+      const rf=S.data.reuna?.[code];
+      const node={
+       code,
+       item,
+       kind:item?.kind||'bncc',
+       category:'reuna',
+       reunaSubtipo:'EF',
+       reunaPosicao:rf?.posicao,
+       reunaTotal:rf?.total_grupo,
+       reunaUnidade:rf?.mapaDeFoco?.ocorrencias?.[0]?.campoOuUnidade||ocUnit,
+       reunaRotulo:rf?.rotulo,
+       reunaSeq:'EF',
+       reason:'Expectativa de Fluência (EF)',
+       text:item?.text||''
+      };
+      result.allNodes.set(code,node);
+      result.groups.reuna.push(node);
+      result.groups.reunaEF.push(node);
      }
     }
    }
+   // Ordenar Aprendizagens Focais pela posicao na unidade tematica
+   result.groups.reunaAF.sort((a,b)=>(a.reunaPosicao||999)-(b.reunaPosicao||999));
   }
   // Try graph progression incoming / outgoing
   const gState=typeof window!=="undefined"?window.bnccGraphState:null;
@@ -2169,54 +2327,60 @@ function arrangeGraphPositions(central,allNodes,groups){
   });
  }
 
- // Agrupamento coeso dos nós conforme sua procedência/origem com distâncias seguras
- // - Reúna (Mapa Focal): cluster no quadrante superior esquerdo
- layoutCluster(groups.reuna||[],-420,-260,3,145,82);
+ // Agrupamento coeso dos nós conforme sua procedência/origem com distâncias compactas e sem sobreposição
+ // - Reúna (Mapa Focal): sub-agrupamentos AF, AC e EF no quadrante superior esquerdo
+ if((groups.reunaAF?.length||0)+(groups.reunaAC?.length||0)+(groups.reunaEF?.length||0)>0){
+  layoutCluster(groups.reunaAF||[],-260,-170,3,105,52);
+  layoutCluster(groups.reunaAC||[],-370,-100,3,105,52);
+  layoutCluster(groups.reunaEF||[],-170,-220,2,105,52);
+ }else{
+  layoutCluster(groups.reuna||[],-280,-160,3,105,52);
+ }
 
  // - CIEB / Computação: cluster no quadrante superior direito
- layoutCluster(groups.cieb||[],420,-260,3,145,82);
+ layoutCluster(groups.cieb||[],280,-170,3,105,52);
 
  // - Competências BNCC: cluster no topo central
- layoutCluster(groups.competencias||[],0,-370,2,150,82);
+ layoutCluster(groups.competencias||[],0,-210,2,112,50);
 
  // - Anteriores / Pré-requisitos: cluster à esquerda do percurso
- layoutCluster(groups.anteriores||[],-640,20,4,148,82);
+ layoutCluster(groups.anteriores||[],-340,0,3,105,52);
 
  // - Posteriores / Continuidade: cluster à direita do percurso
- layoutCluster(groups.posteriores||[],640,20,4,148,82);
+ layoutCluster(groups.posteriores||[],340,0,3,105,52);
 
  // - Interdisciplinar IA: cluster na base central
- layoutCluster(groups.interdisciplinar||[],0,360,2,150,82);
+ layoutCluster(groups.interdisciplinar||[],0,210,2,112,50);
 
  // - Currículo / Articulações: quadrantes inferiores
  const curr=groups.curriculo||[];
  const currLeft=curr.slice(0,Math.ceil(curr.length/2));
  const currRight=curr.slice(Math.ceil(curr.length/2));
- layoutCluster(currLeft,-360,260,2,145,82);
- layoutCluster(currRight,360,260,2,145,82);
+ layoutCluster(currLeft,-260,180,2,105,52);
+ layoutCluster(currRight,260,180,2,105,52);
 
  // Qualquer outro nó avulso não categorizado
  (allNodes||new Map()).forEach((node,code)=>{
   if(!positions.has(code)){
    const angle=positions.size*0.8;
-   positions.set(code,{x:Math.cos(angle)*480,y:Math.sin(angle)*300,node});
+   positions.set(code,{x:Math.cos(angle)*340,y:Math.sin(angle)*220,node});
   }
  });
 
  // Resolução e prevenção estrita de sobreposição de nós e títulos (Collision Avoidance Relaxation)
  const nodes=[...positions.values()];
- const PADDING_X=26;
- const PADDING_Y=22;
- const NODE_HEIGHT=62;
+ const PADDING_X=14;
+ const PADDING_Y=12;
+ const NODE_HEIGHT=44;
 
- for(let iter=0;iter<18;iter++){
+ for(let iter=0;iter<24;iter++){
   let moved=false;
   for(let i=0;i<nodes.length;i++){
    for(let j=i+1;j<nodes.length;j++){
     const a=nodes[i];
     const b=nodes[j];
-    const wA=Math.max(76,(a.node.code?.length||8)*9+22);
-    const wB=Math.max(76,(b.node.code?.length||8)*9+22);
+    const wA=Math.max(68,(a.node.code?.length||8)*8+16);
+    const wB=Math.max(68,(b.node.code?.length||8)*8+16);
     const reqX=(wA+wB)/2+PADDING_X;
     const reqY=NODE_HEIGHT+PADDING_Y;
 
@@ -2230,13 +2394,13 @@ function arrangeGraphPositions(central,allNodes,groups){
      const overlapX=reqX-absX;
      const overlapY=reqY-absY;
 
-     if(overlapX<overlapY*1.4){
-      const shiftX=(overlapX/2)+1;
+     if(overlapX<overlapY*1.3){
+      const shiftX=(overlapX/2)+0.8;
       const signX=(dx>=0?1:-1)||1;
       if(!a.node.isCentral)a.x-=shiftX*signX;
       if(!b.node.isCentral)b.x+=shiftX*signX;
      }else{
-      const shiftY=(overlapY/2)+1;
+      const shiftY=(overlapY/2)+0.8;
       const signY=(dy>=0?1:-1)||1;
       if(!a.node.isCentral)a.y-=shiftY*signY;
       if(!b.node.isCentral)b.y+=shiftY*signY;
@@ -2245,13 +2409,13 @@ function arrangeGraphPositions(central,allNodes,groups){
    }
   }
 
-  // Raio de segurança ao redor do nó central (r = 190px)
+  // Raio de segurança ao redor do nó central (r = 110px)
   for(let i=0;i<nodes.length;i++){
    const a=nodes[i];
    if(a.node.isCentral)continue;
    const dist=Math.hypot(a.x,a.y);
-   if(dist<190){
-    const factor=190/Math.max(dist,1);
+   if(dist<110){
+    const factor=110/Math.max(dist,1);
     a.x*=factor;
     a.y*=factor;
    }
@@ -2296,7 +2460,8 @@ function openProposalGraph(code){
   curriculo:{label:"BNCC / Articulações",color:"#b5a0ff"}
  };
 
- const availableCats=Object.keys(conn.groups).filter(k=>conn.groups[k].length>0);
+ const mainCatKeys=['anteriores','posteriores','competencias','interdisciplinar','cieb','reuna','curriculo'];
+ const availableCats=mainCatKeys.filter(k=>conn.groups[k]&&conn.groups[k].length>0);
  const filterChips=['<button type="button" class="proposal-chip is-active" data-cat="" style="--filter-accent:'+compCol+'"><span class="proposal-chip-check">✓</span><span>Todas</span><span class="proposal-chip-count">'+conn.allNodes.size+'</span></button>']
   .concat(availableCats.map(k=>{
    const cfg=catLabels[k]||{label:k,color:"#b5a0ff"};
@@ -2348,57 +2513,94 @@ function openProposalGraph(code){
   wiresHtml+='<path class="graph2-wire" data-wire="'+E(nodeCode)+'" data-cat="'+E(node.category)+'" d="'+d+'" style="--c:'+c+'"></path>';
   flowsHtml+='<path class="graph2-flow '+flowClass+'" data-flow="'+E(nodeCode)+'" data-cat="'+E(node.category)+'" data-flow-type="'+flowType+'" pathLength="100" d="'+d+'" style="--c:'+c+';--dur:'+dur+'"></path>';
 
-  const badgeW=Math.max(72,nodeCode.length*8.5+20);
-  nodesHtml+='<g class="graph2-node" data-code="'+E(nodeCode)+'" data-cat="'+E(node.category)+'" transform="translate('+nx.toFixed(1)+','+ny.toFixed(1)+')" tabindex="0" role="button" aria-label="'+E(nodeCode)+'">'
+  const badgeW=Math.max(68,nodeCode.length*7.8+16);
+  const reunaSub=node.reunaSubtipo;
+  const subPill=reunaSub?(
+   '<rect class="graph2-sub-pill" x="-19" y="31" width="38" height="13" rx="6.5"></rect>'
+   +'<text class="graph2-sub-text" x="0" y="40">'+E(node.reunaSeq||reunaSub)+'</text>'
+  ):'';
+
+  nodesHtml+='<g class="graph2-node" data-code="'+E(nodeCode)+'" data-cat="'+E(node.category)+'"'+(reunaSub?' data-reuna-sub="'+E(reunaSub)+'"':'')+' transform="translate('+nx.toFixed(1)+','+ny.toFixed(1)+')" tabindex="0" role="button" aria-label="'+E(nodeCode)+'">'
    +'<title>'+E(nodeCode)+(node.reason?' · '+E(node.reason):'')+'</title>'
-   +'<circle class="graph2-halo" r="24" style="--c:'+c+'"></circle>'
-   +'<circle class="graph2-core" r="7" style="--c:'+c+'"></circle>'
-   +'<rect class="graph2-badge-bg" x="-'+(badgeW/2).toFixed(1)+'" y="10" width="'+badgeW+'" height="23" style="--c:'+c+'"></rect>'
+   +'<circle class="graph2-halo" r="22" style="--c:'+c+'"></circle>'
+   +'<circle class="graph2-core" r="6" style="--c:'+c+'"></circle>'
+   +'<rect class="graph2-badge-bg" x="-'+(badgeW/2).toFixed(1)+'" y="8" width="'+badgeW+'" height="21" rx="10.5" style="--c:'+c+'"></rect>'
    +'<text class="graph2-label" x="0" y="22">'+E(nodeCode)+'</text>'
+   +subPill
    +'</g>';
  });
 
- const centralBadgeW=Math.max(90,x.code.length*9.5+24);
+ const centralBadgeW=Math.max(84,x.code.length*8.8+20);
  const centralNodeHtml='<g class="graph2-node is-central" data-code="'+E(x.code)+'" transform="translate(0,0)" tabindex="0" role="button" aria-label="'+E(x.code)+'">'
-  +'<title>'+E(x.code)+' · Habilidade ativa</title>'
-  +'<circle class="graph2-halo" r="38" style="--c:'+compCol+'"></circle>'
-  +'<circle class="graph2-core" r="14" style="--c:'+compCol+'"></circle>'
-  +'<rect class="graph2-badge-bg" x="-'+(centralBadgeW/2).toFixed(1)+'" y="18" width="'+centralBadgeW+'" height="28" style="--c:'+compCol+'"></rect>'
-  +'<text class="graph2-label" x="0" y="32">'+E(x.code)+'</text>'
+  +'<title>'+E(x.code)+' · Habilidade ativa (clique para ver detalhes completos)</title>'
+  +'<circle class="graph2-halo" r="32" style="--c:'+compCol+'"></circle>'
+  +'<circle class="graph2-core" r="12" style="--c:'+compCol+'"></circle>'
+  +'<rect class="graph2-badge-bg" x="-'+(centralBadgeW/2).toFixed(1)+'" y="14" width="'+centralBadgeW+'" height="26" rx="13" style="--c:'+compCol+'"></rect>'
+  +'<text class="graph2-label" x="0" y="27">'+E(x.code)+'</text>'
   +'</g>';
 
- const legendHtml='<div class="graph2-map-legend" role="region" aria-label="Legenda do mapa">'
-  +'<div class="legend-row-main">'
-  +'<div class="legend-header"><strong class="legend-title"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="10"/><path d="M12 16v-4"/><path d="M12 8h.01"/></svg> Legenda:</strong></div>'
-  +'<div class="legend-items">'
-  +'<span class="legend-item"><span class="legend-dot is-central" style="--c:'+compCol+'"></span><strong>Centro:</strong> '+E(x.code)+'</span>'
-  +(conn.groups.anteriores?.length?'<span class="legend-item"><span class="legend-dot" style="--c:#61b8ff"></span><strong>← Esquerda:</strong> Vêm antes</span>':'')
-  +(conn.groups.posteriores?.length?'<span class="legend-item"><span class="legend-dot" style="--c:#ffb86b"></span><strong>Direita →:</strong> Vêm depois</span>':'')
-  +(conn.groups.competencias?.length?'<span class="legend-item"><span class="legend-dot" style="--c:#c9a4e0"></span><strong>↑ Topo:</strong> Competências</span>':'')
-  +(conn.groups.interdisciplinar?.length?'<span class="legend-item"><span class="legend-dot" style="--c:#7de2b8"></span><strong>↓ Base:</strong> Interdisciplinar IA</span>':'')
-  +(conn.groups.cieb?.length?'<span class="legend-item"><span class="legend-dot" style="--c:#7dc9e8"></span><strong>Diagonal:</strong> CIEB</span>':'')
-  +(conn.groups.reuna?.length?'<span class="legend-item"><span class="legend-dot" style="--c:#f2a365"></span><strong>Diagonal:</strong> Reúna</span>':'')
+ const verticalLegendHtml='<aside class="graph2-map-legend" id="proposalVerticalLegend" aria-label="Legenda do mapa" hidden>'
+  +'<div class="legend-vertical-head">'
+  +'<div class="legend-vertical-title">'
+  +'<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="10"/><path d="M12 16v-4"/><path d="M12 8h.01"/></svg>'
+  +'<strong>Legenda do Mapa</strong>'
   +'</div>'
-  +'<span class="legend-hint"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M15 3h6v6"/><path d="M10 14 21 3"/><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/></svg> Clique no nó para ver detalhes</span>'
+  +'<button type="button" class="legend-close-btn" id="legendCloseBtn" aria-label="Fechar legenda" title="Fechar legenda">×</button>'
   +'</div>'
+
+  +'<div class="legend-vertical-section legend-row-main">'
+  +'<span class="legend-sec-title">Disposição e Origem</span>'
+  +'<div class="legend-items-vertical legend-items">'
+  +'<div class="legend-item-v legend-item"><span class="legend-dot is-central" style="--c:'+compCol+'"></span><div><strong>Centro:</strong> <span>'+E(x.code)+' (habilidade ativa)</span></div></div>'
+  +(conn.groups.anteriores?.length?'<div class="legend-item-v legend-item"><span class="legend-dot" style="--c:#61b8ff"></span><div><strong>← Esquerda:</strong> <span>Vêm antes / Pré-requisitos</span></div></div>':'')
+  +(conn.groups.posteriores?.length?'<div class="legend-item-v legend-item"><span class="legend-dot" style="--c:#ffb86b"></span><div><strong>Direita →:</strong> <span>Vêm depois / Continuidade</span></div></div>':'')
+  +(conn.groups.competencias?.length?'<div class="legend-item-v legend-item"><span class="legend-dot" style="--c:#c9a4e0"></span><div><strong>↑ Topo:</strong> <span>Competências BNCC</span></div></div>':'')
+  +(conn.groups.interdisciplinar?.length?'<div class="legend-item-v legend-item"><span class="legend-dot" style="--c:#7de2b8"></span><div><strong>↓ Base:</strong> <span>Interdisciplinar IA</span></div></div>':'')
+  +(conn.groups.cieb?.length?'<div class="legend-item-v legend-item"><span class="legend-dot" style="--c:#7dc9e8"></span><div><strong>↗ Sup. Direita:</strong> <span>CIEB / Computação</span></div></div>':'')
+  +(conn.groups.reuna?.length?'<div class="legend-item-v legend-item"><span class="legend-dot" style="--c:#f2a365"></span><div><strong>↖ Sup. Esquerda:</strong> <span>Reúna (Mapa Focal)</span></div></div>':'')
+  +'</div>'
+  +'</div>'
+
+  +((conn.groups.reunaAF?.length||conn.groups.reunaAC?.length||conn.groups.reunaEF?.length)?(
+   '<div class="legend-vertical-section">'
+   +'<span class="legend-sec-title">Agrupamentos Reúna</span>'
+   +'<div class="legend-items-vertical">'
+   +(conn.groups.reunaAF?.length?'<div class="legend-item-v"><span class="reuna-pill reuna-pill--af">🎯 AF</span><div><strong>Aprendizagem Focal:</strong> <span>Ordem 1 a '+conn.groups.reunaAF.length+' na unidade</span></div></div>':'')
+   +(conn.groups.reunaAC?.length?'<div class="legend-item-v"><span class="reuna-pill reuna-pill--ac">📘 AC</span><div><strong>Aprendizagem Complementar:</strong> <span>Articulação de apoio</span></div></div>':'')
+   +(conn.groups.reunaEF?.length?'<div class="legend-item-v"><span class="reuna-pill reuna-pill--ef">⚡ EF</span><div><strong>Expectativa de Fluência:</strong> <span>Consolidação</span></div></div>':'')
+   +'</div>'
+   +'</div>'
+  ):'')
+
   +'<div class="legend-row-flows" aria-label="Significado dos fluxos animados">'
-  +'<span class="legend-flow-tag" title="Percorre do pré-requisito até a habilidade central"><span class="flow-preview-line flow-preview-in"></span><strong>Pré-requisito:</strong> nó → habilidade</span>'
-  +'<span class="legend-flow-tag" title="Percorre da habilidade central até o vem depois"><span class="flow-preview-line flow-preview-out"></span><strong>Continuidade:</strong> habilidade → nó</span>'
-  +'<span class="legend-flow-tag" title="Vai e volta continuamente entre os nós"><span class="flow-preview-line flow-preview-bounce"></span><strong>Interdisciplinar:</strong> vai e volta</span>'
-  +'<span class="legend-flow-tag" title="Barra curta com percurso rápido"><span class="flow-preview-line flow-preview-fast"></span><strong>Competência:</strong> barra rápida</span>'
-  +'<span class="legend-flow-tag" title="Bolinha percorrendo da habilidade até o CIEB/Computação"><span class="flow-preview-dot"></span><strong>CIEB / Computação:</strong> bolinha</span>'
+  +'<span class="legend-sec-title">Sentido dos Fluxos Animados</span>'
+  +'<div class="legend-items-vertical">'
+  +'<div class="legend-item-v"><span class="flow-preview-line flow-preview-in"></span><div><strong>Pré-requisito:</strong> <span>nó → habilidade</span></div></div>'
+  +'<div class="legend-item-v"><span class="flow-preview-line flow-preview-out"></span><div><strong>Continuidade:</strong> <span>habilidade → nó</span></div></div>'
+  +'<div class="legend-item-v"><span class="flow-preview-line flow-preview-bounce"></span><div><strong>Interdisciplinar:</strong> <span>vai e volta contínuo</span></div></div>'
+  +'<div class="legend-item-v"><span class="flow-preview-line flow-preview-fast"></span><div><strong>Competência:</strong> <span>barra rápida</span></div></div>'
+  +'<div class="legend-item-v"><span class="flow-preview-dot"></span><div><strong>CIEB / Computação:</strong> <span>bolinha pulsante</span></div></div>'
   +'</div>'
-  +'</div>';
+  +'</div>'
+
+  +'<div class="legend-vertical-foot legend-hint">'
+  +'<svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M15 3h6v6"/><path d="M10 14 21 3"/><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/></svg>'
+  +'<span>1 clique em qualquer nó abre detalhes completos.</span>'
+  +'</div>'
+  +'</aside>';
 
  page.innerHTML='<header class="proposal-topbar">'
   +'<div class="proposal-nav-group">'
   +'<button type="button" class="proposal-btn" id="proposalBackDetail">← Voltar aos detalhes</button>'
   +'<button type="button" class="proposal-btn" data-home>Catálogo</button>'
   +'</div>'
-  +'<div class="proposal-skill-pill">'
+  +'<div class="proposal-skill-pill" id="proposalSkillPill" role="button" tabindex="0" title="Clique para ver os detalhes completos da habilidade '+E(x.code)+'" aria-label="Habilidade em foco: '+E(x.code)+'">'
+  +'<div class="proposal-skill-pill-head">'
   +'<span class="proposal-skill-code">'+E(x.code)+'</span>'
   +'<span class="proposal-skill-meta">'+E(compName)+(x.group?' · '+E(x.group):'')+'</span>'
   +'<span class="proposal-conn-tag">'+conn.allNodes.size+' conexões</span>'
+  +'</div>'
+  +'<p class="proposal-skill-desc">'+E(x.text||'')+'</p>'
   +'</div>'
   +'<div class="proposal-view-actions">'
   +'<button type="button" class="proposal-tool-btn" id="graphZoomIn" aria-label="Aumentar zoom" title="Aumentar zoom">+</button>'
@@ -2408,16 +2610,23 @@ function openProposalGraph(code){
   +'</header>'
   +'<div class="proposal-canvas-wrap" id="proposalCanvasWrap">'
   +'<div class="graph2-map-controls-top" role="toolbar" aria-label="Filtrar conexões do mapa">'
+  +'<div class="graph2-filter-chips-wrap">'
   +'<span class="graph2-filter-label"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polygon points="22 3 2 3 10 12.46 10 19 14 21 14 12.46 22 3"/></svg> Filtros:</span>'
   +filterChips
   +'</div>'
-  +'<svg class="proposal-svg" id="proposalSvg" viewBox="-900 -520 1800 1040">'
+  +'<button type="button" class="proposal-chip proposal-legend-btn" id="proposalLegendToggle" aria-expanded="false" aria-controls="proposalVerticalLegend" title="Exibir ou recolher a legenda do mapa">'
+  +'<svg class="legend-btn-icon" width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="10"/><path d="M12 16v-4"/><path d="M12 8h.01"/></svg>'
+  +'<span>Legenda</span>'
+  +'<span class="legend-toggle-caret" aria-hidden="true">▸</span>'
+  +'</button>'
+  +'</div>'
+  +verticalLegendHtml
+  +'<svg class="proposal-svg" id="proposalSvg" viewBox="-800 -480 1600 960">'
   +'<g id="proposalZoomGroup" transform="translate(0,0) scale(1)">'
   +'<g class="graph2-wires-layer">'+wiresHtml+flowsHtml+'</g>'
   +'<g class="graph2-nodes-layer">'+nodesHtml+centralNodeHtml+'</g>'
   +'</g>'
   +'</svg>'
-  +legendHtml
   +'</div>';
 
  page.querySelector("#proposalBackDetail")?.addEventListener("click",()=>{
@@ -2435,6 +2644,32 @@ function openProposalGraph(code){
  };
  window.addEventListener("keydown",handleEscProposal);
  page.querySelectorAll("[data-home]").forEach(b=>b.addEventListener("click",home));
+
+ const skillPill=page.querySelector("#proposalSkillPill");
+ skillPill?.addEventListener("click",()=>habilidadeModalAbrir(x.code));
+ skillPill?.addEventListener("keydown",e=>{
+  if(e.key==="Enter"||e.key===" "){
+   e.preventDefault();
+   habilidadeModalAbrir(x.code);
+  }
+ });
+
+ const legendBtn=page.querySelector("#proposalLegendToggle");
+ const legendPanel=page.querySelector("#proposalVerticalLegend");
+ const legendCloseBtn=page.querySelector("#legendCloseBtn");
+
+ function toggleLegend(force){
+  if(!legendPanel)return;
+  const shouldOpen=typeof force==="boolean"?force:legendPanel.hidden;
+  legendPanel.hidden=!shouldOpen;
+  legendBtn?.classList.toggle("is-active",shouldOpen);
+  legendBtn?.setAttribute("aria-expanded",String(shouldOpen));
+  const caret=legendBtn?.querySelector(".legend-toggle-caret");
+  if(caret)caret.textContent=shouldOpen?"◂":"▸";
+ }
+
+ legendBtn?.addEventListener("click",()=>toggleLegend());
+ legendCloseBtn?.addEventListener("click",()=>toggleLegend(false));
 
  const zoomGroup=page.querySelector("#proposalZoomGroup");
  const canvasWrap=page.querySelector("#proposalCanvasWrap");
@@ -2461,7 +2696,7 @@ function openProposalGraph(code){
  // Pan & Zoom via pointer/drag and wheel
  let isPanning=false,startX=0,startY=0;
  canvasWrap?.addEventListener("pointerdown",e=>{
-  if(e.target.closest(".graph2-node, .proposal-chip, .graph2-map-controls-top, .graph2-map-legend"))return;
+  if(e.target.closest(".graph2-node, .proposal-chip, .graph2-map-controls-top, .graph2-vertical-legend"))return;
   isPanning=true;
   startX=e.clientX-proposalGraphState.panX;
   startY=e.clientY-proposalGraphState.panY;
@@ -2513,7 +2748,7 @@ function openProposalGraph(code){
   });
  }
 
- page.querySelectorAll(".proposal-chip").forEach(chip=>{
+ page.querySelectorAll(".proposal-chip[data-cat]").forEach(chip=>{
   chip.addEventListener("click",()=>{
    const cat=chip.dataset.cat||"";
    if(!cat){
@@ -2543,12 +2778,26 @@ function openProposalGraph(code){
   });
 
   n.addEventListener("click",()=>{
+   if(nCode===x.code){
+    habilidadeModalAbrir(x.code);
+    return;
+   }
+   const nodeData=conn.allNodes.get(nCode);
    if(S.by.has(nCode)){
-    habilidadeModalAbrir(nCode);
+    const extra=nodeData?{
+     relType:nodeData?.reason||(nodeData?.category==='reuna'?'Reúna':undefined),
+     relBasis:nodeData?.rel?.basis||nodeData?.reason,
+     relKind:nodeData?.reunaSubtipo?('reuna-'+nodeData.reunaSubtipo.toLowerCase()):undefined,
+     reunaTipo:nodeData?.reunaSubtipo,
+     reunaPosicao:nodeData?.reunaPosicao,
+     reunaTotal:nodeData?.reunaTotal,
+     reunaUnidade:nodeData?.reunaUnidade,
+     reunaRotulo:nodeData?.reunaRotulo
+    }:null;
+    if(extra)habilidadeModalAbrir(nCode,extra);else habilidadeModalAbrir(nCode);
    }else{
-    const nodeData=conn.allNodes.get(nCode);
     modalAbrirInfo({
-     kicker:"Referência conectada",
+     kicker:nodeData?.reunaSubtipo?('Reúna · '+(nodeData.reunaSubtipo==='AF'?'Aprendizagem Focal':nodeData.reunaSubtipo==='AC'?'Aprendizagem Complementar':'Expectativa de Fluência')):"Referência conectada",
      title:nCode,
      meta:nodeData?.reason||"Conexão curricular",
      texto:nodeData?.text||("Referência conectada à habilidade "+x.code+".")

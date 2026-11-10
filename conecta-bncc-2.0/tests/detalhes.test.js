@@ -828,3 +828,50 @@ test('as animações dos fluxos respeitam o sentido pedagógico e a legenda fica
  assert.ok(appJs.includes('flow-cieb-comp'), 'app.js deve classificar CIEB e Computação com bolinha');
  assert.ok(appJs.includes('class="legend-row-flows"'), 'legenda deve conter linha explicativa dos fluxos animados');
 });
+
+test('o topo da Proposta 2 apresenta a descrição da habilidade em 2 linhas truncadas e abre modal completo ao clicar',()=>{
+ const propostaCss = fs.readFileSync(path.join(root, 'proposta-grafo.css'), 'utf8');
+ const appJs = fs.readFileSync(path.join(root, 'app.js'), 'utf8');
+
+ assert.ok(appJs.includes('class="proposal-skill-desc"'), 'app.js deve renderizar a descrição da habilidade no cabeçalho do grafo');
+ assert.ok(propostaCss.includes('.proposal-skill-desc'), 'proposta-grafo.css deve conter seletor da descrição');
+ assert.ok(propostaCss.includes('-webkit-line-clamp:2') || propostaCss.includes('-webkit-line-clamp: 2'), 'descrição deve ser truncada em no máximo duas linhas');
+ assert.ok(propostaCss.includes('overflow:hidden') || propostaCss.includes('overflow: hidden'), 'descrição deve ocultar texto excedente com overflow hidden');
+ assert.ok(appJs.includes('proposalSkillPill') && appJs.includes('habilidadeModalAbrir(x.code)'), 'clique na pílula do topo deve abrir o modal com texto e detalhes completos');
+});
+
+test('o botão de Legenda fica na barra de filtros e expande um painel vertical à esquerda da tela',()=>{
+ const propostaCss = fs.readFileSync(path.join(root, 'proposta-grafo.css'), 'utf8');
+ const appJs = fs.readFileSync(path.join(root, 'app.js'), 'utf8');
+
+ assert.ok(appJs.includes('id="proposalLegendToggle"') && appJs.includes('proposal-legend-btn'), 'deve conter botão de toggle da legenda ao lado do grupo de filtros');
+ assert.ok(appJs.includes('id="proposalVerticalLegend"'), 'deve conter painel vertical da legenda');
+ assert.ok(propostaCss.includes('.graph2-vertical-legend'), 'proposta-grafo.css deve estilizar a legenda vertical');
+ assert.ok(propostaCss.includes('left:20px') || propostaCss.includes('left: 18px') || propostaCss.includes('left:22px') || propostaCss.includes('left: 20px'), 'legenda vertical deve ficar posicionada à esquerda da tela');
+ assert.ok(appJs.includes('toggleLegend'), 'app.js deve gerenciar a expansão e recolhimento da legenda vertical');
+});
+
+test('os cartões e modal do Reúna exibem a sequência da habilidade e os nós no grafo são sub-agrupados por AF, AC e EF',()=>{
+ const appJs = fs.readFileSync(path.join(root, 'app.js'), 'utf8');
+
+ // 1. Extração dos subtipos Reúna AF, AC e EF
+ assert.ok(appJs.includes('reunaAF:[],reunaAC:[],reunaEF:[]') || appJs.includes('reunaAF: []'), 'estrutura de conexões deve particionar nós Reúna em reunaAF, reunaAC e reunaEF');
+ assert.ok(appJs.includes('result.groups.reunaAF.sort'), 'aprendizagens focais devem ser ordenadas crescentemente pela posição na unidade temática');
+
+ // 2. Sub-agrupamento no grafo com nós próximos e compactos
+ assert.ok(appJs.includes('layoutCluster(groups.reunaAF'), 'arrangeGraphPositions deve posicionar sub-cluster AF');
+ assert.ok(appJs.includes('layoutCluster(groups.reunaAC'), 'arrangeGraphPositions deve posicionar sub-cluster AC');
+ assert.ok(appJs.includes('layoutCluster(groups.reunaEF'), 'arrangeGraphPositions deve posicionar sub-cluster EF');
+
+ // 3. Pílulas nos nós e caixa informativa Reúna no modal
+ assert.ok(appJs.includes('graph2-sub-pill'), 'nós do grafo devem conter pílula indicativa de subtipo Reúna');
+ assert.ok(appJs.includes('hab-dialog-reuna-box'), 'modal deve conter caixa destacada com informações da sequência Reúna');
+ assert.ok(appJs.includes('reuna-pill--af'), 'deve estilizar pílula de Aprendizagem Focal');
+
+ // 4. Sequência e unidade nos cartões da página de detalhes
+ const x02 = api.S.by.get('EF06LP02');
+ assert.ok(x02, 'EF06LP02 deve existir no catálogo');
+ const relCards = api.reunaHtml(x02);
+ assert.ok(relCards.includes('data-reuna-tipo="AF"') || relCards.includes('data-reuna-tipo="AC"'), 'cartões de relação do Reúna devem conter atributo de tipo Reúna');
+});
+
