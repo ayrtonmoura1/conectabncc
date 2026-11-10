@@ -1,12 +1,45 @@
-.row-rail{position:relative}
+.row-rail{
+  position:relative;
+  background:color-mix(in srgb,var(--row-accent,#b5a0ff) 7.5%,transparent);
+  border:1px solid color-mix(in srgb,var(--row-accent,#b5a0ff) 14%,transparent);
+  border-radius:14px;
+  padding:6px 6px 2px;
+  transition:background .28s ease,border-color .28s ease;
+}
 .row-track{align-items:flex-start;scroll-behavior:smooth}
-.rail-arrow{position:absolute;top:0;bottom:19px;z-index:6;width:48px;border:0;color:#fff;font-size:32px;background:linear-gradient(90deg,#111116ee,#11111600);opacity:0;visibility:hidden;pointer-events:none;transition:opacity .2s,visibility .2s;cursor:pointer}
-.rail-prev{left:0;text-align:left;padding-left:9px}
-.rail-next{right:0;text-align:right;padding-right:9px;background:linear-gradient(270deg,#111116ee,#11111600)}
+.rail-arrow{
+  position:absolute;
+  top:0;
+  bottom:0;
+  z-index:6;
+  width:50px;
+  border:0;
+  color:#fff;
+  font-size:32px;
+  background:linear-gradient(90deg,color-mix(in srgb,var(--row-accent,#111116) 18%,#111116) 0%,transparent 100%);
+  opacity:0;
+  visibility:hidden;
+  pointer-events:none;
+  transition:opacity .2s,visibility .2s,color .2s;
+  cursor:pointer;
+}
+.rail-prev{left:0;text-align:left;padding-left:9px;border-radius:14px 0 0 14px}
+.rail-next{right:0;text-align:right;padding-right:9px;border-radius:0 14px 14px 0;background:linear-gradient(270deg,color-mix(in srgb,var(--row-accent,#111116) 18%,#111116) 0%,transparent 100%)}
 .row-rail:hover .rail-arrow,.row-rail:focus-within .rail-arrow{opacity:1;visibility:visible;pointer-events:auto}
 .rail-arrow[hidden]{display:none}
 .rail-arrow:focus-visible{outline:2px solid #e6c6ef;outline-offset:-4px}
 .rail-arrow:hover{color:#eac5f4}
+body[data-theme="light"] .row-rail{
+  background:color-mix(in srgb,var(--row-accent,#7d3fa8) 8.5%,#ffffff);
+  border-color:color-mix(in srgb,var(--row-accent,#7d3fa8) 18%,#ded9e2);
+}
+body[data-theme="light"] .rail-arrow{
+  color:#2b2532;
+  background:linear-gradient(90deg,color-mix(in srgb,var(--row-accent,#ffffff) 25%,#ffffff) 0%,transparent 100%);
+}
+body[data-theme="light"] .rail-next{
+  background:linear-gradient(270deg,color-mix(in srgb,var(--row-accent,#ffffff) 25%,#ffffff) 0%,transparent 100%);
+}
 .skill-card{height:154px;overflow:hidden;transition:height .2s ease,transform .2s ease,box-shadow .2s ease,border-color .2s ease}
 .skill-card:hover,.skill-card:focus-visible{height:auto;min-height:154px;overflow:hidden;transform:scale(1.035)}
 .skill-card:hover .card-text,.skill-card:focus-visible .card-text{display:block;-webkit-line-clamp:unset;overflow:visible}

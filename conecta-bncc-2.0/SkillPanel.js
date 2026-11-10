@@ -83,8 +83,8 @@ window.SkillPanel = (() => {
     const outChips = progressChips(state, outgoing, 'd');
     return '<div class="progress-page"><div class="progress-copy">'
       +'<a class="graph-jump" href="#skillGraph">Ir para o mapa de progressão ↓</a>'
-      +'<div class="progress-block detail-faixa-group"><div class="faixa-head"><h4>Vem antes <small>'+incoming.length+'</small></h4>'+inChips+'</div>'+relationList(state,incoming,'o','vêm antes')+'</div>'
-      +'<div class="progress-block detail-faixa-group"><div class="faixa-head"><h4>Vem depois <small>'+outgoing.length+'</small></h4>'+outChips+'</div>'+relationList(state,outgoing,'d','vêm depois')+'</div>'+
+      +'<div class="progress-block detail-faixa-group" style="--row-accent:#61b8ff"><div class="faixa-head"><h4>Vem antes <small>'+incoming.length+'</small></h4>'+inChips+'</div>'+relationList(state,incoming,'o','vêm antes')+'</div>'
+      +'<div class="progress-block detail-faixa-group" style="--row-accent:#ffb86b"><div class="faixa-head"><h4>Vem depois <small>'+outgoing.length+'</small></h4>'+outChips+'</div>'+relationList(state,outgoing,'d','vêm depois')+'</div>'+
     (trails.length?'<div class="progress-block"><h4>Trilhas</h4><ul class="context-list">'+trails.map(t=>'<li>'+esc(t.nome)+' <small>· '+t.position+' de '+t.membros.length+'</small></li>').join('')+'</ul></div>':'')+
     ((incoming.concat(outgoing).some(e=>e.fonte==='inferida'))?'<p class="graph-warning">'+warning+'</p>':'')+
     '</div></div>';

@@ -31,7 +31,10 @@ button,a,select,input{outline-offset:3px}
 .catalog{padding:46px 5.2vw 82px}.catalog-heading h2{font-size:27px}
 .catalog-empty{padding:28px;border:1px solid #3a363e;border-radius:10px;background:#1e1d22;color:#f0edf2}.catalog-empty p{margin:8px 0 0;color:#c8c1cb;font-size:13px;line-height:1.5}
 .catalog-controls,.row-meta{font-size:12px}
-.stage-chip{font-size:12px;padding:9px 14px;background:#232326}
+.stage-chip{font-size:12px;padding:9px 14px;background:#232326;border:1px solid color-mix(in srgb,var(--chip-stage,#ffffff24),#48434d 45%);transition:all .18s ease}
+.stage-chip:hover,.stage-chip.is-active{border-color:var(--chip-stage,#b5a0ff);background:color-mix(in srgb,var(--chip-stage,#b5a0ff) 18%,#232326);color:#fff}
+body[data-theme="light"] .stage-chip{background:#f3eff5;border-color:color-mix(in srgb,var(--chip-stage,#b48ec0),#d5ced8 55%);color:#3e3742}
+body[data-theme="light"] .stage-chip:hover,body[data-theme="light"] .stage-chip.is-active{border-color:var(--chip-stage,#7d3fa8);background:color-mix(in srgb,var(--chip-stage,#7d3fa8) 16%,#ffffff);color:#241d28}
 .catalog-rows{gap:34px}.row-head{margin-bottom:12px}.row-head h3{font-size:21px}
 .row-components{display:flex;align-items:center;gap:12px;margin:0 0 8px;min-width:0}
 .row-components-label{flex:0 0 auto;color:#bcb5c2;font-size:11px;font-weight:700}

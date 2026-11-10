@@ -63,7 +63,7 @@ function normalize(d){
  S.rows.clear();S.relationCache.clear();
  S.all.forEach(x=>{x._textWords=words(x.text);x._topicWords=words(x.text+" "+x.topic);x._search=N([x.code,x.text,x.discipline,x.area,x.topic,x.group].join(" "));if(!S.by.has(x.code))S.by.set(x.code,x);if(x._id&&!S.by.has(x._id))S.by.set(x._id,x);});
 }
-const ROWS=[{id:"ei",title:"Educação Infantil",sub:"93 objetivos · BNCC 2018",resumo:"Objetivos de aprendizagem da Educação Infantil para bebês, crianças bem pequenas e crianças pequenas, organizados pelos campos de experiência."},{id:"iniciais",title:"Anos Iniciais",sub:"1º ao 5º ano",resumo:"Habilidades do Ensino Fundamental do 1º ao 5º ano, por componente curricular. Os anos permitem focar em uma série."},{id:"finais",title:"Anos Finais",sub:"6º ao 9º ano",resumo:"Habilidades do Ensino Fundamental do 6º ao 9º ano, por componente curricular e por ano."},{id:"em",title:"Ensino Médio",sub:"habilidades por área",resumo:"Habilidades do Ensino Médio, agrupadas pelas áreas de conhecimento."},{id:"competencias",title:"Competências",sub:"gerais, específicas e por área · BNCC",resumo:"Competências gerais, específicas de área e de componente da BNCC, além das competências de Computação."},{id:"computacao",title:"BNCC Computação",sub:"complemento de Computação à BNCC",resumo:"Aprendizagens do complemento de Computação à BNCC, organizadas pelos eixos da Computação."},{id:"cieb",title:"Currículo CIEB",sub:"referências complementares em tecnologia e computação",resumo:"Registros do Currículo de Referência em Tecnologia e Computação (CIEB), organizados por eixo e etapa. São referências complementares à BNCC."},{id:"reuna",title:"Reúna",sub:"mapa de foco · 266 habilidades focais",resumo:"Habilidades focais do Mapa de Foco da BNCC (Instituto Reúna), na sequência de progressão de cada componente, da Educação Infantil ao Ensino Fundamental."}];
+const ROWS=[{id:"ei",cor:"#60c7b4",title:"Educação Infantil",sub:"93 objetivos · BNCC 2018",resumo:"Objetivos de aprendizagem da Educação Infantil para bebês, crianças bem pequenas e crianças pequenas, organizados pelos campos de experiência."},{id:"iniciais",cor:"#ffb86b",title:"Anos Iniciais",sub:"1º ao 5º ano",resumo:"Habilidades do Ensino Fundamental do 1º ao 5º ano, por componente curricular. Os anos permitem focar em uma série."},{id:"finais",cor:"#61b8ff",title:"Anos Finais",sub:"6º ao 9º ano",resumo:"Habilidades do Ensino Fundamental do 6º ao 9º ano, por componente curricular e por ano."},{id:"em",cor:"#ead06c",title:"Ensino Médio",sub:"habilidades por área",resumo:"Habilidades do Ensino Médio, agrupadas pelas áreas de conhecimento."},{id:"competencias",cor:"#a49aff",title:"Competências",sub:"gerais, específicas e por área · BNCC",resumo:"Competências gerais, específicas de área e de componente da BNCC, além das competências de Computação."},{id:"computacao",cor:"#f083b4",title:"BNCC Computação",sub:"complemento de Computação à BNCC",resumo:"Aprendizagens do complemento de Computação à BNCC, organizadas pelos eixos da Computação."},{id:"cieb",cor:"#7dc9e8",title:"Currículo CIEB",sub:"referências complementares em tecnologia e computação",resumo:"Registros do Currículo de Referência em Tecnologia e Computação (CIEB), organizados por eixo e etapa. São referências complementares à BNCC."},{id:"reuna",cor:"#d991f1",title:"Reúna",sub:"mapa de foco · 266 habilidades focais",resumo:"Habilidades focais do Mapa de Foco da BNCC (Instituto Reúna), na sequência de progressão de cada componente, da Educação Infantil ao Ensino Fundamental."}];
 function rowItems(id){
  if(S.rows.has(id))return S.rows.get(id);
  const bn=S.all.filter(x=>x.kind==="bncc");let result=[];
@@ -215,7 +215,7 @@ function card(x,railIndex,rowId){
   +'<p class="card-text">'+E(x.text)+'</p>'
   +'</article>';
 }
-function shortcuts(){ $("#stageShortcuts").innerHTML=ROWS.map(x=>'<button class="stage-chip'+(S.stageFilter===x.id?' is-active':'')+'" data-scroll="'+x.id+'">'+E(x.title)+'</button>').join("");}
+function shortcuts(){ $("#stageShortcuts").innerHTML=ROWS.map(x=>'<button class="stage-chip'+(S.stageFilter===x.id?' is-active':'')+'" data-scroll="'+x.id+'" style="--chip-stage:'+(x.cor||'#b5a0ff')+'">'+E(x.title)+'</button>').join("");}
 function periods(x,rowId){
  const result=[];
  if(rowId==="competencias"){
@@ -271,9 +271,11 @@ function makeRow(row,view){
  const sec=document.createElement("section"),list=view.items,rail=createRailState(list),open=rowIsOpen(row,view);
  rail.rowId=row.id;
  S.rails.set(row.id,rail);sec.className="catalog-row "+(open?"is-open":"is-collapsed");sec.id="row-"+row.id;
+ const rowAccent=view.selected?color(view.selected):(row.cor||(list[0]?color(componentLabel(list[0])):"#b5a0ff"));
+ sec.style.setProperty("--row-accent",rowAccent);
  const count=list.length.toLocaleString("pt-BR")+(list.length===1?" item":" itens")+(view.selected?" · "+view.available.length.toLocaleString("pt-BR")+" no total":"");
  const empty=view.selected?"Nenhuma habilidade neste componente com os filtros atuais. Selecione Todos para voltar à faixa.":"Nenhum resultado nesta faixa.";
- sec.innerHTML='<div class="row-head"><div class="row-heading-main"><h3><button type="button" class="row-toggle" data-row-toggle="'+E(row.id)+'" aria-expanded="'+String(open)+'" aria-controls="row-body-'+E(row.id)+'"><span>'+E(row.title)+'</span><span class="row-chevron" aria-hidden="true"></span></button></h3><p class="row-summary">'+E(row.resumo||"")+'</p>'+rowPeriodChips(row,view)+'</div><span class="row-meta row-item-count">'+E(count)+'</span></div><div class="row-body" id="row-body-'+E(row.id)+'">'+rowComponentChips(row,view)+'<div class="row-rail"><button type="button" class="rail-arrow rail-prev" data-direction="-1" aria-label="Cartões anteriores"'+(!rail.loop?' hidden':'')+'>‹</button><div class="row-track" role="region" aria-label="Habilidades de '+E(row.title)+'. Use as setas do teclado para navegar." data-rail="'+E(row.id)+'">'+(list.length?railMarkup(rail,rail.start,rail.end):'<div class="empty-row">'+E(empty)+'</div>')+'</div><button type="button" class="rail-arrow rail-next" data-direction="1" aria-label="Próximos cartões"'+(!rail.loop?' hidden':'')+'>›</button></div></div>';
+ sec.innerHTML='<div class="row-head"><div class="row-heading-main"><h3><button type="button" class="row-toggle" data-row-toggle="'+E(row.id)+'" aria-expanded="'+String(open)+'" aria-controls="row-body-'+E(row.id)+'"><span>'+E(row.title)+'</span><span class="row-chevron" aria-hidden="true"></span></button></h3><p class="row-summary">'+E(row.resumo||"")+'</p>'+rowPeriodChips(row,view)+'</div><span class="row-meta row-item-count">'+E(count)+'</span></div><div class="row-body" id="row-body-'+E(row.id)+'">'+rowComponentChips(row,view)+'<div class="row-rail" style="--row-accent:'+rowAccent+'"><button type="button" class="rail-arrow rail-prev" data-direction="-1" aria-label="Cartões anteriores"'+(!rail.loop?' hidden':'')+'>‹</button><div class="row-track" role="region" aria-label="Habilidades de '+E(row.title)+'. Use as setas do teclado para navegar." data-rail="'+E(row.id)+'">'+(list.length?railMarkup(rail,rail.start,rail.end):'<div class="empty-row">'+E(empty)+'</div>')+'</div><button type="button" class="rail-arrow rail-next" data-direction="1" aria-label="Próximos cartões"'+(!rail.loop?' hidden':'')+'>›</button></div></div>';
  return sec;
 }
 function updateResultCount(){
@@ -584,7 +586,8 @@ function relatedMapListHtml(related,x){
  const isCompOrCieb=x&&ehComputacao(x);
  const heading=isComp?"Habilidades articuladas":(isCompOrCieb?"Habilidades da BNCC":"Computação");
  const chipsHtml=detailChipsHtml(related,r=>componentLabel(r.item));
- return '<div class="map-related-list detail-faixa-group">'
+ const accent=isComp?"#a49aff":(isCompOrCieb?"#61b8ff":"#f083b4");
+ return '<div class="map-related-list detail-faixa-group" style="--row-accent:'+accent+'">'
   +'<div class="faixa-head"><h3 class="related-heading">'+heading+' <span>'+related.length+'</span></h3>'+chipsHtml+'</div>'
   +'<div class="row-rail detail-row-rail" data-relation-kind="curriculo">'
   +'<button type="button" class="rail-arrow rail-prev" data-direction="-1" aria-label="Cartões anteriores"'+(related.length<=1?' hidden':'')+'>‹</button>'
@@ -615,7 +618,7 @@ function aiHtml(x){
  const conceitos=entry.conceitos||[];
 
  const conceitosHtml=conceitos.length?(
-  '<div class="concept-group detail-faixa-group" id="detalhe-conceitos">'
+  '<div class="concept-group detail-faixa-group" id="detalhe-conceitos" style="--row-accent:#9c78d4">'
   +'<h3 class="related-heading">Conceitos de aproximação <span>'+conceitos.length+'</span></h3>'
   +'<div class="row-rail detail-row-rail">'
   +'<button type="button" class="rail-arrow rail-prev" data-direction="-1" aria-label="Conceitos anteriores"'+(conceitos.length<=1?' hidden':'')+'>‹</button>'
@@ -636,7 +639,7 @@ function aiHtml(x){
 
  const chipsHtml=detailChipsHtml(groups,([comp])=>comp);
  const suggestionsHtml=groups.length?(
-  '<div class="ai-suggestions-group detail-faixa-group">'
+  '<div class="ai-suggestions-group detail-faixa-group" style="--row-accent:#f0ad68">'
   +'<div class="faixa-head">'
   +'<h3 class="related-heading">Sugestões interdisciplinares <span>'+groups.length+'</span></h3>'
   +chipsHtml
@@ -695,7 +698,7 @@ function ciebHtml(x,list){
   +'<button type="button" class="rail-arrow rail-next" data-direction="1" aria-label="Próximas habilidades CIEB"'+(list.length<=1?' hidden':'')+'>›</button>'
   +'</div>'
  ):'<p class="empty-message">Nenhuma aproximação temática encontrada para esta habilidade.</p>';
- return '<section class="detail-section" id="detalhe-cieb"><div class="section-heading"><span class="section-number">↗</span><div><h2>Computação e currículo CIEB</h2><p class="section-caption">Vínculos indicados pelo CIEB e sugestões por termos em comum são identificados em cada cartão.</p></div></div>'+guidanceHtml+structureHtml+'<div class="detail-faixa-group"><div class="faixa-head"><h3 class="related-heading">Habilidades CIEB relacionadas <span>'+list.length+'</span></h3>'+chipsHtml+'</div>'+railHtml+'</div></section>';
+ return '<section class="detail-section" id="detalhe-cieb"><div class="section-heading"><span class="section-number">↗</span><div><h2>Computação e currículo CIEB</h2><p class="section-caption">Vínculos indicados pelo CIEB e sugestões por termos em comum são identificados em cada cartão.</p></div></div>'+guidanceHtml+structureHtml+'<div class="detail-faixa-group" style="--row-accent:#7dc9e8"><div class="faixa-head"><h3 class="related-heading">Habilidades CIEB relacionadas <span>'+list.length+'</span></h3>'+chipsHtml+'</div>'+railHtml+'</div></section>';
 }
 const REUNA_CLASSES={AF:"Aprendizagem focal (AF)",AC:"Aprendizagem complementar (AC)",EF:"Expectativa de fluência (EF)"};
 const REUNA_ETAPAS={EI:"Educação Infantil",EF:"Ensino Fundamental",EM:"Ensino Médio"};
@@ -779,7 +782,7 @@ function reunaRelCardsHtml(codes,k,expl,area,ano){
  });
  const heading=REUNA_CLASSES[k]||"Habilidades relacionadas";
  const chipsHtml=detailChipsHtml(items,r=>componentLabel(r.item));
- return '<div class="detail-faixa-group reuna-faixa-group" data-relation-kind="reuna-'+E(k.toLowerCase())+'">'
+ return '<div class="detail-faixa-group reuna-faixa-group" data-relation-kind="reuna-'+E(k.toLowerCase())+'" style="--row-accent:#d991f1">'
   +'<div class="faixa-head"><h4 class="related-heading">'+E(heading)+' <span>'+items.length+'</span></h4>'+chipsHtml+'</div>'
   +'<div class="row-rail detail-row-rail">'
   +'<button type="button" class="rail-arrow rail-prev" data-direction="-1" aria-label="Cartões anteriores"'+(items.length<=1?' hidden':'')+'>‹</button>'
@@ -1361,7 +1364,7 @@ function competenciasHtml(x){
   const d=resolveCompDetails(c);
   return d.component;
  });
- return '<section class="detail-section detail-faixa-group" id="detalhe-competencias">'
+ return '<section class="detail-section detail-faixa-group" id="detalhe-competencias" style="--row-accent:#a49aff">'
   +'<div class="section-heading"><span class="section-number">✦</span><div><h2>Competências relacionadas</h2><p class="section-caption">Competências gerais, específicas e de área articuladas a esta aprendizagem.</p></div></div>'
   +'<div class="faixa-head"><h3 class="related-heading">Competências articuladas <span>'+list.length+'</span></h3>'+chipsHtml+'</div>'
   +'<div class="row-rail detail-row-rail">'
