@@ -25,7 +25,7 @@ function item(code,text,stage,more){return Object.assign({code,text,stage,years:
 function flattenCieb(root){
  const out=[];
  for(const etapa of root.etapas||[])for(const ano of etapa.anos||[])for(const eixo of ano.eixos||[])for(const conceito of eixo.conceitos||[])for(const h of conceito.habilidades||[]){
-   out.push({code:h.codigo,text:h.descricao,stage:etapa.etapa||"",year:ano.ano||"",axis:eixo.eixo||"",concept:conceito.conceito||"",topic:[eixo.eixo,conceito.conceito].filter(Boolean).join(" · "),practices:h.praticas||[],evaluations:h.avaliacoes||[],bnccLinks:(h.habilidades_bncc||[]).filter(link=>link.codigo),generalCompetencies:(h.competencias_gerais_bncc||[]).filter(link=>link.codigo),materials:h.materiais_referencia||[],axisCompetencies:h.competencias_do_eixo||h.axisCompetencies||[],workload:h.carga_horaria||"",unitType:h.tipo_unidade_curricular||"",unitName:h.nome_unidade||"",attitudes:h.atitudes||[],resources:h.recursos||[],tematicas:h.tematicas||[],teacherProfile:h.perfil_docente||"",structure:h.estrutura||[]});
+   out.push({code:h.codigo,text:h.descricao,stage:etapa.etapa||"",year:ano.ano||"",axis:eixo.eixo||"",concept:conceito.conceito||"",topic:[eixo.eixo,conceito.conceito].filter(Boolean).join(" · "),practices:h.praticas||[],evaluations:h.avaliacoes||[],bnccLinks:(h.habilidades_bncc||[]).filter(link=>link.codigo),generalCompetencies:(h.competencias_gerais_bncc||[]).filter(link=>link.codigo),materials:h.materiais_referencia||[],maturity:h.nivel_maturidade||null,keywords:h.palavras_chave||[],axisCompetencies:h.competencias_do_eixo||h.axisCompetencies||[],workload:h.carga_horaria||"",unitType:h.tipo_unidade_curricular||"",unitName:h.nome_unidade||"",attitudes:h.atitudes||[],resources:h.recursos||[],tematicas:h.tematicas||[],teacherProfile:h.perfil_docente||"",structure:h.estrutura||[]});
  }
  return out;
 }
@@ -104,7 +104,10 @@ function rel(a,b){
   }
   const comp=isAComp?a:b,skill=isAComp?b:a;
   if((skill.competencyIds||[]).some(id=>id===comp._id||id===comp.code))return{type:"Competência declarada",basis:"A habilidade declara diretamente esta competência na fonte oficial.",kind:"formal",score:120};
-  if(skill.kind==="cieb"&&(skill.raw?.generalCompetencies||[]).some(g=>g.codigo===comp.code||(comp.code.startsWith("CG")&&parseInt(comp.raw?.numero,10)===parseInt(g.codigo?.replace(/\D/g,""),10))))return{type:"Competência geral indicada pelo CIEB",basis:"O currículo de referência do CIEB articula esta habilidade à competência geral.",kind:"cieb",score:115};
+  if(skill.kind==="cieb"){
+   if((skill.raw?.generalCompetencies||[]).some(g=>g.codigo===comp.code||(comp.code.startsWith("CG")&&parseInt(comp.raw?.numero,10)===parseInt(g.codigo?.replace(/\D/g,""),10))))return{type:"Competência geral indicada pelo CIEB",basis:"O currículo de referência do CIEB articula esta habilidade à competência geral.",kind:"cieb",score:115};
+   return null;
+  }
   const reunaEntry=S.data.reuna?.[skill.code];
   if(reunaEntry){
    const bc=reunaEntry.bnccComentada,mf=reunaEntry.mapaDeFoco;
@@ -130,8 +133,9 @@ function rel(a,b){
   return null;
  }
  const cieb=a.kind==="cieb"?a:b.kind==="cieb"?b:null,other=cieb===a?b:a;
- if(cieb&&(cieb.raw?.bnccLinks||[]).some(link=>link.codigo===other.code))return{type:"Vínculo indicado pelo CIEB",basis:"Esta relação consta no currículo de referência do CIEB. Ela é uma indicação do CIEB, não uma relação formal declarada pela BNCC.",kind:"cieb",score:110};
- if(a.kind==="cieb"&&b.kind==="cieb"){
+
+ if(cieb){
+  if(other.kind==="cieb"){
   if((a.raw?.axisCompetencies||[]).includes(b.code)||(b.raw?.axisCompetencies||[]).includes(a.code)){
    return{type:"Competência de eixo associada",basis:"Competência geral do eixo articulada a esta unidade curricular no CIEB Ensino Médio.",kind:"cieb",score:115};
   }
@@ -141,7 +145,13 @@ function rel(a,b){
    return{type:"Eixo comum no CIEB",basis:"Ambas integram o eixo "+a.discipline+" no referencial CIEB.",kind:"cieb",score:30};
   }
   if(terms.length>=2)return{type:"Aproximação temática no CIEB",basis:"Temas em comum entre eixos do CIEB: "+terms.slice(0,4).join(", ")+".",kind:"cieb",score:25+terms.length};
+  return null;
  }
+ if((cieb.raw?.bnccLinks||[]).some(link=>link.codigo===other.code)){
+  return{type:"Vínculo indicado pelo CIEB",basis:"Esta relação consta no currículo de referência do CIEB. Ela é uma indicação do CIEB, não uma relação formal declarada pela BNCC.",kind:"cieb",score:110};
+ }
+ return null;
+}
  const obj=(a.objectIds||[]).filter(x=>(b.objectIds||[]).includes(x));if(obj.length)return{type:"Objeto de conhecimento comum",basis:obj.map(x=>name(x,a.kind==="computacao"?S.data.objects:S.data.ctx)).join(", "),kind:"formal",score:100+obj.length};
  const comps=(a.competencyIds||[]).filter(x=>(b.competencyIds||[]).includes(x));if(comps.length)return{type:"Competência específica comum",basis:comps.map(x=>name(x,S.data.bnccCompetencies.has(x)?S.data.bnccCompetencies:S.data.compCompetencies)).join(", "),kind:"competency",score:90+comps.length};
  if(a.alignment&&a.alignment===b.alignment)return{type:"Alinhamento oficial entre faixas etárias",basis:"A BNCC alinha objetivos do mesmo aspecto na Educação Infantil.",kind:"formal",score:96};
@@ -627,6 +637,7 @@ function detailHeaderHtml(x){
   ["Número oficial",raw.numero?"Competência nº "+raw.numero:null],
   ["Componente curricular",x.discipline],
   ["Área de conhecimento",x.area&&x.area!==x.discipline?x.area:null],
+  ["Nível de maturidade sugerido",(raw.maturity?.escola||raw.maturity?.docente)?[raw.maturity.escola?"Escola: "+raw.maturity.escola:"",raw.maturity.docente?"Docente: "+raw.maturity.docente:""].filter(Boolean).join(" · "):null],
   ["Seriação",raw.seriacao],
   ["Vigência",raw.vigencia?.status?raw.vigencia.status+(raw.vigencia.desde?" · desde "+raw.vigencia.desde:"")+(raw.vigencia.ate?" · até "+raw.vigencia.ate:""):null],
   ["Documento de origem",sourceSummary]
@@ -656,6 +667,7 @@ function detailHeaderHtml(x){
   if(raw.axisCompetencies?.length)add("Competências do eixo CIEB",raw.axisCompetencies.join(", "));
   if(raw.teacherProfile)add("Perfil docente sugerido",raw.teacherProfile);
   if(raw.generalCompetencies?.length)add("Competências gerais indicadas pelo CIEB",raw.generalCompetencies.map(h=>h.codigo).join(", "));
+  if(raw.keywords?.length)add("Palavras-chave CIEB",raw.keywords.join(", "));
   const missing=(raw.bnccLinks||[]).filter(h=>!S.by.has(h.codigo));if(missing.length)add("Códigos BNCC indicados pelo CIEB sem registro no catálogo",missing.map(h=>h.codigo).join(", "));
  }
  if(raw.alinhamento)add("Alinhamento entre faixas",raw.alinhamento);
@@ -721,7 +733,7 @@ function relationCard({item:y,rel:z}){
 function relatedListHtml(list,kind,empty){const cards=list.slice(0,6).map(relationCard).join(""),remaining=Math.max(0,list.length-6);return '<div class="relation-grid">'+(cards||'<p class="empty-message">'+E(empty)+'</p>')+'</div>'+(remaining?'<details class="more-relations" data-relation-kind="'+E(kind)+'"><summary>Ver mais '+remaining+' habilidades relacionadas</summary><div class="relation-grid" data-relation-grid></div><button class="load-more-relations" type="button">Carregar mais</button></details>':"");}
 function ciebRelations(x,related){
  const items=new Map(related.filter(r=>r.item.kind==="cieb").map(r=>[r.item.code,r])),byCode=new Map(S.all.filter(y=>y.kind==="cieb").map(y=>[y.code,y]));
- for(const y of S.data.cieb){if(y.code===x.code||items.has(y.code))continue;const item=byCode.get(y.code);if(!item)continue;const explicit=(y.bnccLinks||[]).some(h=>h.codigo===x.code),terms=[...x._topicWords].filter(w=>y.words.has(w));if(!explicit&&terms.length<2)continue;items.set(y.code,{item,rel:explicit?{kind:"cieb",type:"Vínculo indicado pelo CIEB",basis:"Esta relação consta no currículo de referência do CIEB.",score:110}:{kind:"suggested",type:"Aproximação temática sugerida",basis:"Temas em comum: "+terms.slice(0,4).join(", ")+". Proposta para exploração pedagógica.",score:20+terms.length}});}
+ for(const y of S.data.cieb){if(y.code===x.code||items.has(y.code))continue;const item=byCode.get(y.code);if(!item)continue;const explicit=(y.bnccLinks||[]).some(h=>h.codigo===x.code);if(!explicit)continue;items.set(y.code,{item,rel:{kind:"cieb",type:"Vínculo indicado pelo CIEB",basis:"Esta relação consta no currículo de referência do CIEB.",score:110}});}
  return [...items.values()].sort((a,b)=>b.rel.score-a.rel.score||a.item.code.localeCompare(b.item.code));
 }
 function ehComputacao(x){return x.kind==="computacao"||x.kind==="cieb";}
@@ -843,8 +855,37 @@ function aiHtml(x){
   +'</section>';
 }
 function ciebHtml(x,list){
- const raw=x.raw||{},guidance=x.kind==="cieb"?[["Práticas sugeridas",raw.practices||[]],["Avaliação sugerida",raw.evaluations||[]],["Atitudes e valores",raw.attitudes||[]],["Recursos didáticos",raw.resources||[]],["Temáticas integradoras",raw.tematicas||[]]].filter(([,items])=>items.length):[];
+ const raw=x.raw||{},isCieb=x.kind==="cieb";
+ const maturityTags=[
+  raw.maturity?.escola?'<span class="cieb-pill cieb-pill--school">Maturidade da escola: <strong>'+E(raw.maturity.escola)+'</strong></span>':'',
+  raw.maturity?.docente?'<span class="cieb-pill cieb-pill--teacher">Maturidade docente: <strong>'+E(raw.maturity.docente)+'</strong></span>':''
+ ].filter(Boolean).join("");
+ const keywordsTags=(raw.keywords||[]).map(k=>'<span class="cieb-keyword-chip">'+E(k)+'</span>').join("");
+ const metaBlockHtml=isCieb&&(maturityTags||keywordsTags)?(
+  '<div class="info-block cieb-meta-block">'
+  +(maturityTags?'<div class="cieb-meta-line"><span class="cieb-block-label">Nível de maturidade sugerido</span><div class="cieb-pills-list">'+maturityTags+'</div></div>':'')
+  +(keywordsTags?'<div class="cieb-meta-line"><span class="cieb-block-label">Palavras-chave</span><div class="cieb-keywords-list">'+keywordsTags+'</div></div>':'')
+  +'</div>'
+ ):"";
+ const guidance=isCieb?[["Práticas sugeridas",raw.practices||[]],["Avaliação sugerida",raw.evaluations||[]],["Atitudes e valores",raw.attitudes||[]],["Recursos didáticos",raw.resources||[]],["Temáticas integradoras",raw.tematicas||[]]].filter(([,items])=>items.length):[];
  const guidanceHtml=guidance.length?'<div class="detail-columns cieb-guidance cieb-guidance-stacked">'+guidance.map(([label,items])=>'<div class="info-block"><h3>'+E(label)+'</h3><ul>'+items.map(t=>'<li>'+E(t)+'</li>').join("")+'</ul></div>').join("")+'</div>':"";
+ const materialsHtml=isCieb&&raw.materials?.length?(
+  '<div class="info-block cieb-materials-block">'
+  +'<h3>Materiais e referências de apoio <span class="cieb-count-pill">'+raw.materials.length+'</span></h3>'
+  +'<ul class="cieb-materials-list">'
+  +raw.materials.map(m=>{
+    const lang=m.idioma?'<span class="cieb-material-lang">'+E(m.idioma)+'</span>':'';
+    const link=m.link||'#';
+    return '<li class="cieb-material-item">'
+      +'<a class="cieb-material-link" href="'+E(link)+'" target="_blank" rel="noopener noreferrer">'
+      +'<span class="cieb-material-title">'+E(m.nome||link)+'</span>'
+      +'<svg class="cieb-ext-icon" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/><polyline points="15 3 21 3 21 9"/><line x1="10" y1="14" x2="21" y2="3"/></svg>'
+      +'</a>'
+      +lang
+      +'</li>';
+  }).join("")
+  +'</ul></div>'
+ ):"";
  const structureHtml=raw.structure?.length?(
   '<div class="info-block cieb-structure-block" style="margin-top:1.25rem;">'
   +'<h3 style="font-size:0.95rem;font-weight:700;margin-bottom:0.75rem;color:var(--text, #f0f4fc);">Estrutura e detalhamento da unidade curricular</h3>'
@@ -867,8 +908,8 @@ function ciebHtml(x,list){
   +'</div>'
   +'<button type="button" class="rail-arrow rail-next" data-direction="1" aria-label="Próximas habilidades CIEB"'+(list.length<=1?' hidden':'')+'>›</button>'
   +'</div>'
- ):'<p class="empty-message">Nenhuma aproximação temática encontrada para esta habilidade.</p>';
- return '<section class="detail-section" id="detalhe-cieb"><div class="section-heading"><span class="section-number">↗</span><div><h2>Computação e currículo CIEB</h2><p class="section-caption">Vínculos indicados pelo CIEB e sugestões por termos em comum são identificados em cada cartão.</p></div></div>'+guidanceHtml+structureHtml+'<div class="detail-faixa-group" style="--row-accent:#7dc9e8"><div class="faixa-head"><h3 class="related-heading">Habilidades CIEB relacionadas <span>'+list.length+'</span></h3>'+chipsHtml+'</div>'+railHtml+'</div></section>';
+ ):'<p class="empty-message">Nenhuma referência CIEB diretamente vinculada a esta habilidade.</p>';
+ return '<section class="detail-section" id="detalhe-cieb"><div class="section-heading"><span class="section-number">↗</span><div><h2>Computação e currículo CIEB</h2><p class="section-caption">Vínculos oficiais indicados pelo CIEB e orientações complementares em tecnologia e computação.</p></div></div>'+metaBlockHtml+guidanceHtml+materialsHtml+structureHtml+'<div class="detail-faixa-group" style="--row-accent:#7dc9e8"><div class="faixa-head"><h3 class="related-heading">Habilidades CIEB relacionadas <span>'+list.length+'</span></h3>'+chipsHtml+'</div>'+railHtml+'</div></section>';
 }
 const REUNA_CLASSES={AF:"Aprendizagem focal (AF)",AC:"Aprendizagem complementar (AC)",EF:"Expectativa de fluência (EF)"};
 const REUNA_ETAPAS={EI:"Educação Infantil",EF:"Ensino Fundamental",EM:"Ensino Médio"};

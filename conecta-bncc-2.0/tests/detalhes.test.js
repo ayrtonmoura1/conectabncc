@@ -40,7 +40,7 @@ test('a seção Computação mostra só a outra família e mantém as sugestões
   assert.deepEqual(new Set(groups.curriculo.map(r=>r.item.code)),new Set(original.filter(outra).map(r=>r.item.code)),code+': seção com a outra família');
   assert.ok(groups.curriculo.every(outra),code+': item da mesma família na seção');
   const cieb=new Set(groups.cieb.map(r=>r.item.code));
-  const previous=api.S.data.cieb.filter(y=>y.code!==x.code).map(y=>({y,explicit:(y.bnccLinks||[]).some(h=>h.codigo===x.code),n:[...x._topicWords].filter(w=>y.words.has(w)).length})).filter(o=>o.explicit||o.n>=2).sort((a,b)=>Number(b.explicit)-Number(a.explicit)||b.n-a.n).slice(0,6);
+  const previous=api.S.data.cieb.filter(y=>y.code!==x.code).map(y=>({y,explicit:(y.bnccLinks||[]).some(h=>h.codigo===x.code)})).filter(o=>o.explicit).sort((a,b)=>a.y.code.localeCompare(b.y.code));
   for(const {y} of previous)assert.ok(cieb.has(y.code),code+' perdeu referência CIEB '+y.code);
   assert.equal(cieb.size,groups.cieb.length);
   assert.ok(groups.cieb.every(r=>r.item.kind==='cieb'));
@@ -49,11 +49,35 @@ test('a seção Computação mostra só a outra família e mantém as sugestões
  }
 });
 
-test('o detalhe CIEB mantém competências, práticas, avaliações e códigos BNCC indicados',()=>{
+test('o detalhe CIEB mantém competências, práticas, avaliações, nível de maturidade, materiais com links e códigos BNCC indicados',()=>{
  const x=api.S.by.get('CDEILD01'),groups=api.detailRelations(x),header=api.detailHeaderHtml(x),section=api.ciebHtml(x,groups.cieb);
  for(const item of x.raw.generalCompetencies)assert.ok(header.includes(api.E(item.codigo)));
  for(const text of [...x.raw.practices,...x.raw.evaluations])assert.ok(section.includes(api.E(text)));
  for(const link of x.raw.bnccLinks){if(api.S.by.has(link.codigo))assert.ok(groups.curriculo.some(r=>r.item.code===link.codigo));else assert.ok(header.includes(api.E(link.codigo)));}
+ assert.ok(header.includes('Nível de maturidade sugerido'), 'cabeçalho CIEB deve conter nível de maturidade');
+ assert.ok(header.includes('Básico'), 'cabeçalho CIEB deve conter nível Básico');
+ assert.ok(section.includes('Materiais e referências de apoio'), 'ciebHtml deve renderizar seção de materiais de referência');
+ for(const mat of x.raw.materials){
+  assert.ok(section.includes(api.E(mat.nome)), 'material deve conter nome '+mat.nome);
+  assert.ok(section.includes(api.E(mat.link)), 'material deve conter link '+mat.link);
+ }
+ for(const kw of x.raw.keywords){
+  assert.ok(section.includes(api.E(kw)), 'deve conter palavra-chave '+kw);
+ }
+});
+
+test('habilidades BNCC sem vínculo oficial declarado no CIEB possuem zero relações CIEB (ex: EF06LP02)',()=>{
+ const x = api.S.by.get('EF06LP02');
+ const rels = api.relations(x, Infinity);
+ const ciebRels = rels.filter(r => r.item.kind === 'cieb');
+ assert.equal(ciebRels.length, 0, 'EF06LP02 não deve possuir relações CIEB por inferência indevida');
+
+ const groups = api.detailRelations(x);
+ assert.equal(groups.cieb.length, 0, 'detailRelations(EF06LP02).cieb deve ser vazio');
+
+ const count = api.skillConnectionCount(x);
+ assert.equal(typeof count, 'number');
+ assert.ok(count < 186, 'contagem de conexões de EF06LP02 deve cair com remoção das relações falsas do CIEB (antes: 186)');
 });
 
 test('alinhamentos da Educação Infantil continuam no mapa de progressão e indicações BNCC do CIEB continuam acessíveis',()=>{
@@ -609,7 +633,7 @@ test('a faixa Escolha por etapa é fixa no topo (sticky) com atalhos e scrollspy
  // 2. CSS Sticky e scroll-margin
  assert.ok(carrosselCss.includes('.stage-sticky-shell{position:-webkit-sticky!important;position:sticky!important;top:68px!important'), 'carrossel.css deve fixar a faixa de etapas a top:68px');
  assert.ok(carrosselCss.includes('backdrop-filter:blur'), 'carrossel.css deve incluir backdrop-filter blur na faixa sticky');
- assert.ok(interactionsCss.includes('scroll-margin-top:136px'), 'catalog-interactions.css deve definir scroll-margin-top para .catalog-row');
+ assert.ok(interactionsCss.includes('scroll-margin-top:136px') || interactionsCss.includes('scroll-margin-top: 136px'), 'catalog-interactions.css deve definir scroll-margin-top para .catalog-row');
 
  // 3. Offset de rolagem e scrollspy
  assert.ok(appJs.includes('stageBar=$(".stage-sticky-shell, #stageBar")'), 'jumpToRow deve considerar o offset da barra de etapas sticky');
@@ -720,7 +744,7 @@ test('a Proposta Detalhes 2 possui nós estáticos, filtros superiores multi-sel
 test('o campo de busca desativa o botão nativo cancel-button para evitar dois x',()=>{
  const interactionsCss = fs.readFileSync(path.join(root, 'catalog-interactions.css'), 'utf8');
  assert.ok(interactionsCss.includes('::-webkit-search-cancel-button'), 'deve estilizar ::-webkit-search-cancel-button');
- assert.ok(interactionsCss.includes('display:none!important'), 'deve ocultar cancel-button nativo com display:none!important');
+ assert.ok(interactionsCss.includes('display:none!important') || interactionsCss.includes('display: none !important'), 'deve ocultar cancel-button nativo com display:none!important');
 });
 
 test('os nós da Proposta Detalhes 2 são agrupados por origem sem sobreposição entre títulos e nós',()=>{

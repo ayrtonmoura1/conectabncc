@@ -244,3 +244,33 @@ body[data-theme="light"] .cieb-guidance ul{color:#514b57}
 body[data-theme="light"] .ai-card-component{color:#342f38}
 body[data-theme="light"] .ai-card-codes .rel-code{border-color:#dccde3;background:#f5eff7;color:#744286}
 body[data-theme="light"] .ai-card-codes a.rel-code:hover,body[data-theme="light"] .ai-card-codes a.rel-code:focus-visible{border-color:#aa85ba;background:#eee4f2}
+
+/* Detalhamento enriquecido do Currículo CIEB */
+.cieb-meta-block{background:rgba(125,201,232,0.06);border:1px solid rgba(125,201,232,0.2);border-radius:12px;padding:16px 20px;margin:0 0 20px;display:flex;flex-direction:column;gap:12px}
+.cieb-meta-line{display:flex;flex-wrap:wrap;align-items:center;gap:10px}
+.cieb-block-label{font-size:11px;text-transform:uppercase;letter-spacing:0.05em;font-weight:700;color:#7dc9e8;min-width:130px}
+.cieb-pills-list,.cieb-keywords-list{display:flex;flex-wrap:wrap;gap:8px;align-items:center}
+.cieb-pill{display:inline-flex;align-items:center;padding:4px 10px;border-radius:6px;font-size:12px;background:rgba(255,255,255,0.06);border:1px solid rgba(255,255,255,0.12);color:#e2e8f0}
+.cieb-pill strong{color:#7dc9e8;margin-left:4px}
+.cieb-keyword-chip{display:inline-flex;align-items:center;padding:3px 9px;border-radius:14px;font-size:11px;font-weight:500;background:rgba(125,201,232,0.12);border:1px solid rgba(125,201,232,0.25);color:#b6e3f6}
+.cieb-materials-block{margin:0 0 24px;border-radius:12px;background:#1e1d22;border:1px solid #38353e;padding:20px}
+.cieb-materials-block h3{font-size:0.95rem;font-weight:700;margin:0 0 14px;color:var(--text,#f0f4fc);display:flex;align-items:center;gap:8px}
+.cieb-count-pill{font-size:11px;font-weight:600;padding:2px 7px;border-radius:10px;background:rgba(125,201,232,0.18);color:#7dc9e8}
+.cieb-materials-list{list-style:none;padding:0;margin:0;display:flex;flex-direction:column;gap:8px}
+.cieb-material-item{display:flex;align-items:center;justify-content:space-between;gap:12px;padding:10px 14px;border-radius:8px;background:rgba(255,255,255,0.03);border:1px solid rgba(255,255,255,0.07);transition:background .15s ease,border-color .15s ease}
+.cieb-material-item:hover{background:rgba(125,201,232,0.08);border-color:rgba(125,201,232,0.3)}
+.cieb-material-link{display:inline-flex;align-items:center;gap:6px;color:#7dc9e8;text-decoration:none;font-size:13px;font-weight:600}
+.cieb-material-link:hover{text-decoration:underline}
+.cieb-material-lang{font-size:11px;padding:2px 7px;border-radius:4px;background:rgba(255,255,255,0.08);color:#a0aec0}
+
+body[data-theme="light"] .cieb-meta-block{background:rgba(14,116,144,0.05);border-color:rgba(14,116,144,0.2)}
+body[data-theme="light"] .cieb-block-label{color:#0e7490}
+body[data-theme="light"] .cieb-pill{background:#f8fafc;border-color:#cbd5e1;color:#334155}
+body[data-theme="light"] .cieb-pill strong{color:#0e7490}
+body[data-theme="light"] .cieb-keyword-chip{background:rgba(14,116,144,0.08);border-color:rgba(14,116,144,0.2);color:#0e7490}
+body[data-theme="light"] .cieb-materials-block{background:#ffffff;border-color:#e2e8f0}
+body[data-theme="light"] .cieb-material-item{background:#f8fafc;border-color:#e2e8f0}
+body[data-theme="light"] .cieb-material-item:hover{background:rgba(14,116,144,0.06);border-color:rgba(14,116,144,0.3)}
+body[data-theme="light"] .cieb-material-link{color:#0369a1}
+body[data-theme="light"] .cieb-material-lang{background:#e2e8f0;color:#475569}
+
