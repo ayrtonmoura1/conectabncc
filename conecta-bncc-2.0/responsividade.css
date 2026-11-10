@@ -23,7 +23,7 @@
  body[data-theme="light"] .mobile-filter-toggle{border-color:#d5d1db;background:#fff;color:#38323d}
  body[data-theme="light"] .mobile-filter-controls{border-color:#e0dbe4;background:#fff}
 
- .hero-catalog{margin-top:16px;padding-top:14px}
+ .stage-sticky-shell{margin-top:0}
  .spotlight{margin-top:18px}
  .catalog-rows{gap:22px}
  .row-track{padding-bottom:15px}

@@ -593,3 +593,26 @@ test('práticas sugeridas e avaliação sugerida do CIEB ficam empilhadas uma ab
  assert.ok(html.includes('Práticas sugeridas'), 'deve conter Práticas sugeridas');
  assert.ok(html.includes('Avaliação sugerida'), 'deve conter Avaliação sugerida');
 });
+
+test('a faixa Escolha por etapa é fixa no topo (sticky) com atalhos e scrollspy',()=>{
+ const indexHtml = fs.readFileSync(path.join(root, 'index.html'), 'utf8');
+ const carrosselCss = fs.readFileSync(path.join(root, 'carrossel.css'), 'utf8');
+ const interactionsCss = fs.readFileSync(path.join(root, 'catalog-interactions.css'), 'utf8');
+ const appJs = fs.readFileSync(path.join(root, 'app.js'), 'utf8');
+
+ // 1. Estrutura do DOM: faixa de etapas fora do .hero e com classe stage-sticky-shell
+ assert.ok(indexHtml.includes('class="hero-catalog stage-sticky-shell"'), 'index.html deve conter hero-catalog com classe stage-sticky-shell');
+ const heroEnd = indexHtml.indexOf('</section>');
+ const stageBarPos = indexHtml.indexOf('class="hero-catalog stage-sticky-shell"');
+ assert.ok(stageBarPos > heroEnd, 'a faixa de etapas deve estar fora de <section class="hero"> para viabilizar position:sticky');
+
+ // 2. CSS Sticky e scroll-margin
+ assert.ok(carrosselCss.includes('.stage-sticky-shell{position:sticky;top:68px'), 'carrossel.css deve fixar a faixa de etapas a top:68px');
+ assert.ok(carrosselCss.includes('backdrop-filter:blur'), 'carrossel.css deve incluir backdrop-filter blur na faixa sticky');
+ assert.ok(interactionsCss.includes('scroll-margin-top:165px'), 'catalog-interactions.css deve definir scroll-margin-top para .catalog-row');
+
+ // 3. Offset de rolagem e scrollspy
+ assert.ok(appJs.includes('stageBar=$(".stage-sticky-shell, .hero-catalog")'), 'jumpToRow deve considerar o offset da barra de etapas sticky');
+ assert.ok(appJs.includes('function syncCatalogNavScrollspy()'), 'app.js deve implementar syncCatalogNavScrollspy');
+ assert.ok(appJs.includes('syncCatalogNavScrollspy();'), 'scroll listener deve invocar syncCatalogNavScrollspy');
+});
