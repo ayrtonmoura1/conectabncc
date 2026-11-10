@@ -1,7 +1,7 @@
 /* Card da faixa completa: título, chips e cartões ficam todos dentro da mesma placa */
 .catalog-row{
   position:relative;
-  scroll-margin-top:165px;
+  scroll-margin-top:136px;
   background:color-mix(in srgb,var(--row-accent,#b5a0ff) 6%,#15151b);
   border:1px solid color-mix(in srgb,var(--row-accent,#b5a0ff) 15%,transparent);
   border-radius:18px;
@@ -66,7 +66,7 @@ body[data-theme="light"] .rail-next{
   background:linear-gradient(270deg,color-mix(in srgb,var(--row-accent,#ffffff) 35%,#ffffff) 0%,transparent 100%);
 }
 @media(max-width:640px){
-  .catalog-row{padding:16px 14px 14px;border-radius:14px;scroll-margin-top:110px}
+  .catalog-row{padding:16px 14px 14px;border-radius:14px;scroll-margin-top:60px}
   .catalog-row.is-collapsed{padding:14px}
 }
 .skill-card{height:154px;overflow:hidden;transition:height .2s ease,transform .2s ease,box-shadow .2s ease,border-color .2s ease}

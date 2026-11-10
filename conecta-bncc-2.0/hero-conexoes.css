@@ -5,7 +5,7 @@
    malha inteira pode aparecer sem máscara, sem tocar em textos ou na carta. */
 .hero-constellation{position:absolute;inset:0;z-index:1;pointer-events:none}
 .hero-constellation svg{display:block;width:100%;height:100%;animation:hn-drift 34s ease-in-out infinite}
-.spotlight,.hero-catalog,.hero-copy{position:relative;z-index:2}
+.spotlight,.hero-copy{position:relative;z-index:2}
 @keyframes hn-drift{0%,100%{transform:translate(0,0)}50%{transform:translate(-10px,6px)}}
 
 /* Fios visíveis mas finos, desenhando-se uma única vez na entrada. */

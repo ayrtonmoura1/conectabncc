@@ -601,18 +601,18 @@ test('a faixa Escolha por etapa é fixa no topo (sticky) com atalhos e scrollspy
  const appJs = fs.readFileSync(path.join(root, 'app.js'), 'utf8');
 
  // 1. Estrutura do DOM: faixa de etapas fora do .hero e com classe stage-sticky-shell
- assert.ok(indexHtml.includes('class="hero-catalog stage-sticky-shell"'), 'index.html deve conter hero-catalog com classe stage-sticky-shell');
+ assert.ok(indexHtml.includes('class="stage-sticky-shell"'), 'index.html deve conter barra de etapas com classe stage-sticky-shell');
  const heroEnd = indexHtml.indexOf('</section>');
- const stageBarPos = indexHtml.indexOf('class="hero-catalog stage-sticky-shell"');
+ const stageBarPos = indexHtml.indexOf('class="stage-sticky-shell"');
  assert.ok(stageBarPos > heroEnd, 'a faixa de etapas deve estar fora de <section class="hero"> para viabilizar position:sticky');
 
  // 2. CSS Sticky e scroll-margin
- assert.ok(carrosselCss.includes('.stage-sticky-shell{position:sticky;top:68px'), 'carrossel.css deve fixar a faixa de etapas a top:68px');
+ assert.ok(carrosselCss.includes('.stage-sticky-shell{position:-webkit-sticky!important;position:sticky!important;top:68px!important'), 'carrossel.css deve fixar a faixa de etapas a top:68px');
  assert.ok(carrosselCss.includes('backdrop-filter:blur'), 'carrossel.css deve incluir backdrop-filter blur na faixa sticky');
- assert.ok(interactionsCss.includes('scroll-margin-top:165px'), 'catalog-interactions.css deve definir scroll-margin-top para .catalog-row');
+ assert.ok(interactionsCss.includes('scroll-margin-top:136px'), 'catalog-interactions.css deve definir scroll-margin-top para .catalog-row');
 
  // 3. Offset de rolagem e scrollspy
- assert.ok(appJs.includes('stageBar=$(".stage-sticky-shell, .hero-catalog")'), 'jumpToRow deve considerar o offset da barra de etapas sticky');
+ assert.ok(appJs.includes('stageBar=$(".stage-sticky-shell, #stageBar")'), 'jumpToRow deve considerar o offset da barra de etapas sticky');
  assert.ok(appJs.includes('function syncCatalogNavScrollspy()'), 'app.js deve implementar syncCatalogNavScrollspy');
  assert.ok(appJs.includes('syncCatalogNavScrollspy();'), 'scroll listener deve invocar syncCatalogNavScrollspy');
 });
