@@ -372,25 +372,71 @@ body[data-theme="light"] .row-summary {
   transition: border-color .2s ease, box-shadow .2s ease, width .2s ease;
 }
 
-.row-search-input::-webkit-search-cancel-button,
-.row-search-input::-webkit-search-decoration,
-.row-search-input::-webkit-search-results-button,
-.row-search-input::-webkit-search-results-decoration,
-.search-box input::-webkit-search-cancel-button,
-.search-box input::-webkit-search-decoration,
-input[type="search"]::-webkit-search-cancel-button,
-input[type="search"]::-webkit-search-decoration {
+.row-search-input::-webkit-search-cancel-button {
   -webkit-appearance: none !important;
   appearance: none !important;
-  display:none!important;
-  display: none !important;
-}
-
-input[type="search"]::-ms-clear {
-  display:none!important;
   display: none !important;
   width: 0 !important;
   height: 0 !important;
+  opacity: 0 !important;
+  pointer-events: none !important;
+}
+
+.row-search-input::-webkit-search-decoration {
+  -webkit-appearance: none !important;
+  display: none !important;
+}
+
+.row-search-input::-ms-clear {
+  display: none !important;
+  width: 0 !important;
+  height: 0 !important;
+  pointer-events: none !important;
+}
+
+.search-box input::-webkit-search-cancel-button {
+  -webkit-appearance: none !important;
+  appearance: none !important;
+  display: none !important;
+  width: 0 !important;
+  height: 0 !important;
+  opacity: 0 !important;
+  pointer-events: none !important;
+}
+
+.search-box input::-webkit-search-decoration {
+  -webkit-appearance: none !important;
+  display: none !important;
+}
+
+.search-box input::-ms-clear {
+  display: none !important;
+  width: 0 !important;
+  height: 0 !important;
+  pointer-events: none !important;
+}
+
+input[type="search"]::-webkit-search-cancel-button {
+  -webkit-appearance: none !important;
+  appearance: none !important;
+  display: none !important;
+  width: 0 !important;
+  height: 0 !important;
+  opacity: 0 !important;
+  pointer-events: none !important;
+}
+
+input[type="search"]::-webkit-search-decoration {
+  -webkit-appearance: none !important;
+  display: none !important;
+}
+
+input[type="search"]::-ms-clear,
+input::-ms-clear {
+  display: none !important;
+  width: 0 !important;
+  height: 0 !important;
+  pointer-events: none !important;
 }
 
 .row-search-input:focus {

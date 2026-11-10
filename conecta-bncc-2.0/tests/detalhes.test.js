@@ -745,6 +745,11 @@ test('o campo de busca desativa o botão nativo cancel-button para evitar dois x
  const interactionsCss = fs.readFileSync(path.join(root, 'catalog-interactions.css'), 'utf8');
  assert.ok(interactionsCss.includes('::-webkit-search-cancel-button'), 'deve estilizar ::-webkit-search-cancel-button');
  assert.ok(interactionsCss.includes('display:none!important') || interactionsCss.includes('display: none !important'), 'deve ocultar cancel-button nativo com display:none!important');
+
+ const rowEi = api.ROWS.find(r => r.id === 'ei');
+ const viewEi = api.rowView(rowEi);
+ const periodHtml = api.rowPeriodChips(rowEi, viewEi);
+ assert.ok(periodHtml.includes('type="text"') && periodHtml.includes('inputmode="search"'), 'o input de busca deve usar type="text" com inputmode="search" para evitar que o navegador desenhe um segundo "x" nativo');
 });
 
 test('os nós da Proposta Detalhes 2 são agrupados por origem sem sobreposição entre títulos e nós',()=>{
