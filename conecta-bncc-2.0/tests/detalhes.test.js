@@ -622,7 +622,7 @@ test('a faixa Escolha por etapa é fixa no topo (sticky) com atalhos e scrollspy
  const indexHtml = fs.readFileSync(path.join(root, 'index.html'), 'utf8');
  const carrosselCss = fs.readFileSync(path.join(root, 'carrossel.css'), 'utf8');
  const interactionsCss = fs.readFileSync(path.join(root, 'catalog-interactions.css'), 'utf8');
- const appJs = fs.readFileSync(path.join(root, 'app.js'), 'utf8');
+ const appJs = fs.readFileSync(path.join(root, 'app.js'), 'utf8').replace(/\r\n/g, '\n');
 
  // 1. Estrutura do DOM: faixa de etapas fora do .hero e com classe stage-sticky-shell
  assert.ok(indexHtml.includes('class="stage-sticky-shell"'), 'index.html deve conter barra de etapas com classe stage-sticky-shell');
@@ -725,7 +725,7 @@ test('a seleção do chip de etapa no catálogo possui estilo de destaque visual
 });
 
 test('a Proposta Detalhes 2 possui nós estáticos, filtros superiores multi-seleção e legenda inferior',()=>{
- const propostaCss = fs.readFileSync(path.join(root, 'proposta-grafo.css'), 'utf8');
+ const propostaCss = fs.readFileSync(path.join(root, 'proposta-grafo.css'), 'utf8').replace(/\r\n/g, '\n');
  const appJs = fs.readFileSync(path.join(root, 'app.js'), 'utf8');
  
  // 1. CSS dos nós deve ser estático (sem animação de pulso ou translação no hover)
@@ -792,4 +792,33 @@ test('os nós da Proposta Detalhes 2 são agrupados por origem sem sobreposiçã
    assert.ok(noOverlap, 'nós ' + a.node.code + ' e ' + b.node.code + ' não devem se sobrepor (dx=' + dx + ', dy=' + dy + ')');
   }
  }
+});
+test('as animações dos fluxos respeitam o sentido pedagógico e a legenda fica fixa na área de visão do mapa',()=>{
+ const propostaCss = fs.readFileSync(path.join(root, 'proposta-grafo.css'), 'utf8');
+ const appJs = fs.readFileSync(path.join(root, 'app.js'), 'utf8');
+
+ // 1. Layout fixo sem rolagem oculta para a legenda permanecer visível
+ assert.ok(propostaCss.includes('.proposal-graph-page') && propostaCss.includes('position:fixed'), 'página de proposta deve ser position:fixed cobrindo 100vh');
+ assert.ok(propostaCss.includes('.graph2-map-legend'), 'deve conter classe da legenda do mapa');
+
+ // 2. Keyframes direcionais com sentido semântico
+ assert.ok(propostaCss.includes('@keyframes graph2-flow-in'), 'deve conter animação inward (do pré-requisito até a habilidade)');
+ assert.ok(propostaCss.includes('@keyframes graph2-flow-out'), 'deve conter animação outward (da habilidade até o pós/continuidade)');
+ assert.ok(propostaCss.includes('@keyframes graph2-flow-bounce'), 'deve conter animação bounce (vai e volta para interdisciplinar)');
+
+ // 3. Estilização específica por tipo de nó
+ assert.ok(propostaCss.includes('.graph2-flow.flow-anteriores'), 'deve conter classe flow-anteriores');
+ assert.ok(propostaCss.includes('.graph2-flow.flow-posteriores'), 'deve conter classe flow-posteriores');
+ assert.ok(propostaCss.includes('.graph2-flow.flow-interdisciplinar'), 'deve conter classe flow-interdisciplinar');
+ assert.ok(propostaCss.includes('.graph2-flow.flow-competencias'), 'deve conter classe flow-competencias');
+ assert.ok(propostaCss.includes('.graph2-flow.flow-cieb-comp'), 'deve conter classe flow-cieb-comp para CIEB e Computação');
+ assert.ok(propostaCss.includes('0.1 99.9'), 'CIEB/Computação deve usar bolinha com stroke-dasharray pontual');
+
+ // 4. Integração no app.js
+ assert.ok(appJs.includes('flow-anteriores'), 'app.js deve classificar nós anteriores com fluxo inward');
+ assert.ok(appJs.includes('flow-posteriores'), 'app.js deve classificar nós posteriores com fluxo outward');
+ assert.ok(appJs.includes('flow-interdisciplinar'), 'app.js deve classificar nós interdisciplinares com fluxo bounce');
+ assert.ok(appJs.includes('flow-competencias'), 'app.js deve classificar competências com fluxo rápido');
+ assert.ok(appJs.includes('flow-cieb-comp'), 'app.js deve classificar CIEB e Computação com bolinha');
+ assert.ok(appJs.includes('class="legend-row-flows"'), 'legenda deve conter linha explicativa dos fluxos animados');
 });

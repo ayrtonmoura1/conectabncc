@@ -469,7 +469,7 @@ function fillFilters(){
  $("#stageSelect").innerHTML='<option value="">Escolha por etapa</option>'+ROWS.map(r=>'<option value="'+E(r.id)+'"'+(S.stageFilter===r.id?' selected':'')+'>'+E(r.title)+'</option>').join("");
 }
 function open(code){if(!S.by.has(code))return;if(!$("#catalogPage").hidden){S.catalogScroll=window.scrollY;rememberRailPositions();}history.pushState({code},"","?codigo="+encodeURIComponent(code));detail(code);window.scrollTo({top:0,behavior:"instant"});}
-function home(restore=true){SkillGraph.detach();history.pushState({},"",location.pathname);$("#detailPage").hidden=true;$("#detailPage").classList.remove("has-compact-summary");$("#detailPage").querySelectorAll(".detail-nav a.is-active").forEach(a=>{a.classList.remove("is-active");a.removeAttribute("aria-current");});$("#catalogPage").hidden=false;requestAnimationFrame(()=>initializeRails($("#catalogRows")));window.scrollTo({top:restore?(S.catalogScroll||0):0,behavior:"instant"});}
+function home(restore=true){SkillGraph.detach();history.pushState({},"",location.pathname);$("#detailPage").hidden=true;$("#proposalGraphPage")&&($("#proposalGraphPage").hidden=true);document.body.classList.remove("has-proposal-graph");$("#detailPage").classList.remove("has-compact-summary");$("#detailPage").querySelectorAll(".detail-nav a.is-active").forEach(a=>{a.classList.remove("is-active");a.removeAttribute("aria-current");});$("#catalogPage").hidden=false;requestAnimationFrame(()=>initializeRails($("#catalogRows")));window.scrollTo({top:restore?(S.catalogScroll||0):0,behavior:"instant"});}
 function syncDetailStickySummary(){
  const page=$("#detailPage"),summary=page?.querySelector(".detail-sticky-summary"),title=page?.querySelector(".detail-title");
  if(!page||page.hidden||!summary||!title)return;
@@ -2277,6 +2277,8 @@ function openProposalGraph(code){
  const page=$("#proposalGraphPage");
  if(!page)return;
  page.hidden=false;
+ document.body.classList.add("has-proposal-graph");
+ window.scrollTo({top:0,behavior:"instant"});
 
  const conn=getSkillConnectionsData(x);
  const positions=arrangeGraphPositions(x,conn.allNodes,conn.groups);
@@ -2311,9 +2313,40 @@ function openProposalGraph(code){
   const nodeItem=node.item||S.by.get(nodeCode);
   const nodeComp=nodeItem?componentLabel(nodeItem):compName;
   const c=color(nodeComp)||(catLabels[node.category]?.color||'#b5a0ff');
-  const dur=(5+(Math.abs(nx)%4)*1.4).toFixed(1)+'s';
+  const isCiebOrComp=node.category==='cieb'||node.category==='computacao'||node.kind==='computacao'||node.kind==='cieb'||nodeItem?.kind==='cieb'||nodeItem?.kind==='computacao';
+
+  let flowClass='flow-default';
+  let flowType='default';
+  let dur=(5+(Math.abs(nx)%4)*1.2).toFixed(1)+'s';
+
+  if(isCiebOrComp){
+   flowType='cieb-comp';
+   flowClass='flow-cieb-comp flow-dot';
+   dur=(4.4+(Math.abs(nx)%3)*0.4).toFixed(1)+'s';
+  }else if(node.category==='anteriores'){
+   flowType='anteriores';
+   flowClass='flow-anteriores flow-inward';
+   dur=(4.6+(Math.abs(nx)%3)*0.4).toFixed(1)+'s';
+  }else if(node.category==='posteriores'){
+   flowType='posteriores';
+   flowClass='flow-posteriores flow-outward';
+   dur=(4.6+(Math.abs(nx)%3)*0.4).toFixed(1)+'s';
+  }else if(node.category==='interdisciplinar'){
+   flowType='interdisciplinar';
+   flowClass='flow-interdisciplinar flow-bounce';
+   dur=(3.8+(Math.abs(nx)%3)*0.3).toFixed(1)+'s';
+  }else if(node.category==='competencias'){
+   flowType='competencias';
+   flowClass='flow-competencias flow-fast';
+   dur=(1.7+(Math.abs(nx)%3)*0.2).toFixed(1)+'s';
+  }else if(node.category==='reuna'){
+   flowType='reuna';
+   flowClass='flow-reuna flow-outward';
+   dur=(4.8+(Math.abs(nx)%3)*0.4).toFixed(1)+'s';
+  }
+
   wiresHtml+='<path class="graph2-wire" data-wire="'+E(nodeCode)+'" data-cat="'+E(node.category)+'" d="'+d+'" style="--c:'+c+'"></path>';
-  flowsHtml+='<path class="graph2-flow" data-flow="'+E(nodeCode)+'" data-cat="'+E(node.category)+'" pathLength="100" d="'+d+'" style="--c:'+c+';--dur:'+dur+'"></path>';
+  flowsHtml+='<path class="graph2-flow '+flowClass+'" data-flow="'+E(nodeCode)+'" data-cat="'+E(node.category)+'" data-flow-type="'+flowType+'" pathLength="100" d="'+d+'" style="--c:'+c+';--dur:'+dur+'"></path>';
 
   const badgeW=Math.max(72,nodeCode.length*8.5+20);
   nodesHtml+='<g class="graph2-node" data-code="'+E(nodeCode)+'" data-cat="'+E(node.category)+'" transform="translate('+nx.toFixed(1)+','+ny.toFixed(1)+')" tabindex="0" role="button" aria-label="'+E(nodeCode)+'">'
@@ -2335,7 +2368,8 @@ function openProposalGraph(code){
   +'</g>';
 
  const legendHtml='<div class="graph2-map-legend" role="region" aria-label="Legenda do mapa">'
-  +'<div class="legend-header"><strong class="legend-title"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="10"/><path d="M12 16v-4"/><path d="M12 8h.01"/></svg> Legenda:</strong></div>'
+  +'<div class="legend-row-main">'
+  +'<div class="legend-header"><strong class="legend-title"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="10"/><path d="M12 16v-4"/><path d="M12 8h.01"/></svg> Legenda:</strong></div>'
   +'<div class="legend-items">'
   +'<span class="legend-item"><span class="legend-dot is-central" style="--c:'+compCol+'"></span><strong>Centro:</strong> '+E(x.code)+'</span>'
   +(conn.groups.anteriores?.length?'<span class="legend-item"><span class="legend-dot" style="--c:#61b8ff"></span><strong>← Esquerda:</strong> Vêm antes</span>':'')
@@ -2345,7 +2379,15 @@ function openProposalGraph(code){
   +(conn.groups.cieb?.length?'<span class="legend-item"><span class="legend-dot" style="--c:#7dc9e8"></span><strong>Diagonal:</strong> CIEB</span>':'')
   +(conn.groups.reuna?.length?'<span class="legend-item"><span class="legend-dot" style="--c:#f2a365"></span><strong>Diagonal:</strong> Reúna</span>':'')
   +'</div>'
-  +'<span class="legend-hint"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M15 3h6v6"/><path d="M10 14 21 3"/><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/></svg> Clique em qualquer nó para abrir detalhes completos</span>'
+  +'<span class="legend-hint"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M15 3h6v6"/><path d="M10 14 21 3"/><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/></svg> Clique no nó para ver detalhes</span>'
+  +'</div>'
+  +'<div class="legend-row-flows" aria-label="Significado dos fluxos animados">'
+  +'<span class="legend-flow-tag" title="Percorre do pré-requisito até a habilidade central"><span class="flow-preview-line flow-preview-in"></span><strong>Pré-requisito:</strong> nó → habilidade</span>'
+  +'<span class="legend-flow-tag" title="Percorre da habilidade central até o vem depois"><span class="flow-preview-line flow-preview-out"></span><strong>Continuidade:</strong> habilidade → nó</span>'
+  +'<span class="legend-flow-tag" title="Vai e volta continuamente entre os nós"><span class="flow-preview-line flow-preview-bounce"></span><strong>Interdisciplinar:</strong> vai e volta</span>'
+  +'<span class="legend-flow-tag" title="Barra curta com percurso rápido"><span class="flow-preview-line flow-preview-fast"></span><strong>Competência:</strong> barra rápida</span>'
+  +'<span class="legend-flow-tag" title="Bolinha percorrendo da habilidade até o CIEB/Computação"><span class="flow-preview-dot"></span><strong>CIEB / Computação:</strong> bolinha</span>'
+  +'</div>'
   +'</div>';
 
  page.innerHTML='<header class="proposal-topbar">'
@@ -2380,8 +2422,18 @@ function openProposalGraph(code){
 
  page.querySelector("#proposalBackDetail")?.addEventListener("click",()=>{
   page.hidden=true;
+  document.body.classList.remove("has-proposal-graph");
   $("#detailPage").hidden=false;
  });
+ const handleEscProposal=(e)=>{
+  if(e.key==="Escape"&&!page.hidden){
+   page.hidden=true;
+   document.body.classList.remove("has-proposal-graph");
+   $("#detailPage").hidden=false;
+   window.removeEventListener("keydown",handleEscProposal);
+  }
+ };
+ window.addEventListener("keydown",handleEscProposal);
  page.querySelectorAll("[data-home]").forEach(b=>b.addEventListener("click",home));
 
  const zoomGroup=page.querySelector("#proposalZoomGroup");
