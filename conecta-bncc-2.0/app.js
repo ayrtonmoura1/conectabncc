@@ -1735,7 +1735,7 @@ function events(){
  }
  $("#catalogRows").addEventListener("click",e=>{
    const toggle=e.target.closest("[data-row-toggle]");if(toggle){const sec=toggle.closest(".catalog-row");setRowOpen(sec,sec.classList.contains("is-collapsed"));return;}
-   const collapsedHead=e.target.closest(".catalog-row.is-collapsed .row-head");if(collapsedHead&&!e.target.closest("button,a,input,select")){setRowOpen(collapsedHead.closest(".catalog-row"),true);return;}
+   const collapsedRow=e.target.closest(".catalog-row.is-collapsed");if(collapsedRow&&!e.target.closest("button,a,input,select")){setRowOpen(collapsedRow,true);return;}
    const componentArrow=e.target.closest("[data-component-direction]");
    if(componentArrow){const list=componentArrow.closest(".component-rail").querySelector(".row-component-list");list.scrollBy({left:Number(componentArrow.dataset.componentDirection)*Math.max(200,list.clientWidth*.7),behavior:"smooth"});return;}
    const periodChip=e.target.closest("[data-row-period]");
