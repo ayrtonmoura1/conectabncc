@@ -1,0 +1,696 @@
+/* ============================================================
+   PROPOSTA DETALHES 2 - GRAFO INTERATIVO FULLSCREEN
+   Inspirado na animação de constelação e nós de conexões curriculares
+   ============================================================ */
+
+.proposal-graph-page{
+  position:relative;
+  width:100%;
+  min-height:100vh;
+  display:flex;
+  flex-direction:column;
+  background:#101014;
+  color:#f3eff8;
+  overflow:hidden;
+  user-select:none;
+}
+
+body[data-theme="light"] .proposal-graph-page{
+  background:#f6f4fa;
+  color:#1a1322;
+}
+
+/* Barra superior de navegação e atalhos */
+.proposal-topbar{
+  position:sticky;
+  top:0;
+  left:0;
+  right:0;
+  z-index:35;
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  gap:14px;
+  padding:10px 24px;
+  background:rgba(16,16,20,0.94);
+  backdrop-filter:blur(16px);
+  -webkit-backdrop-filter:blur(16px);
+  border-bottom:1px solid rgba(255,255,255,0.08);
+  box-shadow:0 4px 20px rgba(0,0,0,0.35);
+}
+
+body[data-theme="light"] .proposal-topbar{
+  background:rgba(255,255,255,0.95);
+  border-bottom:1px solid rgba(0,0,0,0.08);
+  box-shadow:0 4px 20px rgba(0,0,0,0.06);
+}
+
+.proposal-nav-group{
+  display:flex;
+  align-items:center;
+  gap:10px;
+  flex:0 0 auto;
+}
+
+.proposal-btn{
+  display:inline-flex;
+  align-items:center;
+  gap:6px;
+  min-height:34px;
+  padding:6px 14px;
+  border-radius:20px;
+  border:1px solid rgba(255,255,255,0.12);
+  background:rgba(255,255,255,0.05);
+  color:#f0ebf5;
+  font-size:12px;
+  font-weight:600;
+  cursor:pointer;
+  transition:all .2s ease;
+  white-space:nowrap;
+}
+
+.proposal-btn:hover{
+  background:rgba(255,255,255,0.12);
+  border-color:rgba(255,255,255,0.25);
+  color:#fff;
+  transform:translateY(-1px);
+}
+
+body[data-theme="light"] .proposal-btn{
+  border-color:rgba(0,0,0,0.12);
+  background:rgba(0,0,0,0.04);
+  color:#2f2538;
+}
+
+body[data-theme="light"] .proposal-btn:hover{
+  background:rgba(0,0,0,0.08);
+  border-color:rgba(0,0,0,0.2);
+  color:#0f0717;
+}
+
+/* Pílula central com a habilidade ativa */
+.proposal-skill-pill{
+  display:inline-flex;
+  align-items:center;
+  gap:8px;
+  padding:6px 16px;
+  border-radius:24px;
+  border:1px solid color-mix(in srgb,var(--skill-accent,#b5a0ff) 50%,#3e3749);
+  background:color-mix(in srgb,var(--skill-accent,#b5a0ff) 14%,#17141f);
+  box-shadow:0 0 16px color-mix(in srgb,var(--skill-accent,#b5a0ff) 25%,transparent);
+}
+
+body[data-theme="light"] .proposal-skill-pill{
+  background:color-mix(in srgb,var(--skill-accent,#7d3fa8) 12%,#ffffff);
+  border-color:color-mix(in srgb,var(--skill-accent,#7d3fa8) 45%,#d8d2df);
+  box-shadow:0 0 16px color-mix(in srgb,var(--skill-accent,#7d3fa8) 18%,transparent);
+}
+
+.proposal-skill-code{
+  font-size:14px;
+  font-weight:800;
+  color:#fff;
+  letter-spacing:.02em;
+}
+
+body[data-theme="light"] .proposal-skill-code{
+  color:#1b1223;
+}
+
+.proposal-skill-meta{
+  font-size:11.5px;
+  color:#bcb5c4;
+}
+
+body[data-theme="light"] .proposal-skill-meta{
+  color:#554c5e;
+}
+
+.proposal-conn-tag{
+  padding:2px 8px;
+  border-radius:10px;
+  font-size:10px;
+  font-weight:700;
+  color:#fff;
+  background:color-mix(in srgb,var(--skill-accent,#b5a0ff) 40%,transparent);
+}
+
+/* Ações de visualização (zoom / centralizar) */
+.proposal-view-actions{
+  display:flex;
+  align-items:center;
+  gap:6px;
+  flex:0 0 auto;
+}
+
+.proposal-tool-btn{
+  display:inline-flex;
+  align-items:center;
+  justify-content:center;
+  width:32px;
+  height:32px;
+  padding:0;
+  border-radius:50%;
+  border:1px solid rgba(255,255,255,0.1);
+  background:rgba(255,255,255,0.05);
+  color:#eee8f5;
+  font-size:14px;
+  font-weight:700;
+  cursor:pointer;
+  transition:all .18s ease;
+}
+
+.proposal-tool-btn:hover{
+  border-color:rgba(255,255,255,0.3);
+  background:rgba(255,255,255,0.15);
+  color:#fff;
+  transform:scale(1.05);
+}
+
+body[data-theme="light"] .proposal-tool-btn{
+  border-color:rgba(0,0,0,0.12);
+  background:rgba(0,0,0,0.04);
+  color:#2c2136;
+}
+
+body[data-theme="light"] .proposal-tool-btn:hover{
+  background:rgba(0,0,0,0.09);
+  color:#000;
+}
+
+/* Área do Grafo / Canvas */
+.proposal-canvas-wrap{
+  position:relative;
+  flex:1;
+  width:100%;
+  height:calc(100vh - 58px);
+  overflow:hidden;
+  cursor:grab;
+  background:radial-gradient(ellipse 65% 65% at 50% 50%, rgba(181,160,255,0.06), transparent 75%);
+}
+
+.proposal-canvas-wrap.is-dragging{
+  cursor:grabbing;
+}
+
+body[data-theme="light"] .proposal-canvas-wrap{
+  background:radial-gradient(ellipse 65% 65% at 50% 50%, rgba(125,63,168,0.05), transparent 75%);
+}
+
+/* Filtros dos nós na parte SUPERIOR interna do mapa */
+.graph2-map-controls-top{
+  position:absolute;
+  top:16px;
+  left:50%;
+  transform:translateX(-50%);
+  z-index:30;
+  display:flex;
+  align-items:center;
+  gap:8px;
+  padding:7px 14px;
+  border-radius:28px;
+  background:rgba(18,16,24,0.92);
+  backdrop-filter:blur(14px);
+  -webkit-backdrop-filter:blur(14px);
+  border:1px solid rgba(255,255,255,0.12);
+  box-shadow:0 8px 30px rgba(0,0,0,0.45);
+  max-width:calc(100vw - 32px);
+  overflow-x:auto;
+  scrollbar-width:none;
+}
+
+.graph2-map-controls-top::-webkit-scrollbar{display:none}
+
+body[data-theme="light"] .graph2-map-controls-top{
+  background:rgba(255,255,255,0.94);
+  border-color:rgba(0,0,0,0.1);
+  box-shadow:0 6px 24px rgba(0,0,0,0.08);
+}
+
+.graph2-filter-label{
+  display:inline-flex;
+  align-items:center;
+  gap:6px;
+  font-size:11px;
+  font-weight:700;
+  color:#d5cfdc;
+  white-space:nowrap;
+  padding-right:6px;
+  border-right:1px solid rgba(255,255,255,0.12);
+}
+
+body[data-theme="light"] .graph2-filter-label{
+  color:#453a50;
+  border-right-color:rgba(0,0,0,0.1);
+}
+
+/* Chips de filtro com suporte a multi-seleção */
+.proposal-chip{
+  display:inline-flex;
+  align-items:center;
+  gap:6px;
+  min-height:30px;
+  padding:4px 11px;
+  border-radius:18px;
+  border:1px solid rgba(255,255,255,0.14);
+  background:rgba(255,255,255,0.05);
+  color:#d6d0dc;
+  font-size:11px;
+  font-weight:600;
+  cursor:pointer;
+  transition:all .18s ease;
+  white-space:nowrap;
+  user-select:none;
+}
+
+.proposal-chip:hover{
+  border-color:rgba(255,255,255,0.3);
+  background:rgba(255,255,255,0.1);
+  color:#fff;
+  transform:translateY(-1px);
+}
+
+.proposal-chip.is-active{
+  border-color:var(--filter-accent,#b5a0ff)!important;
+  background:color-mix(in srgb,var(--filter-accent,#b5a0ff) 32%,#191724)!important;
+  color:#ffffff!important;
+  font-weight:800!important;
+  box-shadow:0 0 14px color-mix(in srgb,var(--filter-accent,#b5a0ff) 50%,transparent),0 2px 6px rgba(0,0,0,0.35)!important;
+  transform:translateY(-1px);
+}
+
+.proposal-chip-check{
+  display:inline-block;
+  font-size:10px;
+  font-weight:900;
+  opacity:0;
+  transform:scale(0);
+  transition:all .18s ease;
+  margin-right:-2px;
+}
+
+.proposal-chip.is-active .proposal-chip-check{
+  opacity:1;
+  transform:scale(1);
+}
+
+.proposal-chip-dot{
+  width:7px;
+  height:7px;
+  border-radius:50%;
+  background:var(--filter-accent,#b5a0ff);
+  flex:0 0 auto;
+  box-shadow:0 0 6px var(--filter-accent,#b5a0ff);
+}
+
+.proposal-chip-count{
+  font-size:10px;
+  font-weight:700;
+  padding:1px 5px;
+  border-radius:8px;
+  background:rgba(255,255,255,0.12);
+  color:#f0ecf4;
+}
+
+.proposal-chip.is-active .proposal-chip-count{
+  background:rgba(255,255,255,0.24);
+  color:#ffffff;
+}
+
+body[data-theme="light"] .proposal-chip{
+  border-color:rgba(0,0,0,0.12);
+  background:rgba(0,0,0,0.04);
+  color:#453a50;
+}
+
+body[data-theme="light"] .proposal-chip:hover{
+  background:rgba(0,0,0,0.08);
+  color:#100718;
+}
+
+body[data-theme="light"] .proposal-chip.is-active{
+  background:color-mix(in srgb,var(--filter-accent,#7d3fa8) 22%,#ffffff)!important;
+  border-color:var(--filter-accent,#7d3fa8)!important;
+  color:#12071c!important;
+  box-shadow:0 2px 12px color-mix(in srgb,var(--filter-accent,#7d3fa8) 35%,transparent)!important;
+}
+
+body[data-theme="light"] .proposal-chip-count{
+  background:rgba(0,0,0,0.07);
+  color:#3a2e45;
+}
+
+/* Legenda na parte INFERIOR do mapa */
+.graph2-map-legend{
+  position:absolute;
+  bottom:16px;
+  left:50%;
+  transform:translateX(-50%);
+  z-index:30;
+  display:flex;
+  align-items:center;
+  gap:14px;
+  padding:8px 18px;
+  border-radius:24px;
+  background:rgba(18,16,24,0.92);
+  backdrop-filter:blur(14px);
+  -webkit-backdrop-filter:blur(14px);
+  border:1px solid rgba(255,255,255,0.12);
+  box-shadow:0 8px 30px rgba(0,0,0,0.45);
+  max-width:calc(100vw - 32px);
+  overflow-x:auto;
+  scrollbar-width:none;
+  font-size:11.5px;
+  color:#d5cfdc;
+  white-space:nowrap;
+}
+
+.graph2-map-legend::-webkit-scrollbar{display:none}
+
+body[data-theme="light"] .graph2-map-legend{
+  background:rgba(255,255,255,0.95);
+  border-color:rgba(0,0,0,0.1);
+  box-shadow:0 6px 24px rgba(0,0,0,0.08);
+  color:#41364b;
+}
+
+.legend-header{
+  display:flex;
+  align-items:center;
+  gap:6px;
+}
+
+.legend-title{
+  display:inline-flex;
+  align-items:center;
+  gap:5px;
+  font-size:11.5px;
+  font-weight:800;
+  color:#fff;
+}
+
+body[data-theme="light"] .legend-title{
+  color:#100718;
+}
+
+.legend-items{
+  display:flex;
+  align-items:center;
+  gap:12px;
+}
+
+.legend-item{
+  display:inline-flex;
+  align-items:center;
+  gap:6px;
+  font-size:11px;
+}
+
+.legend-dot{
+  width:9px;
+  height:9px;
+  border-radius:50%;
+  background:var(--c,#b5a0ff);
+  flex:0 0 auto;
+  box-shadow:0 0 6px var(--c,#b5a0ff);
+}
+
+.legend-dot.is-central{
+  width:12px;
+  height:12px;
+  border:2px solid #fff;
+}
+
+body[data-theme="light"] .legend-dot.is-central{
+  border-color:#100718;
+}
+
+.legend-hint{
+  display:inline-flex;
+  align-items:center;
+  gap:5px;
+  padding-left:12px;
+  border-left:1px solid rgba(255,255,255,0.12);
+  font-size:11px;
+  font-weight:600;
+  color:#bcb5c6;
+}
+
+body[data-theme="light"] .legend-hint{
+  border-left-color:rgba(0,0,0,0.12);
+  color:#665972;
+}
+
+/* SVG do Grafo */
+.proposal-svg{
+  display:block;
+  width:100%;
+  height:100%;
+  overflow:visible;
+}
+
+/* Linhas e conexões */
+.graph2-wire{
+  fill:none;
+  stroke:color-mix(in srgb,var(--c,#b5a0ff) 26%,#302b3a);
+  stroke-width:1.5;
+  transition:stroke .2s ease,stroke-width .2s ease;
+}
+
+body[data-theme="light"] .graph2-wire{
+  stroke:color-mix(in srgb,var(--c,#7d3fa8) 32%,#c8c1d2);
+}
+
+.graph2-wire.is-highlighted{
+  stroke:var(--c,#b5a0ff);
+  stroke-width:2.8;
+  filter:drop-shadow(0 0 6px var(--c,#b5a0ff));
+}
+
+/* Fluxos de luz pulsando pelas conexões (como no banner hero) */
+.graph2-flow{
+  fill:none;
+  stroke:var(--c,#b5a0ff);
+  stroke-width:2.8;
+  stroke-linecap:round;
+  stroke-dasharray:12 88;
+  filter:drop-shadow(0 0 5px var(--c,#b5a0ff));
+  animation:hn-flow var(--dur,6s) linear infinite;
+  opacity:.8;
+  pointer-events:none;
+}
+
+body[data-theme="light"] .graph2-flow{
+  stroke:var(--c,#7d3fa8);
+  filter:drop-shadow(0 0 4px var(--c,#7d3fa8));
+}
+
+/* Nós do grafo - ESTÁTICOS, sem movimentação nem pulsos de translação */
+.graph2-node{
+  cursor:pointer;
+  outline:none;
+}
+
+.graph2-halo{
+  fill:var(--c,#b5a0ff);
+  opacity:.25;
+  transition:opacity .2s ease, filter .2s ease;
+}
+
+.graph2-node:hover .graph2-halo,
+.graph2-node:focus-visible .graph2-halo{
+  opacity:.55;
+  filter:drop-shadow(0 0 8px var(--c,#b5a0ff));
+}
+
+.graph2-core{
+  fill:var(--c,#b5a0ff);
+  stroke:#101014;
+  stroke-width:1.5;
+  filter:drop-shadow(0 0 6px var(--c,#b5a0ff));
+  transition:filter .2s ease;
+}
+
+.graph2-node:hover .graph2-core,
+.graph2-node:focus-visible .graph2-core{
+  filter:drop-shadow(0 0 10px var(--c,#b5a0ff));
+}
+
+/* Cápsula do código da habilidade (apenas código) */
+.graph2-badge-bg{
+  fill:#17151e;
+  stroke:color-mix(in srgb,var(--c,#b5a0ff) 40%,#3d3748);
+  stroke-width:1;
+  rx:12px;
+  transition:fill .18s ease, stroke .18s ease, stroke-width .18s ease, filter .18s ease;
+  filter:drop-shadow(0 2px 6px rgba(0,0,0,0.5));
+}
+
+body[data-theme="light"] .graph2-badge-bg{
+  fill:#ffffff;
+  stroke:color-mix(in srgb,var(--c,#7d3fa8) 45%,#d0c9d9);
+  filter:drop-shadow(0 2px 6px rgba(0,0,0,0.08));
+}
+
+.graph2-node:hover .graph2-badge-bg,
+.graph2-node:focus-visible .graph2-badge-bg{
+  stroke:var(--c,#b5a0ff);
+  stroke-width:2;
+  fill:color-mix(in srgb,var(--c,#b5a0ff) 26%,#17151e);
+  filter:drop-shadow(0 2px 10px color-mix(in srgb,var(--c,#b5a0ff) 40%,transparent));
+}
+
+body[data-theme="light"] .graph2-node:hover .graph2-badge-bg,
+body[data-theme="light"] .graph2-node:focus-visible .graph2-badge-bg{
+  stroke:var(--c,#7d3fa8);
+  stroke-width:2;
+  fill:color-mix(in srgb,var(--c,#7d3fa8) 18%,#ffffff);
+}
+
+.graph2-label{
+  fill:#fff;
+  font-family:Inter,"Segoe UI",Arial,sans-serif;
+  font-size:11px;
+  font-weight:800;
+  text-anchor:middle;
+  dominant-baseline:central;
+  letter-spacing:.02em;
+  pointer-events:none;
+}
+
+body[data-theme="light"] .graph2-label{
+  fill:#150d1d;
+}
+
+/* Nó Central */
+.graph2-node.is-central{
+  cursor:pointer;
+}
+
+.graph2-node.is-central .graph2-halo{
+  opacity:.35;
+}
+
+.graph2-node.is-central:hover .graph2-halo{
+  opacity:.6;
+  filter:drop-shadow(0 0 14px var(--c,#b5a0ff));
+}
+
+.graph2-node.is-central .graph2-badge-bg{
+  fill:color-mix(in srgb,var(--c,#b5a0ff) 26%,#161320);
+  stroke:var(--c,#b5a0ff);
+  stroke-width:2;
+  filter:drop-shadow(0 0 12px color-mix(in srgb,var(--c,#b5a0ff) 45%,transparent));
+}
+
+body[data-theme="light"] .graph2-node.is-central .graph2-badge-bg{
+  fill:color-mix(in srgb,var(--c,#7d3fa8) 18%,#ffffff);
+  stroke:var(--c,#7d3fa8);
+}
+
+.graph2-node.is-central .graph2-label{
+  font-size:13px;
+  font-weight:900;
+}
+
+/* Botão "Proposta Detalhes 2" no cabeçalho dos detalhes normais */
+.proposal-graph-button{
+  display:inline-flex;
+  align-items:center;
+  gap:6px;
+  font-weight:700;
+  border-color:color-mix(in srgb,var(--detail-accent,#b5a0ff) 40%,#463f53);
+  background:color-mix(in srgb,var(--detail-accent,#b5a0ff) 12%,#1e1b26);
+  color:#fff;
+  transition:all .2s ease;
+}
+
+.proposal-graph-button:hover{
+  border-color:var(--detail-accent,#b5a0ff);
+  background:color-mix(in srgb,var(--detail-accent,#b5a0ff) 26%,#1e1b26);
+  box-shadow:0 0 14px color-mix(in srgb,var(--detail-accent,#b5a0ff) 35%,transparent);
+  transform:translateY(-1px);
+}
+
+body[data-theme="light"] .proposal-graph-button{
+  border-color:color-mix(in srgb,var(--detail-accent,#7d3fa8) 40%,#d2ccd8);
+  background:color-mix(in srgb,var(--detail-accent,#7d3fa8) 10%,#ffffff);
+  color:#23192e;
+}
+
+body[data-theme="light"] .proposal-graph-button:hover{
+  background:color-mix(in srgb,var(--detail-accent,#7d3fa8) 20%,#ffffff);
+  border-color:var(--detail-accent,#7d3fa8);
+  color:#0f0717;
+  box-shadow:0 0 14px color-mix(in srgb,var(--detail-accent,#7d3fa8) 25%,transparent);
+}
+
+.detail-top-nav-actions{
+  display:flex;
+  align-items:center;
+  gap:10px;
+  flex-wrap:wrap;
+  margin-bottom:18px;
+}
+
+/* Badge de contagem de conexões no canto inferior direito de todos os cartões */
+.card-bottom-meta{
+  position:absolute;
+  right:9px;
+  bottom:8px;
+  display:flex;
+  align-items:center;
+  pointer-events:none;
+  z-index:2;
+}
+
+.card-conn-badge{
+  display:inline-flex;
+  align-items:center;
+  gap:3.5px;
+  padding:2px 7px;
+  border-radius:10px;
+  font-size:10.5px;
+  font-weight:700;
+  line-height:1.2;
+  color:color-mix(in srgb,var(--accent,#b5a0ff) 80%,#ffffff);
+  background:color-mix(in srgb,var(--accent,#b5a0ff) 14%,#16131d);
+  border:1px solid color-mix(in srgb,var(--accent,#b5a0ff) 32%,#3a3344);
+  box-shadow:0 1px 4px rgba(0,0,0,0.35);
+  letter-spacing:.02em;
+  transition:all .18s ease;
+}
+
+body[data-theme="light"] .card-conn-badge{
+  color:color-mix(in srgb,var(--accent,#7d3fa8) 85%,#1c1324);
+  background:color-mix(in srgb,var(--accent,#7d3fa8) 12%,#ffffff);
+  border-color:color-mix(in srgb,var(--accent,#7d3fa8) 32%,#d4cddc);
+  box-shadow:0 1px 3px rgba(0,0,0,0.06);
+}
+
+.card-conn-icon{
+  display:block;
+  stroke:currentColor;
+  opacity:.85;
+}
+
+.skill-card:hover .card-conn-badge,
+.skill-card:focus-visible .card-conn-badge{
+  border-color:var(--accent,#b5a0ff);
+  background:color-mix(in srgb,var(--accent,#b5a0ff) 26%,#16131d);
+  box-shadow:0 0 8px color-mix(in srgb,var(--accent,#b5a0ff) 35%,transparent);
+}
+
+body[data-theme="light"] .skill-card:hover .card-conn-badge,
+body[data-theme="light"] .skill-card:focus-visible .card-conn-badge{
+  border-color:var(--accent,#7d3fa8);
+  background:color-mix(in srgb,var(--accent,#7d3fa8) 22%,#ffffff);
+  box-shadow:0 0 8px color-mix(in srgb,var(--accent,#7d3fa8) 25%,transparent);
+}
+
+@media(max-width:860px){
+  .proposal-topbar{padding:10px 14px;flex-direction:column;align-items:stretch;gap:8px}
+  .graph2-map-controls-top{top:8px;padding:6px 10px;gap:6px}
+  .graph2-map-legend{bottom:8px;padding:6px 12px;gap:8px;font-size:10.5px}
+  .legend-hint{display:none}
+}

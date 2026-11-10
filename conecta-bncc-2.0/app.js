@@ -194,6 +194,38 @@ function reunaCardContext(reunaFocal,x){
  const rotulo=reunaFocal.rotulo||('Focal '+reunaFocal.posicao+'/'+reunaFocal.total_grupo+' em '+reunaFocal.componente+' ('+groupDesc+')');
  return {unidade,label,groupDesc,rotulo};
 }
+function skillConnectionCount(x){
+ if(!x)return 0;
+ if(x._connectionCount!==undefined)return x._connectionCount;
+ const relatedCodes=new Set();
+ try{
+  for(const r of relations(x,Infinity)){
+   if(r.item?.code)relatedCodes.add(r.item.code);
+  }
+  for(const c of getCompetenciasForSkill(x)){
+   if(c.code)relatedCodes.add(c.code);
+  }
+  const ai=S.data.ai?.[x.code];
+  if(ai?.por_componente){
+   for(const k in ai.por_componente){
+    for(const c of ai.por_componente[k]?.codigos||[])relatedCodes.add(c);
+   }
+  }
+  const reuna=S.data.reuna?.[x.code];
+  if(reuna?.mapaDeFoco?.ocorrencias){
+   for(const oc of reuna.mapaDeFoco.ocorrencias){
+    for(const c of oc.conhecimentoPrevio||[])relatedCodes.add(c);
+    const rel=oc.habilidadesRelacionadas||{};
+    for(const c of rel.AF||[])relatedCodes.add(c);
+    for(const c of rel.AC||[])relatedCodes.add(c);
+    for(const c of rel.EF||[])relatedCodes.add(c);
+   }
+  }
+ }catch(e){}
+ relatedCodes.delete(x.code);
+ x._connectionCount=relatedCodes.size;
+ return x._connectionCount;
+}
 function card(x,railIndex,rowId){
  const component=componentLabel(x),co=color(component);
  const isReunaRow=rowId==="reuna";
@@ -209,10 +241,13 @@ function card(x,railIndex,rowId){
    : '';
  const cardTitle=isReunaRow&&reunaCtx?(' title="'+E(reunaCtx.rotulo+(reunaCtx.label?' · '+reunaCtx.label:''))+'"'):'';
  const cardClasses="skill-card"+(isReunaRow?" reuna-card":"")+(isTwoLines?" reuna-theme-lines-2":"");
+ const connCount=skillConnectionCount(x);
+ const connBadge='<div class="card-bottom-meta"><span class="card-conn-badge" title="'+connCount+' conexões registradas com outras habilidades e referências"><svg class="card-conn-icon" width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="18" cy="5" r="3"/><circle cx="6" cy="12" r="3"/><circle cx="18" cy="19" r="3"/><line x1="8.59" y1="13.51" x2="15.42" y2="17.49"/><line x1="15.41" y1="6.51" x2="8.59" y2="10.49"/></svg><span>'+connCount+'</span></span></div>';
  return '<article class="'+cardClasses+'" role="button" tabindex="-1" aria-hidden="true" aria-label="'+E(x.code)+': '+E(x.text)+'" data-code="'+E(x.code)+'" data-rail-index="'+E(railIndex)+'" style="--accent:'+co+'"'+cardTitle+'>'
   +'<div class="card-top"><span class="skill-code">'+E(x.code)+'</span><span class="skill-group" title="'+E(reunaCtx?.rotulo||groupLabel)+'">'+E(groupLabel)+'</span></div>'
   +'<div class="card-identity"><span class="skill-tag">'+E(component)+'</span>'+extraBadge+'</div>'
   +'<p class="card-text">'+E(x.text)+'</p>'
+  +connBadge
   +'</article>';
 }
 function shortcuts(){ $("#stageShortcuts").innerHTML=ROWS.map(x=>'<button class="stage-chip'+(S.stageFilter===x.id?' is-active':'')+'" data-scroll="'+x.id+'" style="--chip-stage:'+(x.cor||'#b5a0ff')+'">'+E(x.title)+'</button>').join("");}
@@ -239,21 +274,24 @@ function rowSearchMarkup(row){
  return '<div class="row-search-wrap'+(searchOpen?' is-expanded':'')+'" data-row-search-wrap="'+E(row.id)+'"><button type="button" class="row-search-toggle'+(query?' has-query':'')+(searchOpen?' is-active':'')+'" data-row-search-toggle="'+E(row.id)+'" aria-label="Buscar habilidades em '+E(row.title)+'" title="Buscar em '+E(row.title)+'"><svg class="row-search-icon" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="11" cy="11" r="7"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line></svg></button><div class="row-search-field"'+(searchOpen?'':' hidden')+'><input type="search" class="row-search-input" data-row-search-input="'+E(row.id)+'" placeholder="Buscar em '+E(row.title)+'…" value="'+E(query)+'" aria-label="Buscar em '+E(row.title)+'" autocomplete="off" spellcheck="false"><button type="button" class="row-search-clear'+(query?'':' is-hidden')+'" data-row-search-clear="'+E(row.id)+'" aria-label="Limpar busca" title="Limpar busca">×</button></div></div>';
 }
 function rowView(row){
- const base=filtered(rowItems(row.id)),period=S.yearFilters.get(row.id)||"",available=period?base.filter(x=>periods(x,row.id).some(p=>p.key===period)):base,selected=S.rowFilters.get(row.id)||"";
- let items=selected?available.filter(x=>componentLabel(x)===selected):available;
+ const base=filtered(rowItems(row.id));
  const q=(S.rowQueries?.get(row.id)||"").trim().toLowerCase();
- if(q){
-  items=items.filter(x=>{
-   const code=String(x.code||"").toLowerCase();
-   const text=String(x.text||"").toLowerCase();
-   const disc=String(x.discipline||x.area||componentLabel(x)||"").toLowerCase();
-   const group=String(x.group||"").toLowerCase();
-   const field=String(x.field||x.theme||"").toLowerCase();
-   const summary=String(x.summary||"").toLowerCase();
-   return code.includes(q)||text.includes(q)||disc.includes(q)||group.includes(q)||field.includes(q)||summary.includes(q);
-  });
- }
- return {base,period,available,selected,items};
+ const matchesQuery=x=>{
+  if(!q)return true;
+  const code=String(x.code||"").toLowerCase();
+  const text=String(x.text||"").toLowerCase();
+  const disc=String(x.discipline||x.area||componentLabel(x)||"").toLowerCase();
+  const group=String(x.group||"").toLowerCase();
+  const field=String(x.field||x.theme||"").toLowerCase();
+  const summary=String(x.summary||"").toLowerCase();
+  return code.includes(q)||text.includes(q)||disc.includes(q)||group.includes(q)||field.includes(q)||summary.includes(q);
+ };
+ const filteredBase=q?base.filter(matchesQuery):base;
+ const period=S.yearFilters.get(row.id)||"";
+ const available=period?filteredBase.filter(x=>periods(x,row.id).some(p=>p.key===period)):filteredBase;
+ const selected=S.rowFilters.get(row.id)||"";
+ const items=selected?available.filter(x=>componentLabel(x)===selected):available;
+ return {base:filteredBase,unfilteredBase:base,period,available,selected,items};
 }
 function rowPeriodChips(row,view){
  const counts=new Map();view.base.forEach(x=>periods(x,row.id).forEach(p=>{const entry=counts.get(p.key)||{...p,count:0};entry.count++;counts.set(p.key,entry);}));
@@ -270,7 +308,7 @@ function rowComponentChips(row,view){
  const labels={ei:"Campos de experiência",iniciais:"Componentes",finais:"Componentes",em:"Áreas de conhecimento",competencias:"Áreas e componentes",computacao:"Eixos da Computação",cieb:"Eixos do CIEB",reuna:"Componentes e áreas"};
  const label=labels[row.id]||"Componentes";
  const button=(name,count)=>'<button type="button" class="component-chip'+(view.selected===name?' active':'')+'" data-row-component="'+E(row.id)+'" data-component="'+E(name)+'" aria-pressed="'+String(view.selected===name)+'"'+(name?' style="--chip-accent:'+color(name)+'"':'')+'><span class="component-chip-dot" aria-hidden="true"></span><span>'+E(name||"Todos")+'</span><span class="component-chip-count">'+count.toLocaleString("pt-BR")+'</span></button>';
- const searchPrefix=(row.id==="competencias"||!periods(rowItems(row.id)[0]||{},row.id).length)?rowSearchMarkup(row):"";
+ const searchPrefix=(!rowPeriodChips(row,view))?rowSearchMarkup(row):"";
  return '<div class="row-components"><span class="row-components-label">'+E(label)+'</span><div class="component-rail"><button type="button" class="component-arrow component-arrow-prev" data-component-direction="-1" aria-label="Ver componentes anteriores" hidden>‹</button><div class="row-component-list" role="group" aria-label="'+E(label+' em '+row.title)+'">'+searchPrefix+button("",view.available.length)+[...counts.entries()].map(([name,count])=>button(name,count)).join("")+'</div><button type="button" class="component-arrow component-arrow-next" data-component-direction="1" aria-label="Ver mais componentes" hidden>›</button></div></div>';
 }
 function railItemIndex(index,count){return count>0?((index%count)+count)%count:-1;}
@@ -292,15 +330,37 @@ function updateRowSearchResults(sec,row){
  const countEl=sec.querySelector(".row-meta");if(countEl)countEl.textContent=count;
  const track=sec.querySelector(".row-track");
  if(track){
-  S.rails.set(row.id,createRailState(view.items));
-  const rail=S.rails.get(row.id);
-  const empty="Nenhuma habilidade encontrada com o termo digitado.";
-  track.innerHTML=view.items.length?railMarkup(rail,rail.start,rail.end):'<div class="empty-row">'+E(empty)+'</div>';
+  const rail=createRailState(view.items);
+  rail.rowId=row.id;
+  S.rails.set(row.id,rail);
+  const q=(S.rowQueries?.get(row.id)||"").trim();
+  const empty=q?'Nenhuma habilidade encontrada para "'+E(q)+'" nesta etapa.':(view.selected?"Nenhuma habilidade neste componente com os filtros atuais. Selecione Todos para voltar à faixa.":"Nenhum resultado nesta faixa.");
+  track.innerHTML=view.items.length?railMarkup(rail,rail.start,rail.end):'<div class="empty-row">'+empty+'</div>';
   initializeRail(track,{animateStart:false});
   const prevArrow=sec.querySelector(".rail-prev"),nextArrow=sec.querySelector(".rail-next");
   if(prevArrow)prevArrow.hidden=!rail.loop;
   if(nextArrow)nextArrow.hidden=!rail.loop;
  }
+ const periodCounts=new Map();
+ view.base.forEach(x=>periods(x,row.id).forEach(p=>periodCounts.set(p.key,(periodCounts.get(p.key)||0)+1)));
+ sec.querySelectorAll(".row-periods [data-row-period]").forEach(chip=>{
+  const pKey=chip.dataset.period;
+  const cEl=chip.querySelector(".component-chip-count");
+  if(cEl){
+   const n=pKey===""?view.base.length:(periodCounts.get(pKey)||0);
+   cEl.textContent=n.toLocaleString("pt-BR");
+  }
+ });
+ const compCounts=new Map();
+ view.available.forEach(x=>{const label=componentLabel(x);compCounts.set(label,(compCounts.get(label)||0)+1);});
+ sec.querySelectorAll(".row-components [data-row-component]").forEach(chip=>{
+  const cKey=chip.dataset.component;
+  const cEl=chip.querySelector(".component-chip-count");
+  if(cEl){
+   const n=cKey===""?view.available.length:(compCounts.get(cKey)||0);
+   cEl.textContent=n.toLocaleString("pt-BR");
+  }
+ });
  if(sec.classList.contains("is-collapsed"))setRowOpen(sec,true);
 }
 function makeRow(row,view){
@@ -1557,10 +1617,11 @@ function detail(code){
   +'<button type="button" class="detail-copy-button" id="printOpen" aria-haspopup="dialog">'+printBtnSvg+'Imprimir / Salvar em PDF</button>'
   +(!isCompOrCieb&&!isComp?'<a class="detail-header-map" href="#skillGraph">Explorar progressão <span aria-hidden="true">↓</span></a>':'')
   +'</div>';
- page.classList.remove("has-compact-summary");page.innerHTML=printHeadHtml(x)+'<section class="detail-hero" style="--detail-accent:'+color(x.discipline||x.area)+'"><div class="detail-hero-inner"><button class="back-button" id="backButton">← &nbsp; Voltar ao catálogo</button><div class="detail-header-grid"><div class="detail-header-main"><div class="detail-topline"><span class="detail-kicker">'+E(kicker)+'</span><span>'+E(docLabel)+'</span></div><div class="detail-title"><h1>'+E(x.code)+'</h1><p class="skill-long-text">'+E(x.text)+'</p></div>'+actionsHtml+'</div></div></div></section><nav class="detail-nav" aria-label="Nesta habilidade"><span>Nesta habilidade</span>'+nav.map(([id,label])=>'<a href="#'+id+'">'+E(label)+'</a>').join("")+'</nav><div class="detail-content">'+detailHeaderHtml(x)+competenciasHtml(x)+mapWorkspaceHtml(x,relationLists.curriculo)+aiHtml(x)+ciebHtml(x,relationLists.cieb)+reunaHtml(x)+'</div>';
+ page.classList.remove("has-compact-summary");page.innerHTML=printHeadHtml(x)+'<section class="detail-hero" style="--detail-accent:'+color(x.discipline||x.area)+'"><div class="detail-hero-inner"><div class="detail-top-nav-actions"><button class="back-button" id="backButton">← &nbsp; Voltar ao catálogo</button><button type="button" class="back-button proposal-graph-button" id="openProposalGraph"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" style="vertical-align:-2px;margin-right:4px"><circle cx="18" cy="5" r="3"/><circle cx="6" cy="12" r="3"/><circle cx="18" cy="19" r="3"/><line x1="8.59" y1="13.51" x2="15.42" y2="17.49"/><line x1="15.41" y1="6.51" x2="8.59" y2="10.49"/></svg>Proposta Detalhes 2 ↗</button></div><div class="detail-header-grid"><div class="detail-header-main"><div class="detail-topline"><span class="detail-kicker">'+E(kicker)+'</span><span>'+E(docLabel)+'</span></div><div class="detail-title"><h1>'+E(x.code)+'</h1><p class="skill-long-text">'+E(x.text)+'</p></div>'+actionsHtml+'</div></div></div></section><nav class="detail-nav" aria-label="Nesta habilidade"><span>Nesta habilidade</span>'+nav.map(([id,label])=>'<a href="#'+id+'">'+E(label)+'</a>').join("")+'</nav><div class="detail-content">'+detailHeaderHtml(x)+competenciasHtml(x)+mapWorkspaceHtml(x,relationLists.curriculo)+aiHtml(x)+ciebHtml(x,relationLists.cieb)+reunaHtml(x)+'</div>';
  page.querySelector('[data-copy-official]')?.addEventListener('click',async e=>{const button=e.currentTarget;try{const textToCopy=page.querySelector('.skill-long-text')?.textContent||x.text||"";await navigator.clipboard.writeText(textToCopy);button.textContent='Texto copiado';setTimeout(()=>button.textContent='Copiar texto oficial',1800);}catch{button.textContent='Não foi possível copiar';}});
  recolherSecoesDetalhe(page);const detailHero=page.querySelector(".detail-hero"),detailNav=page.querySelector(".detail-nav"),stickySummary=document.createElement("div"),navShell=document.createElement("div");stickySummary.className="detail-sticky-summary";stickySummary.style.setProperty('--detail-accent',color(x.discipline||x.area));stickySummary.hidden=true;stickySummary.setAttribute("aria-hidden","true");stickySummary.setAttribute("aria-label","Habilidade em foco");stickySummary.innerHTML="<strong></strong><p></p>";stickySummary.querySelector("strong").textContent=x.code;stickySummary.querySelector("p").textContent=x.text;navShell.className="detail-sticky-shell";detailHero.after(stickySummary);detailNav.before(navShell);navShell.append(detailNav);requestAnimationFrame(()=>{syncDetailStickySummary();syncDetailNavScrollspy();});
  $("#backButton").addEventListener("click",()=>home());
+ $("#openProposalGraph")?.addEventListener("click",()=>openProposalGraph(x.code));
  initializeDetailRails(page);
 
  page.onclick=e=>{
@@ -1950,6 +2011,458 @@ function events(){
  $("#aboutButton").addEventListener("click",()=>$("#aboutDialog").showModal());$("#themeButton").addEventListener("click",()=>{const t=document.body.dataset.theme==="light"?"dark":"light";document.body.dataset.theme=t;localStorage.setItem("conecta-bncc-theme",t);$("#themeButton").textContent=t==="light"?"☾":"☼";$("#themeButton").title=t==="light"?"Ativar tema escuro":"Ativar tema claro";});document.querySelectorAll("[data-close-dialog]").forEach(b=>b.addEventListener("click",()=>$("#aboutDialog").close()));
  $("#aboutMeta").innerHTML="1.721 aprendizagens BNCC + "+S.data.cieb.length+" referências CIEB · "+VERSION+"<br>BNCC-dados CC BY 4.0 · pipeline MIT<br>Todos os arquivos são locais; a aplicação não consulta a rede.";
  $("#footerVersion").textContent=VERSION;$("#themeButton").textContent=document.body.dataset.theme==="light"?"☾":"☼";window.addEventListener("popstate",()=>{const c=new URLSearchParams(location.search).get("codigo");if(c){if($("#detailPage").hidden||S.currentSkill?.code!==c)detail(c);if(location.hash)requestAnimationFrame(()=>{const alvo=document.getElementById(decodeURIComponent(location.hash.slice(1)));detailMostrarFragmento(alvo);alvo?.scrollIntoView();});else window.scrollTo({top:0,behavior:"instant"});}else{$("#detailPage").hidden=true;$("#catalogPage").hidden=false;requestAnimationFrame(()=>initializeRails($("#catalogRows")));window.scrollTo({top:S.catalogScroll||0,behavior:"instant"});}});
+}
+
+function getSkillConnectionsData(x){
+ const result={central:x,allNodes:new Map(),groups:{anteriores:[],posteriores:[],competencias:[],interdisciplinar:[],cieb:[],reuna:[],curriculo:[]}};
+ if(!x)return result;
+ try{
+  for(const c of getCompetenciasForSkill(x)){
+   const code=c.code||c.id;
+   if(code&&!result.allNodes.has(code)){
+    const node={code,item:c,kind:'competencia',category:'competencias',label:c.nome||c.titulo||c.texto?.slice(0,38)||code,text:c.texto||''};
+    result.allNodes.set(code,node);
+    result.groups.competencias.push(node);
+   }
+  }
+  const dRels=detailRelations(x);
+  for(const r of dRels.curriculo||[]){
+   const code=r.item?.code;
+   if(code&&code!==x.code&&!result.allNodes.has(code)){
+    const isBefore=(r.item.years?.[0]||0)<(x.years?.[0]||0);
+    const isAfter=(r.item.years?.[0]||0)>(x.years?.[0]||0);
+    const cat=isBefore?'anteriores':(isAfter?'posteriores':'curriculo');
+    const node={code,item:r.item,kind:r.item.kind||'bncc',category:cat,rel:r.rel,text:r.item.text||''};
+    result.allNodes.set(code,node);
+    result.groups[cat].push(node);
+   }
+  }
+  for(const r of dRels.cieb||[]){
+   const code=r.item?.code;
+   if(code&&code!==x.code&&!result.allNodes.has(code)){
+    const node={code,item:r.item,kind:'cieb',category:'cieb',rel:r.rel,text:r.item.text||''};
+    result.allNodes.set(code,node);
+    result.groups.cieb.push(node);
+   }
+  }
+  const ai=S.data.ai?.[x.code];
+  if(ai?.por_componente){
+   for(const k in ai.por_componente){
+    for(const code of ai.por_componente[k]?.codigos||[]){
+     if(code&&code!==x.code&&!result.allNodes.has(code)){
+      const item=S.by.get(code);
+      const node={code,item,kind:item?.kind||'bncc',category:'interdisciplinar',component:k,text:item?.text||'Sugestão interdisciplinar em '+k};
+      result.allNodes.set(code,node);
+      result.groups.interdisciplinar.push(node);
+     }
+    }
+   }
+  }
+  const reuna=S.data.reuna?.[x.code];
+  if(reuna?.mapaDeFoco?.ocorrencias){
+   for(const oc of reuna.mapaDeFoco.ocorrencias){
+    for(const code of oc.conhecimentoPrevio||[]){
+     if(code&&code!==x.code&&!result.allNodes.has(code)){
+      const item=S.by.get(code);
+      const node={code,item,kind:item?.kind||'bncc',category:'anteriores',reason:'Pré-requisito Reúna',text:item?.text||''};
+      result.allNodes.set(code,node);
+      result.groups.anteriores.push(node);
+     }
+    }
+    const rel=oc.habilidadesRelacionadas||{};
+    for(const code of [...(rel.AF||[]),...(rel.AC||[]),...(rel.EF||[])]){
+     if(code&&code!==x.code&&!result.allNodes.has(code)){
+      const item=S.by.get(code);
+      const node={code,item,kind:item?.kind||'bncc',category:'reuna',text:item?.text||''};
+      result.allNodes.set(code,node);
+      result.groups.reuna.push(node);
+     }
+    }
+   }
+  }
+  // Try graph progression incoming / outgoing
+  const gState=typeof window!=="undefined"?window.bnccGraphState:null;
+  if(gState){
+   for(const e of gState.incoming?.get(x.code)||[]){
+    const code=e.o;
+    if(code&&code!==x.code&&!result.allNodes.has(code)){
+     const item=S.by.get(code);
+     const node={code,item,kind:item?.kind||'bncc',category:'anteriores',reason:'Percurso (vem antes)',text:item?.text||''};
+     result.allNodes.set(code,node);
+     result.groups.anteriores.push(node);
+    }
+   }
+   for(const e of gState.outgoing?.get(x.code)||[]){
+    const code=e.d;
+    if(code&&code!==x.code&&!result.allNodes.has(code)){
+     const item=S.by.get(code);
+     const node={code,item,kind:item?.kind||'bncc',category:'posteriores',reason:'Percurso (vem depois)',text:item?.text||''};
+     result.allNodes.set(code,node);
+     result.groups.posteriores.push(node);
+    }
+   }
+  }
+ }catch(err){console.warn('Erro ao mapear conexoes:',err);}
+ return result;
+}
+
+function arrangeGraphPositions(central,allNodes,groups){
+ const positions=new Map();
+ positions.set(central.code,{x:0,y:0,node:{code:central.code,item:central,isCentral:true,category:'central'}});
+
+ function layoutCluster(items,cx,cy,maxRows,spacingX,spacingY){
+  if(!items||!items.length)return;
+  const count=items.length;
+  const cols=Math.ceil(count/maxRows);
+  items.forEach((n,i)=>{
+   const col=Math.floor(i/maxRows);
+   const rowInCol=i%maxRows;
+   const itemsInThisCol=Math.min(maxRows,count-col*maxRows);
+   const rowOffset=rowInCol-(itemsInThisCol-1)/2;
+   const colOffset=col-(cols-1)/2;
+   positions.set(n.code,{
+    x:cx+colOffset*spacingX,
+    y:cy+rowOffset*spacingY,
+    node:n
+   });
+  });
+ }
+
+ // Agrupamento coeso dos nós conforme sua procedência/origem com distâncias seguras
+ // - Reúna (Mapa Focal): cluster no quadrante superior esquerdo
+ layoutCluster(groups.reuna||[],-420,-260,3,145,82);
+
+ // - CIEB / Computação: cluster no quadrante superior direito
+ layoutCluster(groups.cieb||[],420,-260,3,145,82);
+
+ // - Competências BNCC: cluster no topo central
+ layoutCluster(groups.competencias||[],0,-370,2,150,82);
+
+ // - Anteriores / Pré-requisitos: cluster à esquerda do percurso
+ layoutCluster(groups.anteriores||[],-640,20,4,148,82);
+
+ // - Posteriores / Continuidade: cluster à direita do percurso
+ layoutCluster(groups.posteriores||[],640,20,4,148,82);
+
+ // - Interdisciplinar IA: cluster na base central
+ layoutCluster(groups.interdisciplinar||[],0,360,2,150,82);
+
+ // - Currículo / Articulações: quadrantes inferiores
+ const curr=groups.curriculo||[];
+ const currLeft=curr.slice(0,Math.ceil(curr.length/2));
+ const currRight=curr.slice(Math.ceil(curr.length/2));
+ layoutCluster(currLeft,-360,260,2,145,82);
+ layoutCluster(currRight,360,260,2,145,82);
+
+ // Qualquer outro nó avulso não categorizado
+ (allNodes||new Map()).forEach((node,code)=>{
+  if(!positions.has(code)){
+   const angle=positions.size*0.8;
+   positions.set(code,{x:Math.cos(angle)*480,y:Math.sin(angle)*300,node});
+  }
+ });
+
+ // Resolução e prevenção estrita de sobreposição de nós e títulos (Collision Avoidance Relaxation)
+ const nodes=[...positions.values()];
+ const PADDING_X=26;
+ const PADDING_Y=22;
+ const NODE_HEIGHT=62;
+
+ for(let iter=0;iter<18;iter++){
+  let moved=false;
+  for(let i=0;i<nodes.length;i++){
+   for(let j=i+1;j<nodes.length;j++){
+    const a=nodes[i];
+    const b=nodes[j];
+    const wA=Math.max(76,(a.node.code?.length||8)*9+22);
+    const wB=Math.max(76,(b.node.code?.length||8)*9+22);
+    const reqX=(wA+wB)/2+PADDING_X;
+    const reqY=NODE_HEIGHT+PADDING_Y;
+
+    const dx=b.x-a.x;
+    const dy=b.y-a.y;
+    const absX=Math.abs(dx);
+    const absY=Math.abs(dy);
+
+    if(absX<reqX&&absY<reqY){
+     moved=true;
+     const overlapX=reqX-absX;
+     const overlapY=reqY-absY;
+
+     if(overlapX<overlapY*1.4){
+      const shiftX=(overlapX/2)+1;
+      const signX=(dx>=0?1:-1)||1;
+      if(!a.node.isCentral)a.x-=shiftX*signX;
+      if(!b.node.isCentral)b.x+=shiftX*signX;
+     }else{
+      const shiftY=(overlapY/2)+1;
+      const signY=(dy>=0?1:-1)||1;
+      if(!a.node.isCentral)a.y-=shiftY*signY;
+      if(!b.node.isCentral)b.y+=shiftY*signY;
+     }
+    }
+   }
+  }
+
+  // Raio de segurança ao redor do nó central (r = 190px)
+  for(let i=0;i<nodes.length;i++){
+   const a=nodes[i];
+   if(a.node.isCentral)continue;
+   const dist=Math.hypot(a.x,a.y);
+   if(dist<190){
+    const factor=190/Math.max(dist,1);
+    a.x*=factor;
+    a.y*=factor;
+   }
+  }
+
+  if(!moved)break;
+ }
+
+ return positions;
+}
+let proposalGraphState={activeSkill:null,activeCategory:'',zoom:1,panX:0,panY:0};
+
+function openProposalGraph(code){
+ const x=S.by.get(code);if(!x)return;
+ proposalGraphState.activeSkill=x;
+ proposalGraphState.activeCategory='';
+ proposalGraphState.zoom=1;
+ proposalGraphState.panX=0;
+ proposalGraphState.panY=0;
+
+ $("#catalogPage").hidden=true;
+ $("#detailPage").hidden=true;
+ const page=$("#proposalGraphPage");
+ if(!page)return;
+ page.hidden=false;
+
+ const conn=getSkillConnectionsData(x);
+ const positions=arrangeGraphPositions(x,conn.allNodes,conn.groups);
+ const compName=componentLabel(x);
+ const compCol=color(compName);
+ page.style.setProperty("--skill-accent",compCol);
+
+ const catLabels={
+  anteriores:{label:"Vêm antes / Pré-requisitos",color:"#61b8ff"},
+  posteriores:{label:"Vêm depois / Continuidade",color:"#ffb86b"},
+  competencias:{label:"Competências",color:"#c9a4e0"},
+  interdisciplinar:{label:"Interdisciplinar IA",color:"#7de2b8"},
+  cieb:{label:"CIEB / Computação",color:"#7dc9e8"},
+  reuna:{label:"Reúna (Focal)",color:"#f2a365"},
+  curriculo:{label:"BNCC / Articulações",color:"#b5a0ff"}
+ };
+
+ const availableCats=Object.keys(conn.groups).filter(k=>conn.groups[k].length>0);
+ const filterChips=['<button type="button" class="proposal-chip is-active" data-cat="" style="--filter-accent:'+compCol+'"><span class="proposal-chip-check">✓</span><span>Todas</span><span class="proposal-chip-count">'+conn.allNodes.size+'</span></button>']
+  .concat(availableCats.map(k=>{
+   const cfg=catLabels[k]||{label:k,color:"#b5a0ff"};
+   return '<button type="button" class="proposal-chip" data-cat="'+E(k)+'" style="--filter-accent:'+cfg.color+'"><span class="proposal-chip-check">✓</span><span class="proposal-chip-dot"></span><span>'+E(cfg.label)+'</span><span class="proposal-chip-count">'+conn.groups[k].length+'</span></button>';
+  })).join('');
+
+ let wiresHtml='',flowsHtml='',nodesHtml='';
+
+ positions.forEach((pos,nodeCode)=>{
+  if(nodeCode===x.code)return;
+  const nx=pos.x,ny=pos.y,node=pos.node;
+  const mx=nx*0.5,my=ny*0.5-(ny>0?20:-20);
+  const d='M 0 0 Q '+mx.toFixed(1)+' '+my.toFixed(1)+' '+nx.toFixed(1)+' '+ny.toFixed(1);
+  const nodeItem=node.item||S.by.get(nodeCode);
+  const nodeComp=nodeItem?componentLabel(nodeItem):compName;
+  const c=color(nodeComp)||(catLabels[node.category]?.color||'#b5a0ff');
+  const dur=(5+(Math.abs(nx)%4)*1.4).toFixed(1)+'s';
+  wiresHtml+='<path class="graph2-wire" data-wire="'+E(nodeCode)+'" data-cat="'+E(node.category)+'" d="'+d+'" style="--c:'+c+'"></path>';
+  flowsHtml+='<path class="graph2-flow" data-flow="'+E(nodeCode)+'" data-cat="'+E(node.category)+'" pathLength="100" d="'+d+'" style="--c:'+c+';--dur:'+dur+'"></path>';
+
+  const badgeW=Math.max(72,nodeCode.length*8.5+20);
+  nodesHtml+='<g class="graph2-node" data-code="'+E(nodeCode)+'" data-cat="'+E(node.category)+'" transform="translate('+nx.toFixed(1)+','+ny.toFixed(1)+')" tabindex="0" role="button" aria-label="'+E(nodeCode)+'">'
+   +'<title>'+E(nodeCode)+(node.reason?' · '+E(node.reason):'')+'</title>'
+   +'<circle class="graph2-halo" r="24" style="--c:'+c+'"></circle>'
+   +'<circle class="graph2-core" r="7" style="--c:'+c+'"></circle>'
+   +'<rect class="graph2-badge-bg" x="-'+(badgeW/2).toFixed(1)+'" y="10" width="'+badgeW+'" height="23" style="--c:'+c+'"></rect>'
+   +'<text class="graph2-label" x="0" y="22">'+E(nodeCode)+'</text>'
+   +'</g>';
+ });
+
+ const centralBadgeW=Math.max(90,x.code.length*9.5+24);
+ const centralNodeHtml='<g class="graph2-node is-central" data-code="'+E(x.code)+'" transform="translate(0,0)" tabindex="0" role="button" aria-label="'+E(x.code)+'">'
+  +'<title>'+E(x.code)+' · Habilidade ativa</title>'
+  +'<circle class="graph2-halo" r="38" style="--c:'+compCol+'"></circle>'
+  +'<circle class="graph2-core" r="14" style="--c:'+compCol+'"></circle>'
+  +'<rect class="graph2-badge-bg" x="-'+(centralBadgeW/2).toFixed(1)+'" y="18" width="'+centralBadgeW+'" height="28" style="--c:'+compCol+'"></rect>'
+  +'<text class="graph2-label" x="0" y="32">'+E(x.code)+'</text>'
+  +'</g>';
+
+ const legendHtml='<div class="graph2-map-legend" role="region" aria-label="Legenda do mapa">'
+  +'<div class="legend-header"><strong class="legend-title"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="10"/><path d="M12 16v-4"/><path d="M12 8h.01"/></svg> Legenda:</strong></div>'
+  +'<div class="legend-items">'
+  +'<span class="legend-item"><span class="legend-dot is-central" style="--c:'+compCol+'"></span><strong>Centro:</strong> '+E(x.code)+'</span>'
+  +(conn.groups.anteriores?.length?'<span class="legend-item"><span class="legend-dot" style="--c:#61b8ff"></span><strong>← Esquerda:</strong> Vêm antes</span>':'')
+  +(conn.groups.posteriores?.length?'<span class="legend-item"><span class="legend-dot" style="--c:#ffb86b"></span><strong>Direita →:</strong> Vêm depois</span>':'')
+  +(conn.groups.competencias?.length?'<span class="legend-item"><span class="legend-dot" style="--c:#c9a4e0"></span><strong>↑ Topo:</strong> Competências</span>':'')
+  +(conn.groups.interdisciplinar?.length?'<span class="legend-item"><span class="legend-dot" style="--c:#7de2b8"></span><strong>↓ Base:</strong> Interdisciplinar IA</span>':'')
+  +(conn.groups.cieb?.length?'<span class="legend-item"><span class="legend-dot" style="--c:#7dc9e8"></span><strong>Diagonal:</strong> CIEB</span>':'')
+  +(conn.groups.reuna?.length?'<span class="legend-item"><span class="legend-dot" style="--c:#f2a365"></span><strong>Diagonal:</strong> Reúna</span>':'')
+  +'</div>'
+  +'<span class="legend-hint"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M15 3h6v6"/><path d="M10 14 21 3"/><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/></svg> Clique em qualquer nó para abrir detalhes completos</span>'
+  +'</div>';
+
+ page.innerHTML='<header class="proposal-topbar">'
+  +'<div class="proposal-nav-group">'
+  +'<button type="button" class="proposal-btn" id="proposalBackDetail">← Voltar aos detalhes</button>'
+  +'<button type="button" class="proposal-btn" data-home>Catálogo</button>'
+  +'</div>'
+  +'<div class="proposal-skill-pill">'
+  +'<span class="proposal-skill-code">'+E(x.code)+'</span>'
+  +'<span class="proposal-skill-meta">'+E(compName)+(x.group?' · '+E(x.group):'')+'</span>'
+  +'<span class="proposal-conn-tag">'+conn.allNodes.size+' conexões</span>'
+  +'</div>'
+  +'<div class="proposal-view-actions">'
+  +'<button type="button" class="proposal-tool-btn" id="graphZoomIn" aria-label="Aumentar zoom" title="Aumentar zoom">+</button>'
+  +'<button type="button" class="proposal-tool-btn" id="graphZoomOut" aria-label="Diminuir zoom" title="Diminuir zoom">−</button>'
+  +'<button type="button" class="proposal-tool-btn" id="graphReset" aria-label="Centralizar grafo" title="Centralizar grafo">⟲</button>'
+  +'</div>'
+  +'</header>'
+  +'<div class="proposal-canvas-wrap" id="proposalCanvasWrap">'
+  +'<div class="graph2-map-controls-top" role="toolbar" aria-label="Filtrar conexões do mapa">'
+  +'<span class="graph2-filter-label"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polygon points="22 3 2 3 10 12.46 10 19 14 21 14 12.46 22 3"/></svg> Filtros:</span>'
+  +filterChips
+  +'</div>'
+  +'<svg class="proposal-svg" id="proposalSvg" viewBox="-900 -520 1800 1040">'
+  +'<g id="proposalZoomGroup" transform="translate(0,0) scale(1)">'
+  +'<g class="graph2-wires-layer">'+wiresHtml+flowsHtml+'</g>'
+  +'<g class="graph2-nodes-layer">'+nodesHtml+centralNodeHtml+'</g>'
+  +'</g>'
+  +'</svg>'
+  +legendHtml
+  +'</div>';
+
+ page.querySelector("#proposalBackDetail")?.addEventListener("click",()=>{
+  page.hidden=true;
+  $("#detailPage").hidden=false;
+ });
+ page.querySelectorAll("[data-home]").forEach(b=>b.addEventListener("click",home));
+
+ const zoomGroup=page.querySelector("#proposalZoomGroup");
+ const canvasWrap=page.querySelector("#proposalCanvasWrap");
+
+ function syncTransform(){
+  if(zoomGroup)zoomGroup.setAttribute("transform","translate("+proposalGraphState.panX.toFixed(1)+","+proposalGraphState.panY.toFixed(1)+") scale("+proposalGraphState.zoom.toFixed(3)+")");
+ }
+
+ page.querySelector("#graphZoomIn")?.addEventListener("click",()=>{
+  proposalGraphState.zoom=Math.min(2.5,proposalGraphState.zoom*1.2);
+  syncTransform();
+ });
+ page.querySelector("#graphZoomOut")?.addEventListener("click",()=>{
+  proposalGraphState.zoom=Math.max(0.4,proposalGraphState.zoom/1.2);
+  syncTransform();
+ });
+ page.querySelector("#graphReset")?.addEventListener("click",()=>{
+  proposalGraphState.zoom=1;
+  proposalGraphState.panX=0;
+  proposalGraphState.panY=0;
+  syncTransform();
+ });
+
+ // Pan & Zoom via pointer/drag and wheel
+ let isPanning=false,startX=0,startY=0;
+ canvasWrap?.addEventListener("pointerdown",e=>{
+  if(e.target.closest(".graph2-node, .proposal-chip, .graph2-map-controls-top, .graph2-map-legend"))return;
+  isPanning=true;
+  startX=e.clientX-proposalGraphState.panX;
+  startY=e.clientY-proposalGraphState.panY;
+  canvasWrap.classList.add("is-dragging");
+  canvasWrap.setPointerCapture(e.pointerId);
+ });
+ canvasWrap?.addEventListener("pointermove",e=>{
+  if(!isPanning)return;
+  proposalGraphState.panX=e.clientX-startX;
+  proposalGraphState.panY=e.clientY-startY;
+  syncTransform();
+ });
+ const stopPan=e=>{
+  if(!isPanning)return;
+  isPanning=false;
+  canvasWrap?.classList.remove("is-dragging");
+ };
+ canvasWrap?.addEventListener("pointerup",stopPan);
+ canvasWrap?.addEventListener("pointercancel",stopPan);
+
+ canvasWrap?.addEventListener("wheel",e=>{
+  e.preventDefault();
+  const delta=e.deltaY<0?1.12:0.89;
+  proposalGraphState.zoom=Math.max(0.4,Math.min(2.5,proposalGraphState.zoom*delta));
+  syncTransform();
+ },{passive:false});
+
+ // Multi-select filter chips
+ const selectedCats=new Set();
+
+ function updateGraphFilters(){
+  const allBtn=page.querySelector('.proposal-chip[data-cat=""]');
+  const isAll=selectedCats.size===0||selectedCats.size===availableCats.length;
+  if(allBtn)allBtn.classList.toggle("is-active",selectedCats.size===0);
+
+  page.querySelectorAll('.proposal-chip[data-cat]:not([data-cat=""])').forEach(chip=>{
+   const cat=chip.dataset.cat;
+   chip.classList.toggle("is-active",selectedCats.has(cat));
+  });
+
+  page.querySelectorAll(".graph2-node:not(.is-central)").forEach(n=>{
+   const match=isAll||selectedCats.has(n.dataset.cat);
+   n.style.display=match?"":"none";
+  });
+
+  page.querySelectorAll(".graph2-wire, .graph2-flow").forEach(w=>{
+   const match=isAll||selectedCats.has(w.dataset.cat);
+   w.style.display=match?"":"none";
+  });
+ }
+
+ page.querySelectorAll(".proposal-chip").forEach(chip=>{
+  chip.addEventListener("click",()=>{
+   const cat=chip.dataset.cat||"";
+   if(!cat){
+    selectedCats.clear();
+   }else{
+    if(selectedCats.has(cat)){
+     selectedCats.delete(cat);
+    }else{
+     selectedCats.add(cat);
+    }
+   }
+   updateGraphFilters();
+  });
+ });
+
+ // Node interactions: Hover wire highlight & Click for full modal details
+ page.querySelectorAll(".graph2-node").forEach(n=>{
+  const nCode=n.dataset.code;
+  if(!nCode)return;
+
+  n.addEventListener("mouseenter",()=>{
+   page.querySelectorAll('.graph2-wire[data-wire="'+nCode+'"]').forEach(w=>w.classList.add("is-highlighted"));
+  });
+
+  n.addEventListener("mouseleave",()=>{
+   page.querySelectorAll('.graph2-wire[data-wire="'+nCode+'"]').forEach(w=>w.classList.remove("is-highlighted"));
+  });
+
+  n.addEventListener("click",()=>{
+   if(S.by.has(nCode)){
+    habilidadeModalAbrir(nCode);
+   }else{
+    const nodeData=conn.allNodes.get(nCode);
+    modalAbrirInfo({
+     kicker:"Referência conectada",
+     title:nCode,
+     meta:nodeData?.reason||"Conexão curricular",
+     texto:nodeData?.text||("Referência conectada à habilidade "+x.code+".")
+    });
+   }
+  });
+ });
 }
 async function load(){
  try{const files=["educacao-infantil.json","ensino-fundamental.json","ensino-medio.json","estrutura.json","computacao.json","curriculo_cieb_computacao.json","sugestoes_interdisciplinares_ia.json","hierarquia_reuna.json","bncc-busca.min.json","reuna_visao_geral.json"],data=await Promise.all(files.map(async f=>{const r=await fetch(D+f);if(!r.ok)throw Error(f+" HTTP "+r.status);return r.json();}));normalize({ei:data[0],ef:data[1],em:data[2],structure:data[3],comp:data[4],cieb:data[5],ai:data[6],reuna:data[7],reunaVisao:data[9]});const searchIndex=new Map(data[8].itens.map(x=>[x.c,x]));S.all.forEach(x=>{const entry=x.kind!=="cieb"&&searchIndex.get(x.code);if(!entry)return;x.text=entry.t;x._textWords=words(x.text);x._topicWords=words(x.text+" "+x.topic);x._search=N([x.code,x.text,x.discipline,x.area,x.topic,x.group,entry.x,entry.d].join(" "));});fillFilters();render();events();$("#datasetStatus").textContent="1.721 aprendizagens BNCC + "+S.data.cieb.length+" referências CIEB · grafo dados-2026.08";const code=new URLSearchParams(location.search).get("codigo");if(code){detail(code);if(location.hash)requestAnimationFrame(()=>{const alvo=document.getElementById(decodeURIComponent(location.hash.slice(1)));detailMostrarFragmento(alvo);alvo?.scrollIntoView();});}

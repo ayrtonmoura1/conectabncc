@@ -13,7 +13,8 @@ body[data-theme="light"] .source-note,body[data-theme="light"] .hero-bottom{colo
 body[data-theme="light"] .catalog-heading h2,body[data-theme="light"] .row-head h3{color:#29252f}
 body[data-theme="light"] .row-meta,body[data-theme="light"] .catalog-controls{color:#77717d}
 body[data-theme="light"] .stage-chip{background:#fff;border-color:#ded9e3;color:#5a5560}
-body[data-theme="light"] .stage-chip:hover,body[data-theme="light"] .stage-chip.active{background:#eee5f2;border-color:#b48ec0;color:#382a3c}
+body[data-theme="light"] .stage-chip:hover{background:#eee5f2;border-color:#b48ec0;color:#382a3c}
+body[data-theme="light"] .stage-chip.active,body[data-theme="light"] .stage-chip.is-active{background:var(--chip-stage,#7d3fa8)!important;color:#0c0a12!important;font-weight:800!important;border-color:color-mix(in srgb,var(--chip-stage,#7d3fa8) 65%,#000)!important;box-shadow:0 2px 14px color-mix(in srgb,var(--chip-stage,#7d3fa8) 45%,transparent),0 2px 6px rgba(0,0,0,0.12)!important;transform:translateY(-1px) scale(1.04)}
 body[data-theme="light"] .skill-card{background:linear-gradient(145deg,color-mix(in srgb,var(--accent),white 86%),#fff 78%);box-shadow:0 6px 20px #28202b12}
 body[data-theme="light"] .card-text{color:#3d3942}body[data-theme="light"] .card-foot{color:#77717c}
 body[data-theme="light"] .detail-hero{background:linear-gradient(100deg,#f1edf4,#f7f5f8 53%,#eee9f2);border-color:#ded9e3}

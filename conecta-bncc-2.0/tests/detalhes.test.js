@@ -7,7 +7,7 @@ const vm = require('node:vm');
 const root = path.join(__dirname, '..');
 const read = file => JSON.parse(fs.readFileSync(path.join(root, 'dados', file), 'utf8'));
 const original = fs.readFileSync(path.join(root, 'app.js'), 'utf8');
-const instrumented = original.replace(/load\(\);\s*\}\)\(\);\s*$/, 'globalThis.detailApi={normalize,S,E,relations,detailRelations,detailHeaderHtml,detailNavItems,relatedMapListHtml,mapWorkspaceHtml,ciebHtml,aiHtml,reunaHtml,competenciasHtml,relationCard,initializeDetailRails,shortcuts,ROWS,rowItems,modalAbrirInfo,habilidadeModalAbrir,openCardDetailModal,periods,printBarHtml,syncDetailNavScrollspy,setActiveDetailNavLink,rowView,rowPeriodChips};})();');
+const instrumented = original.replace(/load\(\);\s*\}\)\(\);\s*$/, 'globalThis.detailApi={normalize,S,E,relations,detailRelations,detailHeaderHtml,detailNavItems,relatedMapListHtml,mapWorkspaceHtml,ciebHtml,aiHtml,reunaHtml,competenciasHtml,relationCard,initializeDetailRails,shortcuts,ROWS,rowItems,modalAbrirInfo,habilidadeModalAbrir,openCardDetailModal,periods,printBarHtml,syncDetailNavScrollspy,setActiveDetailNavLink,rowView,rowPeriodChips,card,skillConnectionCount,getSkillConnectionsData,arrangeGraphPositions};})();');
 assert.notEqual(instrumented, original, 'Não foi possível preparar o módulo da página para verificação');
 const sandbox = {document:{body:{dataset:{}}},localStorage:{getItem:()=>null},console};
 vm.runInNewContext(instrumented, sandbox, {filename:'app.js'});
@@ -646,4 +646,126 @@ test('cada etapa possui botão de busca à esquerda do chip Todos que filtra por
  api.S.rowQueries.delete('ei');
  const restoredView = api.rowView(rowEi);
  assert.equal(restoredView.items.length, viewEi.base.length, 'remover query local deve restaurar a quantidade original de itens');
+});
+
+
+test('todos os cartões do catálogo exibem badge no canto inferior direito com a contagem total de conexões',()=>{
+ const x=api.S.by.get('EF06MA01');
+ assert.ok(x, 'EF06MA01 deve existir');
+ const count=api.skillConnectionCount(x);
+ assert.ok(typeof count==='number'&&count>0, 'skillConnectionCount deve ser positivo');
+ const cardHtml=api.card(x,0,'finais');
+ assert.ok(cardHtml.includes('class="card-conn-badge"'), 'cartão deve conter card-conn-badge');
+ assert.ok(cardHtml.includes(String(count)), 'cartão deve conter o número de conexões');
+});
+
+test('a busca na etapa afeta as contagens de itens do componente e do ano/fase',()=>{
+ const rowEi = api.ROWS.find(r => r.id === 'ei');
+ const initialView = api.rowView(rowEi);
+ const initialCount = initialView.base.length;
+ 
+ // Digitar busca restringe view.base
+ api.S.rowQueries.set('ei', 'EI01CG01');
+ const filteredView = api.rowView(rowEi);
+ assert.equal(filteredView.base.length, 1, 'view.base deve ser filtrado pela query');
+ 
+ const chipsHtml = api.rowPeriodChips(rowEi, filteredView);
+ assert.ok(chipsHtml.includes('>1</span>'), 'chip Todos deve refletir a quantidade filtrada');
+ 
+ api.S.rowQueries.delete('ei');
+ const restoredView = api.rowView(rowEi);
+ assert.equal(restoredView.base.length, initialCount, 'view.base deve ser restaurado');
+});
+
+test('a etapa do Ensino Médio possui botão de busca contextual ativo',()=>{
+ const rowEm = api.ROWS.find(r => r.id === 'em');
+ const viewEm = api.rowView(rowEm);
+ const emChipsHtml = api.rowPeriodChips(rowEm, viewEm);
+ assert.ok(emChipsHtml.includes('data-row-search-toggle="em"'), 'Ensino Médio deve conter data-row-search-toggle="em"');
+ assert.ok(emChipsHtml.includes('data-row-search-input="em"'), 'Ensino Médio deve conter data-row-search-input="em"');
+});
+
+test('a estrutura de dados da Proposta Detalhes 2 mapeia nós organizados por categorias',()=>{
+ const x=api.S.by.get('EF06MA01');
+ const conn=api.getSkillConnectionsData(x);
+ assert.ok(conn.allNodes.size > 0, 'deve mapear nós relacionados');
+ assert.ok(conn.groups.anteriores.length > 0 || conn.groups.posteriores.length > 0 || conn.groups.competencias.length > 0, 'deve agrupar nós em categorias organizadas');
+});
+test('a seleção do chip de etapa no catálogo possui estilo de destaque visual perceptível',()=>{
+ const refinoCss = fs.readFileSync(path.join(root, 'refino.css'), 'utf8');
+ const temaClaroCss = fs.readFileSync(path.join(root, 'tema-claro.css'), 'utf8');
+ assert.ok(refinoCss.includes('.stage-chip.is-active') && refinoCss.includes('background:var(--chip-stage'), 'refino.css deve aplicar cor de destaque da etapa no chip ativo');
+ assert.ok(refinoCss.includes('font-weight:800'), 'chip ativo de etapa deve ter tipografia em peso 800 para alta legibilidade');
+ assert.ok(refinoCss.includes('box-shadow:'), 'chip ativo de etapa deve ter sombra/brilho no dark mode');
+ assert.ok(temaClaroCss.includes('.stage-chip.is-active') && temaClaroCss.includes('font-weight:800'), 'tema claro deve manter chip de etapa ativo com peso 800 e destaque');
+});
+
+test('a Proposta Detalhes 2 possui nós estáticos, filtros superiores multi-seleção e legenda inferior',()=>{
+ const propostaCss = fs.readFileSync(path.join(root, 'proposta-grafo.css'), 'utf8');
+ const appJs = fs.readFileSync(path.join(root, 'app.js'), 'utf8');
+ 
+ // 1. CSS dos nós deve ser estático (sem animação de pulso ou translação no hover)
+ assert.ok(!propostaCss.includes('.graph2-node{cursor:pointer;transition:transform'), 'graph2-node não deve ter transição de transform que cause saltos');
+ assert.ok(!propostaCss.includes('animation:hn-pulse 4.5s'), 'graph2-halo não deve pulsar com transform scale');
+ assert.ok(!propostaCss.includes('animation:hn-pulse-central'), 'halo central não deve pulsar com transform scale');
+ assert.ok(propostaCss.includes('.graph2-map-controls-top'), 'deve conter classe de controles/filtros na parte superior interna do mapa');
+ assert.ok(propostaCss.includes('.graph2-map-legend'), 'deve conter classe de legenda na parte inferior do mapa');
+ 
+ // 2. app.js deve conter a barra de filtros no topo do mapa e a legenda na base
+ assert.ok(appJs.includes('class="graph2-map-controls-top"'), 'app.js deve renderizar filtros no topo do mapa');
+ assert.ok(appJs.includes('class="graph2-map-legend"'), 'app.js deve renderizar legenda explicativa na base do mapa');
+ assert.ok(appJs.includes('selectedCats=new Set()'), 'app.js deve suportar multi-seleção de categorias de filtros');
+ assert.ok(appJs.includes('habilidadeModalAbrir(nCode)'), 'clique no nó deve abrir modal de detalhes completos');
+});
+test('o campo de busca desativa o botão nativo cancel-button para evitar dois x',()=>{
+ const interactionsCss = fs.readFileSync(path.join(root, 'catalog-interactions.css'), 'utf8');
+ assert.ok(interactionsCss.includes('::-webkit-search-cancel-button'), 'deve estilizar ::-webkit-search-cancel-button');
+ assert.ok(interactionsCss.includes('display:none!important'), 'deve ocultar cancel-button nativo com display:none!important');
+});
+
+test('os nós da Proposta Detalhes 2 são agrupados por origem sem sobreposição entre títulos e nós',()=>{
+ const x = api.S.by.get('EF06MA01');
+ const conn = api.getSkillConnectionsData(x);
+ const positions = api.arrangeGraphPositions(x, conn.allNodes, conn.groups);
+
+ assert.ok(positions.size > 5, 'deve posicionar múltiplos nós para EF06MA01');
+
+ // 1. Verificação de agrupamento por quadrante/procedência
+ conn.groups.reuna.forEach(n => {
+  const pos = positions.get(n.code);
+  if (pos) {
+   assert.ok(pos.x < 0 && pos.y < 0, 'nós do Reúna devem ficar agrupados no quadrante superior esquerdo (x<0, y<0)');
+  }
+ });
+
+ conn.groups.cieb.forEach(n => {
+  const pos = positions.get(n.code);
+  if (pos) {
+   assert.ok(pos.x > 0 && pos.y < 0, 'nós do CIEB devem ficar agrupados no quadrante superior direito (x>0, y<0)');
+  }
+ });
+
+ conn.groups.competencias.forEach(n => {
+  const pos = positions.get(n.code);
+  if (pos) {
+   assert.ok(pos.y < -150, 'competências devem ficar agrupadas no topo (y < -150)');
+  }
+ });
+
+ // 2. Verificação estrita de não-sobreposição entre nós/títulos
+ const entries = [...positions.values()];
+ for (let i = 0; i < entries.length; i++) {
+  for (let j = i + 1; j < entries.length; j++) {
+   const a = entries[i];
+   const b = entries[j];
+   const wA = Math.max(76, (a.node.code?.length || 8) * 9 + 22);
+   const wB = Math.max(76, (b.node.code?.length || 8) * 9 + 22);
+   const minClearanceX = (wA + wB) / 2 + 10;
+   const minClearanceY = 56;
+   const dx = Math.abs(b.x - a.x);
+   const dy = Math.abs(b.y - a.y);
+   const noOverlap = dx >= minClearanceX || dy >= minClearanceY;
+   assert.ok(noOverlap, 'nós ' + a.node.code + ' e ' + b.node.code + ' não devem se sobrepor (dx=' + dx + ', dy=' + dy + ')');
+  }
+ }
 });
