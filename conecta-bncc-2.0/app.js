@@ -236,7 +236,7 @@ function periods(x,rowId){
 function rowSearchMarkup(row){
  const searchOpen=Boolean(S.rowSearchOpen?.has(row.id)||(S.rowQueries?.get(row.id)));
  const query=S.rowQueries?.get(row.id)||"";
- return '<div class="row-search-wrap'+(searchOpen?' is-expanded':'')+'" data-row-search-wrap="'+E(row.id)+'"><button type="button" class="row-search-toggle'+(query?' has-query':'')+'" data-row-search-toggle="'+E(row.id)+'" aria-label="Buscar habilidades em '+E(row.title)+'" title="Buscar em '+E(row.title)+'"><span class="row-search-icon" aria-hidden="true">⌕</span></button><div class="row-search-field"'+(searchOpen?'':' hidden')+'><input type="search" class="row-search-input" data-row-search-input="'+E(row.id)+'" placeholder="Buscar em '+E(row.title)+'…" value="'+E(query)+'" aria-label="Buscar em '+E(row.title)+'" autocomplete="off"><button type="button" class="row-search-clear'+(query?'':' is-hidden')+'" data-row-search-clear="'+E(row.id)+'" aria-label="Limpar busca" title="Limpar busca">×</button></div></div>';
+ return '<div class="row-search-wrap'+(searchOpen?' is-expanded':'')+'" data-row-search-wrap="'+E(row.id)+'"><button type="button" class="row-search-toggle'+(query?' has-query':'')+(searchOpen?' is-active':'')+'" data-row-search-toggle="'+E(row.id)+'" aria-label="Buscar habilidades em '+E(row.title)+'" title="Buscar em '+E(row.title)+'"><svg class="row-search-icon" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="11" cy="11" r="7"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line></svg></button><div class="row-search-field"'+(searchOpen?'':' hidden')+'><input type="search" class="row-search-input" data-row-search-input="'+E(row.id)+'" placeholder="Buscar em '+E(row.title)+'…" value="'+E(query)+'" aria-label="Buscar em '+E(row.title)+'" autocomplete="off" spellcheck="false"><button type="button" class="row-search-clear'+(query?'':' is-hidden')+'" data-row-search-clear="'+E(row.id)+'" aria-label="Limpar busca" title="Limpar busca">×</button></div></div>';
 }
 function rowView(row){
  const base=filtered(rowItems(row.id)),period=S.yearFilters.get(row.id)||"",available=period?base.filter(x=>periods(x,row.id).some(p=>p.key===period)):base,selected=S.rowFilters.get(row.id)||"";
@@ -1845,6 +1845,43 @@ function events(){
    }
  }
  $("#catalogRows").addEventListener("click",e=>{
+    const searchToggle=e.target.closest("[data-row-search-toggle]");
+    if(searchToggle){
+      const id=searchToggle.dataset.rowSearchToggle,sec=searchToggle.closest(".catalog-row");
+      const wrap=searchToggle.closest(".row-search-wrap"),field=wrap?.querySelector(".row-search-field"),input=field?.querySelector(".row-search-input");
+      if(!field||!input)return;
+      if(sec&&sec.classList.contains("is-collapsed"))setRowOpen(sec,true);
+      const isHidden=field.hidden;
+      if(isHidden){
+        field.hidden=false;
+        wrap.classList.add("is-expanded");
+        searchToggle.classList.add("is-active");
+        S.rowSearchOpen.add(id);
+        input.focus();
+      }else{
+        if(!input.value.trim()){
+          field.hidden=true;
+          wrap.classList.remove("is-expanded");
+          searchToggle.classList.remove("is-active");
+          S.rowSearchOpen.delete(id);
+        }else{
+          input.focus();
+        }
+      }
+      return;
+    }
+    const searchClear=e.target.closest("[data-row-search-clear]");
+    if(searchClear){
+      const id=searchClear.dataset.rowSearchClear,sec=searchClear.closest(".catalog-row");
+      const wrap=searchClear.closest(".row-search-wrap"),input=wrap?.querySelector(".row-search-input"),row=ROWS.find(x=>x.id===id);
+      if(!input||!row||!sec)return;
+      input.value="";
+      searchClear.classList.add("is-hidden");
+      S.rowQueries.delete(id);
+      updateRowSearchResults(sec,row);
+      input.focus();
+      return;
+    }
    const toggle=e.target.closest("[data-row-toggle]");if(toggle){const sec=toggle.closest(".catalog-row");setRowOpen(sec,sec.classList.contains("is-collapsed"));return;}
    const collapsedRow=e.target.closest(".catalog-row.is-collapsed");if(collapsedRow&&!e.target.closest("button,a,input,select")){setRowOpen(collapsedRow,true);return;}
    const componentArrow=e.target.closest("[data-component-direction]");
@@ -1884,7 +1921,29 @@ function events(){
  $("#catalogRows").addEventListener("scroll",e=>{const list=e.target.closest(".row-component-list");if(list)syncComponentArrows(list.closest(".catalog-row"));const track=e.target.closest(".row-track");if(track)scheduleRail(track);},true);
  $("#catalogRows").addEventListener("focusin",e=>{const c=e.target.closest(".skill-card"),track=c?.closest(".row-track");if(track){syncRailA11y(track);scheduleRail(track);}});
  window.addEventListener("resize",()=>requestAnimationFrame(()=>{initializeRails($("#catalogRows"));syncComponentArrows($("#catalogRows"));}));
- $("#catalogRows").addEventListener("keydown",e=>{const c=e.target.closest(".skill-card");if(!c)return;if(e.key==="Enter"||e.key===" "){e.preventDefault();open(c.dataset.code);}else if(e.key==="ArrowLeft"||e.key==="ArrowRight"){e.preventDefault();moveRailFocus(c.closest(".row-track"),c,e.key==="ArrowLeft"?-1:1);}});
+ $("#catalogRows").addEventListener("keydown",e=>{
+    const input=e.target.closest("[data-row-search-input]");
+    if(input){
+      if(e.key==="Escape"){
+        e.preventDefault();
+        const id=input.dataset.rowSearchInput,wrap=input.closest(".row-search-wrap"),toggle=wrap?.querySelector(".row-search-toggle");
+        const sec=input.closest(".catalog-row"),row=ROWS.find(x=>x.id===id);
+        if(input.value.trim()){
+          input.value="";
+          wrap.querySelector(".row-search-clear")?.classList.add("is-hidden");
+          S.rowQueries.delete(id);
+          if(sec&&row)updateRowSearchResults(sec,row);
+        }
+        const field=wrap?.querySelector(".row-search-field");if(field)field.hidden=true;
+        wrap?.classList.remove("is-expanded");toggle?.classList.remove("is-active");
+        S.rowSearchOpen.delete(id);
+        toggle?.focus();
+        return;
+      }
+      if(e.key==="Enter"){e.preventDefault();return;}
+      return;
+    }
+    const c=e.target.closest(".skill-card");if(!c)return;if(e.key==="Enter"||e.key===" "){e.preventDefault();open(c.dataset.code);}else if(e.key==="ArrowLeft"||e.key==="ArrowRight"){e.preventDefault();moveRailFocus(c.closest(".row-track"),c,e.key==="ArrowLeft"?-1:1);}});
  $("#stageShortcuts").addEventListener("click",e=>{const b=e.target.closest("[data-scroll]");if(!b)return;if(!$("#detailPage").hidden)home(false);let row=$("#row-"+b.dataset.scroll);if(!row){clearTimeout(searchTimer);$("#searchInput").value="";$("#stageSelect").value="";$("#areaSelect").value="";S.q=S.filter=S.stageFilter="";S.rowFilters.clear();S.yearFilters.clear();render();row=$("#row-"+b.dataset.scroll);}jumpToRow(row);});
  document.querySelectorAll("[data-home]").forEach(a=>a.addEventListener("click",e=>{e.preventDefault();if(!$("#detailPage").hidden)home();else window.scrollTo({top:0,behavior:"smooth"});}));
   document.querySelectorAll("[data-jump]").forEach(a=>a.addEventListener("click",e=>{e.preventDefault();if(!$("#detailPage").hidden)home(false);let row=$("#row-"+a.dataset.jump);if(!row){clearTimeout(searchTimer);$("#searchInput").value="";$("#stageSelect").value="";$("#areaSelect").value="";S.q=S.filter=S.stageFilter="";S.rowFilters.clear();S.yearFilters.clear();render();row=$("#row-"+a.dataset.jump);}jumpToRow(row);}));

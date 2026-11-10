@@ -109,27 +109,35 @@ body[data-theme="light"] .row-summary{color:#6f6876}
   width:32px;
   height:32px;
   min-width:32px;
+  max-width:32px;
+  flex:0 0 32px;
   padding:0;
   border-radius:50%;
-  border:1px solid color-mix(in srgb,var(--row-accent,#b5a0ff) 26%,#3e3947);
-  background:color-mix(in srgb,var(--row-accent,#b5a0ff) 10%,#1e1c24);
-  color:#ddd8e5;
-  font-size:15px;
-  line-height:1;
+  border:1px solid color-mix(in srgb,var(--row-accent,#b5a0ff) 36%,#453f50);
+  background:color-mix(in srgb,var(--row-accent,#b5a0ff) 14%,#1e1c24);
+  color:#f2edf7;
   cursor:pointer;
   transition:all .2s ease;
 }
 .row-search-toggle:hover{
   border-color:var(--row-accent,#b5a0ff);
-  background:color-mix(in srgb,var(--row-accent,#b5a0ff) 22%,#1e1c24);
+  background:color-mix(in srgb,var(--row-accent,#b5a0ff) 26%,#1e1c24);
   color:#fff;
-  transform:scale(1.06);
+  transform:scale(1.08);
 }
+.row-search-toggle.is-active,
 .row-search-toggle.has-query{
   border-color:var(--row-accent,#b5a0ff);
-  background:color-mix(in srgb,var(--row-accent,#b5a0ff) 28%,#1e1c24);
+  background:color-mix(in srgb,var(--row-accent,#b5a0ff) 32%,#1e1c24);
   color:#fff;
-  box-shadow:0 0 10px color-mix(in srgb,var(--row-accent,#b5a0ff) 35%,transparent);
+  box-shadow:0 0 10px color-mix(in srgb,var(--row-accent,#b5a0ff) 40%,transparent);
+}
+.row-search-icon{
+  display:block;
+  width:14px;
+  height:14px;
+  stroke:currentColor;
+  pointer-events:none;
 }
 .row-search-field{
   display:inline-flex;
@@ -203,11 +211,12 @@ body[data-theme="light"] .row-search-toggle:hover{
   background:color-mix(in srgb,var(--row-accent,#7d3fa8) 18%,#ffffff);
   color:#221a28;
 }
+body[data-theme="light"] .row-search-toggle.is-active,
 body[data-theme="light"] .row-search-toggle.has-query{
   border-color:var(--row-accent,#7d3fa8);
-  background:color-mix(in srgb,var(--row-accent,#7d3fa8) 22%,#ffffff);
-  color:#1c1322;
-  box-shadow:0 0 10px color-mix(in srgb,var(--row-accent,#7d3fa8) 25%,transparent);
+  background:color-mix(in srgb,var(--row-accent,#7d3fa8) 28%,#ffffff);
+  color:#100616;
+  box-shadow:0 0 10px color-mix(in srgb,var(--row-accent,#7d3fa8) 35%,transparent);
 }
 body[data-theme="light"] .row-search-input{
   background:#ffffff;

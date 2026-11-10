@@ -625,6 +625,9 @@ test('cada etapa possui botão de busca à esquerda do chip Todos que filtra por
  // 1. O botão de busca existe e antecede o chip Todos
  assert.ok(periodHtml.includes('class="row-search-wrap'), 'rowPeriodChips deve conter row-search-wrap');
  assert.ok(periodHtml.includes('data-row-search-toggle="ei"'), 'deve conter botão data-row-search-toggle para ei');
+ assert.ok(periodHtml.includes('row-search-icon') && periodHtml.includes('<svg'), 'deve renderizar ícone svg de lupa na busca da etapa');
+ assert.ok(periodHtml.includes('data-row-search-input="ei"'), 'deve conter input de busca contextual');
+ assert.ok(periodHtml.includes('data-row-search-clear="ei"'), 'deve conter botão para limpar busca');
  assert.ok(periodHtml.indexOf('data-row-search-toggle') < periodHtml.indexOf('data-period=""'), 'o botão de busca deve ficar à esquerda do chip Todos');
 
  // 2. Filtragem local da linha por código
